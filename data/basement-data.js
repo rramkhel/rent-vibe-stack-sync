@@ -3,7 +3,7 @@
 const SAMPLE_IMAGES = [
   {
     id: 1,
-    url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
+    url: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?w=600&h=400&fit=crop",
     description: "Unfinished basement with concrete walls and exposed ceiling",
     verdict: true,
     confidence: 99.7,
@@ -19,7 +19,7 @@ const SAMPLE_IMAGES = [
   },
   {
     id: 3,
-    url: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&h=400&fit=crop",
+    url: "https://images.unsplash.com/photo-1528823872057-9c018a7a7553?w=600&h=400&fit=crop",
     description: "Wine cellar with bottle racks and stone walls",
     verdict: true,
     confidence: 78.3,
@@ -43,7 +43,7 @@ const SAMPLE_IMAGES = [
   },
   {
     id: 6,
-    url: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=600&h=400&fit=crop",
+    url: "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&h=400&fit=crop",
     description: "Laundry room with washer dryer and utility sink",
     verdict: true,
     confidence: 82.1,
