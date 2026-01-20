@@ -52,14 +52,14 @@
         // Slide 1: Title
         {
           title: "RentVibes",
-          subtitle: "Find Your Home by Feeling",
+          subtitle: "everything is vibe ✨",
           content: (
             <div className="text-center py-8">
               <div className="mb-6">
                 <span className="text-6xl">✨</span>
               </div>
               <h1 className="text-6xl font-black text-white mb-4">RentVibes</h1>
-              <p className="text-2xl text-white/90 mb-12">Find Your Home by Feeling</p>
+              <p className="text-2xl text-white/90 mb-12">everything is vibe ✨</p>
               <div className="inline-block px-6 py-3 bg-white/20 rounded-full">
                 <p className="text-white/80 text-sm font-medium">RentSync Innovation Lab</p>
               </div>
@@ -68,7 +68,7 @@
           bg: "bg-coral"
         },
 
-        // Slide 2: Problem
+        // Slide 2: Problem - Renters
         {
           title: "PROBLEM",
           subtitle: "Rental search is optimized for inventory, not intent.",
@@ -81,22 +81,25 @@
                 </h2>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="md:col-span-2 space-y-4">
-                  <div className="bg-gray-50 p-6 rounded-xl">
-                    <p className="text-lg text-navy">
-                      Renters scroll through <strong>200 identical listings</strong>. "Granite countertops." "Walking distance to transit."
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="bg-gray-50 p-6 rounded-xl border-l-4 border-coral">
+                    <p className="font-bold text-navy mb-2">🏠 For Renters:</p>
+                    <p className="text-navy">
+                      Scroll through <strong>200 identical listings</strong>. "Granite countertops." "Walking distance to transit." Everyone filters by <strong>beds and baths</strong>—but nobody knows what they actually want until they <em>feel</em> it.
                     </p>
                   </div>
-                  <div className="bg-gray-50 p-6 rounded-xl">
-                    <p className="text-lg text-navy">
-                      Everyone filters by <strong>beds and baths</strong>—but nobody knows what they actually want until they <em>feel</em> it.
+                  <div className="bg-gray-50 p-6 rounded-xl border-l-4 border-teal">
+                    <p className="font-bold text-navy mb-2">🏢 For Landlords:</p>
+                    <p className="text-navy">
+                      Get <strong>10,000 impressions</strong>, but not the renters they want. <strong>Low conversion</strong>. Leads that don't match. Time wasted on unqualified inquiries.
                     </p>
                   </div>
                 </div>
                 <div className="bg-navy rounded-xl p-8 flex flex-col items-center justify-center text-center">
                   <p className="text-6xl font-black text-coral mb-2">47</p>
                   <p className="text-white/70 text-sm">dropdown menus on a typical rental search</p>
+                  <p className="text-white/50 text-xs mt-4">...and none of them ask how you want to live</p>
                 </div>
               </div>
             </div>
@@ -106,39 +109,40 @@
 
         // Slide 3: Research
         {
-          title: "PROBLEM",
+          title: "RESEARCH",
           subtitle: "The science says: vibes win.",
           content: (
             <div className="space-y-6">
               <div>
-                <p className="text-coral font-bold text-sm tracking-widest mb-3">PROBLEM</p>
+                <p className="text-coral font-bold text-sm tracking-widest mb-3">RESEARCH</p>
                 <h2 className="text-4xl font-black text-navy leading-tight mb-8">
                   The science says: vibes win.
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-3 gap-6">
-                <div className="bg-navy rounded-xl p-8">
+                <a href="https://www.urbaneer.com/blog/the_psychology_of_home_buying_how_the_brain_works_in_real_estate" target="_blank" rel="noopener noreferrer" className="bg-navy rounded-xl p-8 hover:bg-navy/90 transition-colors cursor-pointer group">
                   <p className="text-5xl font-black text-coral mb-4">2:1</p>
                   <p className="text-white text-base mb-2">Emotions outweigh rational thinking in consumer decisions</p>
-                  <p className="text-white/50 text-xs">Journal of Advertising Research</p>
-                </div>
-                <div className="bg-navy rounded-xl p-8">
+                  <p className="text-white/50 text-xs group-hover:text-coral transition-colors">Journal of Advertising Research ↗</p>
+                </a>
+                <a href="https://customerthink.com/neuroscience-confirms-we-buy-on-emotion-justify-with-logic-yet-we-sell-to-mr-rational-ignore-mr-intuitive/" target="_blank" rel="noopener noreferrer" className="bg-navy rounded-xl p-8 hover:bg-navy/90 transition-colors cursor-pointer group">
                   <p className="text-5xl font-black text-coral mb-4">95%</p>
                   <p className="text-white text-base mb-2">of purchase decisions happen subconsciously</p>
-                  <p className="text-white/50 text-xs">Harvard Business School</p>
-                </div>
-                <div className="bg-navy rounded-xl p-8">
+                  <p className="text-white/50 text-xs group-hover:text-coral transition-colors">Harvard Business School (Zaltman) ↗</p>
+                </a>
+                <a href="https://www.tokinomo.com/blog/emotional-marketing" target="_blank" rel="noopener noreferrer" className="bg-navy rounded-xl p-8 hover:bg-navy/90 transition-colors cursor-pointer group">
                   <p className="text-5xl font-black text-coral mb-4">2x</p>
                   <p className="text-white text-base mb-2">Emotional ads outperform rational ads (31% vs 16%)</p>
-                  <p className="text-white/50 text-xs">Nielsen</p>
-                </div>
+                  <p className="text-white/50 text-xs group-hover:text-coral transition-colors">Nielsen via Tokinomo ↗</p>
+                </a>
               </div>
 
-              <div className="pt-4">
-                <p className="text-gray-500 text-sm italic">
-                  "House hunting is a multi-sensory experience... you've already made a decision before you've rationalized the pros and cons." — Urbaneer
+              <div className="pt-4 bg-gray-50 p-6 rounded-xl border-l-4 border-coral">
+                <p className="text-gray-700 text-base italic">
+                  "House hunting is a multi-sensory experience... you've already made a decision before you've rationalized the pros and cons."
                 </p>
+                <p className="text-coral font-semibold text-sm mt-2">— Urbaneer</p>
               </div>
             </div>
           ),
@@ -148,13 +152,13 @@
         // Slide 4: Solution
         {
           title: "SOLUTION",
-          subtitle: "Skip the 47 dropdowns. Ask 5 weird questions instead.",
+          subtitle: "Ask 5 vibe-based questions instead.",
           content: (
             <div className="space-y-6">
               <div>
                 <p className="text-teal font-bold text-sm tracking-widest mb-3">SOLUTION</p>
                 <h2 className="text-4xl font-black text-navy leading-tight mb-8">
-                  Skip the 47 dropdowns.<br/>Ask 5 weird questions instead.
+                  Skip the 47 dropdowns.<br/>Ask 5 vibe-based questions instead.
                 </h2>
               </div>
 
@@ -203,15 +207,13 @@
               <h2 className="text-5xl font-black text-white mb-8">Let's try it.</h2>
 
               <a
-                href="demo.html"
+                href="https://rent-vibe-stack-sync.vercel.app/demo.html"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block bg-white px-12 py-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-8"
               >
-                <p className="text-3xl font-bold text-navy">Try the Demo →</p>
+                <p className="text-3xl font-bold text-navy">Try RentVibes Live →</p>
               </a>
-
-              <p className="text-white/80 text-lg">
-                20 real Toronto listings · 15 vibe questions · 100% unserious methodology
-              </p>
             </div>
           ),
           bg: "bg-coral"
@@ -235,21 +237,21 @@
                   <p className="text-3xl mb-4">🏠</p>
                   <p className="font-bold text-navy text-xl mb-3">Renters</p>
                   <p className="text-gray-600">
-                    Find places that match how they want to live—not just what they can afford. Less scroll fatigue, more "this is the one."
+                    Instead of presenting renters with choices between <span className="line-through text-gray-400">sacrifice 1, sacrifice 2, sacrifice 3</span>... we present them with <strong className="text-teal">3 choices they love</strong>.
                   </p>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-8">
                   <p className="text-3xl mb-4">🏢</p>
                   <p className="font-bold text-navy text-xl mb-3">Landlords</p>
                   <p className="text-gray-600">
-                    Better-qualified leads. Renters who inquire actually <em>want</em> to live there—not just checking boxes. Higher conversion.
+                    Turn <span className="line-through text-gray-400">10,000 views and 2 leads</span> into <strong className="text-teal">1,000 views and 8-12 high quality future renters</strong>.
                   </p>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-8">
                   <p className="text-3xl mb-4">📊</p>
                   <p className="font-bold text-navy text-xl mb-3">RentSync</p>
                   <p className="text-gray-600">
-                    Intent data we've never had before. Learn what renters <em>actually</em> want—and build better products for 5M+ monthly users.
+                    <strong className="text-teal">The one company on the market</strong> that finds renters the listings they love and landlords the renters they want.
                   </p>
                 </div>
               </div>
