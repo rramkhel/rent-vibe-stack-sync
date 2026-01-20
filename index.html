@@ -3,221 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RentVibes.ca - Find Your Home by Feeling</title>
+  <title>RentVibes - Find Your Home by Feeling</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-  <header class="header">
-    <a class="logo" onclick="goHome()">
-      <svg class="logo-icon" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-      </svg>
-      RentVibes.ca
-    </a>
-    <nav class="nav-pills">
-      <a href="#">How It Works</a>
-      <a href="#">The Science</a>
-      <a href="#">Blog</a>
-    </nav>
-    <div class="nav-right">
-      <button class="btn-login">→ Login</button>
-      <div class="lang-toggle">
-        <span class="active">EN</span>
-        <span class="inactive">FR</span>
-      </div>
-      <button class="btn-post">List a Vibe</button>
+<body class="homepage">
+
+  <header class="home-header">
+    <div class="home-header-inner">
+      <span class="home-logo-small">rentvibes.ca · by rentsync</span>
     </div>
   </header>
 
-  <!-- ============================================
-       QUIZ PAGE
-       ============================================ -->
-  <div id="quiz-page" class="quiz-page">
-    <section class="hero">
-      <div class="hero-content">
-        <div class="tagline">✨ The vibes-only rental search</div>
-        <h1>Find Your Home by <span>Feeling</span></h1>
-        <p>Beds? Forget it. Baths? Not here. Answer a few questions and we'll find your perfect match based on pure, unfiltered vibes.</p>
+  <main class="home-main">
+
+    <section class="home-hero">
+      <h1>✨ RentVibes</h1>
+      <p class="home-subtitle">Find Your Home by Feeling</p>
+      <p class="home-description">
+        A RentSync Innovation Lab experiment<br>
+        in vibes-based rental matching.
+      </p>
+    </section>
+
+    <nav class="home-nav-cards">
+      <a href="highlights.html" class="home-card home-card-disabled">
+        <span class="home-card-icon">📊</span>
+        <span class="home-card-title">Product Highlights</span>
+        <span class="home-card-subtitle">Coming Soon</span>
+      </a>
+      <a href="vision.html" class="home-card">
+        <span class="home-card-icon">🎯</span>
+        <span class="home-card-title">Behind the Vibes</span>
+        <span class="home-card-subtitle">The vision</span>
+      </a>
+      <a href="demo.html" class="home-card home-card-primary">
+        <span class="home-card-icon">🔮</span>
+        <span class="home-card-title">Live Demo</span>
+        <span class="home-card-subtitle">Try it now</span>
+      </a>
+    </nav>
+
+    <section class="home-quote">
+      <blockquote>
+        "What if apartment hunting felt less like a<br>
+        spreadsheet and more like a personality quiz?"
+      </blockquote>
+    </section>
+
+    <section class="home-stats">
+      <div class="home-stat">
+        <span class="home-stat-icon">🏠</span>
+        <span class="home-stat-number">20</span>
+        <span class="home-stat-label">listings in Toronto</span>
+      </div>
+      <div class="home-stat">
+        <span class="home-stat-icon">✨</span>
+        <span class="home-stat-number">15</span>
+        <span class="home-stat-label">vibe questions</span>
+      </div>
+      <div class="home-stat">
+        <span class="home-stat-icon">🎯</span>
+        <span class="home-stat-number">100%</span>
+        <span class="home-stat-label">unserious methodology</span>
       </div>
     </section>
 
-    <div class="quiz-container">
-      <div class="quiz-card" id="quiz-card">
-        <!-- Content injected by JS -->
-      </div>
-    </div>
+  </main>
 
-    <section class="features">
-      <h2>Why Vibes Work</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🔮</div>
-          <h3>Astrologically Aligned</h3>
-          <p>Your star sign tells us more about your ideal home than square footage ever could.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🧠</div>
-          <h3>Psychologically Sound</h3>
-          <p>Our questions reveal subconscious preferences you didn't know you had.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">💫</div>
-          <h3>Statistically Dubious</h3>
-          <p><a href="https://www.tylervigen.com/spurious-correlations" target="_blank">Correlation isn't causation</a>, but vibes don't care about that.</p>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ============================================
-       RESULTS PAGE
-       ============================================ -->
-  <div id="results-page" class="results-page">
-    <section class="hero mini">
-      <div class="hero-content">
-        <h1>Your <span>Vibe Matches</span></h1>
-        <p id="results-subtitle">We consulted the cosmos and found these spots that match your energy.</p>
-      </div>
-    </section>
-
-    <div class="results-container">
-      <div class="results-header">
-        <h2>Showing <span id="match-count">5</span> vibe-aligned listings</h2>
-        <div class="vibe-summary" id="vibe-summary">
-          <span>✨</span>
-          <span>Your vibe: <strong id="vibe-name-display">Loading...</strong></span>
-        </div>
-      </div>
-
-      <div class="results-layout">
-        <div class="listings-section">
-          <h3>Spaces that understand you</h3>
-          <div class="listings-grid" id="listings-grid">
-            <!-- Listings injected by JS -->
-          </div>
-        </div>
-
-        <aside class="vibe-panel">
-          <h3>✨ Adjust Your Vibe</h3>
-          <p class="subtitle">Not quite right? Fine-tune your energy and discover more matches.</p>
-
-          <div class="vibe-slider-group">
-            <div class="vibe-slider-label">
-              <span>🌟 Aura Intensity</span>
-              <span class="vibe-value" id="aura-value">Balanced</span>
-            </div>
-            <input type="range" class="vibe-slider" id="aura-slider" min="0" max="100" value="50">
-            <div class="vibe-slider-ends">
-              <span>Chill hermit</span>
-              <span>Main character</span>
-            </div>
-          </div>
-
-          <div class="vibe-slider-group">
-            <div class="vibe-slider-label">
-              <span>🏠 Space Energy</span>
-              <span class="vibe-value" id="space-value">Cozy+</span>
-            </div>
-            <input type="range" class="vibe-slider" id="space-slider" min="0" max="100" value="40">
-            <div class="vibe-slider-ends">
-              <span>Minimalist cave</span>
-              <span>Dance floor</span>
-            </div>
-          </div>
-
-          <div class="vibe-slider-group">
-            <div class="vibe-slider-label">
-              <span>👥 Neighbor Tolerance</span>
-              <span class="vibe-value" id="neighbor-value">Polite nods</span>
-            </div>
-            <input type="range" class="vibe-slider" id="neighbor-slider" min="0" max="100" value="50">
-            <div class="vibe-slider-ends">
-              <span>I am a ghost</span>
-              <span>Block party host</span>
-            </div>
-          </div>
-
-          <div class="vibe-slider-group">
-            <div class="vibe-slider-label">
-              <span>🌅 Sunrise Relationship</span>
-              <span class="vibe-value" id="sunrise-value">It exists</span>
-            </div>
-            <input type="range" class="vibe-slider" id="sunrise-slider" min="0" max="100" value="30">
-            <div class="vibe-slider-ends">
-              <span>Vampire hours</span>
-              <span>5am yoga</span>
-            </div>
-          </div>
-
-          <div class="vibe-slider-group">
-            <div class="vibe-slider-label">
-              <span>🌿 Nature Proximity</span>
-              <span class="vibe-value" id="nature-value">Window plants</span>
-            </div>
-            <input type="range" class="vibe-slider" id="nature-slider" min="0" max="100" value="45">
-            <div class="vibe-slider-ends">
-              <span>Concrete jungle</span>
-              <span>Woodland creature</span>
-            </div>
-          </div>
-
-          <div class="vibe-slider-group" id="budget-slider-group">
-            <div class="vibe-slider-label">
-              <span id="budget-label">💸 Budget Vibe</span>
-              <span class="vibe-value" id="budget-value">Loading...</span>
-            </div>
-            <input type="range" class="vibe-slider" id="budget-slider" min="0" max="100" value="50">
-            <div class="vibe-slider-ends">
-              <span id="budget-low-label">Low</span>
-              <span id="budget-high-label">High</span>
-            </div>
-          </div>
-
-          <div class="bonus-question">
-            <div class="question-label">One more thing... your ideal Sunday morning?</div>
-            <div class="bonus-options" id="bonus-options">
-              <div class="bonus-option" data-value="brunch" onclick="selectBonusOption(this)">
-                <span class="emoji">🥐</span>
-                Fancy brunch
-              </div>
-              <div class="bonus-option" data-value="couch" onclick="selectBonusOption(this)">
-                <span class="emoji">🛋️</span>
-                Couch forever
-              </div>
-              <div class="bonus-option" data-value="market" onclick="selectBonusOption(this)">
-                <span class="emoji">🧺</span>
-                Farmers market
-              </div>
-              <div class="bonus-option" data-value="gym" onclick="selectBonusOption(this)">
-                <span class="emoji">💪</span>
-                Already at gym
-              </div>
-            </div>
-          </div>
-
-          <button class="btn-recalibrate" onclick="recalibrateVibes()">
-            ✨ Recalibrate & Show More
-          </button>
-          <button class="btn-start-over" onclick="goHome()">
-            Start over with new vibes
-          </button>
-        </aside>
-      </div>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <p>A <a href="https://rentsync.com" target="_blank">RentSync</a> Innovation™ | Not actual rental advice | Please still check the number of bathrooms</p>
+  <footer class="home-footer">
+    <p class="home-footer-tagline">Built with chaotic good energy by the RentSync team</p>
+    <nav class="home-footer-links">
+      <a href="https://rentsync.com" target="_blank">About RentSync</a>
+      <a href="https://rentsync.com/careers" target="_blank">Careers</a>
+      <a href="https://rentals.ca" target="_blank">The Serious Sites</a>
+    </nav>
   </footer>
 
-  <!-- Data files (load first) -->
-  <script src="data/listings.js"></script>
-  <script src="data/questions.js"></script>
-
-  <!-- Application modules -->
-  <script src="js/app.js"></script>
-  <script src="js/quiz.js"></script>
-  <script src="js/results.js"></script>
 </body>
 </html>
