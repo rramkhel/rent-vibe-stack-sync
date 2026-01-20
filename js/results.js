@@ -46,6 +46,120 @@ const BUDGET_THEMES = [
   }
 ];
 
+// ============================================
+// BONUS QUESTIONS
+// ============================================
+
+/**
+ * Randomized bonus questions for the results page
+ */
+const BONUS_QUESTIONS = [
+  {
+    id: 'sunday',
+    question: 'One more thing... your ideal Sunday morning?',
+    options: [
+      { emoji: '🥐', text: 'Fancy brunch', value: 'brunch' },
+      { emoji: '🛋️', text: 'Couch forever', value: 'couch' },
+      { emoji: '🧺', text: 'Farmers market', value: 'market' },
+      { emoji: '💪', text: 'Already at gym', value: 'gym' }
+    ]
+  },
+  {
+    id: 'emergency',
+    question: 'Your apartment is on fire. You grab...',
+    options: [
+      { emoji: '💻', text: 'My laptop', value: 'laptop' },
+      { emoji: '🪴', text: 'My plant children', value: 'plants' },
+      { emoji: '📸', text: 'Photo albums', value: 'photos' },
+      { emoji: '🧀', text: 'The fancy cheese', value: 'cheese' }
+    ]
+  },
+  {
+    id: 'decor',
+    question: 'Your walls say...',
+    options: [
+      { emoji: '🖼️', text: 'Gallery wall chaos', value: 'gallery' },
+      { emoji: '🪞', text: 'One statement mirror', value: 'mirror' },
+      { emoji: '📦', text: 'Still have moving boxes', value: 'boxes' },
+      { emoji: '🎨', text: 'I painted a mural', value: 'mural' }
+    ]
+  },
+  {
+    id: 'cooking',
+    question: 'Your relationship with the kitchen...',
+    options: [
+      { emoji: '👨‍🍳', text: 'I am the chef', value: 'chef' },
+      { emoji: '📱', text: 'UberEats knows me', value: 'delivery' },
+      { emoji: '🥣', text: 'Cereal is a meal', value: 'cereal' },
+      { emoji: '🍳', text: 'Eggs are my range', value: 'eggs' }
+    ]
+  },
+  {
+    id: 'guest',
+    question: 'When guests come over, you...',
+    options: [
+      { emoji: '🧹', text: 'Panic clean for 3 hours', value: 'panic' },
+      { emoji: '🏠', text: 'It\'s always guest-ready', value: 'ready' },
+      { emoji: '🚫', text: 'Guests don\'t come over', value: 'none' },
+      { emoji: '🎉', text: 'They\'re already here', value: 'party' }
+    ]
+  },
+  {
+    id: 'noise',
+    question: 'Your ideal background noise...',
+    options: [
+      { emoji: '🔇', text: 'Pure silence', value: 'silence' },
+      { emoji: '🎵', text: 'Lo-fi beats 24/7', value: 'lofi' },
+      { emoji: '📺', text: 'TV I\'m not watching', value: 'tv' },
+      { emoji: '🌧️', text: 'Rain sounds (fake)', value: 'rain' }
+    ]
+  },
+  {
+    id: 'laundry',
+    question: 'Your laundry situation...',
+    options: [
+      { emoji: '👔', text: 'Folded immediately', value: 'folded' },
+      { emoji: '🧺', text: 'The chair knows', value: 'chair' },
+      { emoji: '🔄', text: 'Rewash cycle', value: 'rewash' },
+      { emoji: '👃', text: 'Smell test approved', value: 'smell' }
+    ]
+  },
+  {
+    id: 'temperature',
+    question: 'Thermostat wars: you are...',
+    options: [
+      { emoji: '🥶', text: 'Always cold', value: 'cold' },
+      { emoji: '🥵', text: 'Always hot', value: 'hot' },
+      { emoji: '🧦', text: 'Just wear socks', value: 'socks' },
+      { emoji: '💸', text: 'Bill anxiety wins', value: 'bill' }
+    ]
+  }
+];
+
+let currentBonusQuestion = null;
+
+/**
+ * Initialize bonus question with random selection
+ */
+function initializeBonusQuestion() {
+  currentBonusQuestion = BONUS_QUESTIONS[Math.floor(Math.random() * BONUS_QUESTIONS.length)];
+
+  const container = document.querySelector('.bonus-question');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="question-label">${currentBonusQuestion.question}</div>
+    <div class="bonus-options" id="bonus-options">
+      ${currentBonusQuestion.options.map(opt => `
+        <div class="bonus-option" data-value="${opt.value}" onclick="selectBonusOption(this)">
+          <span class="emoji">${opt.emoji}</span>
+          ${opt.text}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
 /**
  * Budget ranges mapped to slider values
  * Slider 0-100 maps to these price ranges
@@ -237,8 +351,9 @@ function showResultsPage() {
   document.getElementById('results-subtitle').textContent =
     `We consulted the cosmos and found these spots that match your ${AppState.userData.starsign} energy.`;
 
-  // Initialize randomized budget slider
+  // Initialize randomized elements
   initializeBudgetSlider();
+  initializeBonusQuestion();
 
   // Generate listings
   generateListings();
