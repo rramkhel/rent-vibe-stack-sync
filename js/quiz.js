@@ -47,14 +47,14 @@ function renderIntakeForm() {
           <label for="starsign">Star Sign (Required)</label>
           <select id="starsign" required>
             <option value="">Choose your sign...</option>
-            ${STAR_SIGNS.map(sign => `<option value="${sign}">${sign}</option>`).join('')}
+            ${STAR_SIGNS.map(sign => `<option value="${sign.value}">${sign.display}</option>`).join('')}
           </select>
         </div>
         <div class="form-group">
           <label for="risingsign">Rising Sign (Optional)</label>
           <select id="risingsign">
             <option value="">If you know it...</option>
-            ${STAR_SIGNS.map(sign => `<option value="${sign}">${sign}</option>`).join('')}
+            ${STAR_SIGNS.map(sign => `<option value="${sign.value}">${sign.display}</option>`).join('')}
           </select>
         </div>
 
@@ -121,12 +121,26 @@ function selectWildcard(element) {
  * Handle intake form submission
  */
 function submitIntake() {
-  const name = document.getElementById('name').value;
-  const job = document.getElementById('job').value;
-  const city = document.getElementById('city').value;
-  const movein = document.getElementById('movein').value;
-  const starsign = document.getElementById('starsign').value;
-  const risingsign = document.getElementById('risingsign').value;
+  const nameEl = document.getElementById('name');
+  const jobEl = document.getElementById('job');
+  const cityEl = document.getElementById('city');
+  const moveinEl = document.getElementById('movein');
+  const starsignEl = document.getElementById('starsign');
+  const risingsignEl = document.getElementById('risingsign');
+
+  // Check if form elements exist
+  if (!nameEl || !starsignEl) {
+    console.error('Form elements not found - form may not have rendered correctly');
+    alert('Something went wrong. Please refresh the page and try again.');
+    return;
+  }
+
+  const name = nameEl.value.trim();
+  const job = jobEl ? jobEl.value.trim() : '';
+  const city = cityEl ? cityEl.value.trim() : '';
+  const movein = moveinEl ? moveinEl.value : '';
+  const starsign = starsignEl.value;
+  const risingsign = risingsignEl ? risingsignEl.value : '';
 
   if (!name || !starsign) {
     alert('Please enter your name and star sign (we need this for the vibes)');

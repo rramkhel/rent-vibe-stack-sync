@@ -106,10 +106,16 @@ function getAnswerText(questionIndex) {
 // INITIALIZATION
 // ============================================
 
+let appInitialized = false;
+
 /**
  * Initialize the application
  */
 function initApp() {
+  // Prevent double initialization
+  if (appInitialized) return;
+  appInitialized = true;
+
   renderIntakeForm();
   setupSliders();
 }

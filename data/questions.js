@@ -440,20 +440,20 @@ function getWildcardForName(name) {
   return getRandomWildcard();
 }
 
-// Star signs list
+// Star signs list - using objects to separate value from display
 const STAR_SIGNS = [
-  'Aries ♈',
-  'Taurus ♉',
-  'Gemini ♊',
-  'Cancer ♋',
-  'Leo ♌',
-  'Virgo ♍',
-  'Libra ♎',
-  'Scorpio ♏',
-  'Sagittarius ♐',
-  'Capricorn ♑',
-  'Aquarius ♒',
-  'Pisces ♓'
+  { value: 'Aries', display: 'Aries ♈' },
+  { value: 'Taurus', display: 'Taurus ♉' },
+  { value: 'Gemini', display: 'Gemini ♊' },
+  { value: 'Cancer', display: 'Cancer ♋' },
+  { value: 'Leo', display: 'Leo ♌' },
+  { value: 'Virgo', display: 'Virgo ♍' },
+  { value: 'Libra', display: 'Libra ♎' },
+  { value: 'Scorpio', display: 'Scorpio ♏' },
+  { value: 'Sagittarius', display: 'Sagittarius ♐' },
+  { value: 'Capricorn', display: 'Capricorn ♑' },
+  { value: 'Aquarius', display: 'Aquarius ♒' },
+  { value: 'Pisces', display: 'Pisces ♓' }
 ];
 
 /**
