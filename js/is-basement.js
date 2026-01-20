@@ -43,94 +43,22 @@ function updateVerdict(isBasement, confidence, reasoning) {
   reasoningText.textContent = reasoning;
 }
 
-// File Upload
-function handleFileUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
+// Coming Soon Popup
+function showComingSoon() {
+  const popup = document.getElementById('coming-soon-popup');
+  popup.classList.remove('hidden');
 
-  // Display the uploaded image
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const imgElement = document.getElementById('carousel-image');
-    imgElement.src = e.target.result;
-    imgElement.alt = 'Uploaded image for analysis';
-
-    // Start analysis animation
-    runAnalysis();
-  };
-  reader.readAsDataURL(file);
-
-  // Reset file input
-  event.target.value = '';
+  // Close on background click
+  popup.addEventListener('click', function(e) {
+    if (e.target === popup) {
+      hideComingSoon();
+    }
+  });
 }
 
-function runAnalysis() {
-  if (isAnalyzing) return;
-  isAnalyzing = true;
-
-  const overlay = document.getElementById('analyzing-overlay');
-  const messageEl = document.getElementById('analyzing-message');
-  const progressBar = document.getElementById('analyzing-progress-bar');
-  const verdictContainer = document.getElementById('verdict-container');
-  const reasoningContainer = document.getElementById('reasoning-container');
-
-  // Hide verdict during analysis
-  verdictContainer.classList.add('analyzing');
-  reasoningContainer.classList.add('analyzing');
-
-  // Show overlay
-  overlay.classList.remove('hidden');
-
-  // Get random analysis messages
-  const messages = getRandomAnalysisMessages(6);
-  let messageIndex = 0;
-  let progress = 0;
-
-  // Cycle through messages
-  const messageInterval = setInterval(() => {
-    if (messageIndex < messages.length) {
-      messageEl.textContent = messages[messageIndex];
-      messageIndex++;
-    }
-  }, 600);
-
-  // Update progress bar
-  const progressInterval = setInterval(() => {
-    progress += Math.random() * 15 + 5;
-    if (progress > 95) progress = 95;
-    progressBar.style.width = progress + '%';
-  }, 400);
-
-  // Complete analysis after delay
-  setTimeout(() => {
-    clearInterval(messageInterval);
-    clearInterval(progressInterval);
-
-    // Final progress
-    progressBar.style.width = '100%';
-    messageEl.textContent = 'Analysis complete!';
-
-    // Hide overlay and show result
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-      progressBar.style.width = '0%';
-
-      // Generate and show result
-      const result = generateUploadResult();
-      updateVerdict(result.verdict, result.confidence, result.reasoning);
-
-      // Show verdict with animation
-      verdictContainer.classList.remove('analyzing');
-      reasoningContainer.classList.remove('analyzing');
-      verdictContainer.classList.add('reveal');
-
-      setTimeout(() => {
-        verdictContainer.classList.remove('reveal');
-      }, 500);
-
-      isAnalyzing = false;
-    }, 500);
-  }, 3500);
+function hideComingSoon() {
+  const popup = document.getElementById('coming-soon-popup');
+  popup.classList.add('hidden');
 }
 
 // Keyboard navigation
@@ -139,5 +67,7 @@ document.addEventListener('keydown', function(event) {
     prevImage();
   } else if (event.key === 'ArrowRight') {
     nextImage();
+  } else if (event.key === 'Escape') {
+    hideComingSoon();
   }
 });

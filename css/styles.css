@@ -2081,6 +2081,113 @@ body.basement-page * {
   }
 }
 
+/* Coming Soon Popup */
+.basement-popup {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 1000 !important;
+}
+
+.basement-popup.hidden {
+  display: none !important;
+}
+
+.basement-popup-content {
+  background: #c0c0c0 !important;
+  border: 4px outset #dfdfdf !important;
+  padding: 24px 32px !important;
+  max-width: 450px !important;
+  width: 90% !important;
+  text-align: center !important;
+  position: relative !important;
+  box-shadow: 8px 8px 0 rgba(0,0,0,0.3) !important;
+}
+
+.popup-close {
+  position: absolute !important;
+  top: 8px !important;
+  right: 12px !important;
+  background: #c0c0c0 !important;
+  border: 2px outset #dfdfdf !important;
+  font-size: 20px !important;
+  cursor: pointer !important;
+  padding: 0 8px !important;
+  line-height: 1.2 !important;
+}
+
+.popup-close:active {
+  border-style: inset !important;
+}
+
+.popup-icon {
+  font-size: 48px !important;
+  margin-bottom: 12px !important;
+}
+
+.basement-popup-content h2 {
+  font-family: "Impact", "Arial Black", sans-serif !important;
+  font-size: 28px !important;
+  color: #000080 !important;
+  margin: 0 0 12px 0 !important;
+  letter-spacing: 2px !important;
+}
+
+.basement-popup-content p {
+  font-family: "Courier New", monospace !important;
+  font-size: 14px !important;
+  color: #333 !important;
+  margin: 0 0 8px 0 !important;
+}
+
+.popup-subtext {
+  color: #666 !important;
+  font-size: 12px !important;
+}
+
+.popup-api-btn {
+  display: inline-block !important;
+  background: #000080 !important;
+  color: #fff !important;
+  border: 3px outset #4040ff !important;
+  padding: 10px 20px !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 13px !important;
+  font-weight: bold !important;
+  text-decoration: none !important;
+  margin: 16px 0 !important;
+  cursor: pointer !important;
+}
+
+.popup-api-btn:hover {
+  background: #0000aa !important;
+}
+
+.popup-api-btn:active {
+  border-style: inset !important;
+}
+
+.popup-code {
+  background: #1a1a1a !important;
+  border: 2px inset #808080 !important;
+  padding: 12px !important;
+  margin-top: 12px !important;
+  text-align: left !important;
+}
+
+.popup-code code {
+  font-family: "Courier New", monospace !important;
+  font-size: 11px !important;
+  color: #00ff00 !important;
+  line-height: 1.6 !important;
+}
+
 /* ============================================
    IS BASEMENT - DOCUMENTATION PAGE
    ============================================ */

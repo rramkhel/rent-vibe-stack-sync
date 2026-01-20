@@ -53,10 +53,26 @@
 
       <!-- Upload Button -->
       <div class="upload-section">
-        <input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
-        <button class="basement-upload-btn" onclick="document.getElementById('file-input').click()">
+        <button class="basement-upload-btn" onclick="showComingSoon()">
           UPLOAD YOUR OWN
         </button>
+      </div>
+    </div>
+
+    <!-- Coming Soon Popup -->
+    <div id="coming-soon-popup" class="basement-popup hidden">
+      <div class="basement-popup-content">
+        <button class="popup-close" onclick="hideComingSoon()">&times;</button>
+        <div class="popup-icon">🚧</div>
+        <h2>COMING SOON</h2>
+        <p>Browser upload is under construction.</p>
+        <p class="popup-subtext">In the meantime, use our enterprise-grade API:</p>
+        <a href="is-basement-docs.html" class="popup-api-btn">VIEW API DOCS →</a>
+        <div class="popup-code">
+          <code>curl -X POST https://api.isbasement.io/v1/analyze \<br>
+          &nbsp;&nbsp;-H "Authorization: Bearer $API_KEY" \<br>
+          &nbsp;&nbsp;-F "image=@photo.jpg"</code>
+        </div>
       </div>
     </div>
 
