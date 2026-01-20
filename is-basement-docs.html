@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Is Basement API Documentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="docs-page">
+
+  <div class="docs-layout">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="docs-logo">
+        <a href="is-basement.html">
+          <span class="docs-logo-text">is_basement</span>
+        </a>
+        <span class="docs-version">v2.4.1</span>
+      </div>
+
+      <nav class="docs-nav">
+        <a href="#introduction" class="docs-nav-item active">Introduction</a>
+        <a href="#quick-start" class="docs-nav-item">Quick Start</a>
+        <a href="#authentication" class="docs-nav-item">Authentication</a>
+        <a href="#endpoints" class="docs-nav-item">Endpoints</a>
+        <a href="#rate-limiting" class="docs-nav-item">Rate Limiting</a>
+        <a href="#error-codes" class="docs-nav-item">Error Codes</a>
+        <a href="#sdks" class="docs-nav-item">SDKs</a>
+        <a href="#webhooks" class="docs-nav-item">Webhooks</a>
+        <a href="#changelog" class="docs-nav-item">Changelog</a>
+        <a href="#support" class="docs-nav-item">Support</a>
+      </nav>
+
+      <div class="docs-sidebar-footer">
+        <a href="is-basement.html" class="docs-back-link">&larr; Back to Demo</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-content">
+
+      <!-- Introduction -->
+      <section id="introduction" class="docs-section">
+        <h1>Introduction</h1>
+        <p class="docs-lead">
+          The Is Basement API provides enterprise-grade basement detection capabilities through a simple RESTful interface. Our proprietary detection algorithm analyzes images to determine, with industry-leading accuracy, whether the depicted space is or is not a basement.
+        </p>
+
+        <h2>Why Is Basement?</h2>
+        <p>
+          In a world of uncertainty, one question has plagued humanity since the dawn of architecture: <em>"Is this a basement?"</em>
+        </p>
+        <p>Until now, answering this question required:</p>
+        <ul>
+          <li>Physical inspection of the space</li>
+          <li>Consultation with real estate professionals</li>
+          <li>Expensive geological surveys</li>
+          <li>Wild guessing</li>
+        </ul>
+        <p>The Is Basement API eliminates this friction entirely.</p>
+
+        <h2>Use Cases</h2>
+        <ul>
+          <li><strong>Real Estate Platforms:</strong> Automatically classify listing photos</li>
+          <li><strong>Smart Home Systems:</strong> Trigger basement-specific automations</li>
+          <li><strong>Insurance Applications:</strong> Assess below-grade risk factors</li>
+          <li><strong>Academic Research:</strong> Finally, a definitive dataset</li>
+          <li><strong>Personal Curiosity:</strong> Sometimes you just need to know</li>
+        </ul>
+
+        <h2>Base URL</h2>
+        <p>All API requests should be made to:</p>
+        <pre class="docs-code"><code>https://api.isbasement.io/v1</code></pre>
+        <p class="docs-note"><em>Note: API access coming soon. Join the waitlist below.</em></p>
+      </section>
+
+      <!-- Quick Start -->
+      <section id="quick-start" class="docs-section">
+        <h1>Quick Start</h1>
+        <p>Get up and running with basement detection in under 5 minutes.</p>
+
+        <h2>1. Get Your API Key</h2>
+        <p>Sign up at <a href="#">dashboard.isbasement.io</a> to receive your API key. Free tier includes 100 requests per month.</p>
+
+        <h2>2. Make Your First Request</h2>
+        <pre class="docs-code"><code class="language-bash">curl -X POST https://api.isbasement.io/v1/analyze \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: multipart/form-data" \
+  -F "image=@/path/to/photo.jpg"</code></pre>
+
+        <h2>3. Receive Your Verdict</h2>
+        <pre class="docs-code"><code class="language-json">{
+  "id": "bsmt_a1b2c3d4e5f6",
+  "is_basement": true,
+  "confidence": 0.973,
+  "reasoning": "Concrete foundation walls detected. Exposed ceiling joists visible. Below-grade indicators: 97.2%.",
+  "processed_at": "2024-01-15T14:32:01.847Z",
+  "processing_time_ms": 847
+}</code></pre>
+        <p>That's it. You now know if it's a basement.</p>
+      </section>
+
+      <!-- Authentication -->
+      <section id="authentication" class="docs-section">
+        <h1>Authentication</h1>
+        <p>The Is Basement API uses API keys to authenticate requests. You can view and manage your API keys in the Dashboard.</p>
+
+        <h2>API Key Authentication</h2>
+        <p>Include your API key in the <code>Authorization</code> header:</p>
+        <pre class="docs-code"><code>Authorization: Bearer bsmt_live_a1b2c3d4e5f6g7h8i9j0</code></pre>
+
+        <h2>Key Types</h2>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Key Type</th>
+              <th>Prefix</th>
+              <th>Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Live</td>
+              <td><code>bsmt_live_</code></td>
+              <td>Production basement detection</td>
+            </tr>
+            <tr>
+              <td>Test</td>
+              <td><code>bsmt_test_</code></td>
+              <td>Development and testing (always returns <code>is_basement: true</code>)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>OAuth 2.0</h2>
+        <p>For applications requiring user-delegated access to basement detection capabilities, we support OAuth 2.0 authorization code flow.</p>
+
+        <h3>Authorization URL</h3>
+        <pre class="docs-code"><code>https://auth.isbasement.io/oauth/authorize</code></pre>
+
+        <h3>Token URL</h3>
+        <pre class="docs-code"><code>https://auth.isbasement.io/oauth/token</code></pre>
+
+        <h3>Scopes</h3>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Scope</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>basement:read</code></td>
+              <td>Analyze images for basement classification</td>
+            </tr>
+            <tr>
+              <td><code>basement:write</code></td>
+              <td>Submit corrections to basement classifications</td>
+            </tr>
+            <tr>
+              <td><code>basement:admin</code></td>
+              <td>Access aggregate basement statistics</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Security Best Practices</h2>
+        <ul>
+          <li>Never expose API keys in client-side code</li>
+          <li>Rotate keys periodically</li>
+          <li>Use test keys during development</li>
+          <li>Monitor usage for anomalies</li>
+        </ul>
+        <p class="docs-note"><em>If you suspect your API key has been compromised, rotate it immediately in the Dashboard.</em></p>
+      </section>
+
+      <!-- Endpoints -->
+      <section id="endpoints" class="docs-section">
+        <h1>Endpoints</h1>
+
+        <h2><span class="http-method post">POST</span> /analyze</h2>
+        <p>Analyze an image to determine basement classification.</p>
+
+        <h3>Request</h3>
+        <pre class="docs-code"><code>POST /v1/analyze
+Content-Type: multipart/form-data
+Authorization: Bearer YOUR_API_KEY</code></pre>
+
+        <h3>Parameters</h3>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>image</code></td>
+              <td>file</td>
+              <td>Yes</td>
+              <td>Image file (JPEG, PNG, WebP). Max 10MB.</td>
+            </tr>
+            <tr>
+              <td><code>include_reasoning</code></td>
+              <td>boolean</td>
+              <td>No</td>
+              <td>Include detailed reasoning. Default: <code>true</code></td>
+            </tr>
+            <tr>
+              <td><code>strict_mode</code></td>
+              <td>boolean</td>
+              <td>No</td>
+              <td>Reject ambiguous classifications. Default: <code>false</code></td>
+            </tr>
+            <tr>
+              <td><code>webhook_url</code></td>
+              <td>string</td>
+              <td>No</td>
+              <td>URL for async result delivery</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Response</h3>
+        <pre class="docs-code"><code class="language-json">{
+  "id": "bsmt_a1b2c3d4e5f6",
+  "object": "basement_analysis",
+  "is_basement": true,
+  "confidence": 0.947,
+  "classification": "DEFINITE_BASEMENT",
+  "reasoning": "Concrete foundation walls detected. Exposed ceiling joists visible. Lack of natural light consistent with below-grade construction. Window-to-wall ratio: 0.02.",
+  "metadata": {
+    "image_dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "detected_features": [
+      "concrete_walls",
+      "exposed_joists",
+      "fluorescent_lighting",
+      "utility_equipment"
+    ],
+    "natural_light_score": 0.03,
+    "ceiling_height_estimate": "7.2ft"
+  },
+  "processed_at": "2024-01-15T14:32:01.847Z",
+  "processing_time_ms": 847
+}</code></pre>
+
+        <h3>Classification Values</h3>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Classification</th>
+              <th>Confidence Range</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>DEFINITE_BASEMENT</code></td>
+              <td>95-100%</td>
+              <td>Unambiguous basement</td>
+            </tr>
+            <tr>
+              <td><code>PROBABLE_BASEMENT</code></td>
+              <td>75-94%</td>
+              <td>Likely basement, some uncertainty</td>
+            </tr>
+            <tr>
+              <td><code>UNCERTAIN</code></td>
+              <td>40-74%</td>
+              <td>Insufficient indicators</td>
+            </tr>
+            <tr>
+              <td><code>PROBABLE_NOT_BASEMENT</code></td>
+              <td>25-39%</td>
+              <td>Likely not a basement</td>
+            </tr>
+            <tr>
+              <td><code>DEFINITE_NOT_BASEMENT</code></td>
+              <td>0-24%</td>
+              <td>Unambiguous non-basement</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Example: Uncertain Result</h3>
+        <p>Some images may yield ambiguous results:</p>
+        <pre class="docs-code"><code class="language-json">{
+  "id": "bsmt_x9y8z7w6v5",
+  "is_basement": true,
+  "confidence": 0.512,
+  "classification": "UNCERTAIN",
+  "reasoning": "EDGE CASE: Wine cellar detected. Subterranean indicators present but specialty-use classification creates ambiguity per RFC 7231 Section 4.2.1. Defaulting to is_basement=true. Human review recommended.",
+  "flags": ["EDGE_CASE", "HUMAN_REVIEW_RECOMMENDED"]
+}</code></pre>
+      </section>
+
+      <!-- Rate Limiting -->
+      <section id="rate-limiting" class="docs-section">
+        <h1>Rate Limiting</h1>
+        <p>API requests are rate limited to ensure fair usage and system stability.</p>
+
+        <h2>Limits by Plan</h2>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Plan</th>
+              <th>Requests/Minute</th>
+              <th>Requests/Month</th>
+              <th>Concurrent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Free</td>
+              <td>10</td>
+              <td>100</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>Starter</td>
+              <td>60</td>
+              <td>5,000</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>Pro</td>
+              <td>300</td>
+              <td>50,000</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>Enterprise</td>
+              <td>1,000</td>
+              <td>Unlimited</td>
+              <td>100</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Rate Limit Headers</h2>
+        <p>Every response includes rate limit information:</p>
+        <pre class="docs-code"><code>X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 45
+X-RateLimit-Reset: 1705329600</code></pre>
+
+        <h2>Handling Rate Limits</h2>
+        <p>When rate limited, you'll receive a <code>429 Too Many Requests</code> response:</p>
+        <pre class="docs-code"><code class="language-json">{
+  "error": {
+    "code": "rate_limit_exceeded",
+    "message": "Rate limit exceeded. Please slow down.",
+    "retry_after": 32
+  }
+}</code></pre>
+        <p>Implement exponential backoff for production applications.</p>
+      </section>
+
+      <!-- Error Codes -->
+      <section id="error-codes" class="docs-section">
+        <h1>Error Codes</h1>
+        <p>The Is Basement API uses conventional HTTP response codes.</p>
+
+        <h2>HTTP Status Codes</h2>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>200</code></td>
+              <td>Success - basement status determined</td>
+            </tr>
+            <tr>
+              <td><code>400</code></td>
+              <td>Bad Request - invalid parameters</td>
+            </tr>
+            <tr>
+              <td><code>401</code></td>
+              <td>Unauthorized - invalid or missing API key</td>
+            </tr>
+            <tr>
+              <td><code>403</code></td>
+              <td>Forbidden - insufficient permissions</td>
+            </tr>
+            <tr>
+              <td><code>404</code></td>
+              <td>Not Found - resource doesn't exist</td>
+            </tr>
+            <tr>
+              <td><code>418</code></td>
+              <td>I'm a teapot - uploaded file is not an image</td>
+            </tr>
+            <tr>
+              <td><code>422</code></td>
+              <td>Unprocessable Entity - image could not be analyzed</td>
+            </tr>
+            <tr>
+              <td><code>429</code></td>
+              <td>Too Many Requests - rate limit exceeded</td>
+            </tr>
+            <tr>
+              <td><code>500</code></td>
+              <td>Internal Server Error - something went wrong on our end</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Error Response Format</h2>
+        <pre class="docs-code"><code class="language-json">{
+  "error": {
+    "code": "invalid_image_format",
+    "message": "The uploaded file is not a supported image format.",
+    "details": {
+      "received_type": "application/pdf",
+      "supported_types": ["image/jpeg", "image/png", "image/webp"]
+    },
+    "request_id": "req_a1b2c3d4"
+  }
+}</code></pre>
+
+        <h2>Common Errors</h2>
+
+        <h3>418 I'm a Teapot</h3>
+        <pre class="docs-code"><code class="language-json">{
+  "error": {
+    "code": "not_an_image",
+    "message": "The uploaded file appears to be a teapot, not an image. We detect basements, not teapots.",
+    "suggestion": "Please upload a JPEG, PNG, or WebP image file."
+  }
+}</code></pre>
+        <p class="docs-note"><em>Note: This error is returned for any non-image file upload. We take RFC 2324 very seriously.</em></p>
+
+        <h3>IMAGE_TOO_DARK</h3>
+        <pre class="docs-code"><code class="language-json">{
+  "error": {
+    "code": "image_too_dark",
+    "message": "The image is too dark to analyze. Ironically, this is often indicative of a basement.",
+    "suggestion": "Upload a better-lit image, or accept that it's probably a basement."
+  }
+}</code></pre>
+      </section>
+
+      <!-- SDKs -->
+      <section id="sdks" class="docs-section">
+        <h1>SDKs</h1>
+        <p>Official client libraries for the Is Basement API.</p>
+
+        <h2>Python</h2>
+        <pre class="docs-code"><code class="language-bash">pip install isbasement</code></pre>
+        <pre class="docs-code"><code class="language-python">from isbasement import IsBasement
+
+client = IsBasement(api_key="bsmt_live_...")
+
+result = client.analyze("photo.jpg")
+
+if result.is_basement:
+    print(f"It's a basement! ({result.confidence:.1%} confident)")
+else:
+    print("Not a basement.")</code></pre>
+
+        <h2>Node.js</h2>
+        <pre class="docs-code"><code class="language-bash">npm install @isbasement/sdk</code></pre>
+        <pre class="docs-code"><code class="language-javascript">import { IsBasement } from '@isbasement/sdk';
+
+const client = new IsBasement({ apiKey: 'bsmt_live_...' });
+
+const result = await client.analyze('./photo.jpg');
+console.log(result.is_basement ? 'Basement!' : 'Not a basement.');</code></pre>
+
+        <h2>Go</h2>
+        <pre class="docs-code"><code class="language-bash">go get github.com/isbasement/isbasement-go</code></pre>
+        <pre class="docs-code"><code class="language-go">package main
+
+import (
+    "fmt"
+    isbasement "github.com/isbasement/isbasement-go"
+)
+
+func main() {
+    client := isbasement.NewClient("bsmt_live_...")
+    result, _ := client.Analyze("photo.jpg")
+    fmt.Printf("Is basement: %v\n", result.IsBasement)
+}</code></pre>
+
+        <h2>Ruby</h2>
+        <pre class="docs-code"><code class="language-bash">gem install isbasement</code></pre>
+        <pre class="docs-code"><code class="language-ruby">require 'isbasement'
+
+client = IsBasement::Client.new(api_key: 'bsmt_live_...')
+result = client.analyze('photo.jpg')
+
+puts result.basement? ? "It's a basement!" : "Not a basement."</code></pre>
+
+        <h2>Rust</h2>
+        <pre class="docs-code"><code class="language-bash">cargo add isbasement</code></pre>
+        <pre class="docs-code"><code class="language-rust">use isbasement::Client;
+
+#[tokio::main]
+async fn main() {
+    let client = Client::new("bsmt_live_...");
+    let result = client.analyze("photo.jpg").await.unwrap();
+
+    println!("Basement: {}", result.is_basement);
+}</code></pre>
+
+        <h2>Community SDKs</h2>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Language</th>
+              <th>Package</th>
+              <th>Maintainer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PHP</td>
+              <td><code>composer require basement/detector</code></td>
+              <td>Community</td>
+            </tr>
+            <tr>
+              <td>Elixir</td>
+              <td><code>{:is_basement, "~> 1.0"}</code></td>
+              <td>Community</td>
+            </tr>
+            <tr>
+              <td>Haskell</td>
+              <td><code>cabal install is-basement</code></td>
+              <td>Community</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="docs-note"><em>More SDKs coming soon. Interested in building one? See our SDK Development Guide.</em></p>
+      </section>
+
+      <!-- Webhooks -->
+      <section id="webhooks" class="docs-section">
+        <h1>Webhooks</h1>
+        <p>Receive real-time notifications when basement analysis completes.</p>
+
+        <h2>Setup</h2>
+        <p>Configure webhook endpoints in your Dashboard, or pass a <code>webhook_url</code> parameter with each request.</p>
+
+        <h2>Event Types</h2>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>analysis.completed</code></td>
+              <td>Basement analysis finished</td>
+            </tr>
+            <tr>
+              <td><code>analysis.failed</code></td>
+              <td>Analysis could not be completed</td>
+            </tr>
+            <tr>
+              <td><code>classification.disputed</code></td>
+              <td>A classification was disputed</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Payload Format</h2>
+        <pre class="docs-code"><code class="language-json">{
+  "id": "evt_a1b2c3d4",
+  "type": "analysis.completed",
+  "created": "2024-01-15T14:32:02Z",
+  "data": {
+    "analysis_id": "bsmt_a1b2c3d4e5f6",
+    "is_basement": true,
+    "confidence": 0.947
+  }
+}</code></pre>
+
+        <h2>Verifying Signatures</h2>
+        <p>All webhook payloads include a signature header:</p>
+        <pre class="docs-code"><code>X-IsBasement-Signature: sha256=a1b2c3d4e5f6...</code></pre>
+        <p>Verify using your webhook secret:</p>
+        <pre class="docs-code"><code class="language-python">import hmac
+import hashlib
+
+def verify_signature(payload, signature, secret):
+    expected = hmac.new(
+        secret.encode(),
+        payload.encode(),
+        hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(f"sha256={expected}", signature)</code></pre>
+
+        <h2>Retry Policy</h2>
+        <p>Failed webhook deliveries are retried with exponential backoff:</p>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Attempt</th>
+              <th>Delay</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Immediate</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>1 minute</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>5 minutes</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>30 minutes</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>2 hours</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>After 5 failed attempts, the webhook is marked as failed and no further retries are attempted.</p>
+      </section>
+
+      <!-- Changelog -->
+      <section id="changelog" class="docs-section">
+        <h1>Changelog</h1>
+
+        <div class="changelog-entry">
+          <h3>v2.4.1 <span class="changelog-date">(2024-01-15)</span></h3>
+          <ul>
+            <li>Fixed edge case where wine cellars were incorrectly classified</li>
+            <li>Improved detection of finished basements</li>
+            <li>Added support for WebP image format</li>
+          </ul>
+        </div>
+
+        <div class="changelog-entry">
+          <h3>v2.4.0 <span class="changelog-date">(2024-01-02)</span></h3>
+          <ul>
+            <li>New: <code>strict_mode</code> parameter for rejecting ambiguous results</li>
+            <li>New: Rust SDK released</li>
+            <li>Improved confidence calibration for parking garages</li>
+          </ul>
+        </div>
+
+        <div class="changelog-entry">
+          <h3>v2.3.0 <span class="changelog-date">(2023-12-15)</span></h3>
+          <ul>
+            <li>Added webhook support</li>
+            <li>New metadata fields: <code>ceiling_height_estimate</code>, <code>natural_light_score</code></li>
+            <li>Performance improvements (avg response time reduced by 23%)</li>
+          </ul>
+        </div>
+
+        <div class="changelog-entry">
+          <h3>v2.2.0 <span class="changelog-date">(2023-11-28)</span></h3>
+          <ul>
+            <li>OAuth 2.0 support</li>
+            <li>New error code: <code>418 I'm a teapot</code> for non-image uploads</li>
+            <li>Added Go SDK</li>
+          </ul>
+        </div>
+
+        <div class="changelog-entry">
+          <h3>v2.1.0 <span class="changelog-date">(2023-11-01)</span></h3>
+          <ul>
+            <li>Introduced <code>classification</code> field with 5-tier system</li>
+            <li>Added <code>detected_features</code> array</li>
+            <li>Ruby SDK released</li>
+          </ul>
+        </div>
+
+        <div class="changelog-entry">
+          <h3>v2.0.0 <span class="changelog-date">(2023-10-15)</span></h3>
+          <ul>
+            <li><strong>BREAKING:</strong> Response format updated</li>
+            <li>New: Detailed reasoning included by default</li>
+            <li>New: Processing time metrics</li>
+            <li>Deprecated: v1 endpoints (sunset: 2024-04-15)</li>
+          </ul>
+        </div>
+
+        <div class="changelog-entry">
+          <h3>v1.0.0 <span class="changelog-date">(2023-09-01)</span></h3>
+          <ul>
+            <li>Initial release</li>
+            <li>Basic is/isn't basement detection</li>
+            <li>Python and Node.js SDKs</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Support -->
+      <section id="support" class="docs-section">
+        <h1>Support</h1>
+
+        <h2>Getting Help</h2>
+        <ul>
+          <li><strong>Documentation:</strong> You're reading it!</li>
+          <li><strong>API Status:</strong> <a href="#">status.isbasement.io</a></li>
+          <li><strong>Email:</strong> support@isbasement.io</li>
+          <li><strong>Twitter:</strong> <a href="#">@isbasementapi</a></li>
+        </ul>
+
+        <h2>FAQ</h2>
+
+        <div class="faq-item">
+          <h4>Q: How accurate is the basement detection?</h4>
+          <p>A: Our algorithm achieves 99.97% accuracy on our test dataset of 2.3 million labeled images.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Q: Can I dispute a classification?</h4>
+          <p>A: Yes! Use the <code>POST /v1/dispute</code> endpoint (Enterprise plan only).</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Q: Is this a real API?</h4>
+          <p>A: The documentation is very real. The API is coming soon.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Q: Why?</h4>
+          <p>A: Sometimes you just need to know if something is a basement.</p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="docs-footer">
+        <p>&copy; 2024 Is Basement, Inc. All rights reserved.</p>
+        <p>A RentSync Innovation Lab Experiment.</p>
+        <p class="docs-footer-note"><em>API access coming soon. In the meantime, enjoy the demo.</em></p>
+        <p><a href="is-basement.html" class="docs-footer-link">&larr; Back to Demo</a></p>
+      </footer>
+
+    </main>
+  </div>
+
+  <script>
+    // Smooth scroll for sidebar navigation
+    document.querySelectorAll('.docs-nav-item').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+        // Update active state
+        document.querySelectorAll('.docs-nav-item').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Update active nav item on scroll
+    const sections = document.querySelectorAll('.docs-section');
+    const navItems = document.querySelectorAll('.docs-nav-item');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 100) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href') === '#' + current) {
+          item.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

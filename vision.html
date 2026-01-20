@@ -4,97 +4,389 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Behind the Vibes - RentVibes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            coral: '#FF6B6B',
+            'coral-dark': '#E85555',
+            navy: '#1a1a2e',
+            teal: '#16A085'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+  </style>
 </head>
-<body class="subpage">
+<body>
+  <div id="root"></div>
 
-  <header class="home-header">
-    <a href="index.html" class="home-logo-small">rentvibes.ca · by rentsync</a>
-  </header>
+  <script type="text/babel">
+    const { useState } = React;
 
-  <main class="subpage-main">
-    <a href="index.html" class="back-link">← Back</a>
+    const ChevronLeft = () => (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+      </svg>
+    );
 
-    <div class="subpage-header">
-      <h1>🎯 Behind the Vibes</h1>
-      <p class="subpage-subtitle">The problem, the hypothesis, and why we think this might actually work.</p>
-    </div>
+    const ChevronRight = () => (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+      </svg>
+    );
 
-    <div class="vision-content">
+    const RentVibesPresentation = () => {
+      const [currentSlide, setCurrentSlide] = useState(0);
 
-      <section class="vision-section">
-        <h2>The Problem</h2>
-        <p>
-          Renters scroll through 200 identical listings. "Granite countertops." "Walking distance to transit."
-          Everyone filters by beds, baths, and price—but those 200 "matching" listings all look the same.
-        </p>
-        <p>
-          The dirty secret: renters don't know what they want until they feel it. Current rental search
-          is optimized for inventory, not intent. The listings that actually convert? They match how
-          someone wants to live, not just what they can technically afford.
-        </p>
-      </section>
+      const slides = [
+        // Slide 1: Title
+        {
+          title: "RentVibes",
+          subtitle: "Find Your Home by Feeling",
+          content: (
+            <div className="text-center py-8">
+              <div className="mb-6">
+                <span className="text-6xl">✨</span>
+              </div>
+              <h1 className="text-6xl font-black text-white mb-4">RentVibes</h1>
+              <p className="text-2xl text-white/90 mb-12">Find Your Home by Feeling</p>
+              <div className="inline-block px-6 py-3 bg-white/20 rounded-full">
+                <p className="text-white/80 text-sm font-medium">RentSync Innovation Lab</p>
+              </div>
+            </div>
+          ),
+          bg: "bg-coral"
+        },
 
-      <section class="vision-section">
-        <h2>The Hypothesis</h2>
-        <p>
-          What if we skipped the 47 dropdown menus and asked 5 weird questions instead?
-        </p>
-        <p>
-          RentVibes matches renters to listings based on personality and lifestyle, then explains
-          <em>why</em> each listing fits. No square footage. No parking filters. Just vibes.
-        </p>
-        <p>
-          The bet: "vibe explanations" create emotional connection. Emotional connection drives engagement.
-          Engagement drives leads.
-        </p>
-      </section>
+        // Slide 2: Problem
+        {
+          title: "PROBLEM",
+          subtitle: "Rental search is optimized for inventory, not intent.",
+          content: (
+            <div className="space-y-8">
+              <div>
+                <p className="text-coral font-bold text-sm tracking-widest mb-3">PROBLEM</p>
+                <h2 className="text-4xl font-black text-navy leading-tight">
+                  Rental search is optimized for inventory, not intent.
+                </h2>
+              </div>
 
-      <section class="vision-section">
-        <h2>Why Us</h2>
-        <p>
-          We're not a startup in a garage. RentSync powers 5M+ monthly renters across Rentals.ca,
-          RentFaster, Zumper Canada, and 3 other platforms.
-        </p>
-        <p>
-          Real listings. Real intent data. Real distribution if this works.
-        </p>
-      </section>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="md:col-span-2 space-y-4">
+                  <div className="bg-gray-50 p-6 rounded-xl">
+                    <p className="text-lg text-navy">
+                      Renters scroll through <strong>200 identical listings</strong>. "Granite countertops." "Walking distance to transit."
+                    </p>
+                  </div>
+                  <div className="bg-gray-50 p-6 rounded-xl">
+                    <p className="text-lg text-navy">
+                      Everyone filters by <strong>beds and baths</strong>—but nobody knows what they actually want until they <em>feel</em> it.
+                    </p>
+                  </div>
+                </div>
+                <div className="bg-navy rounded-xl p-8 flex flex-col items-center justify-center text-center">
+                  <p className="text-6xl font-black text-coral mb-2">47</p>
+                  <p className="text-white/70 text-sm">dropdown menus on a typical rental search</p>
+                </div>
+              </div>
+            </div>
+          ),
+          bg: "bg-white"
+        },
 
-      <section class="vision-section">
-        <h2>What We're Testing</h2>
-        <ul class="vision-list">
-          <li>Do "vibe explanations" increase time-on-listing?</li>
-          <li>Can personality questions predict which listings get leads?</li>
-          <li>Will renters trust a search that doesn't ask about bathrooms?</li>
-        </ul>
-      </section>
+        // Slide 3: Research
+        {
+          title: "PROBLEM",
+          subtitle: "The science says: vibes win.",
+          content: (
+            <div className="space-y-6">
+              <div>
+                <p className="text-coral font-bold text-sm tracking-widest mb-3">PROBLEM</p>
+                <h2 className="text-4xl font-black text-navy leading-tight mb-8">
+                  The science says: vibes win.
+                </h2>
+              </div>
 
-      <section class="vision-section">
-        <h2>The Team</h2>
-        <p>
-          Built by the RentSync product and innovation team. We've been doing rental search for years.
-          This is us trying something new.
-        </p>
-      </section>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="bg-navy rounded-xl p-8">
+                  <p className="text-5xl font-black text-coral mb-4">2:1</p>
+                  <p className="text-white text-base mb-2">Emotions outweigh rational thinking in consumer decisions</p>
+                  <p className="text-white/50 text-xs">Journal of Advertising Research</p>
+                </div>
+                <div className="bg-navy rounded-xl p-8">
+                  <p className="text-5xl font-black text-coral mb-4">95%</p>
+                  <p className="text-white text-base mb-2">of purchase decisions happen subconsciously</p>
+                  <p className="text-white/50 text-xs">Harvard Business School</p>
+                </div>
+                <div className="bg-navy rounded-xl p-8">
+                  <p className="text-5xl font-black text-coral mb-4">2x</p>
+                  <p className="text-white text-base mb-2">Emotional ads outperform rational ads (31% vs 16%)</p>
+                  <p className="text-white/50 text-xs">Nielsen</p>
+                </div>
+              </div>
 
-      <div class="vision-cta">
-        <a href="demo.html" class="btn-primary">Try the Demo →</a>
-      </div>
+              <div className="pt-4">
+                <p className="text-gray-500 text-sm italic">
+                  "House hunting is a multi-sensory experience... you've already made a decision before you've rationalized the pros and cons." — Urbaneer
+                </p>
+              </div>
+            </div>
+          ),
+          bg: "bg-white"
+        },
 
-    </div>
-  </main>
+        // Slide 4: Solution
+        {
+          title: "SOLUTION",
+          subtitle: "Skip the 47 dropdowns. Ask 5 weird questions instead.",
+          content: (
+            <div className="space-y-6">
+              <div>
+                <p className="text-teal font-bold text-sm tracking-widest mb-3">SOLUTION</p>
+                <h2 className="text-4xl font-black text-navy leading-tight mb-8">
+                  Skip the 47 dropdowns.<br/>Ask 5 weird questions instead.
+                </h2>
+              </div>
 
-  <footer class="home-footer">
-    <div class="home-footer-inner">
-      <nav class="home-footer-links">
-        <a href="https://rentsync.com" target="_blank">About RentSync</a>
-        <a href="https://rentsync.com/careers" target="_blank">Careers</a>
-        <a href="https://rentals.ca" target="_blank">Rentals.ca</a>
-      </nav>
-    </div>
-  </footer>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div className="flex gap-4 items-start">
+                    <div className="w-10 h-10 bg-coral text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                    <div>
+                      <p className="font-bold text-navy text-lg">Personality-based matching</p>
+                      <p className="text-gray-500">Questions about lifestyle, not square footage</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="w-10 h-10 bg-coral text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                    <div>
+                      <p className="font-bold text-navy text-lg">Vibe explanations</p>
+                      <p className="text-gray-500">Explains <em>why</em> each listing fits you</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="w-10 h-10 bg-coral text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                    <div>
+                      <p className="font-bold text-navy text-lg">Real RentSync inventory</p>
+                      <p className="text-gray-500">Not a toy—actual listings from our network</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-8 flex items-center">
+                  <p className="text-xl text-navy italic text-center leading-relaxed">
+                    "What if apartment hunting felt less like a spreadsheet and more like a personality quiz?"
+                  </p>
+                </div>
+              </div>
+            </div>
+          ),
+          bg: "bg-white"
+        },
 
+        // Slide 5: Demo
+        {
+          title: "DEMO",
+          subtitle: "Let's try it.",
+          content: (
+            <div className="text-center py-8">
+              <p className="text-white/70 font-bold text-sm tracking-widest mb-4">DEMO</p>
+              <h2 className="text-5xl font-black text-white mb-8">Let's try it.</h2>
+
+              <a
+                href="demo.html"
+                className="inline-block bg-white px-12 py-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-8"
+              >
+                <p className="text-3xl font-bold text-navy">Try the Demo →</p>
+              </a>
+
+              <p className="text-white/80 text-lg">
+                20 real Toronto listings · 15 vibe questions · 100% unserious methodology
+              </p>
+            </div>
+          ),
+          bg: "bg-coral"
+        },
+
+        // Slide 6: Win for Everybody
+        {
+          title: "WHY IT MATTERS",
+          subtitle: "How RentVibes is a win for everybody.",
+          content: (
+            <div className="space-y-6">
+              <div>
+                <p className="text-teal font-bold text-sm tracking-widest mb-3">WHY IT MATTERS</p>
+                <h2 className="text-4xl font-black text-navy leading-tight mb-8">
+                  How RentVibes is a win for everybody.
+                </h2>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="bg-gray-50 rounded-xl p-8">
+                  <p className="text-3xl mb-4">🏠</p>
+                  <p className="font-bold text-navy text-xl mb-3">Renters</p>
+                  <p className="text-gray-600">
+                    Find places that match how they want to live—not just what they can afford. Less scroll fatigue, more "this is the one."
+                  </p>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-8">
+                  <p className="text-3xl mb-4">🏢</p>
+                  <p className="font-bold text-navy text-xl mb-3">Landlords</p>
+                  <p className="text-gray-600">
+                    Better-qualified leads. Renters who inquire actually <em>want</em> to live there—not just checking boxes. Higher conversion.
+                  </p>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-8">
+                  <p className="text-3xl mb-4">📊</p>
+                  <p className="font-bold text-navy text-xl mb-3">RentSync</p>
+                  <p className="text-gray-600">
+                    Intent data we've never had before. Learn what renters <em>actually</em> want—and build better products for 5M+ monthly users.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                <p className="text-gray-500 text-sm">
+                  Testing: Do vibe explanations increase engagement? Can personality predict conversions?
+                </p>
+              </div>
+            </div>
+          ),
+          bg: "bg-white"
+        }
+      ];
+
+      const nextSlide = () => {
+        if (currentSlide < slides.length - 1) {
+          setCurrentSlide(currentSlide + 1);
+        }
+      };
+
+      const prevSlide = () => {
+        if (currentSlide > 0) {
+          setCurrentSlide(currentSlide - 1);
+        }
+      };
+
+      // Keyboard navigation
+      React.useEffect(() => {
+        const handleKeyDown = (e) => {
+          if (e.key === 'ArrowRight' || e.key === ' ') {
+            e.preventDefault();
+            nextSlide();
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+      }, [currentSlide]);
+
+      return (
+        <div className="min-h-screen bg-gray-100">
+          {/* Header */}
+          <div className="bg-white border-b border-gray-200">
+            <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+              <div>
+                <a href="index.html" className="text-lg font-bold text-gray-900 hover:text-coral transition-colors">RentVibes Product Overview</a>
+                <p className="text-sm text-gray-600">RentSync Innovation Lab</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-600">
+                  Slide {currentSlide + 1} of {slides.length}
+                </span>
+                <a href="index.html" className="text-sm text-coral hover:underline">← Back to Home</a>
+              </div>
+            </div>
+          </div>
+
+          {/* Slide Content */}
+          <div className="max-w-6xl mx-auto px-4 py-8">
+            <div className={`rounded-xl shadow-lg p-8 md:p-12 min-h-[500px] ${slides[currentSlide].bg}`}>
+              {slides[currentSlide].content}
+            </div>
+
+            {/* Navigation */}
+            <div className="mt-6 flex items-center justify-between">
+              <button
+                onClick={prevSlide}
+                disabled={currentSlide === 0}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                  currentSlide === 0
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-gray-800 text-white hover:bg-gray-900'
+                }`}
+              >
+                <ChevronLeft />
+                Previous
+              </button>
+
+              {/* Slide Indicators */}
+              <div className="flex gap-2">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`h-2 rounded-full transition-all ${
+                      index === currentSlide ? 'bg-coral w-8' : 'bg-gray-300 w-2'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={nextSlide}
+                disabled={currentSlide === slides.length - 1}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                  currentSlide === slides.length - 1
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-coral text-white hover:bg-coral-dark'
+                }`}
+              >
+                Next
+                <ChevronRight />
+              </button>
+            </div>
+
+            {/* Quick Navigation */}
+            <div className="mt-6 bg-white rounded-lg p-4">
+              <p className="text-sm font-semibold text-gray-700 mb-3">Quick Navigation:</p>
+              <div className="flex flex-wrap gap-2">
+                {slides.map((slide, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`px-3 py-1 rounded text-sm font-medium transition-all ${
+                      index === currentSlide
+                        ? 'bg-coral text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {index + 1}. {slide.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <p className="text-center text-gray-400 text-sm mt-6">
+              Use arrow keys or spacebar to navigate
+            </p>
+          </div>
+        </div>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<RentVibesPresentation />);
+  </script>
 </body>
 </html>

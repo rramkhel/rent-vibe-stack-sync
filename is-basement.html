@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Is This A Basement?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="basement-page">
+
+  <div class="basement-container">
+    <!-- Header -->
+    <div class="basement-header">
+      <div class="basement-title-box">
+        <h1>Is This A Basement?</h1>
+        <p class="basement-subtitle">The world's most important question.</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="basement-main">
+      <!-- Image Carousel -->
+      <div class="basement-carousel">
+        <button class="carousel-arrow carousel-prev" onclick="prevImage()">&#9664;</button>
+        <div class="carousel-image-container">
+          <img id="carousel-image" src="" alt="Space to analyze" class="carousel-image">
+          <div id="analyzing-overlay" class="analyzing-overlay hidden">
+            <div class="analyzing-spinner"></div>
+            <p id="analyzing-message">Analyzing...</p>
+            <div class="analyzing-progress">
+              <div id="analyzing-progress-bar" class="analyzing-progress-bar"></div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-arrow carousel-next" onclick="nextImage()">&#9654;</button>
+      </div>
+
+      <!-- Verdict Display -->
+      <div id="verdict-container" class="verdict-container">
+        <div id="verdict-box" class="verdict-box verdict-yes">
+          <span id="verdict-text" class="verdict-text">YES</span>
+        </div>
+        <p class="verdict-confidence">Confidence: <span id="confidence-value">94.2</span>%</p>
+      </div>
+
+      <!-- Reasoning -->
+      <div id="reasoning-container" class="reasoning-container">
+        <p id="reasoning-text" class="reasoning-text">
+          Subterranean indicators detected. Lack of natural light consistent with below-grade construction. Confidence: HIGH.
+        </p>
+      </div>
+
+      <!-- Upload Button -->
+      <div class="upload-section">
+        <input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
+        <button class="basement-upload-btn" onclick="document.getElementById('file-input').click()">
+          UPLOAD YOUR OWN
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="basement-stats">
+      <div class="stat-item">
+        <span class="stat-label">visitors:</span>
+        <span class="stat-value">48,291,573</span>
+      </div>
+      <div class="stat-divider">|</div>
+      <div class="stat-item">
+        <span class="stat-label">accuracy:</span>
+        <span class="stat-value">99.97%</span>
+      </div>
+      <div class="stat-divider">|</div>
+      <div class="stat-item">
+        <span class="stat-label">basements found:</span>
+        <span class="stat-value">12,847,293</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="basement-footer">
+      <div class="basement-footer-links">
+        <a href="is-basement-docs.html">API</a>
+        <span class="footer-divider">|</span>
+        <a href="is-basement-docs.html">Documentation</a>
+      </div>
+      <div class="basement-footer-brand">
+        another fine <a href="index.html">rentsync</a> product
+      </div>
+    </div>
+  </div>
+
+  <!-- Data and Scripts -->
+  <script src="data/basement-data.js"></script>
+  <script src="js/is-basement.js"></script>
+</body>
+</html>
