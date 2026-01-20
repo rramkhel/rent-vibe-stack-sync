@@ -18,6 +18,8 @@ const AppState = {
   currentListings: [],
   listingBatch: 0,
   selectedBonusOption: null,
+  currentWildcard: null,
+  wildcardAnswer: null,
   TOTAL_QUESTIONS: 5
 };
 
@@ -38,6 +40,8 @@ function resetAppState() {
   AppState.currentListings = [];
   AppState.listingBatch = 0;
   AppState.selectedBonusOption = null;
+  AppState.currentWildcard = null;
+  AppState.wildcardAnswer = null;
 }
 
 /**
@@ -56,6 +60,7 @@ function goHome() {
   document.getElementById('neighbor-slider').value = 50;
   document.getElementById('sunrise-slider').value = 30;
   document.getElementById('nature-slider').value = 45;
+  document.getElementById('budget-slider').value = 50;
 
   // Reset bonus options
   document.querySelectorAll('.bonus-option').forEach(opt => opt.classList.remove('selected'));

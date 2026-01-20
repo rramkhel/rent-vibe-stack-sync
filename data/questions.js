@@ -215,6 +215,231 @@ const RECALIBRATED_VIBE_NAMES = [
   'Upgraded Energy Detector'
 ];
 
+// Wildcard questions for the intake form - fun debates that reveal personality
+const WILDCARD_QUESTIONS = [
+  // Pop culture debates
+  {
+    id: 'dress',
+    question: "The dress was...",
+    secretlyMeasures: "perception and certainty",
+    options: [
+      { emoji: "💙", text: "Blue/Black", value: "blue-black" },
+      { emoji: "🤍", text: "White/Gold", value: "white-gold" },
+      { emoji: "🙄", text: "I've moved on", value: "over-it" }
+    ]
+  },
+  {
+    id: 'pineapple',
+    question: "Pineapple on pizza?",
+    secretlyMeasures: "openness to controversy",
+    options: [
+      { emoji: "🍍", text: "Absolutely", value: "yes" },
+      { emoji: "🚫", text: "Never", value: "never" },
+      { emoji: "🤫", text: "Only in secret", value: "secret" }
+    ]
+  },
+  {
+    id: 'gif',
+    question: "GIF or JIF?",
+    secretlyMeasures: "willingness to die on hills",
+    options: [
+      { emoji: "🔤", text: "GIF (hard G)", value: "hard-g" },
+      { emoji: "🥜", text: "JIF (soft G)", value: "soft-g" },
+      { emoji: "✋", text: "I refuse to participate", value: "abstain" }
+    ]
+  },
+  {
+    id: 'chris',
+    question: "Best Chris?",
+    secretlyMeasures: "aesthetic preferences",
+    options: [
+      { emoji: "🛡️", text: "Evans", value: "evans" },
+      { emoji: "⚡", text: "Hemsworth", value: "hemsworth" },
+      { emoji: "🦖", text: "Pratt", value: "pratt" },
+      { emoji: "🌲", text: "Pine", value: "pine" }
+    ]
+  },
+  {
+    id: 'hotdog',
+    question: "Is a hot dog a sandwich?",
+    secretlyMeasures: "philosophical flexibility",
+    options: [
+      { emoji: "✅", text: "Yes", value: "yes" },
+      { emoji: "❌", text: "No", value: "no" },
+      { emoji: "😰", text: "This keeps me up at night", value: "existential" }
+    ]
+  },
+  {
+    id: 'ross-rachel',
+    question: "Did Ross and Rachel...?",
+    secretlyMeasures: "moral absolutism",
+    options: [
+      { emoji: "💔", text: "Were on a break", value: "break" },
+      { emoji: "😤", text: "Were NOT on a break", value: "not-break" },
+      { emoji: "📺", text: "I've moved on", value: "over-it" }
+    ]
+  },
+  // Eternal arguments
+  {
+    id: 'toilet-paper',
+    question: "Toilet paper orientation:",
+    secretlyMeasures: "attention to detail",
+    options: [
+      { emoji: "⬆️", text: "Over", value: "over" },
+      { emoji: "⬇️", text: "Under", value: "under" },
+      { emoji: "🙈", text: "I don't look", value: "chaos" }
+    ]
+  },
+  {
+    id: 'cereal',
+    question: "Cereal or milk first?",
+    secretlyMeasures: "respect for tradition",
+    options: [
+      { emoji: "🥣", text: "Cereal first", value: "cereal" },
+      { emoji: "🥛", text: "Milk first", value: "milk" },
+      { emoji: "🦝", text: "I eat it dry like a feral creature", value: "feral" }
+    ]
+  },
+  {
+    id: 'egg',
+    question: "The egg came...",
+    secretlyMeasures: "scientific vs philosophical leaning",
+    options: [
+      { emoji: "🥚", text: "First", value: "egg" },
+      { emoji: "🐔", text: "After the chicken", value: "chicken" },
+      { emoji: "🥑", text: "With avocado toast", value: "brunch" }
+    ]
+  },
+  {
+    id: 'straw',
+    question: "How many holes does a straw have?",
+    secretlyMeasures: "topological thinking",
+    options: [
+      { emoji: "1️⃣", text: "One", value: "one" },
+      { emoji: "2️⃣", text: "Two", value: "two" },
+      { emoji: "😵", text: "I need to lie down", value: "overwhelmed" }
+    ]
+  },
+  {
+    id: 'water',
+    question: "Is water wet?",
+    secretlyMeasures: "pedantry tolerance",
+    options: [
+      { emoji: "💧", text: "Yes", value: "yes" },
+      { emoji: "🏜️", text: "No", value: "no" },
+      { emoji: "🚫", text: "Blocked", value: "blocked" }
+    ]
+  },
+  // Personality reveals
+  {
+    id: 'cart',
+    question: "Do you return the shopping cart?",
+    secretlyMeasures: "civic responsibility",
+    options: [
+      { emoji: "😇", text: "Always", value: "always" },
+      { emoji: "🤷", text: "Sometimes", value: "sometimes" },
+      { emoji: "😈", text: "Chaos agent", value: "chaos" }
+    ]
+  },
+  {
+    id: 'kitkat',
+    question: "How do you eat a Kit Kat?",
+    secretlyMeasures: "rule following",
+    options: [
+      { emoji: "🍫", text: "Break apart", value: "proper" },
+      { emoji: "😬", text: "Straight bite", value: "monster" },
+      { emoji: "🤔", text: "Never thought about it", value: "oblivious" }
+    ]
+  },
+  {
+    id: 'socks-sandals',
+    question: "Socks with sandals?",
+    secretlyMeasures: "fashion vs function",
+    options: [
+      { emoji: "👮", text: "Crime", value: "crime" },
+      { emoji: "🧦", text: "Comfort", value: "comfort" },
+      { emoji: "🇩🇪", text: "I'm German", value: "german" }
+    ]
+  },
+  {
+    id: 'reply-all',
+    question: "Reply all?",
+    secretlyMeasures: "risk tolerance",
+    options: [
+      { emoji: "🚫", text: "Never", value: "never" },
+      { emoji: "🤔", text: "Sometimes", value: "sometimes" },
+      { emoji: "🔥", text: "I live dangerously", value: "chaos" }
+    ]
+  },
+  {
+    id: 'tabs-spaces',
+    question: "Tabs or spaces?",
+    secretlyMeasures: "developer identity",
+    options: [
+      { emoji: "➡️", text: "Tabs", value: "tabs" },
+      { emoji: "⬜", text: "Spaces", value: "spaces" },
+      { emoji: "🤖", text: "I let the computer decide", value: "auto" }
+    ]
+  },
+  {
+    id: 'dark-mode',
+    question: "Dark mode or light mode?",
+    secretlyMeasures: "adaptability",
+    options: [
+      { emoji: "🌙", text: "Dark mode", value: "dark" },
+      { emoji: "☀️", text: "Light mode", value: "light" },
+      { emoji: "😨", text: "I fear change", value: "default" }
+    ]
+  }
+];
+
+// Special wildcard questions triggered by specific names
+const SPECIAL_WILDCARDS = {
+  rachel: {
+    id: 'han-shot',
+    question: "Who shot first?",
+    secretlyMeasures: "revisionist history tolerance",
+    options: [
+      { emoji: "🔫", text: "Han", value: "han" },
+      { emoji: "👽", text: "Greedo", value: "greedo" },
+      { emoji: "🎬", text: "George Lucas keeps changing it", value: "lucas" }
+    ]
+  },
+  brandon: {
+    id: 'seven-ate-nine',
+    question: "Why was 6 afraid of 7?",
+    secretlyMeasures: "dad joke appreciation",
+    options: [
+      { emoji: "7️⃣", text: "Because 7 8 9", value: "seven" },
+      { emoji: "9️⃣", text: "Because 7 was a registered six offender", value: "nine" },
+      { emoji: "6️⃣", text: "6 was never afraid, that's propaganda", value: "six" }
+    ]
+  }
+};
+
+/**
+ * Get a random wildcard question
+ * @returns {Object} A random wildcard question
+ */
+function getRandomWildcard() {
+  return WILDCARD_QUESTIONS[Math.floor(Math.random() * WILDCARD_QUESTIONS.length)];
+}
+
+/**
+ * Get wildcard question, checking for special name-based ones first
+ * @param {string} name - The user's name to check
+ * @returns {Object} A wildcard question
+ */
+function getWildcardForName(name) {
+  if (name) {
+    const lowerName = name.toLowerCase().trim();
+    if (SPECIAL_WILDCARDS[lowerName]) {
+      return SPECIAL_WILDCARDS[lowerName];
+    }
+  }
+  return getRandomWildcard();
+}
+
 // Star signs list
 const STAR_SIGNS = [
   'Aries ♈',

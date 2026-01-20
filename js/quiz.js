@@ -16,6 +16,11 @@
  */
 function renderIntakeForm() {
   const card = document.getElementById('quiz-card');
+  const wildcard = getRandomWildcard();
+
+  // Store the current wildcard for later use
+  AppState.currentWildcard = wildcard;
+
   card.innerHTML = `
     <div class="intake-form">
       <h2>Let's Get the Boring Stuff Out of the Way</h2>
@@ -38,18 +43,78 @@ function renderIntakeForm() {
           <label for="movein">Move-in Date</label>
           <input type="month" id="movein">
         </div>
-        <div class="form-group full-width">
+        <div class="form-group">
           <label for="starsign">Star Sign (Required)</label>
           <select id="starsign" required>
-            <option value="">Choose your cosmic identity...</option>
+            <option value="">Choose your sign...</option>
             ${STAR_SIGNS.map(sign => `<option value="${sign}">${sign}</option>`).join('')}
           </select>
+        </div>
+        <div class="form-group">
+          <label for="risingsign">Rising Sign (Optional)</label>
+          <select id="risingsign">
+            <option value="">If you know it...</option>
+            ${STAR_SIGNS.map(sign => `<option value="${sign}">${sign}</option>`).join('')}
+          </select>
+        </div>
+
+        <div class="form-group full-width wildcard-question">
+          <label>${wildcard.question}</label>
+          <div class="wildcard-options" id="wildcard-options">
+            ${wildcard.options.map((opt, i) => `
+              <button type="button" class="wildcard-btn" data-value="${opt.value}" onclick="selectWildcard(this)">
+                <span class="option-emoji">${opt.emoji}</span>
+                ${opt.text}
+              </button>
+            `).join('')}
+          </div>
         </div>
       </div>
 
       <button class="btn-primary" onclick="submitIntake()">Read My Vibes →</button>
     </div>
   `;
+
+  // Add listener to update wildcard based on name
+  const nameInput = document.getElementById('name');
+  nameInput.addEventListener('input', updateWildcardForName);
+}
+
+/**
+ * Update wildcard question based on name input
+ */
+function updateWildcardForName() {
+  const nameInput = document.getElementById('name');
+  const name = nameInput.value;
+  const newWildcard = getWildcardForName(name);
+
+  // Only update if the wildcard changed
+  if (newWildcard.id !== AppState.currentWildcard.id) {
+    AppState.currentWildcard = newWildcard;
+    AppState.wildcardAnswer = null;
+
+    const wildcardContainer = document.querySelector('.wildcard-question');
+    wildcardContainer.innerHTML = `
+      <label>${newWildcard.question}</label>
+      <div class="wildcard-options" id="wildcard-options">
+        ${newWildcard.options.map((opt, i) => `
+          <button type="button" class="wildcard-btn" data-value="${opt.value}" onclick="selectWildcard(this)">
+            <span class="option-emoji">${opt.emoji}</span>
+            ${opt.text}
+          </button>
+        `).join('')}
+      </div>
+    `;
+  }
+}
+
+/**
+ * Handle wildcard option selection
+ */
+function selectWildcard(element) {
+  document.querySelectorAll('.wildcard-btn').forEach(btn => btn.classList.remove('selected'));
+  element.classList.add('selected');
+  AppState.wildcardAnswer = element.dataset.value;
 }
 
 /**
@@ -61,13 +126,23 @@ function submitIntake() {
   const city = document.getElementById('city').value;
   const movein = document.getElementById('movein').value;
   const starsign = document.getElementById('starsign').value;
+  const risingsign = document.getElementById('risingsign').value;
 
   if (!name || !starsign) {
     alert('Please enter your name and star sign (we need this for the vibes)');
     return;
   }
 
-  AppState.userData = { name, job, city, movein, starsign };
+  AppState.userData = {
+    name,
+    job,
+    city,
+    movein,
+    starsign,
+    risingsign,
+    wildcardQuestion: AppState.currentWildcard,
+    wildcardAnswer: AppState.wildcardAnswer
+  };
   AppState.currentStep = 'questions';
   generateQuestions();
 }

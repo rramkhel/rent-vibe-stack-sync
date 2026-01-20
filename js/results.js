@@ -8,6 +8,97 @@
  */
 
 // ============================================
+// BUDGET SLIDER THEMES
+// ============================================
+
+/**
+ * Randomized budget slider themes
+ * Each theme has a label, low/high end labels, and value labels for each 20% increment
+ */
+const BUDGET_THEMES = [
+  {
+    id: 'avocado',
+    label: '🥑 Avocado Toast Sacrifice Level',
+    lowEnd: 'Rent is my personality',
+    highEnd: 'Money is a construct',
+    values: ['Ramen lifestyle', 'Some luxuries die', 'Balanced-ish', 'Comfortable', 'Oligarch energy']
+  },
+  {
+    id: 'retrograde',
+    label: '💸 Mercury Retrograde Protection Fund',
+    lowEnd: 'Bare minimum',
+    highEnd: 'Fully insured against chaos',
+    values: ['Chaos welcomes me', 'Minor protection', 'Moderate hedge', 'Well-buffered', 'Astrologically secure']
+  },
+  {
+    id: 'crying',
+    label: '🎰 Monthly Crying Budget',
+    lowEnd: 'Light weeping',
+    highEnd: 'Sobbing into equity',
+    values: ['Tears of joy only', 'Occasional sniffles', 'Manageable weeping', 'Regular sobbing', 'Emotional bankruptcy']
+  },
+  {
+    id: 'latte',
+    label: '☕ Oat Milk Lattes You\'d Sacrifice',
+    lowEnd: 'None (I need them)',
+    highEnd: 'All of them (I own a kettle)',
+    values: ['Zero lattes harmed', 'One or two', 'Half my lattes', 'Most lattes', 'I make coffee at home now']
+  }
+];
+
+/**
+ * Budget ranges mapped to slider values
+ * Slider 0-100 maps to these price ranges
+ */
+const BUDGET_RANGES = [
+  { maxSlider: 20, minPrice: 1400, maxPrice: 1700 },
+  { maxSlider: 40, minPrice: 1600, maxPrice: 2000 },
+  { maxSlider: 60, minPrice: 1900, maxPrice: 2500 },
+  { maxSlider: 80, minPrice: 2300, maxPrice: 3000 },
+  { maxSlider: 100, minPrice: 2800, maxPrice: 9999 }
+];
+
+// Track current budget theme
+let currentBudgetTheme = null;
+
+/**
+ * Initialize budget slider with random theme
+ */
+function initializeBudgetSlider() {
+  // Pick random theme
+  currentBudgetTheme = BUDGET_THEMES[Math.floor(Math.random() * BUDGET_THEMES.length)];
+
+  // Update DOM elements
+  document.getElementById('budget-label').textContent = currentBudgetTheme.label;
+  document.getElementById('budget-low-label').textContent = currentBudgetTheme.lowEnd;
+  document.getElementById('budget-high-label').textContent = currentBudgetTheme.highEnd;
+
+  // Set initial value display
+  updateBudgetValueDisplay(50);
+}
+
+/**
+ * Update the budget value display based on slider position
+ * @param {number} value - Slider value 0-100
+ */
+function updateBudgetValueDisplay(value) {
+  if (!currentBudgetTheme) return;
+
+  const index = Math.min(Math.floor(value / 20), 4);
+  document.getElementById('budget-value').textContent = currentBudgetTheme.values[index];
+}
+
+/**
+ * Get price range from slider value
+ * @param {number} sliderValue - Slider value 0-100
+ * @returns {Object} Object with minPrice and maxPrice
+ */
+function getBudgetRange(sliderValue) {
+  const range = BUDGET_RANGES.find(r => sliderValue <= r.maxSlider);
+  return range || BUDGET_RANGES[BUDGET_RANGES.length - 1];
+}
+
+// ============================================
 // VIBE EXPLANATIONS
 // ============================================
 
@@ -146,6 +237,9 @@ function showResultsPage() {
   document.getElementById('results-subtitle').textContent =
     `We consulted the cosmos and found these spots that match your ${AppState.userData.starsign} energy.`;
 
+  // Initialize randomized budget slider
+  initializeBudgetSlider();
+
   // Generate listings
   generateListings();
 }
@@ -165,9 +259,29 @@ function generateListings() {
 
   // Simulate loading
   setTimeout(() => {
-    // Get 5 random listings based on vibe adjustments
-    const shuffled = [...LISTINGS].sort(() => Math.random() - 0.5);
-    const startIndex = (AppState.listingBatch * 5) % LISTINGS.length;
+    // Get budget range from slider
+    const budgetSlider = document.getElementById('budget-slider');
+    const budgetValue = budgetSlider ? parseInt(budgetSlider.value) : 50;
+    const budgetRange = getBudgetRange(budgetValue);
+
+    // Filter listings by budget first
+    const affordableListings = LISTINGS.filter(listing =>
+      listing.price >= budgetRange.minPrice && listing.price <= budgetRange.maxPrice
+    );
+
+    // If not enough listings in range, expand the search
+    let eligibleListings = affordableListings;
+    if (affordableListings.length < 5) {
+      // Sort all listings by how close they are to the budget range midpoint
+      const midpoint = (budgetRange.minPrice + budgetRange.maxPrice) / 2;
+      eligibleListings = [...LISTINGS].sort((a, b) =>
+        Math.abs(a.price - midpoint) - Math.abs(b.price - midpoint)
+      );
+    }
+
+    // Shuffle eligible listings and take 5
+    const shuffled = [...eligibleListings].sort(() => Math.random() - 0.5);
+    const startIndex = (AppState.listingBatch * 5) % shuffled.length;
     AppState.currentListings = [];
 
     for (let i = 0; i < 5; i++) {
@@ -255,6 +369,14 @@ function setupSliders() {
       });
     }
   });
+
+  // Budget slider (uses different logic due to randomized theme)
+  const budgetSlider = document.getElementById('budget-slider');
+  if (budgetSlider) {
+    budgetSlider.addEventListener('input', () => {
+      updateBudgetValueDisplay(parseInt(budgetSlider.value));
+    });
+  }
 }
 
 /**
