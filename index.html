@@ -3,181 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RentVibes - Find Your Home by Feeling</title>
+  <title>RentSync Prototypes</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="homepage-v2">
+<body class="hub-page">
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="index.html" class="site-logo">
-        <span class="logo-icon">✨</span>
-        RentVibes
+  <main class="hub-container">
+    <!-- Header -->
+    <header class="hub-header">
+      <h1 class="hub-title">RentSync Prototypes</h1>
+      <p class="hub-subtitle">Product explorations and proof of concepts</p>
+    </header>
+
+    <!-- Project Cards -->
+    <div class="hub-grid">
+      <!-- Rent Vibes Card -->
+      <a href="rent-vibes/" class="hub-card">
+        <div class="hub-card-icon teal">
+          <i data-lucide="home"></i>
+        </div>
+        <div class="hub-card-content">
+          <h2 class="hub-card-title">Rent Vibes</h2>
+          <p class="hub-card-description">Vibes-based rental search experience and tools</p>
+        </div>
+        <div class="hub-card-arrow">
+          <i data-lucide="arrow-right"></i>
+        </div>
       </a>
-      <nav class="site-nav">
-        <a href="#features">Features</a>
-        <a href="#approach">Approach</a>
-        <a href="vision.html">The Vision</a>
-        <a href="is-basement.html">Is Basement?</a>
-      </nav>
-      <a href="demo.html" class="header-cta">Try Demo →</a>
-    </div>
-  </header>
 
-  <!-- Hero -->
-  <section class="hero-v2">
-    <div class="hero-inner">
-      <span class="hero-badge">RentSync Innovation Lab</span>
-      <h1 class="hero-title">✨ RentVibes</h1>
-      <p class="hero-subtitle">Find Your Home by Feeling</p>
-      <p class="hero-description">
-        A vibes-based approach to rental search. Skip the 47 dropdown menus,
-        answer 5 personality questions, and discover listings that match how you
-        actually want to live—not just what you can afford.
-      </p>
-      <div class="hero-buttons">
-        <a href="vision.html" class="btn-outline">Product Rationale →</a>
-        <a href="demo.html" class="btn-solid">Try the Demo →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section id="features" class="features-v2">
-    <div class="features-inner">
-      <h2 class="section-title">The Features</h2>
-      <p class="section-subtitle">Three core innovations that make vibes-based search possible</p>
-
-      <div class="feature-cards">
-        <!-- Card 1: Vibe Quiz -->
-        <div class="feature-card accent-teal">
-          <div class="feature-card-header">
-            <span class="feature-icon">🔮</span>
-            <div>
-              <h3 class="feature-card-title">Vibe Quiz</h3>
-              <p class="feature-card-subtitle">Personality-Based Matching</p>
-            </div>
+      <!-- Landlord Login Card -->
+      <a href="landlord-login/" class="hub-card">
+        <div class="hub-card-icon coral">
+          <i data-lucide="key-round"></i>
+        </div>
+        <div class="hub-card-content">
+          <div class="hub-card-title-row">
+            <h2 class="hub-card-title">Landlord Login</h2>
+            <span class="hub-badge">Coming Soon</span>
           </div>
-          <p class="feature-card-description">
-            Replace traditional filters with personality questions that reveal what renters
-            actually want. Questions about lifestyle, not square footage.
-          </p>
-          <ul class="feature-metrics">
-            <li><span class="metric-dot teal"></span>5 weird questions vs 47 dropdowns</li>
-            <li><span class="metric-dot teal"></span>Star sign integration (required)</li>
-            <li><span class="metric-dot teal"></span>Wildcard debates that reveal personality</li>
-          </ul>
-          <a href="demo.html" class="feature-link teal">View Prototype →</a>
+          <p class="hub-card-description">AI-powered listing creation for landlords</p>
         </div>
-
-        <!-- Card 2: Vibe Explanations -->
-        <div class="feature-card accent-green">
-          <div class="feature-card-header">
-            <span class="feature-icon">💬</span>
-            <div>
-              <h3 class="feature-card-title">Vibe Explanations</h3>
-              <p class="feature-card-subtitle">AI-Powered Reasoning</p>
-            </div>
-          </div>
-          <p class="feature-card-description">
-            Every listing comes with a personalized explanation of why it matches your
-            energy. Not just "2 bed, 1 bath"—but why this space fits your soul.
-          </p>
-          <ul class="feature-metrics">
-            <li><span class="metric-dot green"></span>Personalized match reasoning</li>
-            <li><span class="metric-dot green"></span>Feature-to-personality mapping</li>
-            <li><span class="metric-dot green"></span>Vibe match percentage scores</li>
-          </ul>
-          <a href="demo.html" class="feature-link green">View Prototype →</a>
+        <div class="hub-card-arrow">
+          <i data-lucide="arrow-right"></i>
         </div>
-
-        <!-- Card 3: Vibe Adjusters -->
-        <div class="feature-card accent-purple">
-          <div class="feature-card-header">
-            <span class="feature-icon">🎚️</span>
-            <div>
-              <h3 class="feature-card-title">Vibe Adjusters</h3>
-              <p class="feature-card-subtitle">Fine-Tune Your Energy</p>
-            </div>
-          </div>
-          <p class="feature-card-description">
-            Not quite right? Adjust sliders like "Aura Intensity" and "Neighbor Tolerance"
-            to recalibrate your matches without starting over.
-          </p>
-          <ul class="feature-metrics">
-            <li><span class="metric-dot purple"></span>6 adjustment dimensions</li>
-            <li><span class="metric-dot purple"></span>Randomized budget themes</li>
-            <li><span class="metric-dot purple"></span>Instant recalibration</li>
-          </ul>
-          <a href="demo.html" class="feature-link purple">View Prototype →</a>
-        </div>
-      </div>
+      </a>
     </div>
-  </section>
 
-  <!-- Approach -->
-  <section id="approach" class="approach-v2">
-    <div class="approach-inner">
-      <h2 class="section-title">The Approach</h2>
-      <p class="section-subtitle">A structured experiment in vibes-based product design</p>
-
-      <div class="approach-steps">
-        <div class="approach-step">
-          <div class="step-number">01</div>
-          <h3>Question</h3>
-          <p>Why do renters bounce after viewing 200 listings? Current search optimizes for inventory, not intent.</p>
-        </div>
-        <div class="approach-step">
-          <div class="step-number">02</div>
-          <h3>Hypothesis</h3>
-          <p>Filters don't capture intent. Personality-based matching might increase engagement and conversion.</p>
-        </div>
-        <div class="approach-step">
-          <div class="step-number">03</div>
-          <h3>Build</h3>
-          <p>5 vibe questions, personality matching algorithm, personalized listing explanations.</p>
-        </div>
-        <div class="approach-step">
-          <div class="step-number">04</div>
-          <h3>Learn</h3>
-          <p>Test with real users, measure engagement lift, iterate on the matching logic.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-col footer-brand">
-        <div class="footer-logo">✨ RentVibes</div>
-        <p>A RentSync Innovation Lab experiment in vibes-based rental matching. Making apartment hunting feel less like a spreadsheet.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Features</h4>
-        <nav>
-          <a href="demo.html">Vibe Quiz</a>
-          <a href="demo.html">Vibe Explanations</a>
-          <a href="demo.html">Vibe Adjusters</a>
-          <a href="is-basement.html">Is Basement?</a>
-        </nav>
-      </div>
-      <div class="footer-col">
-        <h4>Links</h4>
-        <nav>
-          <a href="vision.html">Product Rationale</a>
-          <a href="https://rentsync.com" target="_blank">About RentSync</a>
-          <a href="https://rentsync.com/careers" target="_blank">Careers</a>
-          <a href="https://rentals.ca" target="_blank">Rentals.ca</a>
-        </nav>
-      </div>
-    </div>
-    <div class="footer-bottom">
+    <!-- Footer -->
+    <footer class="hub-footer">
       <p>Built by the RentSync team in Toronto</p>
-    </div>
-  </footer>
+    </footer>
+  </main>
 
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
