@@ -23,7 +23,12 @@ Then visit:
 
 ## Deployment
 
-Push to GitHub triggers Vercel auto-deploy. Manual deploy:
+GitHub is connected to Vercel - pushing to main auto-deploys:
+```bash
+git push origin main
+```
+
+Fallback (manual deploy if needed):
 ```bash
 npx vercel --prod --yes
 ```
