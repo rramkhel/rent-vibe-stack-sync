@@ -1,0 +1,37 @@
+# Claude Instructions
+
+## Local Development
+
+Start local server from project root:
+```bash
+cd /Users/jupiter/Projects/rent-vibe-stack-sync && python3 -m http.server 8080
+```
+
+Then visit:
+- Hub: http://localhost:8080/
+- Rent Vibes: http://localhost:8080/rent-vibes/
+- Landlord Login: http://localhost:8080/landlord-login/
+
+## Project Structure
+
+- `/index.html` - Hub homepage (project cards)
+- `/css/styles.css` - Shared styles for all pages
+- `/rent-vibes/` - All RentVibes prototype files
+- `/landlord-login/` - Landlord Login placeholder
+- `/docs/` - Sprint/milestone documentation
+- `/docs/old/` - Archived files (gitignored)
+
+## Deployment
+
+Push to GitHub triggers Vercel auto-deploy. Manual deploy:
+```bash
+npx vercel --prod --yes
+```
+
+Live: https://rent-vibe-stack-sync.vercel.app/
+
+## Notes
+
+- Static HTML/CSS/JS site (no build step)
+- CSS is shared at root level (`/css/styles.css`)
+- Wait for user to verify locally before pushing to GitHub
