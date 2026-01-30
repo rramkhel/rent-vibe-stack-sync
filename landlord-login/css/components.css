@@ -243,7 +243,7 @@
    ========================================== */
 .selection-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-md);
 }
 
@@ -873,4 +873,60 @@
 
 .skip-link:focus {
   top: 0;
+}
+
+/* ==========================================
+   TOOLTIPS
+   ========================================== */
+
+/* Wrapper for any element with a tooltip */
+.has-tooltip {
+  position: relative;
+}
+
+/* The tooltip itself */
+.tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background: var(--gray-900, #1a1a1a);
+  color: white;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  border-radius: 8px;
+  white-space: nowrap;
+  max-width: 220px;
+  text-align: center;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Tooltip arrow */
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--gray-900, #1a1a1a);
+}
+
+/* Show tooltip on hover */
+.has-tooltip:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Allow text wrapping for longer descriptions */
+.tooltip.tooltip-wrap {
+  white-space: normal;
 }

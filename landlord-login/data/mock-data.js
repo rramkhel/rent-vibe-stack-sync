@@ -17,17 +17,65 @@ const MOCK_ADDRESSES = [
 ];
 
 const PROPERTY_TYPES = {
-  house: { label: 'House', icon: 'home' },
-  apartment: { label: 'Apartment', icon: 'building' },
-  room: { label: 'Room', icon: 'door-open' },
-  other: { label: 'Other', icon: 'layout-grid' },
+  house: {
+    label: 'House',
+    icon: 'home',
+    description: 'Detached house'
+  },
+  townhouse: {
+    label: 'Townhouse',
+    icon: 'warehouse',
+    description: 'Adjacent homes split side-by-side or upper/lower'
+  },
+  apartment: {
+    label: 'Apartment',
+    icon: 'building',
+    description: 'Single unit in a multi-unit building owned by a company'
+  },
+  condo: {
+    label: 'Condo',
+    icon: 'building-2',
+    description: 'Single unit in a building owned by a landlord'
+  },
+  room: {
+    label: 'Room',
+    icon: 'door-open',
+    description: 'Single room or unit in a building'
+  },
+  other: {
+    label: 'Other',
+    icon: 'layout-grid',
+    description: 'Other units for rent'
+  },
 };
 
 const PROPERTY_SUBTYPES = {
-  house: ['Single family', 'Townhouse', 'Semi-detached', 'Duplex'],
-  apartment: ['Apartment', 'Basement', 'Loft', 'Penthouse'],
-  room: ['Private room', 'Shared room'],
-  other: ['Studio', 'Condo', 'Laneway house', 'Coach house'],
+  house: [
+    { value: 'single-family', label: 'Single Family House', description: 'Detached, single-family home' },
+    { value: 'main-floor', label: 'Main Floor', description: 'Main floor of a house' },
+    { value: 'basement', label: 'Basement', description: 'Basement suite in a house' },
+  ],
+  townhouse: [
+    { value: 'townhouse', label: 'Townhouse', description: 'Multiple units sharing 1+ side walls with neighbours' },
+    { value: 'duplex', label: 'Duplex', description: '2 units split upper/lower floors or side-to-side' },
+    { value: 'triplex', label: 'Triplex', description: '3 units split upper/lower floors or side-to-side' },
+    { value: 'multiplex', label: 'Multiplex', description: '4+ units split upper/lower floors or side-to-side' },
+  ],
+  apartment: [
+    { value: 'studio', label: 'Studio', description: 'Combined living and sleeping space' },
+    { value: 'loft', label: 'Loft', description: 'Open-concept with elevated space' },
+  ],
+  condo: [
+    { value: 'studio', label: 'Studio', description: 'Combined living and sleeping space' },
+    { value: 'loft', label: 'Loft', description: 'Open-concept with elevated space' },
+  ],
+  room: [
+    { value: 'bedroom', label: 'Bedroom', description: 'Single bedroom with shared common areas' },
+    { value: 'office', label: 'Office', description: 'Office space for rent' },
+  ],
+  other: [
+    { value: 'parking-stall', label: 'Parking Stall', description: 'Parking space for rent' },
+  ],
 };
 
 const BEDROOM_OPTIONS = [

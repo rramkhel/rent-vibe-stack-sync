@@ -25,9 +25,10 @@ function renderPropertyTypeCards() {
   if (!grid) return;
 
   grid.innerHTML = Object.entries(PROPERTY_TYPES).map(([type, config]) => `
-    <div class="selection-card" data-type="${type}">
+    <div class="selection-card has-tooltip" data-type="${type}">
       <i data-lucide="${config.icon}" class="selection-card-icon"></i>
       <div class="selection-card-label">${config.label}</div>
+      <span class="tooltip tooltip-wrap">${config.description}</span>
     </div>
   `).join('');
 
@@ -229,7 +230,10 @@ function renderSubtypes(type, selectedSubtype = '') {
 
   if (subtypes && subtypes.length > 0) {
     subtypePills.innerHTML = subtypes.map(st => `
-      <button class="pill ${selectedSubtype === st ? 'selected' : ''}" data-subtype="${st}">${st}</button>
+      <button class="pill has-tooltip ${selectedSubtype === st.value ? 'selected' : ''}" data-subtype="${st.value}">
+        ${st.label}
+        <span class="tooltip tooltip-wrap">${st.description}</span>
+      </button>
     `).join('');
     subtypeSection.classList.remove('hidden');
   } else {
