@@ -108,7 +108,10 @@ async function loadFooter() {
     document.getElementById('footer-container').innerHTML = `
       <div class="footer-nav" id="footer-nav">
         <div class="footer-nav-inner">
-          <button class="btn btn-ghost" id="footer-back-btn">Back</button>
+          <button class="btn btn-outline" id="footer-back-btn">
+              <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+              Previous
+            </button>
           <button class="btn btn-primary" id="footer-next-btn">
             Continue
             <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
