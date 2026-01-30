@@ -1,0 +1,139 @@
+<section class="screen" id="screen-photos">
+  <div class="content-centered screen-content">
+
+    <div class="screen-header">
+      <h1 class="screen-title">Add photos & media</h1>
+      <p class="screen-subtitle">Help renters picture themselves in your place</p>
+    </div>
+
+    <!-- ============================
+         SECTION 1: Show us your place
+         ============================ -->
+    <div class="photos-section">
+      <div class="photos-section-header">
+        <div class="photos-section-icon photos-section-icon--blue">
+          <i data-lucide="image" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="photos-section-text">
+          <h3 class="photos-section-title">Show us your place</h3>
+          <p class="photos-section-hint">Photos, videos, or a 3D walkthrough</p>
+        </div>
+        <span class="photos-count" id="photosCount">0 of 5 min</span>
+      </div>
+
+      <!-- Hero + Grid Layout -->
+      <div class="photos-hero-grid">
+        <!-- Primary/Cover Photo -->
+        <div class="photos-primary">
+          <div class="photos-primary-inner" id="primaryPhotoZone">
+            <div class="photos-primary-empty">
+              <i data-lucide="upload" style="width: 32px; height: 32px;"></i>
+              <p>Drop your cover photo here</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thumbnail Grid (2 rows x 3 cols) -->
+        <div class="photos-grid-wrapper">
+          <div class="photos-grid" id="photosGrid">
+            <!-- JS renders 6 slots here -->
+          </div>
+
+          <!-- Full-width add bar (shown when grid is full) -->
+          <div class="photos-add-bar hidden" id="photosAddBar" onclick="triggerPhotoUpload()">
+            <div class="photos-add-bar-content">
+              <i data-lucide="plus"></i>
+              <span>Add more photos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upload Buttons -->
+      <div class="photos-upload-bar">
+        <div class="photos-upload-buttons">
+          <button class="btn btn-outline btn-sm" id="uploadPhotosBtn">
+            <i data-lucide="image" style="width: 16px; height: 16px;"></i>
+            Photos
+          </button>
+          <button class="btn btn-outline btn-sm" id="uploadVideoBtn">
+            <i data-lucide="video" style="width: 16px; height: 16px;"></i>
+            Video
+          </button>
+          <button class="btn btn-outline btn-sm" id="upload3dBtn">
+            <i data-lucide="box" style="width: 16px; height: 16px;"></i>
+            3D Tour
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="photos-divider"></div>
+
+    <!-- ============================
+         SECTION 2: Share extra details
+         ============================ -->
+    <div class="photos-section">
+      <div class="photos-section-header">
+        <div class="photos-section-icon photos-section-icon--purple">
+          <i data-lucide="file-text" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="photos-section-text">
+          <h3 class="photos-section-title">Share extra details</h3>
+          <p class="photos-section-hint">Optional resources to help renters learn more</p>
+        </div>
+      </div>
+
+      <div class="photos-extras-grid">
+        <!-- Documents Upload -->
+        <div class="photos-extra-card">
+          <div class="photos-extra-header">
+            <i data-lucide="file-text" style="width: 20px; height: 20px;"></i>
+            <span class="photos-extra-title">Upload documents</span>
+          </div>
+          <p class="photos-extra-hint">Floorplans, brochures, lease terms</p>
+
+          <div class="photos-docs-list" id="docsList">
+            <!-- JS renders uploaded docs here -->
+          </div>
+
+          <button class="photos-upload-zone" id="uploadDocsBtn">
+            <i data-lucide="upload" style="width: 16px; height: 16px;"></i>
+            Choose files
+          </button>
+        </div>
+
+        <!-- Website URL -->
+        <div class="photos-extra-card">
+          <div class="photos-extra-header">
+            <i data-lucide="link" style="width: 20px; height: 20px;"></i>
+            <span class="photos-extra-title">Building website</span>
+          </div>
+          <p class="photos-extra-hint">Property page, Matterport link, etc.</p>
+
+          <input
+            type="url"
+            class="form-input"
+            id="buildingWebsiteUrl"
+            placeholder="https://..."
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================
+         AI EXTRACTION NOTICE
+         ============================ -->
+    <div class="photos-ai-notice">
+      <div class="photos-ai-icon">
+        <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+      </div>
+      <div class="photos-ai-text">
+        <strong>We'll do the heavy lifting</strong>
+        <p>We'll automatically detect amenities and features from your photos, documents, and links — so you don't have to enter everything manually.</p>
+      </div>
+    </div>
+
+  </div>
+</section>

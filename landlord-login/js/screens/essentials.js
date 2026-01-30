@@ -180,6 +180,6 @@ function updateAmenitiesNextButton() {
 }
 
 // Register screen init callback
-onScreenLoad('amenities', initAmenitiesScreen);
+onScreenLoad('essentials', initAmenitiesScreen);
 
 console.log('amenities.js loaded');

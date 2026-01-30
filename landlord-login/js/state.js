@@ -55,8 +55,12 @@ const defaultState = {
     }
   ],
 
+  // Photos & Media
+  photos: [],              // Array of { id, type, name, url }
+  documents: [],           // Array of { id, name, type }
+  buildingWebsiteUrl: '',  // URL string
+
   // Property details
-  photos: [],              // Array of { id, dataUrl, name }
   amenities: {
     unit: [],              // In-unit amenities
     building: [],          // Building amenities

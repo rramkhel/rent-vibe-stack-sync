@@ -3,7 +3,7 @@
    Handles screen navigation and history
    ========================================== */
 
-const SCREENS = ['welcome', 'address', 'floorplan', 'amenities', 'details', 'pricing', 'review'];
+const SCREENS = ['welcome', 'address', 'floorplan', 'essentials', 'photos', 'details', 'pricing', 'review'];
 
 let currentScreen = 'welcome';
 let screenLoadCallbacks = {};
@@ -119,7 +119,8 @@ function updateHeader() {
       welcome: '',
       address: 'Create Your Listing',
       floorplan: 'Create Your Listing',
-      amenities: 'Create Your Listing',
+      essentials: 'Create Your Listing',
+      photos: 'Create Your Listing',
       details: 'Create Your Listing',
       pricing: 'Set Your Price',
       review: 'Review Your Listing',
@@ -162,7 +163,8 @@ function updateFooterButton(screenId) {
   const buttonConfig = {
     address: { text: 'Continue', btnClass: 'btn-primary' },
     floorplan: { text: 'Continue', btnClass: 'btn-primary' },
-    amenities: { text: 'Continue', btnClass: 'btn-primary' },
+    essentials: { text: 'Continue', btnClass: 'btn-primary' },
+    photos: { text: 'Continue', btnClass: 'btn-primary' },
     details: { text: 'Continue to Pricing', btnClass: 'btn-pink' },
     pricing: { text: 'Continue to Review', btnClass: 'btn-pink' },
     review: { text: 'Publish Listing', btnClass: 'btn-pink' },
