@@ -1,178 +1,65 @@
 <section class="screen" id="screen-details">
-  <div class="content-wide screen-content">
 
-    <!-- Two-column layout -->
-    <div class="details-layout">
+  <!-- Header -->
+  <div class="details-header">
+    <div class="details-header-content">
+      <h1 class="details-title">A few final details</h1>
+      <p class="details-subtitle">These help renters find you, but we couldn't detect them from photos.</p>
+    </div>
+  </div>
 
-      <!-- Main Column -->
-      <div class="details-main">
+  <div class="content-centered screen-content details-content">
 
-        <!-- Preview Header -->
-        <div class="preview-header">
-          <p class="preview-label">Here's how renters will see your listing:</p>
-          <h2 class="preview-title" id="previewTitle">Modern Apartment in Toronto</h2>
-          <p class="preview-meta" id="previewMeta">
-            <i data-lucide="home" style="width: 14px; height: 14px;"></i>
-            <span id="previewType">Apartment</span> •
-            <span id="previewCity">Toronto</span> •
-            <span id="previewAddress">123 Main Street</span>
-          </p>
+    <!-- Smoking -->
+    <div class="details-card">
+      <div class="details-card-header">
+        <div class="details-card-icon details-card-icon--gray">
+          <i data-lucide="cigarette" style="width: 16px; height: 16px;"></i>
         </div>
-
-        <!-- Photo Upload Section -->
-        <div class="section">
-          <div class="photo-upload-area" id="photoUploadArea">
-            <div class="photo-upload-empty" id="photoUploadEmpty">
-              <i data-lucide="camera" style="width: 32px; height: 32px;"></i>
-              <p class="photo-upload-title">Upload Photos (0/5 min)</p>
-              <p class="photo-upload-hint">Add 5-15 photos to showcase your property</p>
-              <div class="photo-upload-buttons">
-                <label class="btn btn-outline btn-sm">
-                  <i data-lucide="upload" style="width: 16px; height: 16px;"></i>
-                  Upload Photos
-                  <input type="file" id="photoInput" multiple accept="image/*" hidden>
-                </label>
-                <button class="btn btn-outline-pink btn-sm" id="smartFillBtn">
-                  <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
-                  Smart Fill - AI will analyze
-                </button>
-              </div>
-            </div>
-            <div class="photo-grid hidden" id="photoGrid">
-              <!-- Photos rendered by JS -->
-            </div>
-          </div>
-          <div class="photo-upload-actions hidden" id="photoUploadActions">
-            <label class="btn btn-outline btn-sm">
-              <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
-              Add More
-              <input type="file" id="photoInputMore" multiple accept="image/*" hidden>
-            </label>
-            <span class="photo-count" id="photoCount">0 photos</span>
-          </div>
-        </div>
-
-        <!-- Price Placeholder -->
-        <div class="section">
-          <div class="price-placeholder">
-            <i data-lucide="dollar-sign" style="width: 16px; height: 16px;"></i>
-            <span>Price coming soon</span>
-          </div>
-        </div>
-
-        <!-- Quick Stats -->
-        <div class="section">
-          <div class="quick-stats" id="quickStats">
-            <span><i data-lucide="bed" style="width: 16px; height: 16px;"></i> <span id="statBeds">--</span> beds</span>
-            <span><i data-lucide="bath" style="width: 16px; height: 16px;"></i> <span id="statBaths">--</span> baths</span>
-            <span><i data-lucide="maximize" style="width: 16px; height: 16px;"></i> <span id="statSqft">--</span> sqft</span>
-          </div>
-          <div class="quick-stats-actions">
-            <button class="btn btn-outline btn-sm" id="editDetailsBtn">
-              <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
-              Add Details
-            </button>
-            <button class="btn btn-outline-pink btn-sm" id="aiDetectDetailsBtn">
-              <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
-              AI Detect
-            </button>
-          </div>
-        </div>
-
-        <!-- Amenities Section -->
-        <div class="section">
-          <h3 class="section-title">What this place offers</h3>
-          <div class="amenities-empty" id="amenitiesEmpty">
-            <i data-lucide="home" style="width: 24px; height: 24px;"></i>
-            <p>No amenities added yet</p>
-            <p class="text-muted">Help renters know what's included with your property</p>
-            <div class="amenities-actions">
-              <button class="btn btn-outline btn-sm" id="selectAmenitiesBtn">
-                <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
-                Select Amenities
-              </button>
-              <button class="btn btn-outline-pink btn-sm" id="detectAmenitiesBtn">
-                <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
-                Detect from Photos
-              </button>
-            </div>
-          </div>
-          <div class="amenities-display hidden" id="amenitiesDisplay">
-            <!-- Rendered by JS -->
-          </div>
-        </div>
-
-        <!-- Description Section -->
-        <div class="section">
-          <h3 class="section-title">About This Property</h3>
-          <div class="description-area">
-            <textarea
-              class="form-input description-textarea"
-              id="descriptionInput"
-              placeholder="Click to write description..."
-              rows="4"
-            ></textarea>
-            <button class="btn btn-outline-pink btn-sm description-ai-btn" id="aiWriteBtn">
-              <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
-              AI Write For Me
-            </button>
-          </div>
-        </div>
-
+        <span class="details-card-title">Smoking allowed?</span>
       </div>
-
-      <!-- Sidebar -->
-      <div class="details-sidebar">
-
-        <!-- Progress Card -->
-        <div class="card progress-card">
-          <div class="progress-card-header">
-            <h4>Listing Progress</h4>
-            <span class="progress-card-status" id="progressStatus">0/5 complete</span>
-          </div>
-          <div class="progress-bar-container">
-            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
-          </div>
-          <ul class="progress-checklist" id="progressChecklist">
-            <li data-item="photos">
-              <span class="progress-check"></span>
-              At least 5 photos (0/5)
-            </li>
-            <li data-item="bedrooms">
-              <span class="progress-check"></span>
-              Bedrooms
-            </li>
-            <li data-item="bathrooms">
-              <span class="progress-check"></span>
-              Bathrooms
-            </li>
-            <li data-item="description">
-              <span class="progress-check"></span>
-              Description
-            </li>
-            <li data-item="amenities">
-              <span class="progress-check"></span>
-              At least 1 amenity
-            </li>
-          </ul>
-          <button class="btn btn-pink" id="continueToPricingBtn" disabled style="width: 100%;">
-            Continue to Pricing
-          </button>
-        </div>
-
-        <!-- Pro Tips Card -->
-        <div class="card tips-card">
-          <h4><i data-lucide="lightbulb" style="width: 16px; height: 16px; color: var(--warning);"></i> Pro Tips</h4>
-          <ul class="tips-list">
-            <li>Photos with good lighting get 40% more views</li>
-            <li>Include shots of all rooms and outdoor spaces</li>
-            <li>Highlight unique features in your description</li>
-            <li>Be honest about the condition to build trust</li>
-          </ul>
-        </div>
-
+      <div class="details-options details-options--thirds" id="smokingOptions">
+        <!-- JS renders: Yes / Outside only / No -->
       </div>
+    </div>
 
+    <!-- Security -->
+    <div class="details-card">
+      <div class="details-card-header">
+        <div class="details-card-icon details-card-icon--blue">
+          <i data-lucide="shield" style="width: 16px; height: 16px;"></i>
+        </div>
+        <span class="details-card-title">Security features</span>
+      </div>
+      <div class="details-pills" id="securityOptions">
+        <!-- JS renders multi-select pills -->
+      </div>
+    </div>
+
+    <!-- Storage -->
+    <div class="details-card">
+      <div class="details-card-header">
+        <div class="details-card-icon details-card-icon--amber">
+          <i data-lucide="archive" style="width: 16px; height: 16px;"></i>
+        </div>
+        <span class="details-card-title">Storage</span>
+      </div>
+      <div class="details-pills" id="storageOptions">
+        <!-- JS renders multi-select pills -->
+      </div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="details-card">
+      <div class="details-card-header">
+        <div class="details-card-icon details-card-icon--purple">
+          <i data-lucide="accessibility" style="width: 16px; height: 16px;"></i>
+        </div>
+        <span class="details-card-title">Accessibility</span>
+      </div>
+      <div class="details-pills" id="accessibilityOptions">
+        <!-- JS renders multi-select pills -->
+      </div>
     </div>
 
   </div>

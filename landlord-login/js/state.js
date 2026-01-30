@@ -78,6 +78,14 @@ const defaultState = {
     detected: [],   // IDs of AI-detected features (for styling)
   },
 
+  // Manual details (things AI can't detect from photos)
+  details: {
+    smoking: null,      // 'yes' | 'outside' | 'no'
+    security: [],       // ['alarm', 'intercom', 'keyless', 'doorman', 'secure-parking']
+    storage: [],        // ['in-unit', 'locker', 'bike', 'basement']
+    accessibility: [],  // ['wheelchair', 'step-free', 'wide-doors', 'accessible-bath', 'elevator']
+  },
+
   // Property details
   amenities: {
     unit: [],              // In-unit amenities
