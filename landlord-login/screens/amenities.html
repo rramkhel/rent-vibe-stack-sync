@@ -7,57 +7,60 @@
     </div>
 
     <!-- Furnished Section -->
-    <div class="amenity-section">
-      <div class="amenity-header">
+    <div class="amenity-row">
+      <div class="amenity-label-group">
         <div class="amenity-icon">
-          <i data-lucide="sofa" style="width: 20px; height: 20px;"></i>
+          <i data-lucide="sofa" style="width: 24px; height: 24px;"></i>
         </div>
-        <div class="amenity-header-text">
+        <div class="amenity-label-text">
           <h3 class="amenity-title">Furnished</h3>
           <p class="amenity-hint">What's included?</p>
         </div>
       </div>
-      <div class="amenity-options-grid" id="furnishedOptions">
+      <div class="amenity-options" id="furnishedOptions">
         <!-- Rendered by JS -->
       </div>
     </div>
 
     <!-- Laundry Section -->
-    <div class="amenity-section">
-      <div class="amenity-header">
+    <div class="amenity-row">
+      <div class="amenity-label-group">
         <div class="amenity-icon">
-          <i data-lucide="washing-machine" style="width: 20px; height: 20px;"></i>
+          <i data-lucide="washing-machine" style="width: 24px; height: 24px;"></i>
         </div>
-        <div class="amenity-header-text">
+        <div class="amenity-label-text">
           <h3 class="amenity-title">Laundry</h3>
-          <p class="amenity-hint">Where can tenants do laundry?</p>
+          <p class="amenity-hint">Where to wash?</p>
         </div>
       </div>
-      <div class="amenity-options-grid" id="laundryOptions">
+      <div class="amenity-options" id="laundryOptions">
         <!-- Rendered by JS -->
       </div>
     </div>
 
     <!-- Parking Section -->
-    <div class="amenity-section">
-      <div class="amenity-header">
+    <div class="amenity-row">
+      <div class="amenity-label-group">
         <div class="amenity-icon">
-          <i data-lucide="car" style="width: 20px; height: 20px;"></i>
+          <i data-lucide="car" style="width: 24px; height: 24px;"></i>
         </div>
-        <div class="amenity-header-text">
+        <div class="amenity-label-text">
           <h3 class="amenity-title">Parking</h3>
-          <p class="amenity-hint">Is parking available?</p>
+          <p class="amenity-hint">Available?</p>
         </div>
       </div>
-
-      <!-- First level: Availability -->
-      <div class="amenity-options-grid" id="parkingAvailability">
+      <div class="amenity-options" id="parkingAvailability">
         <!-- Rendered by JS -->
       </div>
+    </div>
 
-      <!-- Second level: Type (hidden until Yes selected) -->
-      <div class="parking-type-section hidden" id="parkingTypeSection">
-        <label class="amenity-sublabel">What type of parking?</label>
+    <!-- Parking Type (hidden until Yes selected) -->
+    <div class="amenity-row amenity-row-sub hidden" id="parkingTypeSection">
+      <div class="amenity-label-group">
+        <!-- Empty spacer to align with options above -->
+      </div>
+      <div class="amenity-sub-section">
+        <p class="amenity-sub-label">What type?</p>
         <div class="amenity-pills" id="parkingTypes">
           <!-- Rendered by JS -->
         </div>

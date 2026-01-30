@@ -109,8 +109,8 @@ const LAUNDRY_OPTIONS = [
 ];
 
 const PARKING_AVAILABILITY = [
-  { value: 'included', label: 'Included with rent', description: 'Spot included' },
-  { value: 'available', label: 'Available on property', description: 'Extra cost' },
+  { value: 'included', label: 'Included', description: 'Spot included with rent' },
+  { value: 'available', label: 'Available', description: 'Extra cost' },
   { value: 'none', label: 'No parking', description: 'Not available' },
 ];
 

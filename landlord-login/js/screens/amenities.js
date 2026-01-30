@@ -24,25 +24,13 @@ function renderFurnishedOptions() {
   const state = getState();
 
   container.innerHTML = FURNISHED_OPTIONS.map(opt => `
-    <div class="amenity-card ${state.furnished === opt.value ? 'selected' : ''}" data-value="${opt.value}">
+    <button class="amenity-card ${state.furnished === opt.value ? 'selected' : ''}"
+            data-value="${opt.value}"
+            onclick="selectFurnished('${opt.value}')">
       <div class="amenity-card-label">${opt.label}</div>
       <div class="amenity-card-desc">${opt.description}</div>
-    </div>
+    </button>
   `).join('');
-
-  // Add click handlers
-  container.addEventListener('click', (e) => {
-    const card = e.target.closest('.amenity-card');
-    if (card) {
-      // Remove selected from all in this section
-      container.querySelectorAll('.amenity-card').forEach(c => c.classList.remove('selected'));
-      // Add selected to clicked
-      card.classList.add('selected');
-      // Update state
-      updateState('furnished', card.dataset.value);
-      updateAmenitiesNextButton();
-    }
-  });
 }
 
 function renderLaundryOptions() {
@@ -52,25 +40,13 @@ function renderLaundryOptions() {
   const state = getState();
 
   container.innerHTML = LAUNDRY_OPTIONS.map(opt => `
-    <div class="amenity-card ${state.laundry === opt.value ? 'selected' : ''}" data-value="${opt.value}">
+    <button class="amenity-card ${state.laundry === opt.value ? 'selected' : ''}"
+            data-value="${opt.value}"
+            onclick="selectLaundry('${opt.value}')">
       <div class="amenity-card-label">${opt.label}</div>
       <div class="amenity-card-desc">${opt.description}</div>
-    </div>
+    </button>
   `).join('');
-
-  // Add click handlers
-  container.addEventListener('click', (e) => {
-    const card = e.target.closest('.amenity-card');
-    if (card) {
-      // Remove selected from all in this section
-      container.querySelectorAll('.amenity-card').forEach(c => c.classList.remove('selected'));
-      // Add selected to clicked
-      card.classList.add('selected');
-      // Update state
-      updateState('laundry', card.dataset.value);
-      updateAmenitiesNextButton();
-    }
-  });
 }
 
 function renderParkingAvailability() {
@@ -80,19 +56,13 @@ function renderParkingAvailability() {
   const state = getState();
 
   container.innerHTML = PARKING_AVAILABILITY.map(opt => `
-    <div class="amenity-card ${state.parkingAvailability === opt.value ? 'selected' : ''}" data-value="${opt.value}">
+    <button class="amenity-card ${state.parkingAvailability === opt.value ? 'selected' : ''}"
+            data-value="${opt.value}"
+            onclick="selectParkingAvailability('${opt.value}')">
       <div class="amenity-card-label">${opt.label}</div>
       <div class="amenity-card-desc">${opt.description}</div>
-    </div>
+    </button>
   `).join('');
-
-  // Add click handlers
-  container.addEventListener('click', (e) => {
-    const card = e.target.closest('.amenity-card');
-    if (card) {
-      selectParkingAvailability(card.dataset.value);
-    }
-  });
 }
 
 function renderParkingTypes() {
@@ -102,23 +72,41 @@ function renderParkingTypes() {
   const state = getState();
 
   container.innerHTML = PARKING_TYPES.map(opt => `
-    <button class="amenity-pill ${state.parkingType === opt.value ? 'selected' : ''}" data-value="${opt.value}">
+    <button class="amenity-pill ${state.parkingType === opt.value ? 'selected' : ''}"
+            data-value="${opt.value}"
+            onclick="selectParkingType('${opt.value}')">
       ${opt.label}
     </button>
   `).join('');
-
-  // Add click handlers
-  container.addEventListener('click', (e) => {
-    const pill = e.target.closest('.amenity-pill');
-    if (pill) {
-      selectParkingType(pill.dataset.value);
-    }
-  });
 }
 
 /* ------------------------------------------
    Selection Handlers
    ------------------------------------------ */
+
+function selectFurnished(value) {
+  // Update state
+  updateState('furnished', value);
+
+  // Update UI
+  const container = document.getElementById('furnishedOptions');
+  container.querySelectorAll('.amenity-card').forEach(c => c.classList.remove('selected'));
+  container.querySelector(`.amenity-card[data-value="${value}"]`)?.classList.add('selected');
+
+  updateAmenitiesNextButton();
+}
+
+function selectLaundry(value) {
+  // Update state
+  updateState('laundry', value);
+
+  // Update UI
+  const container = document.getElementById('laundryOptions');
+  container.querySelectorAll('.amenity-card').forEach(c => c.classList.remove('selected'));
+  container.querySelector(`.amenity-card[data-value="${value}"]`)?.classList.add('selected');
+
+  updateAmenitiesNextButton();
+}
 
 function selectParkingAvailability(value) {
   // Update state
