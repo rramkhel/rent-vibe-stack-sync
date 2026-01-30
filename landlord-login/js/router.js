@@ -3,7 +3,10 @@
    Handles screen navigation and history
    ========================================== */
 
-const SCREENS = ['welcome', 'address', 'floorplan', 'essentials', 'photos', 'details', 'pricing', 'review'];
+const SCREENS = ['welcome', 'address', 'floorplan', 'essentials', 'photos', 'detecting', 'details', 'pricing', 'review'];
+
+// Screens that should skip on back navigation (go to previous-previous)
+const SKIP_ON_BACK = ['detecting'];
 
 let currentScreen = 'welcome';
 let screenLoadCallbacks = {};
@@ -74,12 +77,22 @@ function nextScreen() {
 function prevScreen() {
   const currentIndex = SCREENS.indexOf(currentScreen);
   if (currentIndex > 0) {
-    goToScreen(SCREENS[currentIndex - 1]);
+    let prevIndex = currentIndex - 1;
+    // Skip screens marked for skipping on back navigation
+    while (prevIndex > 0 && SKIP_ON_BACK.includes(SCREENS[prevIndex])) {
+      prevIndex--;
+    }
+    goToScreen(SCREENS[prevIndex]);
   }
 }
 
 function getCurrentScreen() {
   return currentScreen;
+}
+
+// Alias for goToScreen
+function navigateTo(screenId) {
+  goToScreen(screenId);
 }
 
 function getScreenIndex(screenId) {
@@ -121,6 +134,7 @@ function updateHeader() {
       floorplan: 'Create Your Listing',
       essentials: 'Create Your Listing',
       photos: 'Create Your Listing',
+      detecting: '',
       details: 'Create Your Listing',
       pricing: 'Set Your Price',
       review: 'Review Your Listing',
@@ -134,8 +148,14 @@ function updateFooter() {
 }
 
 function updateHeaderVisibility() {
+  const header = document.querySelector('.header');
   const backBtn = document.getElementById('header-back-btn');
   const headerRight = document.querySelector('.header-right');
+
+  // Hide entire header on detecting screen
+  if (header) {
+    header.style.display = currentScreen === 'detecting' ? 'none' : 'flex';
+  }
 
   if (currentScreen === 'welcome') {
     if (backBtn) backBtn.style.visibility = 'hidden';
@@ -150,8 +170,8 @@ function updateFooterVisibility() {
   const footer = document.getElementById('footer-nav');
 
   if (footer) {
-    // Hide footer on welcome and review screens
-    const hideFooter = ['welcome', 'review'].includes(currentScreen);
+    // Hide footer on welcome, detecting, and review screens
+    const hideFooter = ['welcome', 'detecting', 'review'].includes(currentScreen);
     footer.style.display = hideFooter ? 'none' : 'block';
   }
 }

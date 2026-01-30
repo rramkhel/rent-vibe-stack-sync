@@ -105,7 +105,6 @@
 /* Screen */
 .screen {
   display: none;
-  min-height: calc(100vh - 64px);
   opacity: 0;
   transform: translateX(20px);
 }
@@ -145,7 +144,7 @@
 .content-centered {
   max-width: 800px;
   margin: 0 auto;
-  padding: var(--space-2xl) var(--space-lg);
+  padding: var(--space-xl) var(--space-lg);
 }
 
 .content-wide {
@@ -245,7 +244,7 @@
 
 /* Ensure content doesn't get hidden behind fixed footer */
 .screen-content {
-  padding-bottom: 100px;
+  padding-bottom: 80px;
 }
 
 /* ==========================================
@@ -255,8 +254,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 64px);
-  padding: var(--space-xl);
+  min-height: calc(100dvh - 64px);
+  padding: var(--space-lg);
   text-align: center;
 }
 
@@ -2560,6 +2559,176 @@
   }
 
   .screen-content {
-    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ==========================================
+   DETECTING / LOADING SCREEN
+   ========================================== */
+
+#screen-detecting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: white;
+}
+
+.detecting-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+/* ==========================================
+   SPINNER
+   ========================================== */
+
+.detecting-spinner {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  margin-bottom: var(--space-2xl);
+}
+
+.detecting-ring {
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* Outer ring - static */
+.detecting-ring--outer {
+  inset: 0;
+  border: 4px solid #f3e8ff; /* purple-100 */
+}
+
+/* Main spinning ring */
+.detecting-ring--spinning {
+  inset: 0;
+  border: 4px solid transparent;
+  border-top-color: #a855f7; /* purple-500 */
+  animation: detecting-spin 1s linear infinite;
+}
+
+/* Inner ring - static */
+.detecting-ring--inner {
+  inset: 16px;
+  border: 4px solid #faf5ff; /* purple-50 */
+}
+
+/* Reverse spinning ring */
+.detecting-ring--reverse {
+  inset: 16px;
+  border: 4px solid transparent;
+  border-bottom-color: #c084fc; /* purple-400 */
+  animation: detecting-spin 1.5s linear infinite reverse;
+}
+
+/* Center icon container */
+.detecting-icon {
+  position: absolute;
+  inset: 32px;
+  border-radius: 50%;
+  background: #f3e8ff; /* purple-100 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9333ea; /* purple-600 */
+}
+
+.detecting-icon i {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes detecting-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   TEXT
+   ========================================== */
+
+.detecting-text {
+  margin-bottom: var(--space-xl);
+}
+
+.detecting-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+  min-height: 1.5em; /* Prevent layout shift */
+  transition: opacity 0.3s ease;
+}
+
+.detecting-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ==========================================
+   PROGRESS DOTS
+   ========================================== */
+
+.detecting-dots {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--space-2xl);
+}
+
+.detecting-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gray-200, #e5e7eb);
+  transition: all 0.3s ease;
+}
+
+.detecting-dot.active {
+  width: 24px;
+  border-radius: 4px;
+  background: #a855f7; /* purple-500 */
+}
+
+.detecting-dot.complete {
+  background: #a855f7; /* purple-500 */
+}
+
+/* ==========================================
+   SKIP BUTTON
+   ========================================== */
+
+.detecting-skip {
+  position: absolute;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--gray-200, #e5e7eb);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.detecting-skip:hover {
+  background: var(--gray-50, #f9fafb);
+  border-color: var(--gray-300, #d1d5db);
+  color: var(--text-secondary);
+}
+
+/* Mobile positioning */
+@media (max-width: 640px) {
+  .detecting-skip {
+    bottom: var(--space-lg);
+    right: var(--space-lg);
   }
 }

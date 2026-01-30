@@ -1,0 +1,37 @@
+<section class="screen" id="screen-detecting">
+  <div class="detecting-container">
+
+    <!-- Animated Spinner -->
+    <div class="detecting-spinner">
+      <!-- Outer ring (static) -->
+      <div class="detecting-ring detecting-ring--outer"></div>
+      <!-- Spinning ring -->
+      <div class="detecting-ring detecting-ring--spinning"></div>
+      <!-- Inner ring (static) -->
+      <div class="detecting-ring detecting-ring--inner"></div>
+      <!-- Reverse spinning ring -->
+      <div class="detecting-ring detecting-ring--reverse"></div>
+      <!-- Center icon -->
+      <div class="detecting-icon" id="detectingIcon">
+        <i data-lucide="camera" style="width: 32px; height: 32px;"></i>
+      </div>
+    </div>
+
+    <!-- Rotating Text -->
+    <div class="detecting-text">
+      <h2 class="detecting-title" id="detectingTitle">Analyzing your photos</h2>
+      <p class="detecting-subtitle">This only takes a moment...</p>
+    </div>
+
+    <!-- Progress Dots -->
+    <div class="detecting-dots" id="detectingDots">
+      <!-- JS renders dots here -->
+    </div>
+
+    <!-- Skip Button (for demo) -->
+    <button class="detecting-skip" id="detectingSkip" onclick="skipDetection()">
+      Skip
+    </button>
+
+  </div>
+</section>
