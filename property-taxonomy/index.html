@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Taxonomy | RentSync Prototypes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Back Link -->
+  <a href="../" class="back-link">
+    <i data-lucide="arrow-left"></i>
+    Back to Prototypes
+  </a>
+
+  <!-- Main Container -->
+  <div class="taxonomy-container">
+    <!-- Header -->
+    <header class="taxonomy-header">
+      <h1>Property Types Taxonomy</h1>
+      <p>Simplified proposal for multi-stakeholder needs</p>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="taxonomy-tabs">
+      <button class="taxonomy-tab active" data-view="overview">Overview</button>
+      <button class="taxonomy-tab" data-view="renter">Renter View</button>
+      <button class="taxonomy-tab" data-view="ecommerce">Ecommerce LL</button>
+      <button class="taxonomy-tab" data-view="enterprise">Enterprise + Data</button>
+      <button class="taxonomy-tab" data-view="datamodel">Data Model</button>
+    </nav>
+
+    <!-- Content Panels -->
+    <div class="taxonomy-content">
+      <div id="panel-overview" class="taxonomy-panel active"></div>
+      <div id="panel-renter" class="taxonomy-panel"></div>
+      <div id="panel-ecommerce" class="taxonomy-panel"></div>
+      <div id="panel-enterprise" class="taxonomy-panel"></div>
+      <div id="panel-datamodel" class="taxonomy-panel"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="taxonomy-footer">
+      RentSync Property Taxonomy Proposal &bull; Click tabs to explore each stakeholder view
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data/taxonomy-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

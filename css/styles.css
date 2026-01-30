@@ -3227,6 +3227,11 @@ body.docs-page {
   color: #E4715F;
 }
 
+.hub-card-icon.purple {
+  background: rgba(139, 92, 246, 0.2);
+  color: #8B5CF6;
+}
+
 .hub-card-icon svg {
   width: 24px;
   height: 24px;
