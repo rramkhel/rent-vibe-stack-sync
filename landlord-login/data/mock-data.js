@@ -97,25 +97,30 @@ const BATHROOM_OPTIONS = [
 ];
 
 const FURNISHED_OPTIONS = [
-  { value: 'unfurnished', label: 'Unfurnished' },
-  { value: 'partially', label: 'Partially Furnished' },
-  { value: 'fully', label: 'Fully Furnished' },
+  { value: 'unfurnished', label: 'Unfurnished', description: 'No furniture included' },
+  { value: 'partially', label: 'Partially', description: 'Some furniture included' },
+  { value: 'fully', label: 'Fully Furnished', description: 'Move-in ready' },
 ];
 
 const LAUNDRY_OPTIONS = [
-  { value: 'in-unit', label: 'In-unit' },
-  { value: 'in-building', label: 'In building' },
-  { value: 'none', label: 'None' },
+  { value: 'in-unit', label: 'In-unit', description: 'Washer & dryer included' },
+  { value: 'in-building', label: 'In building', description: 'Shared facilities' },
+  { value: 'none', label: 'None', description: 'Not available' },
 ];
 
-const PARKING_OPTIONS = [
+const PARKING_AVAILABILITY = [
+  { value: 'included', label: 'Included with rent', description: 'Spot included' },
+  { value: 'available', label: 'Available on property', description: 'Extra cost' },
+  { value: 'none', label: 'No parking', description: 'Not available' },
+];
+
+const PARKING_TYPES = [
   { value: 'underground', label: 'Underground' },
   { value: 'indoor', label: 'Indoor' },
   { value: 'outdoor', label: 'Outdoor' },
   { value: 'covered', label: 'Covered' },
   { value: 'surface', label: 'Surface' },
   { value: 'garage', label: 'Garage' },
-  { value: 'none', label: 'No Parking' },
 ];
 
 const UTILITIES = [

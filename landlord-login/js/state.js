@@ -27,6 +27,12 @@ const defaultState = {
   bathrooms: '',         // 1, 1.5, 2, 2.5, 3, 3+
   sqft: '',              // square footage
 
+  // Amenities (essentials)
+  furnished: '',            // unfurnished, partially, fully
+  laundry: '',              // in-unit, in-building, none
+  parkingAvailability: '',  // included, available, none
+  parkingType: '',          // underground, indoor, outdoor, etc. (only if parking available)
+
   // Unit details
   units: [
     {
