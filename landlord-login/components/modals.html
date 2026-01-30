@@ -1,0 +1,92 @@
+<!-- Amenities Selection Modal -->
+<div class="modal-overlay" id="amenitiesModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Select Amenities</h3>
+      <button class="modal-close" onclick="closeModal('amenitiesModal')">
+        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="amenitiesModalBody">
+      <!-- Populated by JS -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('amenitiesModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAmenitiesSelection()">
+        Save Selection
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- AI Amenity Detection Modal -->
+<div class="modal-overlay" id="aiDetectionModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <i data-lucide="sparkles" class="ai-icon" style="width: 20px; height: 20px;"></i>
+        Amenities Detected
+      </h3>
+      <button class="modal-close" onclick="closeModal('aiDetectionModal')">
+        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="aiDetectionModalBody">
+      <!-- Populated by JS -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('aiDetectionModal')">Cancel</button>
+      <button class="btn btn-primary" id="saveDetectedBtn">
+        Save Selection (<span id="detectedCount">0</span> amenities)
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- AI Description Generator Modal -->
+<div class="modal-overlay" id="aiDescriptionModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <i data-lucide="sparkles" class="ai-icon" style="width: 20px; height: 20px;"></i>
+        AI Description Generator
+      </h3>
+      <button class="modal-close" onclick="closeModal('aiDescriptionModal')">
+        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="aiDescriptionModalBody">
+      <!-- Populated by JS -->
+    </div>
+    <div class="modal-footer" id="aiDescriptionFooter">
+      <button class="btn btn-outline" onclick="closeModal('aiDescriptionModal')">Cancel</button>
+      <button class="btn btn-pink" id="useDescriptionBtn" disabled>
+        Use This Description
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Smart Pricing Modal -->
+<div class="modal-overlay" id="smartPricingModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <i data-lucide="sparkles" class="ai-icon" style="width: 20px; height: 20px;"></i>
+        Smart Pricing Suggestion
+      </h3>
+      <button class="modal-close" onclick="closeModal('smartPricingModal')">
+        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="smartPricingModalBody">
+      <!-- Populated by JS -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('smartPricingModal')">Keep My Price</button>
+      <button class="btn btn-primary" id="useSuggestedPriceBtn">
+        Use Suggested Price
+      </button>
+    </div>
+  </div>
+</div>

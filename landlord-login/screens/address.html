@@ -1,0 +1,66 @@
+<section class="screen" id="screen-address">
+  <div class="content-centered screen-content">
+
+    <div class="screen-header">
+      <h1 class="screen-title">Where's your property?</h1>
+    </div>
+
+    <!-- Address Search -->
+    <div class="section">
+      <label class="form-label">Property Address</label>
+      <div class="address-search-container">
+        <div class="form-input-with-icon">
+          <i data-lucide="search" class="input-icon" style="width: 18px; height: 18px;"></i>
+          <input
+            type="text"
+            class="form-input"
+            id="addressInput"
+            placeholder="Start typing an address..."
+            autocomplete="off"
+          >
+        </div>
+        <div class="address-suggestions" id="addressSuggestions"></div>
+      </div>
+    </div>
+
+    <!-- Map Placeholder -->
+    <div class="map-placeholder" id="mapPlaceholder">
+      <div class="map-pin">
+        <i data-lucide="map-pin" style="width: 20px; height: 20px;"></i>
+      </div>
+      <div class="map-label hidden" id="mapLabel"></div>
+    </div>
+
+    <!-- Property Type -->
+    <div class="section hidden" id="propertyTypeSection">
+      <label class="section-label">Property Type</label>
+      <div class="selection-grid" id="propertyTypeGrid">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Sub-types -->
+      <div class="mt-lg hidden" id="subtypeSection">
+        <div class="pill-group" id="subtypePills"></div>
+      </div>
+    </div>
+
+    <!-- Unit Number -->
+    <div class="section hidden" id="unitNumberSection">
+      <div class="section-divider"></div>
+      <label class="checkbox-label">
+        <input type="checkbox" id="hasUnitNumber">
+        <span>This property has a unit or apartment number</span>
+      </label>
+      <div class="hidden" id="unitNumberInputWrapper">
+        <input
+          type="text"
+          class="form-input"
+          id="unitNumberInput"
+          placeholder="e.g., 2B, Unit 405"
+          style="max-width: 200px;"
+        >
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,168 @@
+<section class="screen" id="screen-review">
+  <div class="content-wide screen-content">
+
+    <div class="screen-header">
+      <h1 class="screen-title">Your listing is ready!</h1>
+      <p class="screen-subtitle">Here's what renters will see:</p>
+    </div>
+
+    <!-- Review Layout -->
+    <div class="review-layout">
+
+      <!-- Main Preview -->
+      <div class="review-main">
+
+        <!-- Photo Gallery -->
+        <div class="review-gallery" id="reviewGallery">
+          <div class="review-gallery-main" id="reviewMainPhoto">
+            <!-- Primary photo -->
+          </div>
+          <div class="review-gallery-thumbs" id="reviewThumbs">
+            <!-- Thumbnail grid -->
+          </div>
+        </div>
+
+        <!-- Listing Header -->
+        <div class="review-listing-header">
+          <div class="review-listing-title" id="reviewTitle">Modern Apartment in Toronto</div>
+          <div class="review-listing-price" id="reviewPrice">$2,400/mo</div>
+        </div>
+
+        <div class="review-listing-meta" id="reviewMeta">
+          <span><i data-lucide="home" style="width: 14px; height: 14px;"></i> Apartment</span>
+          <span><i data-lucide="map-pin" style="width: 14px; height: 14px;"></i> Toronto, ON</span>
+        </div>
+
+        <!-- Quick Facts -->
+        <div class="review-quick-facts">
+          <div class="review-fact">
+            <i data-lucide="bed" style="width: 20px; height: 20px;"></i>
+            <span id="reviewBeds">2 beds</span>
+          </div>
+          <div class="review-fact">
+            <i data-lucide="bath" style="width: 20px; height: 20px;"></i>
+            <span id="reviewBaths">1 bath</span>
+          </div>
+          <div class="review-fact">
+            <i data-lucide="maximize" style="width: 20px; height: 20px;"></i>
+            <span id="reviewSqft">850 sqft</span>
+          </div>
+          <div class="review-fact">
+            <i data-lucide="calendar" style="width: 20px; height: 20px;"></i>
+            <span id="reviewDate">Available Now</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="review-section">
+          <h3>About This Property</h3>
+          <p id="reviewDescription" class="review-description">
+            No description provided.
+          </p>
+        </div>
+
+        <!-- Amenities -->
+        <div class="review-section">
+          <h3>What this place offers</h3>
+          <div class="review-amenities" id="reviewAmenities">
+            <!-- Amenity tags -->
+          </div>
+        </div>
+
+        <!-- Additional Details -->
+        <div class="review-section">
+          <h3>Details</h3>
+          <div class="review-details-grid" id="reviewDetails">
+            <!-- Detail rows -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="review-sidebar">
+
+        <!-- Quality Score -->
+        <div class="card quality-score-card">
+          <h4>Listing Quality Score</h4>
+          <div class="quality-score" id="qualityScore">
+            <svg viewBox="0 0 36 36" class="quality-score-ring">
+              <path class="quality-score-bg"
+                d="M18 2.0845
+                   a 15.9155 15.9155 0 0 1 0 31.831
+                   a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path class="quality-score-fill" id="qualityScoreFill"
+                stroke-dasharray="0, 100"
+                d="M18 2.0845
+                   a 15.9155 15.9155 0 0 1 0 31.831
+                   a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+            <span class="quality-score-value" id="qualityScoreValue">0%</span>
+          </div>
+          <p class="quality-score-label" id="qualityScoreLabel">Add more details to improve</p>
+
+          <ul class="quality-checklist" id="qualityChecklist">
+            <!-- Populated by JS -->
+          </ul>
+        </div>
+
+        <!-- Edit Sections -->
+        <div class="card edit-sections-card">
+          <h4>Quick Edit</h4>
+          <div class="edit-sections">
+            <button class="edit-section-btn" onclick="goToScreen('address')">
+              <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
+              Location
+              <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+            </button>
+            <button class="edit-section-btn" onclick="goToScreen('units')">
+              <i data-lucide="home" style="width: 16px; height: 16px;"></i>
+              Unit Details
+              <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+            </button>
+            <button class="edit-section-btn" onclick="goToScreen('details')">
+              <i data-lucide="image" style="width: 16px; height: 16px;"></i>
+              Photos & Amenities
+              <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+            </button>
+            <button class="edit-section-btn" onclick="goToScreen('pricing')">
+              <i data-lucide="dollar-sign" style="width: 16px; height: 16px;"></i>
+              Pricing
+              <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Publish Button -->
+        <button class="btn btn-pink btn-lg publish-btn" id="publishBtn" style="width: 100%;">
+          <i data-lucide="sparkles" style="width: 18px; height: 18px;"></i>
+          Publish Listing
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="publishSuccessModal">
+  <div class="modal" style="text-align: center;">
+    <div class="modal-body" style="padding: var(--space-2xl);">
+      <div class="success-icon">
+        <i data-lucide="check-circle" style="width: 64px; height: 64px; color: var(--success);"></i>
+      </div>
+      <h2 style="margin: var(--space-lg) 0 var(--space-sm);">Your listing is live!</h2>
+      <p class="text-secondary" style="margin-bottom: var(--space-xl);">
+        Renters can now find your property on Rentals.ca
+      </p>
+      <div class="success-actions">
+        <button class="btn btn-primary" onclick="viewListing()">View Your Listing</button>
+        <button class="btn btn-outline" onclick="createAnother()">Create Another</button>
+      </div>
+    </div>
+  </div>
+</div>

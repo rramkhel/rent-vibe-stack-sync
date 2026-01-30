@@ -1,0 +1,100 @@
+<section class="screen" id="screen-pricing">
+  <div class="content-centered screen-content">
+
+    <div class="screen-header">
+      <h1 class="screen-title">What's your monthly rent?</h1>
+    </div>
+
+    <!-- Market Insight -->
+    <div class="market-insight-card" id="marketInsightCard">
+      <i data-lucide="lightbulb" style="width: 20px; height: 20px;"></i>
+      <div>
+        <strong>Market Insight</strong>
+        <p id="marketInsightText">Similar 1BR apartments in Toronto rent for <strong>$1,900 - $2,300/month</strong></p>
+      </div>
+    </div>
+
+    <!-- Rent Input -->
+    <div class="section">
+      <label class="form-label">Monthly Rent <span class="required">*</span></label>
+      <div class="rent-input-container">
+        <span class="rent-currency">$</span>
+        <input
+          type="number"
+          class="form-input rent-input"
+          id="rentInput"
+          placeholder="2,400"
+          min="0"
+          step="50"
+        >
+      </div>
+      <button class="btn btn-outline-pink btn-sm mt-md" id="getSmartPricingBtn">
+        <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+        Get Smart Pricing Suggestion
+      </button>
+    </div>
+
+    <!-- Utilities -->
+    <div class="section">
+      <label class="form-label">Utilities Included?</label>
+      <div class="utilities-toggle-group">
+        <label class="utilities-toggle">
+          <input type="radio" name="utilitiesIncluded" value="none">
+          <span class="utilities-toggle-label">None</span>
+        </label>
+        <label class="utilities-toggle">
+          <input type="radio" name="utilitiesIncluded" value="some">
+          <span class="utilities-toggle-label">Some</span>
+        </label>
+        <label class="utilities-toggle">
+          <input type="radio" name="utilitiesIncluded" value="all">
+          <span class="utilities-toggle-label">All</span>
+        </label>
+      </div>
+      <p class="form-hint" id="utilitiesHint">Specify which utilities are included on the previous screen</p>
+    </div>
+
+    <!-- Available Date -->
+    <div class="section">
+      <label class="form-label">Available Date <span class="required">*</span></label>
+      <div class="date-input-container">
+        <i data-lucide="calendar" class="date-icon" style="width: 18px; height: 18px;"></i>
+        <input
+          type="date"
+          class="form-input date-input"
+          id="availableDateInput"
+        >
+      </div>
+      <div class="date-quick-options">
+        <button class="pill" data-date="today">Available Now</button>
+        <button class="pill" data-date="first">First of Next Month</button>
+      </div>
+    </div>
+
+    <!-- Lease Term -->
+    <div class="section">
+      <label class="form-label">Lease Term</label>
+      <div class="lease-term-options">
+        <label class="lease-term-option">
+          <input type="radio" name="leaseTerm" value="month-to-month">
+          <span class="lease-term-label">Month-to-month</span>
+        </label>
+        <label class="lease-term-option">
+          <input type="radio" name="leaseTerm" value="6-months">
+          <span class="lease-term-label">6 months minimum</span>
+        </label>
+        <label class="lease-term-option">
+          <input type="radio" name="leaseTerm" value="1-year" checked>
+          <span class="lease-term-label">1 year minimum</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Validation Message -->
+    <div class="validation-message hidden" id="pricingValidation">
+      <i data-lucide="alert-circle" style="width: 16px; height: 16px;"></i>
+      <span>Please enter a price and select an available date</span>
+    </div>
+
+  </div>
+</section>
