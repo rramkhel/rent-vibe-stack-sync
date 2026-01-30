@@ -3,7 +3,7 @@
    Handles screen navigation and history
    ========================================== */
 
-const SCREENS = ['welcome', 'address', 'floorplan', 'essentials', 'photos', 'detecting', 'details', 'pricing', 'review'];
+const SCREENS = ['welcome', 'address', 'floorplan', 'essentials', 'pets', 'photos', 'detecting', 'details', 'pricing', 'review'];
 
 // Screens that should skip on back navigation (go to previous-previous)
 const SKIP_ON_BACK = ['detecting'];
@@ -133,6 +133,7 @@ function updateHeader() {
       address: 'Create Your Listing',
       floorplan: 'Create Your Listing',
       essentials: 'Create Your Listing',
+      pets: 'Create Your Listing',
       photos: 'Create Your Listing',
       detecting: '',
       details: 'Create Your Listing',

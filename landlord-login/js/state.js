@@ -33,6 +33,18 @@ const defaultState = {
   parkingAvailability: '',  // included, available, none
   parkingType: '',          // underground, indoor, outdoor, etc. (only if parking available)
 
+  // Pets policy
+  pets: {
+    policy: null,           // 'included' | 'withFee' | 'no'
+    types: [],              // ['dogs', 'cats', 'other']
+    sizes: [],              // ['small', 'medium', 'large']
+    fee: {
+      amount: '',           // string (input value)
+      frequency: 'monthly', // 'monthly' | 'oneTime'
+      structure: 'perPet'   // 'perPet' | 'flat'
+    }
+  },
+
   // Unit details
   units: [
     {

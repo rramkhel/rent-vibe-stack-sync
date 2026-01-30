@@ -2732,3 +2732,353 @@
     right: var(--space-lg);
   }
 }
+
+/* ==========================================
+   PETS POLICY SCREEN
+   ========================================== */
+
+/* Section Header */
+.pets-section {
+  margin-bottom: var(--space-xl);
+}
+
+.pets-section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.pets-section-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fef3c7; /* amber-100 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d97706; /* amber-600 */
+  flex-shrink: 0;
+}
+
+.pets-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.pets-section-hint {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Policy Options (3 cards) */
+.pets-policy-options {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.pets-policy-card {
+  flex: 1;
+  padding: var(--space-lg);
+  border: 2px solid var(--gray-200, #e5e7eb);
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.pets-policy-card:hover {
+  border-color: var(--gray-300, #d1d5db);
+}
+
+.pets-policy-card.selected {
+  border-color: var(--gray-800, #1f2937);
+  background: var(--gray-50, #f9fafb);
+}
+
+.pets-policy-card-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.pets-policy-card.selected .pets-policy-card-label {
+  color: var(--text-primary);
+}
+
+.pets-policy-card-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Details Section */
+.pets-details {
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-lg);
+}
+
+.pets-details.hidden {
+  display: none;
+}
+
+.pets-field {
+  margin-bottom: var(--space-xl);
+}
+
+.pets-field-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.pets-field-hint {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: var(--space-sm);
+}
+
+/* Pet Types (multi-select pills) */
+.pets-types {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.pets-type-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 2px solid var(--gray-200, #e5e7eb);
+  border-radius: 8px;
+  background: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pets-type-btn:hover {
+  border-color: var(--gray-300, #d1d5db);
+}
+
+.pets-type-btn.selected {
+  border-color: var(--gray-800, #1f2937);
+  background: var(--gray-800, #1f2937);
+  color: white;
+}
+
+.pets-type-btn i {
+  width: 16px;
+  height: 16px;
+}
+
+/* Size Cards */
+.pets-sizes {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.pets-size-card {
+  flex: 1;
+  padding: var(--space-md);
+  border: 2px solid var(--gray-200, #e5e7eb);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.pets-size-card:hover {
+  border-color: var(--gray-300, #d1d5db);
+}
+
+.pets-size-card.selected {
+  border-color: var(--gray-800, #1f2937);
+  background: var(--gray-50, #f9fafb);
+}
+
+.pets-size-card-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pets-size-card.selected .pets-size-card-label {
+  color: var(--text-primary);
+}
+
+.pets-size-card-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Fee Section */
+.pets-fee {
+  margin-top: var(--space-lg);
+}
+
+.pets-fee.hidden {
+  display: none;
+}
+
+.pets-fee-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.pets-fee-amount {
+  position: relative;
+  width: 140px;
+}
+
+.pets-fee-currency {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.pets-fee-amount input {
+  width: 100%;
+  padding: 12px 12px 12px 28px;
+  border: 1px solid var(--gray-200, #e5e7eb);
+  border-radius: 8px;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.pets-fee-amount input:focus {
+  outline: none;
+  border-color: var(--gray-400, #9ca3af);
+}
+
+/* Fee Frequency Toggle */
+.pets-fee-frequency {
+  display: flex;
+  border: 1px solid var(--gray-200, #e5e7eb);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pets-freq-btn {
+  padding: 12px 16px;
+  background: white;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pets-freq-btn:hover {
+  background: var(--gray-50, #f9fafb);
+}
+
+.pets-freq-btn.selected {
+  background: var(--gray-800, #1f2937);
+  color: white;
+}
+
+/* Fee Structure Cards */
+.pets-fee-structure {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.pets-structure-card {
+  flex: 1;
+  padding: var(--space-md);
+  border: 2px solid var(--gray-200, #e5e7eb);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.pets-structure-card:hover {
+  border-color: var(--gray-300, #d1d5db);
+}
+
+.pets-structure-card.selected {
+  border-color: var(--gray-800, #1f2937);
+  background: var(--gray-50, #f9fafb);
+}
+
+.pets-structure-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pets-structure-card.selected .pets-structure-label {
+  color: var(--text-primary);
+}
+
+.pets-structure-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* No Pets Message */
+.pets-no-pets {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--text-muted);
+}
+
+.pets-no-pets.hidden {
+  display: none;
+}
+
+/* ==========================================
+   PETS MOBILE RESPONSIVE
+   ========================================== */
+
+@media (max-width: 640px) {
+  .pets-policy-options {
+    flex-direction: column;
+  }
+
+  .pets-sizes {
+    flex-direction: column;
+  }
+
+  .pets-fee-structure {
+    flex-direction: column;
+  }
+
+  .pets-fee-row {
+    flex-wrap: wrap;
+  }
+
+  .pets-fee-amount {
+    width: 100%;
+  }
+
+  .pets-fee-frequency {
+    width: 100%;
+  }
+
+  .pets-freq-btn {
+    flex: 1;
+  }
+}

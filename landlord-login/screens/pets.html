@@ -1,0 +1,78 @@
+<section class="screen" id="screen-pets">
+  <div class="content-centered screen-content">
+
+    <div class="screen-header">
+      <h1 class="screen-title">Pet policy</h1>
+      <p class="screen-subtitle">Let renters know your pet rules</p>
+    </div>
+
+    <!-- Policy Selection -->
+    <div class="pets-section">
+      <div class="pets-section-header">
+        <div class="pets-section-icon">
+          <i data-lucide="dog" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="pets-section-text">
+          <h3 class="pets-section-title">Are pets allowed?</h3>
+          <p class="pets-section-hint">Set your policy</p>
+        </div>
+      </div>
+
+      <div class="pets-policy-options" id="petsPolicyOptions">
+        <!-- JS renders policy cards here -->
+      </div>
+    </div>
+
+    <!-- Conditional Details (hidden until policy selected) -->
+    <div class="pets-details hidden" id="petsDetails">
+
+      <!-- Pet Types -->
+      <div class="pets-field">
+        <p class="pets-field-label">What types of pets?</p>
+        <div class="pets-types" id="petsTypes">
+          <!-- JS renders type buttons here -->
+        </div>
+      </div>
+
+      <!-- Size Restrictions -->
+      <div class="pets-field">
+        <p class="pets-field-label">Size restrictions?</p>
+        <div class="pets-sizes" id="petsSizes">
+          <!-- JS renders size cards here -->
+        </div>
+        <p class="pets-field-hint">
+          <i data-lucide="info" style="width: 12px; height: 12px;"></i>
+          Select all sizes allowed
+        </p>
+      </div>
+
+      <!-- Fee Section (only if policy = withFee) -->
+      <div class="pets-fee hidden" id="petsFeeSection">
+        <p class="pets-field-label">Pet fee</p>
+
+        <!-- Amount + Frequency -->
+        <div class="pets-fee-row">
+          <div class="pets-fee-amount">
+            <span class="pets-fee-currency">$</span>
+            <input type="number" id="petsFeeAmount" placeholder="0" min="0" />
+          </div>
+          <div class="pets-fee-frequency" id="petsFeeFrequency">
+            <!-- JS renders frequency toggle here -->
+          </div>
+        </div>
+
+        <!-- Fee Structure: Per Pet vs Flat -->
+        <div class="pets-fee-structure" id="petsFeeStructure">
+          <!-- JS renders structure cards here -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- No Pets Message -->
+    <div class="pets-no-pets hidden" id="petsNoPets">
+      <p>No pets will be allowed in this unit</p>
+    </div>
+
+  </div>
+</section>
