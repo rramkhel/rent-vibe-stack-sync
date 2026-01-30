@@ -928,7 +928,62 @@
   visibility: visible;
 }
 
-/* Allow text wrapping for longer descriptions */
-.tooltip.tooltip-wrap {
-  white-space: normal;
+/* ==========================================
+   SUBTYPE CARDS (matching type cards)
+   ========================================== */
+
+.subtype-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+@media (max-width: 640px) {
+  .subtype-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.subtype-card {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 60px;
+}
+
+.subtype-card:hover {
+  border-color: var(--text-primary);
+}
+
+.subtype-card.selected {
+  border-color: var(--text-primary);
+  border-width: 2px;
+  background: var(--background-subtle);
+}
+
+.subtype-card-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.subtype-card.selected .subtype-card-label {
+  color: var(--text-primary);
+}
+
+/* Subtype section label */
+.subtype-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-top: 24px;
+  margin-bottom: 12px;
 }

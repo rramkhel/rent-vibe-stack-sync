@@ -87,11 +87,11 @@ function setupAddressListeners() {
     }
   });
 
-  // Subtype pills
-  document.getElementById('subtypePills')?.addEventListener('click', (e) => {
-    const pill = e.target.closest('.pill');
-    if (pill) {
-      selectSubtype(pill.dataset.subtype);
+  // Subtype cards (delegated to subtypeSection since grid is dynamic)
+  document.getElementById('subtypeSection')?.addEventListener('click', (e) => {
+    const card = e.target.closest('.subtype-card');
+    if (card) {
+      selectSubtype(card.dataset.subtype);
     }
   });
 }
@@ -206,17 +206,20 @@ function selectPropertyType(type) {
 
 function renderSubtypes(type, selectedSubtype = '') {
   const subtypeSection = document.getElementById('subtypeSection');
-  const subtypePills = document.getElementById('subtypePills');
-
   const subtypes = PROPERTY_SUBTYPES[type];
 
   if (subtypes && subtypes.length > 0) {
-    subtypePills.innerHTML = subtypes.map(st => `
-      <button class="pill has-tooltip ${selectedSubtype === st.value ? 'selected' : ''}" data-subtype="${st.value}">
-        ${st.label}
-        <span class="tooltip tooltip-wrap">${st.description}</span>
-      </button>
-    `).join('');
+    subtypeSection.innerHTML = `
+      <label class="subtype-label">What kind?</label>
+      <div class="subtype-grid" id="subtypeGrid">
+        ${subtypes.map(st => `
+          <button class="subtype-card has-tooltip ${selectedSubtype === st.value ? 'selected' : ''}" data-subtype="${st.value}">
+            <span class="subtype-card-label">${st.label}</span>
+            <span class="tooltip">${st.description}</span>
+          </button>
+        `).join('')}
+      </div>
+    `;
     subtypeSection.classList.remove('hidden');
   } else {
     subtypeSection.classList.add('hidden');
@@ -226,8 +229,8 @@ function renderSubtypes(type, selectedSubtype = '') {
 function selectSubtype(subtype) {
   updateState('subType', subtype);
 
-  document.querySelectorAll('#subtypePills .pill').forEach(pill => {
-    pill.classList.toggle('selected', pill.dataset.subtype === subtype);
+  document.querySelectorAll('#subtypeGrid .subtype-card').forEach(card => {
+    card.classList.toggle('selected', card.dataset.subtype === subtype);
   });
 }
 
