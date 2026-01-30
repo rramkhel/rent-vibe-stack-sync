@@ -51,15 +51,8 @@ function restoreAddressState(state) {
       card.classList.toggle('selected', card.dataset.type === state.propertyType);
     });
     renderSubtypes(state.propertyType, state.subType);
-    document.getElementById('unitNumberSection').classList.remove('hidden');
   }
 
-  // Restore unit number
-  if (state.hasUnitNumber) {
-    document.getElementById('hasUnitNumber').checked = true;
-    document.getElementById('unitNumberInputWrapper').classList.remove('hidden');
-    document.getElementById('unitNumberInput').value = state.unitNumber || '';
-  }
 }
 
 function setupAddressListeners() {
@@ -100,16 +93,6 @@ function setupAddressListeners() {
     if (pill) {
       selectSubtype(pill.dataset.subtype);
     }
-  });
-
-  // Unit number checkbox
-  document.getElementById('hasUnitNumber')?.addEventListener('change', (e) => {
-    toggleUnitNumber(e.target.checked);
-  });
-
-  // Unit number input
-  document.getElementById('unitNumberInput')?.addEventListener('input', (e) => {
-    updateState('unitNumber', e.target.value);
   });
 }
 
@@ -217,7 +200,6 @@ function selectPropertyType(type) {
   });
 
   renderSubtypes(type);
-  document.getElementById('unitNumberSection').classList.remove('hidden');
 
   updateAddressNextButton();
 }
@@ -247,18 +229,6 @@ function selectSubtype(subtype) {
   document.querySelectorAll('#subtypePills .pill').forEach(pill => {
     pill.classList.toggle('selected', pill.dataset.subtype === subtype);
   });
-}
-
-function toggleUnitNumber(checked) {
-  updateState('hasUnitNumber', checked);
-
-  const wrapper = document.getElementById('unitNumberInputWrapper');
-  wrapper.classList.toggle('hidden', !checked);
-
-  if (!checked) {
-    updateState('unitNumber', '');
-    document.getElementById('unitNumberInput').value = '';
-  }
 }
 
 function updateAddressNextButton() {

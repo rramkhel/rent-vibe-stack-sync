@@ -12,7 +12,7 @@ let screenLoadCallbacks = {};
    Navigation
    ------------------------------------------ */
 
-function goToScreen(screenId) {
+function goToScreen(screenId, updateHash = true) {
   if (!SCREENS.includes(screenId)) {
     console.error(`Unknown screen: ${screenId}`);
     return;
@@ -28,6 +28,11 @@ function goToScreen(screenId) {
   if (target) {
     target.classList.add('active');
     currentScreen = screenId;
+
+    // Update URL hash
+    if (updateHash) {
+      window.location.hash = screenId;
+    }
 
     // Update state
     updateState('currentScreen', screenId);
@@ -178,13 +183,33 @@ function updateFooterButton(screenId) {
 }
 
 /* ------------------------------------------
+   Hash-based Navigation
+   ------------------------------------------ */
+
+function getScreenFromHash() {
+  const hash = window.location.hash.slice(1); // Remove the #
+  return SCREENS.includes(hash) ? hash : null;
+}
+
+function handleHashChange() {
+  const screenFromHash = getScreenFromHash();
+  if (screenFromHash && screenFromHash !== currentScreen) {
+    goToScreen(screenFromHash, false); // Don't update hash again
+  }
+}
+
+/* ------------------------------------------
    Initialization
    ------------------------------------------ */
 
 function initRouter() {
-  // Load initial screen from state
+  // Check URL hash first, then fall back to state
+  const screenFromHash = getScreenFromHash();
   const state = getState();
-  currentScreen = state.currentScreen || 'welcome';
+  currentScreen = screenFromHash || state.currentScreen || 'welcome';
+
+  // Listen for browser back/forward
+  window.addEventListener('hashchange', handleHashChange);
 
   // Set up initial screen
   goToScreen(currentScreen);
