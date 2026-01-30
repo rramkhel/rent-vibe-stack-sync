@@ -76,8 +76,13 @@ function updateFloorplanNextButton() {
   const state = getState();
   const nextBtn = document.getElementById('footer-next-btn');
 
-  // Enable Continue if bedrooms and bathrooms are selected (sqft optional)
-  const isComplete = state.bedrooms && state.bathrooms;
+  // Check each field (bedrooms/bathrooms can be "0" which is falsy, so check for !== '')
+  const bedroomsSelected = state.bedrooms !== '' && state.bedrooms !== null && state.bedrooms !== undefined;
+  const bathroomsSelected = state.bathrooms !== '' && state.bathrooms !== null && state.bathrooms !== undefined;
+  const sqftEntered = state.sqft && state.sqft.toString().trim() !== '';
+
+  // Enable Continue only when ALL three fields are filled
+  const isComplete = bedroomsSelected && bathroomsSelected && sqftEntered;
 
   if (nextBtn) {
     nextBtn.disabled = !isComplete;
