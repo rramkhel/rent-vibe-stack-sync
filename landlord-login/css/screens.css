@@ -1694,9 +1694,8 @@
 
 /* Add Another Unit (Disabled/Coming Soon) */
 .add-unit-section {
-  margin-top: var(--space-2xl);
-  padding-top: var(--space-xl);
-  border-top: 1px solid var(--border);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
   text-align: center;
 }
 
