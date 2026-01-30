@@ -1547,6 +1547,152 @@
 }
 
 /* ==========================================
+   FLOORPLAN SCREEN
+   Airy, spacious layout for bed/bath/sqft
+   ========================================== */
+
+.floorplan-section {
+  padding: var(--space-xl) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.floorplan-section:last-child {
+  border-bottom: none;
+}
+
+.floorplan-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.floorplan-row-input {
+  flex-wrap: wrap;
+}
+
+.floorplan-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.floorplan-label-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.floorplan-label-hint {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* Selector buttons (bed/bath options) */
+.floorplan-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.floorplan-btn {
+  min-width: 56px;
+  height: 48px;
+  padding: 0 16px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: white;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.floorplan-btn:hover {
+  border-color: var(--text-muted);
+  background: var(--background-subtle);
+}
+
+.floorplan-btn.selected {
+  border-color: var(--text-primary);
+  background: var(--text-primary);
+  color: white;
+}
+
+/* Square footage input */
+.floorplan-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.floorplan-input {
+  width: 140px;
+  height: 48px;
+  padding: 0 16px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  text-align: right;
+  transition: border-color 0.15s ease;
+}
+
+.floorplan-input:focus {
+  outline: none;
+  border-color: var(--text-primary);
+}
+
+.floorplan-input::placeholder {
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.floorplan-input-suffix {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Hide number input spinners */
+.floorplan-input::-webkit-outer-spin-button,
+.floorplan-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.floorplan-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .floorplan-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .floorplan-selector {
+    width: 100%;
+  }
+
+  .floorplan-btn {
+    flex: 1;
+    min-width: unset;
+  }
+
+  .floorplan-input-wrapper {
+    width: 100%;
+  }
+
+  .floorplan-input {
+    flex: 1;
+    text-align: left;
+  }
+}
+
+/* ==========================================
    MOBILE OPTIMIZATIONS
    ========================================== */
 

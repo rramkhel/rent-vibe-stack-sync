@@ -21,7 +21,7 @@ async function loadComponent(containerId, componentPath) {
 }
 
 async function loadAllScreens() {
-  const screens = ['welcome', 'address', 'units', 'details', 'pricing', 'review'];
+  const screens = ['welcome', 'address', 'floorplan', 'units', 'details', 'pricing', 'review'];
   const container = document.getElementById('screens-container');
 
   let html = '';
@@ -185,6 +185,7 @@ function setupGlobalHandlers() {
 async function loadScreenScripts() {
   const scripts = [
     'js/screens/address.js',
+    'js/screens/floorplan.js',
     'js/screens/units.js',
     'js/screens/details.js',
     'js/screens/pricing.js',

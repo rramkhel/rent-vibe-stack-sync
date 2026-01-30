@@ -22,6 +22,11 @@ const defaultState = {
   unitNumber: '',
   hasUnitNumber: false,
 
+  // Floorplan (basic layout)
+  bedrooms: '',          // studio, 1, 2, 3, 4, 5+
+  bathrooms: '',         // 1, 1.5, 2, 2.5, 3, 3+
+  sqft: '',              // square footage
+
   // Unit details
   units: [
     {

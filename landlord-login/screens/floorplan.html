@@ -1,0 +1,65 @@
+<section class="screen" id="screen-floorplan">
+  <div class="content-centered screen-content">
+
+    <div class="screen-header">
+      <h1 class="screen-title">Tell us about your space</h1>
+      <p class="screen-subtitle">Help renters understand the layout</p>
+    </div>
+
+    <!-- Bedrooms -->
+    <div class="floorplan-section">
+      <div class="floorplan-row">
+        <div class="floorplan-label">
+          <span class="floorplan-label-title">Bedrooms</span>
+          <span class="floorplan-label-hint">Or select Studio</span>
+        </div>
+        <div class="floorplan-selector" id="bedroomSelector">
+          <button class="floorplan-btn" data-value="studio">Studio</button>
+          <button class="floorplan-btn" data-value="1">1</button>
+          <button class="floorplan-btn" data-value="2">2</button>
+          <button class="floorplan-btn" data-value="3">3</button>
+          <button class="floorplan-btn" data-value="4">4</button>
+          <button class="floorplan-btn" data-value="5+">5+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bathrooms -->
+    <div class="floorplan-section">
+      <div class="floorplan-row">
+        <div class="floorplan-label">
+          <span class="floorplan-label-title">Bathrooms</span>
+        </div>
+        <div class="floorplan-selector" id="bathroomSelector">
+          <button class="floorplan-btn" data-value="1">1</button>
+          <button class="floorplan-btn" data-value="1.5">1.5</button>
+          <button class="floorplan-btn" data-value="2">2</button>
+          <button class="floorplan-btn" data-value="2.5">2.5</button>
+          <button class="floorplan-btn" data-value="3">3</button>
+          <button class="floorplan-btn" data-value="3+">3+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Square Footage -->
+    <div class="floorplan-section">
+      <div class="floorplan-row floorplan-row-input">
+        <div class="floorplan-label">
+          <span class="floorplan-label-title">Square footage</span>
+        </div>
+        <div class="floorplan-input-wrapper">
+          <input
+            type="number"
+            class="floorplan-input"
+            id="sqftInput"
+            placeholder="e.g., 850"
+            min="1"
+            max="50000"
+          >
+          <span class="floorplan-input-suffix">sq ft</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

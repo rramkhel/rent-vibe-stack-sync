@@ -3,7 +3,7 @@
    Handles screen navigation and history
    ========================================== */
 
-const SCREENS = ['welcome', 'address', 'units', 'details', 'pricing', 'review'];
+const SCREENS = ['welcome', 'address', 'floorplan', 'units', 'details', 'pricing', 'review'];
 
 let currentScreen = 'welcome';
 let screenLoadCallbacks = {};
@@ -118,6 +118,7 @@ function updateHeader() {
     const titles = {
       welcome: '',
       address: 'Create Your Listing',
+      floorplan: 'Create Your Listing',
       units: 'Create Your Listing',
       details: 'Create Your Listing',
       pricing: 'Set Your Price',
@@ -160,6 +161,7 @@ function updateFooterButton(screenId) {
 
   const buttonConfig = {
     address: { text: 'Continue', btnClass: 'btn-primary' },
+    floorplan: { text: 'Continue', btnClass: 'btn-primary' },
     units: { text: 'Continue', btnClass: 'btn-primary' },
     details: { text: 'Continue to Pricing', btnClass: 'btn-pink' },
     pricing: { text: 'Continue to Review', btnClass: 'btn-pink' },
