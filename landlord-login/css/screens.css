@@ -1692,6 +1692,49 @@
   }
 }
 
+/* Add Another Unit (Disabled/Coming Soon) */
+.add-unit-section {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.add-unit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.add-unit-hint {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* Disabled state */
+.add-unit-disabled .add-unit-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Coming Soon tag */
+.coming-soon-tag {
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--background-muted);
+  color: var(--text-muted);
+  border-radius: 4px;
+}
+
 /* ==========================================
    MOBILE OPTIMIZATIONS
    ========================================== */
