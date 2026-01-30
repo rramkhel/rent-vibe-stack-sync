@@ -1,0 +1,64 @@
+<section class="screen" id="screen-features">
+
+  <!-- Header with gradient background -->
+  <div class="features-header">
+    <div class="features-header-content">
+      <div class="features-badge">
+        <i data-lucide="sparkles" class="features-badge-icon"></i>
+        AI-detected from your photos
+      </div>
+      <h1 class="features-title">Make your listing shine</h1>
+      <p class="features-subtitle">
+        We found <strong id="featuresDetectedCount">0</strong> features in your photos.
+        Confirm what's right, remove what's wrong, and add anything we missed.
+      </p>
+    </div>
+  </div>
+
+  <div class="content-centered screen-content features-content">
+
+    <!-- Stats Bar -->
+    <div class="features-stats">
+      <div class="features-stats-count">
+        <div class="features-stats-icon">
+          <i data-lucide="check" style="width: 16px; height: 16px;"></i>
+        </div>
+        <div class="features-stats-numbers">
+          <div class="features-stats-value" id="featuresSelectedCount">0</div>
+          <div class="features-stats-label">selected</div>
+        </div>
+      </div>
+      <div class="features-stats-divider"></div>
+      <div class="features-stats-message" id="featuresStatsMessage">
+        <!-- JS populates encouragement message -->
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="features-search-wrapper">
+      <div class="features-search" id="featuresSearch">
+        <i data-lucide="search" class="features-search-icon"></i>
+        <input
+          type="text"
+          id="featuresSearchInput"
+          placeholder="Search for &quot;patio&quot; or &quot;garden&quot;"
+          class="features-search-input"
+        />
+        <button class="features-search-clear hidden" id="featuresSearchClear">
+          <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search Results Count (when searching) -->
+    <div class="features-search-results hidden" id="featuresSearchResults">
+      <!-- JS populates search results count -->
+    </div>
+
+    <!-- Categories Container -->
+    <div class="features-categories" id="featuresCategories">
+      <!-- JS renders categories here -->
+    </div>
+
+  </div>
+</section>

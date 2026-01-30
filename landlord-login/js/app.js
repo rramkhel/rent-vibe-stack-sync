@@ -21,7 +21,7 @@ async function loadComponent(containerId, componentPath) {
 }
 
 async function loadAllScreens() {
-  const screens = ['welcome', 'address', 'floorplan', 'essentials', 'pets', 'photos', 'detecting', 'details', 'pricing', 'review'];
+  const screens = ['welcome', 'address', 'floorplan', 'essentials', 'pets', 'photos', 'detecting', 'features', 'details', 'pricing', 'review'];
   const container = document.getElementById('screens-container');
 
   let html = '';
@@ -193,6 +193,7 @@ async function loadScreenScripts() {
     'js/screens/pets.js',
     'js/screens/photos.js',
     'js/screens/detecting.js',
+    'js/screens/features.js',
     'js/screens/details.js',
     'js/screens/pricing.js',
     'js/screens/review.js',

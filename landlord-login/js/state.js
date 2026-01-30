@@ -72,6 +72,12 @@ const defaultState = {
   documents: [],           // Array of { id, name, type }
   buildingWebsiteUrl: '',  // URL string
 
+  // AI-detected features
+  features: {
+    selected: [],   // IDs of selected features
+    detected: [],   // IDs of AI-detected features (for styling)
+  },
+
   // Property details
   amenities: {
     unit: [],              // In-unit amenities

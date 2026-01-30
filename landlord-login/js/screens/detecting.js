@@ -85,6 +85,27 @@ function updateDetectionDots() {
   });
 }
 
+function initializeDetectedFeatures() {
+  // Pre-populate the features state with "AI-detected" features
+  const DETECTED_FEATURES = [
+    // Unit Features
+    'hardwood', 'high-ceilings', 'large-windows', 'natural-light',
+    // Kitchen
+    'dishwasher', 'stainless', 'granite', 'gas-stove',
+    // Outdoor & Views
+    'balcony', 'city-view',
+    // Building Amenities
+    'gym', 'elevator', 'rooftop',
+    // Vibe
+    'modern', 'bright'
+  ];
+
+  updateState('features', {
+    selected: [...DETECTED_FEATURES],
+    detected: [...DETECTED_FEATURES],
+  });
+}
+
 function finishDetection() {
   // Clear any pending timeout
   if (detectionTimeout) {
@@ -92,8 +113,11 @@ function finishDetection() {
     detectionTimeout = null;
   }
 
+  // Initialize features with AI-detected items
+  initializeDetectedFeatures();
+
   // Navigate to features page
-  navigateTo('details');
+  navigateTo('features');
 }
 
 function skipDetection() {
@@ -103,8 +127,11 @@ function skipDetection() {
     detectionTimeout = null;
   }
 
+  // Initialize features with AI-detected items
+  initializeDetectedFeatures();
+
   // Navigate directly to features
-  navigateTo('details');
+  navigateTo('features');
 }
 
 // Cleanup when leaving the screen
