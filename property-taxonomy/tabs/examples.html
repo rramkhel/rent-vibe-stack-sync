@@ -1,20 +1,55 @@
-<div class="page">
+<div class="page examples-page">
     <span class="doc-label">Interactive</span>
     <h2 class="page-title">Live Examples</h2>
-    <p class="subtitle">See how the same canonical data displays differently across platforms.</p>
+    <p class="subtitle">See how real listings flow through the canonical system to each platform.</p>
 
-    <div id="example-browser" class="example-browser">
-        <div class="example-tabs">
-            <!-- Rendered by JavaScript -->
+    <div class="examples-container">
+        <!-- Left Sidebar -->
+        <div class="examples-sidebar">
+            <div class="category-tabs" id="category-tabs">
+                <!-- Rendered by JS -->
+            </div>
+            <div class="example-list" id="example-list">
+                <!-- Rendered by JS -->
+            </div>
         </div>
 
-        <div id="example-content" class="example-content active">
-            <!-- Rendered by JavaScript -->
-        </div>
-    </div>
+        <!-- Main Content -->
+        <div class="examples-main">
+            <!-- Loading State -->
+            <div class="examples-loading" id="examples-loading">
+                <p>Loading examples...</p>
+            </div>
 
-    <div class="big-idea" style="background: linear-gradient(135deg, var(--ink) 0%, #44403c 100%);">
-        <h4>Key Takeaway</h4>
-        <p>Same canonical data, different platform experiences. The Bible doesn't care how the data got there or where it's going — it just holds the truth.</p>
+            <!-- Header: Title + Scenario -->
+            <div class="example-header" id="example-header">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- Two Column Grid -->
+            <div class="example-grid">
+                <!-- Left Column: Canonical Data + Sentence Formula -->
+                <div class="example-left-col">
+                    <div class="canonical-card" id="canonical-card">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <div class="sentence-formula-box" id="sentence-formula">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Right Column: Platform Mappings -->
+                <div class="example-right-col">
+                    <div class="platforms-card" id="platforms-card">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Insight Box -->
+            <div class="key-insight" id="key-insight">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
     </div>
 </div>

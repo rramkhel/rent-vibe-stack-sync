@@ -15,7 +15,7 @@ function loadTabContent(tabId) {
     var container = document.getElementById(tabId);
     if (!container || container.dataset.loaded) return;
 
-    fetch('tabs/' + tabId + '.html')
+    fetch('tabs/' + tabId + '.html?v=' + Date.now())
         .then(function(response) { return response.text(); })
         .then(function(html) {
             container.innerHTML = html;
