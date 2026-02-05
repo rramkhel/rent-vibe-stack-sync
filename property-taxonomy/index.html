@@ -1,55 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Property Taxonomy | RentSync Prototypes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="https://unpkg.com/lucide@latest"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Classification System — RentSync Data Architecture</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Commissioner:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/diagrams.css">
+    <link rel="stylesheet" href="css/code-blocks.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Back Link -->
-  <a href="../" class="back-link">
-    <i data-lucide="arrow-left"></i>
-    Back to Prototypes
-  </a>
-
-  <!-- Main Container -->
-  <div class="taxonomy-container">
     <!-- Header -->
-    <header class="taxonomy-header">
-      <h1>Property Types Taxonomy</h1>
-      <p>Simplified proposal for multi-stakeholder needs</p>
+    <header class="page-header">
+        <div>
+            <h1>Property Classification System</h1>
+            <div class="header-meta">RentSync Data Architecture</div>
+        </div>
+        <span class="header-badge">Internal Review</span>
     </header>
 
-    <!-- Tabs -->
-    <nav class="taxonomy-tabs">
-      <button class="taxonomy-tab active" data-view="overview">Overview</button>
-      <button class="taxonomy-tab" data-view="renter">Renter View</button>
-      <button class="taxonomy-tab" data-view="ecommerce">Ecommerce LL</button>
-      <button class="taxonomy-tab" data-view="enterprise">Enterprise + Data</button>
-      <button class="taxonomy-tab" data-view="datamodel">Data Model</button>
+    <!-- Tab Navigation -->
+    <nav class="tabs-container" role="tablist" aria-label="Demo sections">
+        <div class="tabs">
+            <button class="tab active" data-tab="overview" role="tab" aria-selected="true" aria-controls="overview" id="tab-overview">
+                <span class="tab-icon" aria-hidden="true">🎯</span> Overview
+            </button>
+            <button class="tab" data-tab="data-model" role="tab" aria-selected="false" aria-controls="data-model" id="tab-data-model">
+                <span class="tab-icon" aria-hidden="true">📐</span> Data Model
+            </button>
+            <button class="tab" data-tab="input-flows" role="tab" aria-selected="false" aria-controls="input-flows" id="tab-input-flows">
+                <span class="tab-icon" aria-hidden="true">📥</span> Input Flows
+            </button>
+            <button class="tab" data-tab="syndication" role="tab" aria-selected="false" aria-controls="syndication" id="tab-syndication">
+                <span class="tab-icon" aria-hidden="true">🔄</span> Syndication
+            </button>
+            <button class="tab" data-tab="examples" role="tab" aria-selected="false" aria-controls="examples" id="tab-examples">
+                <span class="tab-icon" aria-hidden="true">💡</span> Live Examples
+            </button>
+        </div>
     </nav>
 
-    <!-- Content Panels -->
-    <div class="taxonomy-content">
-      <div id="panel-overview" class="taxonomy-panel active"></div>
-      <div id="panel-renter" class="taxonomy-panel"></div>
-      <div id="panel-ecommerce" class="taxonomy-panel"></div>
-      <div id="panel-enterprise" class="taxonomy-panel"></div>
-      <div id="panel-datamodel" class="taxonomy-panel"></div>
-    </div>
+    <!-- Tab Content — loaded dynamically from tabs/*.html -->
+    <main id="main-content">
+        <div id="overview" class="tab-content active" role="tabpanel" aria-labelledby="tab-overview" tabindex="0"></div>
+        <div id="data-model" class="tab-content" role="tabpanel" aria-labelledby="tab-data-model" tabindex="0"></div>
+        <div id="input-flows" class="tab-content" role="tabpanel" aria-labelledby="tab-input-flows" tabindex="0"></div>
+        <div id="syndication" class="tab-content" role="tabpanel" aria-labelledby="tab-syndication" tabindex="0"></div>
+        <div id="examples" class="tab-content" role="tabpanel" aria-labelledby="tab-examples" tabindex="0"></div>
+    </main>
 
-    <!-- Footer -->
-    <footer class="taxonomy-footer">
-      RentSync Property Taxonomy Proposal &bull; Click tabs to explore each stakeholder view
-    </footer>
-  </div>
-
-  <!-- Scripts -->
-  <script src="data/taxonomy-data.js"></script>
-  <script src="js/app.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/examples.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

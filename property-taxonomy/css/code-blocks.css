@@ -1,0 +1,26 @@
+/* Code Blocks */
+.code-block {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 20px 25px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    overflow-x: auto;
+    margin: 20px 0;
+    white-space: pre;
+    line-height: 1.5;
+}
+
+.code-block pre {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre;
+}
+
+.code-block .comment { color: #6a9955; }
+.code-block .key { color: #9cdcfe; }
+.code-block .string { color: #ce9178; }
+.code-block .keyword { color: #569cd6; }

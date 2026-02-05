@@ -1,0 +1,113 @@
+/* Header */
+.page-header {
+    background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
+    color: white;
+    padding: 25px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-header h1 {
+    font-family: var(--font-display);
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.header-meta {
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+.header-badge {
+    background: var(--canonical);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Tabs */
+.tabs-container {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.tabs {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+}
+
+.tab {
+    padding: 16px 24px;
+    font-weight: 600;
+    font-size: 0.9em;
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 3px solid transparent;
+    color: var(--warm-gray);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+}
+
+.tab:hover {
+    color: var(--ink);
+    background: var(--cream);
+}
+
+.tab.active {
+    color: var(--canonical);
+    border-bottom-color: var(--canonical);
+}
+
+.tab-icon {
+    font-size: 1.1em;
+}
+
+/* Page content */
+.page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+/* Tab content visibility */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-header {
+        padding: 20px 24px;
+    }
+
+    .page {
+        padding: 30px 20px;
+    }
+
+    .tabs {
+        overflow-x: auto;
+    }
+
+    .tab {
+        padding: 12px 16px;
+        font-size: 0.85em;
+    }
+}

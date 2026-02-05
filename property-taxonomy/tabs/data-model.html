@@ -1,0 +1,169 @@
+<div class="page">
+    <span class="doc-label">The Bible</span>
+    <h2 class="page-title">Dimensional Data Model</h2>
+    <p class="subtitle">Fixed dimensions with extensible values. Four logical groupings that resolve to a natural language sentence.</p>
+
+    <div class="sentence-formula">
+        <div class="label">The Sentence Formula</div>
+        <div class="formula">
+            A <span class="purpose">purpose</span> <span class="listing">listing type</span> <span class="unit">unit type</span> in a <span class="structure">structure</span>
+        </div>
+    </div>
+
+    <h3>The Dimensions</h3>
+
+    <div class="table-wrapper">
+    <table class="dimension-table">
+        <thead>
+            <tr>
+                <th>Grouping</th>
+                <th>Dimension</th>
+                <th>Question It Answers</th>
+                <th>Example Values</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="background: var(--cream);">🏢 Field</td>
+                <td><span class="dimension-name">Sector</span></td>
+                <td>What industry?</td>
+                <td>
+                    <div class="dimension-values">
+                        <span class="dim-value">Residential</span>
+                        <span class="dim-value">Commercial</span>
+                        <span class="dim-value">Recreation</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="4" style="background: var(--cream);">🏗️ Building</td>
+                <td><span class="dimension-name">Scope</span></td>
+                <td>What scale?</td>
+                <td>
+                    <div class="dimension-values">
+                        <span class="dim-value">Unit</span>
+                        <span class="dim-value">Building</span>
+                        <span class="dim-value">Community</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="dimension-name">Structure Type</span></td>
+                <td>What kind of building?</td>
+                <td>
+                    <div class="dimension-values">
+                        <span class="dim-value">House</span>
+                        <span class="dim-value">Apartment Building</span>
+                        <span class="dim-value">Townhouse</span>
+                        <span class="dim-value">Cottage/Cabin</span>
+                        <span class="dim-value">Office</span>
+                        <span class="dim-value">Retail</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="dimension-name">Structure Subtype</span></td>
+                <td>What variation?</td>
+                <td>
+                    <div class="dimension-values">
+                        <span class="dim-value">Detached</span>
+                        <span class="dim-value">Semi-detached</span>
+                        <span class="dim-value">High Rise</span>
+                        <span class="dim-value">A-Frame</span>
+                        <span class="dim-value">Yurt</span>
+                        <span class="dim-value">Class A</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="dimension-name">Unit Type</span></td>
+                <td>What portion?</td>
+                <td>
+                    <div class="dimension-values">
+                        <span class="dim-value">Entire Property</span>
+                        <span class="dim-value">Basement Suite</span>
+                        <span class="dim-value">Room (Private)</span>
+                        <span class="dim-value">Loft</span>
+                        <span class="dim-value">Office Suite</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="background: var(--cream);">📝 Contract</td>
+                <td><span class="dimension-name">Listing Type</span></td>
+                <td>What transaction?</td>
+                <td>
+                    <div class="dimension-values">
+                        <span class="dim-value">For Rent</span>
+                        <span class="dim-value">For Sale</span>
+                        <span class="dim-value">For Lease</span>
+                        <span class="dim-value">Sublet</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="background: var(--cream);">🎯 Theme</td>
+                <td><span class="dimension-name">Purpose</span></td>
+                <td>Who is it for?</td>
+                <td>
+                    <div class="dimension-values">
+                        <span class="dim-value">Conventional</span>
+                        <span class="dim-value">Student</span>
+                        <span class="dim-value">Senior (55+)</span>
+                        <span class="dim-value">Vacation</span>
+                        <span class="dim-value">Corporate</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="callout">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content">
+            <h5>Key Resolution: "Condo" and "Community"</h5>
+            <p><strong>Condo</strong> is an ownership attribute, not a structure. A condo can be in a High Rise, Mid Rise, or Townhouse. <strong>Community</strong> is a grouping mechanism for marketing/billing, not a property type.</p>
+        </div>
+    </div>
+
+    <h3>Hierarchy Visualization</h3>
+
+    <div class="code-block">
+<pre><span class="comment">// The full hierarchy path</span>
+<span class="key">Sector</span>
+└── <span class="key">Scope</span>
+    └── <span class="key">Structure Type</span>
+        └── <span class="key">Structure Subtype</span>
+            └── <span class="key">Unit Type</span>
+
+<span class="comment">// Example: Sarah's basement</span>
+<span class="string">Residential</span>
+└── <span class="string">Unit</span>
+    └── <span class="string">House</span>
+        └── <span class="string">Detached</span>
+            └── <span class="string">Basement Suite</span>
+
+<span class="comment">// Example: Enterprise high-rise</span>
+<span class="string">Residential</span>
+└── <span class="string">Building</span>
+    └── <span class="string">Apartment Building</span>
+        └── <span class="string">High Rise</span>
+            └── <span class="string">Various (Studio, 1BR, 2BR)</span></pre>
+    </div>
+
+    <h3>Extensibility in Action</h3>
+
+    <p>When WoodCabins.ca joins, we don't restructure. We add values:</p>
+
+    <div class="card-grid">
+        <div class="card" style="border-left: 4px solid var(--bstk);">
+            <h5>✅ What We Do</h5>
+            <p>Add <code>Yurt</code>, <code>Treehouse</code>, <code>Glamping</code> to Structure Subtype. Add <code>Glamping</code> to Purpose.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid #ef4444;">
+            <h5>❌ What We Don't Do</h5>
+            <p>Create a new "Vacation Structures" dimension or reorganize the hierarchy.</p>
+        </div>
+    </div>
+</div>

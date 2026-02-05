@@ -1,0 +1,214 @@
+/**
+ * Responsive Styles
+ * Breakpoints: 768px (tablet), 480px (mobile)
+ */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .page {
+        padding: 30px 25px;
+    }
+
+    .page-header {
+        padding: 20px 25px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .page-title {
+        font-size: 1.8em;
+    }
+
+    .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab {
+        padding: 14px 18px;
+        font-size: 0.85em;
+    }
+
+    /* Cards stack on tablet */
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    /* Flow diagram stacks */
+    .flow-container {
+        flex-direction: column;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+        padding: 10px 0;
+    }
+
+    /* Architecture diagram adjusts */
+    .arch-row {
+        gap: 10px;
+    }
+
+    .arch-platform {
+        min-width: 100px;
+        padding: 10px 15px;
+    }
+
+    /* Tables scroll horizontally */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .compare-table,
+    .dimension-table {
+        min-width: 600px;
+    }
+
+    /* Mapping grid adjusts */
+    .mapping-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Strategy cards */
+    .strategy-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .mock-form {
+        grid-template-columns: 1fr;
+    }
+
+    /* Mini architecture stacks */
+    .mini-arch {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .mini-arch .arch-box {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .page {
+        padding: 20px 15px;
+    }
+
+    .page-header h1 {
+        font-size: 1.2em;
+    }
+
+    .page-title {
+        font-size: 1.5em;
+    }
+
+    .page-title br {
+        display: none;
+    }
+
+    .subtitle {
+        font-size: 1em;
+    }
+
+    h3 {
+        font-size: 1.2em;
+        margin-top: 35px;
+    }
+
+    .tab {
+        padding: 12px 14px;
+        font-size: 0.8em;
+    }
+
+    .tab-icon {
+        display: none;
+    }
+
+    /* Cards full width */
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    /* Big idea adjusts */
+    .big-idea {
+        padding: 20px 25px;
+    }
+
+    .big-idea p {
+        font-size: 1.2em;
+    }
+
+    /* Example browser */
+    .example-tabs {
+        flex-wrap: nowrap;
+    }
+
+    .example-tab {
+        padding: 10px 15px;
+        font-size: 0.8em;
+    }
+
+    .example-content {
+        padding: 20px;
+    }
+
+    .mapping-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Code blocks */
+    .code-block {
+        padding: 15px;
+        font-size: 0.8em;
+    }
+
+    .inference-chain {
+        padding: 15px;
+        font-size: 0.8em;
+    }
+
+    /* Architecture diagram */
+    .architecture-diagram {
+        padding: 25px 15px;
+    }
+
+    .arch-platform {
+        min-width: 80px;
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+
+    /* Sentence formula */
+    .sentence-formula {
+        padding: 20px;
+    }
+
+    .sentence-formula .formula {
+        font-size: 1.1em;
+    }
+}
+
+/* Print styles */
+@media print {
+    .tabs-container {
+        position: static;
+    }
+
+    .tab-content {
+        display: block !important;
+        page-break-before: always;
+    }
+
+    .tab-content:first-of-type {
+        page-break-before: avoid;
+    }
+}

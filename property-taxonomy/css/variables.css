@@ -1,0 +1,50 @@
+:root {
+    /* Base colors */
+    --ink: #1c1917;
+    --paper: #fafaf9;
+    --cream: #f5f5f4;
+    --warm-gray: #78716c;
+    --border: #e7e5e4;
+
+    /* Platform colors - BSTK and RentSync aligned (same teal) */
+    --rentals: #2563eb;
+    --rentals-light: #dbeafe;
+    --bstk: #0d9488;
+    --bstk-light: #ccfbf1;
+    --rentsync: #0d9488;
+    --rentsync-light: #ccfbf1;
+    --spacelist: #ea580c;
+    --spacelist-light: #ffedd5;
+    --woodcabins: #d97706;
+    --woodcabins-light: #fef3c7;
+    --canonical: #7c3aed;
+    --canonical-light: #ede9fe;
+
+    /* Semantic colors */
+    --success: #10b981;
+    --success-light: #d1fae5;
+    --warning: #f59e0b;
+    --warning-light: #fef3c7;
+
+    /* Typography */
+    --font-body: 'Commissioner', sans-serif;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    /* Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+    /* Border radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+}

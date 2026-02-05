@@ -1,0 +1,120 @@
+<div class="page">
+    <span class="doc-label">The Vision</span>
+    <h2 class="page-title">One Source of Truth,<br>Many Platform Views</h2>
+    <p class="subtitle">Build a comprehensive classification system that captures everything at full granularity, then map it to simplified views for each platform.</p>
+
+    <div class="big-idea">
+        <h4>The Core Principle</h4>
+        <p>"The classification system isn't a form. It's a data structure. The form can be 1 question or 20 questions — both produce the same canonical output."</p>
+    </div>
+
+    <!-- Architecture Diagram -->
+    <div class="architecture-diagram">
+        <div class="arch-box canonical" style="max-width: 500px; margin: 0 auto;">
+            <h5>Source of Truth</h5>
+            <div class="title">Canonical Classification System</div>
+            <p style="font-size: 0.85em; color: var(--warm-gray); margin-top: 10px;">"The Bible" — Universal across all platforms, extensible for future acquisitions</p>
+        </div>
+
+        <div class="arch-arrow">↓</div>
+
+        <div style="text-align: center; margin-bottom: 15px;">
+            <span style="background: var(--cream); padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 500;">
+                Mapping Layer — Per-platform translation tables
+            </span>
+        </div>
+
+        <div class="arch-arrow">↓</div>
+
+        <div class="arch-row">
+            <div class="arch-platform bstk">
+                <strong>BSTK</strong>
+                <div style="font-size: 0.8em; color: var(--warm-gray);">Enterprise · Unit-based</div>
+            </div>
+            <div class="arch-platform rentsync">
+                <strong>RentSync</strong>
+                <div style="font-size: 0.8em; color: var(--warm-gray);">Enterprise · Property-based</div>
+            </div>
+            <div class="arch-platform rentals">
+                <strong>Rentals.ca</strong>
+                <div style="font-size: 0.8em; color: var(--warm-gray);">Consumer ILS</div>
+            </div>
+            <div class="arch-platform spacelist">
+                <strong>Spacelist</strong>
+                <div style="font-size: 0.8em; color: var(--warm-gray);">Commercial</div>
+            </div>
+            <div class="arch-platform woodcabins">
+                <strong>WoodCabins</strong>
+                <div style="font-size: 0.8em; color: var(--warm-gray);">Niche</div>
+            </div>
+            <div class="arch-platform future">
+                <strong>Future</strong>
+                <div style="font-size: 0.8em; color: var(--warm-gray);">Acquisitions</div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Why This Matters</h3>
+
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-icon" style="background: var(--canonical-light);">📚</div>
+            <h5>Build the Bible First</h5>
+            <p>Comprehensive system that captures everything — even niche options. If "woodcabins.com" joins someday, their data fits.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon" style="background: var(--rentals-light);">🎨</div>
+            <h5>UI is Separate</h5>
+            <p>Backend = accuracy, comprehensiveness. Frontend = optimized for how users search. Clean mapping between them.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon" style="background: var(--bstk-light);">🔌</div>
+            <h5>Extensible by Design</h5>
+            <p>Dimensions are fixed. Values are extensible. Adding "Yurt" doesn't restructure the system.</p>
+        </div>
+    </div>
+
+    <h3>The Four Use Cases</h3>
+
+    <div class="table-wrapper">
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>Platform</th>
+                    <th>User</th>
+                    <th>Typical Listing</th>
+                    <th>Complexity Tolerance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="platform-badge rentals">Rentals.ca</span></td>
+                    <td>Small landlord</td>
+                    <td>"Renting out my basement"</td>
+                    <td>Low — just let me post</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="platform-badge bstk">BSTK</span>
+                        <span class="platform-badge rentsync" style="margin-left: 4px;">RentSync</span>
+                    </td>
+                    <td>Enterprise PM</td>
+                    <td>"200 units across 5 high-rises"</td>
+                    <td>High — need granular control</td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge spacelist">Spacelist</span></td>
+                    <td>Commercial broker</td>
+                    <td>"5,000 sqft Class A office"</td>
+                    <td>Medium — different domain</td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge woodcabins">WoodCabins</span></td>
+                    <td>Niche vacation owner</td>
+                    <td>"Lakefront A-frame cabin"</td>
+                    <td>Low — niche categories exist</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
