@@ -551,3 +551,158 @@
     padding: var(--space-1) var(--space-2);
     border-radius: var(--radius-sm);
 }
+
+/* ==========================================================================
+   Divider (Sprint 4.2)
+   ========================================================================== */
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--gray-200);
+    margin: var(--space-8) 0;
+}
+
+/* ==========================================================================
+   Content Sections (Sprint 4.2)
+   ========================================================================== */
+
+.content-section {
+    margin-bottom: var(--space-8);
+}
+
+/* ==========================================================================
+   Hub-and-Spoke Diagram (Sprint 4.2)
+   ========================================================================== */
+
+.diagram-container {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    margin-bottom: var(--space-6);
+}
+
+.diagram-hub {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+}
+
+.diagram-arrow-down {
+    text-align: center;
+    font-size: 24px;
+    color: var(--gray-400);
+    margin: var(--space-3) 0;
+}
+
+.diagram-spokes {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.diagram-box {
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    min-width: 140px;
+}
+
+.diagram-box.large {
+    padding: var(--space-6) var(--space-8);
+    min-width: 280px;
+}
+
+.diagram-box-title {
+    font-weight: 600;
+}
+
+.diagram-box-subtitle {
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.diagram-box.canonical {
+    background: var(--teal-light);
+    border: 2px solid var(--teal);
+}
+.diagram-box.canonical .diagram-box-title { color: var(--teal); font-size: 16px; }
+.diagram-box.canonical .diagram-box-subtitle { color: var(--teal-dark); font-size: 13px; }
+
+.diagram-box.platform {
+    background: var(--dim-listing-light);
+    border: 2px solid var(--dim-listing);
+}
+.diagram-box.platform .diagram-box-title { color: #15803d; font-size: 14px; }
+.diagram-box.platform .diagram-box-subtitle { color: #166534; }
+
+.diagram-box.future {
+    background: var(--gray-100);
+    border: 2px dashed var(--gray-300);
+}
+.diagram-box.future .diagram-box-title { color: var(--gray-500); font-size: 14px; }
+.diagram-box.future .diagram-box-subtitle { color: var(--gray-400); }
+
+/* ==========================================================================
+   Example Cards (Sprint 4.2)
+   ========================================================================== */
+
+.example-sentence {
+    background: var(--gray-50);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-5);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.example-breakdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3) var(--space-6);
+}
+
+.example-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.example-row:last-child {
+    border-bottom: none;
+}
+
+.example-label {
+    font-size: 13px;
+    color: var(--gray-500);
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+.example-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-800);
+}
+
+/* ==========================================================================
+   External Note (Sprint 4.2)
+   ========================================================================== */
+
+.external-note {
+    background: var(--gray-50);
+    border: 1px dashed var(--gray-300);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-6);
+    margin-top: var(--space-8);
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.6;
+}
+
+.external-note strong {
+    color: var(--gray-800);
+}

@@ -1,104 +1,465 @@
 <!-- Tab 2: Data Model -->
-<h2 class="section-title">The 6 Dimensions</h2>
-<p class="section-subtitle">Every property classification can be described using exactly 6 dimensions.</p>
 
-<div class="dim-grid">
-    <div class="dim-card has-color dim-sector">
-        <div class="dim-card-name">Sector</div>
-        <div class="dim-card-count">2</div>
-        <div class="dim-card-label">values</div>
-    </div>
+<!-- Section 1: What is "The Bible"? -->
+<section class="content-section">
+    <h2 class="section-title">What is "The Bible"?</h2>
+    <p class="section-subtitle">A single, universal classification system that every platform uses as its source of truth.</p>
 
-    <div class="dim-card has-color dim-structure">
-        <div class="dim-card-name">Structure Type</div>
-        <div class="dim-card-count">12+</div>
-        <div class="dim-card-label">values</div>
-    </div>
-
-    <div class="dim-card has-color dim-subtype">
-        <div class="dim-card-name">Structure Subtype</div>
-        <div class="dim-card-count">20+</div>
-        <div class="dim-card-label">values</div>
-    </div>
-
-    <div class="dim-card has-color dim-unit">
-        <div class="dim-card-name">Unit Type</div>
-        <div class="dim-card-count">9</div>
-        <div class="dim-card-label">values</div>
-    </div>
-
-    <div class="dim-card has-color dim-listing">
-        <div class="dim-card-name">Listing Type</div>
-        <div class="dim-card-count">4</div>
-        <div class="dim-card-label">values</div>
-    </div>
-
-    <div class="dim-card has-color dim-purpose">
-        <div class="dim-card-name">Purpose</div>
-        <div class="dim-card-count">7</div>
-        <div class="dim-card-label">values</div>
-    </div>
-</div>
-
-<h2 class="section-title">The Sentence Formula</h2>
-<p class="section-subtitle">Every listing resolves to a human-readable sentence.</p>
-
-<div class="sentence-box">
-    <div class="sentence-label">Canonical Sentence</div>
-    <div class="sentence-text">
-        A <span class="dim dim-purpose">conventional</span>
-        <span class="dim dim-listing">rental</span>
-        <span class="dim dim-unit">basement</span>
-        in a <span class="dim dim-subtype">detached</span>
-        <span class="dim dim-structure">house</span>
-    </div>
-</div>
-
-<h2 class="section-title">Key Concepts</h2>
-
-<div class="callout callout-purple has-icon">
-    <div class="callout-icon">&#x1F4CA;</div>
-    <div>
-        <div class="callout-title">Scope is Derived, Not Declared</div>
-        <div class="callout-text">
-            Single-family vs multi-family is NOT a dimension. It's calculated from unit count.
-            <code style="display: block; margin-top: 8px;">IF property.units.count == 1 → Single-family billing<br>IF property.units.count > 1 → Multi-family billing</code>
+    <div class="callout callout-teal has-icon">
+        <div class="callout-icon">&#x1F4D6;</div>
+        <div>
+            <div class="callout-title">The Core Idea</div>
+            <div class="callout-text">
+                Instead of each platform having its own way of categorizing properties, we have ONE master system.
+                Every platform translates to and from this master system — they never talk directly to each other.
+            </div>
         </div>
     </div>
-</div>
 
-<div class="callout callout-amber has-icon">
-    <div class="callout-icon">&#x1F3D8;</div>
-    <div>
-        <div class="callout-title">Community is a Wrapper, Not a Type</div>
-        <div class="callout-text">
-            "Community" exists outside the property hierarchy. It's a Listing Structure concept:
-            <ul style="margin-top: 8px; margin-left: 20px;">
-                <li><strong>Unit</strong> — One unit, one listing (Sarah's basement)</li>
-                <li><strong>Building</strong> — One building, multiple units (50-unit apartment)</li>
-                <li><strong>Community</strong> — Multiple buildings grouped (Development of 200 townhomes)</li>
-            </ul>
+    <!-- Hub-and-spoke diagram -->
+    <div class="diagram-container">
+        <div class="diagram-hub">
+            <div class="diagram-box canonical large">
+                <div class="diagram-box-title">The Canonical System</div>
+                <div class="diagram-box-subtitle">"The Bible" — Single Source of Truth</div>
+            </div>
+        </div>
+
+        <div class="diagram-arrow-down">↓</div>
+
+        <div class="diagram-spokes">
+            <div class="diagram-box platform">
+                <div class="diagram-box-title">BSTK / RentSync</div>
+                <div class="diagram-box-subtitle">Enterprise</div>
+            </div>
+            <div class="diagram-box platform">
+                <div class="diagram-box-title">ILS Network</div>
+                <div class="diagram-box-subtitle">Rentals.ca, RentFaster, etc.</div>
+            </div>
+            <div class="diagram-box platform">
+                <div class="diagram-box-title">Spacelist</div>
+                <div class="diagram-box-subtitle">Commercial</div>
+            </div>
+            <div class="diagram-box future">
+                <div class="diagram-box-title">Future</div>
+                <div class="diagram-box-subtitle">Acquisitions</div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="callout callout-teal has-icon">
-    <div class="callout-icon">&#x1F3E0;</div>
-    <div>
-        <div class="callout-title">Condo is Ownership, Not Structure</div>
-        <div class="callout-text">
-            "Condo" is about ownership model, not building shape. A high-rise can be condo. A townhouse can be condo. Resolution: Condo lives in a separate Ownership/Tenure attribute, not in Structure Type.
+<hr class="divider">
+
+<!-- Section 2: The Six Dimensions -->
+<section class="content-section">
+    <h2 class="section-title">The Six Dimensions</h2>
+    <p class="section-subtitle">Every property is classified using these six attributes. Think of them as questions we answer about each listing.</p>
+
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Question It Answers</th>
+                        <th>Example Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge badge-purple">Sector</span></td>
+                        <td>What broad category?</td>
+                        <td><code>residential</code>, <code>commercial</code></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-amber">Structure Type</span></td>
+                        <td>What kind of building?</td>
+                        <td><code>house</code>, <code>apartment_bldg</code>, <code>office</code>, <code>cottage</code></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-orange">Structure Subtype</span></td>
+                        <td>What specific variation?</td>
+                        <td><code>detached</code>, <code>semi</code>, <code>townhouse</code>, <code>aframe</code>, <code>yurt</code>, <code>class_a</code></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-teal">Unit Type</span></td>
+                        <td>What portion is listed?</td>
+                        <td><code>entire</code>, <code>basement</code>, <code>suite</code>, <code>room</code></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-green">Listing Type</span></td>
+                        <td>What's the transaction?</td>
+                        <td><code>rent</code>, <code>sale</code>, <code>lease</code>, <code>sublet</code></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-pink">Purpose</span></td>
+                        <td>Who is it for?</td>
+                        <td><code>standard</code>, <code>student</code>, <code>senior</code>, <code>vacation</code>, <code>corporate</code></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
+</section>
 
-<div class="callout callout-green has-icon">
-    <div class="callout-icon">&#x1F4B0;</div>
-    <div>
-        <div class="callout-title">Billing is Decoupled from Classification</div>
-        <div class="callout-text">
-            "Nobody should be changing how they structure their data to save on billing." — Steven<br>
-            The data model should reflect reality, not billing optimization.
+<!-- Section 3: The Classification Sentence -->
+<section class="content-section">
+    <h2 class="section-title">The Classification Sentence</h2>
+    <p class="section-subtitle">Every listing can be described using this formula:</p>
+
+    <div class="sentence-box">
+        <div class="sentence-label">The Formula</div>
+        <div class="sentence-text">
+            A <span class="dim dim-purpose">[purpose]</span>
+            <span class="dim dim-listing">[listing type]</span>
+            <span class="dim dim-unit">[unit type]</span>
+            in a <span class="dim dim-subtype">[subtype]</span>
+            <span class="dim dim-structure">[structure]</span>
         </div>
     </div>
+
+    <!-- Example 1: Student Basement Rental -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">&#x1F4DD; Example: Student Basement Rental</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="example-sentence">
+                <strong>Full sentence:</strong> "A <span class="dim dim-purpose">student</span>
+                <span class="dim dim-listing">rental</span>
+                <span class="dim dim-unit">basement</span>
+                in a <span class="dim dim-subtype">detached</span>
+                <span class="dim dim-structure">house</span>"
+            </div>
+
+            <div class="example-breakdown">
+                <div class="example-row">
+                    <span class="example-label">Sector:</span>
+                    <span class="example-value">Residential</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Structure Type:</span>
+                    <span class="example-value">House</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Structure Subtype:</span>
+                    <span class="example-value">Detached</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Unit Type:</span>
+                    <span class="example-value">Basement</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Listing Type:</span>
+                    <span class="example-value">Rent</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Purpose:</span>
+                    <span class="example-value">Student</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Example 2: Commercial Office Lease -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">&#x1F3E2; Example: Commercial Office Lease</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="example-sentence">
+                <strong>Full sentence:</strong> "A <span class="dim dim-purpose">corporate</span>
+                <span class="dim dim-listing">lease</span> of a
+                <span class="dim dim-unit">floor</span>
+                in a <span class="dim dim-subtype">Class A</span>
+                <span class="dim dim-structure">office building</span>"
+            </div>
+
+            <div class="example-breakdown">
+                <div class="example-row">
+                    <span class="example-label">Sector:</span>
+                    <span class="example-value">Commercial</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Structure Type:</span>
+                    <span class="example-value">Office Building</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Structure Subtype:</span>
+                    <span class="example-value">Class A</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Unit Type:</span>
+                    <span class="example-value">Floor</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Listing Type:</span>
+                    <span class="example-value">Lease</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Purpose:</span>
+                    <span class="example-value">Corporate</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Example 3: Vacation Cabin Rental -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">&#x1F3D5; Example: Vacation Cabin Rental</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="example-sentence">
+                <strong>Full sentence:</strong> "A <span class="dim dim-purpose">vacation</span>
+                <span class="dim dim-listing">rental</span> of an
+                <span class="dim dim-unit">entire</span>
+                <span class="dim dim-subtype">A-Frame</span>
+                <span class="dim dim-structure">cabin</span>"
+            </div>
+
+            <div class="example-breakdown">
+                <div class="example-row">
+                    <span class="example-label">Sector:</span>
+                    <span class="example-value">Residential</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Structure Type:</span>
+                    <span class="example-value">Cottage</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Structure Subtype:</span>
+                    <span class="example-value">A-Frame</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Unit Type:</span>
+                    <span class="example-value">Entire</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Listing Type:</span>
+                    <span class="example-value">Rent</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Purpose:</span>
+                    <span class="example-value">Vacation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- Section 4: Key Concepts -->
+<section class="content-section">
+    <h2 class="section-title">Key Concepts</h2>
+    <p class="section-subtitle">Four important principles that make this system work.</p>
+
+    <div class="grid-2 mb-6">
+        <div class="callout callout-teal has-icon">
+            <div class="callout-icon">&#x1F522;</div>
+            <div>
+                <div class="callout-title">Scope is Derived, Not Declared</div>
+                <div class="callout-text">
+                    Single-family vs multi-family is <strong>calculated from unit count</strong>, not declared by landlords.
+                    A house with 1 unit = single-family. Same house with 3 units = multi-family.
+                    This eliminates billing manipulation where landlords mislabel properties to get better rates.
+                </div>
+            </div>
+        </div>
+
+        <div class="callout callout-amber has-icon">
+            <div class="callout-icon">&#x1F3D8;</div>
+            <div>
+                <div class="callout-title">Community is a Wrapper, Not a Type</div>
+                <div class="callout-text">
+                    "Community" describes <strong>how listings are grouped for marketing</strong> — not what the properties are.
+                    A community might contain townhouses, apartments, and detached homes.
+                    It exists outside the property hierarchy as a container/wrapper concept.
+                </div>
+            </div>
+        </div>
+
+        <div class="callout callout-purple has-icon">
+            <div class="callout-icon">&#x1F3E2;</div>
+            <div>
+                <div class="callout-title">Condo is Ownership, Not Structure</div>
+                <div class="callout-text">
+                    "Condo" describes <strong>tenure/ownership</strong>, not building type.
+                    A high-rise, townhouse, or detached house can all be "condo" — it means you own your unit but share common areas.
+                    This is tracked as a separate attribute, not as a structure type.
+                </div>
+            </div>
+        </div>
+
+        <div class="callout callout-green has-icon">
+            <div class="callout-icon">&#x1F4B0;</div>
+            <div>
+                <div class="callout-title">Billing is Decoupled from Classification</div>
+                <div class="callout-text">
+                    The data model reflects <strong>reality</strong>, not billing optimization.
+                    Classify properties correctly first, then apply billing rules based on unit count and other factors.
+                    This prevents the data model from being distorted by business incentives.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed vs Extensible callout -->
+    <div class="callout callout-teal has-icon">
+        <div class="callout-icon">&#x1F511;</div>
+        <div>
+            <div class="callout-title">Fixed Dimensions, Extensible Values</div>
+            <div class="callout-text">
+                The <strong>six dimensions</strong> (Sector, Structure Type, etc.) are fixed — adding a new dimension is a major architectural change that affects the entire system.
+                But the <strong>values within each dimension</strong> (like adding "Yurt" to Structure Subtype) can grow over time without restructuring anything.
+                This is how we accommodate future acquisitions and niche platforms without breaking the core model.
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- Section 5: Dimension Details -->
+<section class="content-section">
+    <h2 class="section-title">Dimension Details</h2>
+    <p class="section-subtitle">Complete breakdown of each dimension's allowed values.</p>
+
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">All Dimensions & Values</div>
+                <div class="card-subtitle">What values are currently supported in each dimension</div>
+            </div>
+            <span class="badge badge-teal">Canonical</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Current Values</th>
+                        <th>Extensible?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Sector</strong></td>
+                        <td><code>residential</code>, <code>commercial</code></td>
+                        <td><span class="badge badge-gray">Fixed</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structure Type</strong></td>
+                        <td>
+                            <code>house</code>, <code>apartment_bldg</code>, <code>cottage</code>, <code>multiplex</code>,
+                            <code>office</code>, <code>retail</code>, <code>industrial</code>, <code>warehouse</code>,
+                            <code>land</code>, <code>mixed_use</code>, <code>special</code>, <code>mobile</code>
+                        </td>
+                        <td><span class="badge badge-teal">Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structure Subtype</strong></td>
+                        <td>
+                            <strong>House:</strong> <code>detached</code>, <code>semi</code>, <code>townhouse</code>, <code>row</code>, <code>link</code>, <code>stacked</code><br>
+                            <strong>Cottage:</strong> <code>cabin</code>, <code>aframe</code>, <code>yurt</code>, <code>treehouse</code>, <code>chalet</code>, <code>bunkie</code><br>
+                            <strong>Apartment:</strong> <code>lowrise</code>, <code>midrise</code>, <code>highrise</code>, <code>walkup</code><br>
+                            <strong>Office:</strong> <code>class_a</code>, <code>class_b</code>, <code>class_c</code>, <code>flex</code>
+                        </td>
+                        <td><span class="badge badge-teal">Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unit Type</strong></td>
+                        <td>
+                            <code>entire</code>, <code>basement</code>, <code>main_floor</code>, <code>upper</code>,
+                            <code>suite</code>, <code>room_private</code>, <code>room_shared</code>, <code>floor</code>,
+                            <code>loft</code>, <code>garage_suite</code>, <code>laneway</code>
+                        </td>
+                        <td><span class="badge badge-teal">Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Listing Type</strong></td>
+                        <td><code>rent</code>, <code>sale</code>, <code>lease</code>, <code>sublet</code></td>
+                        <td><span class="badge badge-gray">Fixed</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Purpose</strong></td>
+                        <td>
+                            <code>standard</code>, <code>student</code>, <code>senior</code>, <code>corporate</code>,
+                            <code>vacation</code>, <code>military</code>, <code>short_term</code>
+                        </td>
+                        <td><span class="badge badge-teal">Yes</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Section 6: Related Attributes -->
+<section class="content-section">
+    <h2 class="section-title">Related Attributes</h2>
+    <p class="section-subtitle">Additional data tracked alongside the six dimensions.</p>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Ownership Types</div>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">Tracked separately from structure — a detached house can be freehold, condo, co-op, etc.</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>freehold</code></td><td>Own the land and building</td></tr>
+                        <tr><td><code>condo</code></td><td>Own unit, share common areas</td></tr>
+                        <tr><td><code>coop</code></td><td>Own shares in corporation</td></tr>
+                        <tr><td><code>leasehold</code></td><td>Own building, lease land</td></tr>
+                        <tr><td><code>rental</code></td><td>Renting, no ownership</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Listing Structure</div>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">How listings are grouped — affects search and display but not classification.</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>unit</code></td><td>Single unit listing</td></tr>
+                        <tr><td><code>building</code></td><td>Entire building listing</td></tr>
+                        <tr><td><code>community</code></td><td>Multi-building development</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- External Note -->
+<div class="external-note">
+    <strong>&#x1F4DD; Note on External Integrations:</strong>
+    The canonical system also receives data from external sources (Zumper, Kijiji, MLS, Roomies) through inbound mappings.
+    These integrations are managed separately. Before modifying or removing any canonical value,
+    check with the integration team to ensure we don't break inbound data flows.
 </div>
