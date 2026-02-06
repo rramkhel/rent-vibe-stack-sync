@@ -4,16 +4,17 @@ export const config = {
 
 export default function middleware(request) {
   // Valid username:password combinations
+  // Hardcoded fallback for testing - remove after confirming it works
   const validUsers = {
-    'jupiter': process.env.AUTH_PASS_JUPITER,
-    'rachel': process.env.AUTH_PASS_RACHEL,
-    'demo1': process.env.AUTH_PASS_DEMO1,
-    'demo2': process.env.AUTH_PASS_DEMO2,
-    'demo3': process.env.AUTH_PASS_DEMO3,
-    'demo4': process.env.AUTH_PASS_DEMO4,
-    'demo5': process.env.AUTH_PASS_DEMO5,
-    'demo6': process.env.AUTH_PASS_DEMO6,
-    'demo7': process.env.AUTH_PASS_DEMO7,
+    'jupiter': process.env.AUTH_PASS_JUPITER || 'Nebula#Moons42!',
+    'rachel': process.env.AUTH_PASS_RACHEL || 'Teal$Stack2026',
+    'demo1': process.env.AUTH_PASS_DEMO1 || 'Comet9!Drift',
+    'demo2': process.env.AUTH_PASS_DEMO2 || 'Orbit#Flash88',
+    'demo3': process.env.AUTH_PASS_DEMO3 || 'Quasar$Leap21',
+    'demo4': process.env.AUTH_PASS_DEMO4 || 'Nova!Spark67',
+    'demo5': process.env.AUTH_PASS_DEMO5 || 'Pulsar#Wave33',
+    'demo6': process.env.AUTH_PASS_DEMO6 || 'Meteor$Fall99',
+    'demo7': process.env.AUTH_PASS_DEMO7 || 'Cosmic!Glow55',
   };
 
   const authHeader = request.headers.get('authorization');
