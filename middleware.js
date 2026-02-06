@@ -1,10 +1,9 @@
-// middleware.js
-// Basic auth protection for Vercel deployment
-// Localhost is unaffected - this only runs on Vercel's edge network
+export const config = {
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+};
 
-export function middleware(request) {
-  // List of valid username:password combinations
-  // Each user gets their own login - revoke access by removing their entry
+export default function middleware(request) {
+  // Valid username:password combinations
   const validUsers = {
     'jupiter': process.env.AUTH_PASS_JUPITER,
     'rachel': process.env.AUTH_PASS_RACHEL,
@@ -20,36 +19,38 @@ export function middleware(request) {
   const authHeader = request.headers.get('authorization');
 
   if (!authHeader || !authHeader.startsWith('Basic ')) {
-    return unauthorizedResponse();
+    return new Response('Authentication required', {
+      status: 401,
+      headers: {
+        'WWW-Authenticate': 'Basic realm="RentSync Prototypes"',
+      },
+    });
   }
 
-  // Decode the base64 credentials
-  const base64Credentials = authHeader.split(' ')[1];
-  const credentials = atob(base64Credentials);
-  const [username, password] = credentials.split(':');
+  try {
+    const base64Credentials = authHeader.split(' ')[1];
+    const credentials = atob(base64Credentials);
+    const [username, password] = credentials.split(':');
 
-  // Check if username exists and password matches
-  const expectedPassword = validUsers[username?.toLowerCase()];
+    const expectedPassword = validUsers[username?.toLowerCase()];
 
-  if (!expectedPassword || password !== expectedPassword) {
-    return unauthorizedResponse();
+    if (!expectedPassword || password !== expectedPassword) {
+      return new Response('Invalid credentials', {
+        status: 401,
+        headers: {
+          'WWW-Authenticate': 'Basic realm="RentSync Prototypes"',
+        },
+      });
+    }
+  } catch (e) {
+    return new Response('Authentication required', {
+      status: 401,
+      headers: {
+        'WWW-Authenticate': 'Basic realm="RentSync Prototypes"',
+      },
+    });
   }
 
-  // Auth successful - continue to the requested page
-  return;
+  // Auth successful - continue
+  return undefined;
 }
-
-function unauthorizedResponse() {
-  return new Response('Authentication required', {
-    status: 401,
-    headers: {
-      'WWW-Authenticate': 'Basic realm="RentSync Prototypes"',
-      'Content-Type': 'text/plain',
-    },
-  });
-}
-
-// Apply to all routes
-export const config = {
-  matcher: '/:path*',
-};
