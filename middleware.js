@@ -4,15 +4,15 @@ export const config = {
 
 export default function middleware(request) {
   const validUsers = {
-    'jupiter': process.env.AUTH_PASS_JUPITER || 'NebulaMoons42!',
-    'rachel': process.env.AUTH_PASS_RACHEL || 'Teal$Stack2026',
-    'demo1': process.env.AUTH_PASS_DEMO1 || 'Comet9!Drift',
-    'demo2': process.env.AUTH_PASS_DEMO2 || 'OrbitFlash88!',
-    'demo3': process.env.AUTH_PASS_DEMO3 || 'Quasar$Leap21',
-    'demo4': process.env.AUTH_PASS_DEMO4 || 'Nova!Spark67',
-    'demo5': process.env.AUTH_PASS_DEMO5 || 'PulsarWave33!',
-    'demo6': process.env.AUTH_PASS_DEMO6 || 'Meteor$Fall99',
-    'demo7': process.env.AUTH_PASS_DEMO7 || 'Cosmic!Glow55',
+    'jupiter': process.env.AUTH_PASS_JUPITER,
+    'rachel': process.env.AUTH_PASS_RACHEL,
+    'demo1': process.env.AUTH_PASS_DEMO1,
+    'demo2': process.env.AUTH_PASS_DEMO2,
+    'demo3': process.env.AUTH_PASS_DEMO3,
+    'demo4': process.env.AUTH_PASS_DEMO4,
+    'demo5': process.env.AUTH_PASS_DEMO5,
+    'demo6': process.env.AUTH_PASS_DEMO6,
+    'demo7': process.env.AUTH_PASS_DEMO7,
   };
 
   const authHeader = request.headers.get('authorization');
