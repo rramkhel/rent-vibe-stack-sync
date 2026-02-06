@@ -1,212 +1,105 @@
 /**
  * Property Classification Showcase - CSS Variables
- * Sprint 4.1: Foundation & Design System
+ * Sprint 4.1.1: Finalized Design System
  *
- * Color Philosophy:
- * - Every color signals meaning, no random decoration
- * - Teal primary for professional, data-forward aesthetic
- * - Semantic colors for specific purposes
+ * Combines:
+ * - L2 tabs: Logo square, underline navigation
+ * - L4 layout: Big number dimension cards, clean sections
+ * - L3 callouts: Teal bar callouts with color variants
  */
 
 :root {
     /* ==========================================================================
-       Primary Accent - Teal
+       Primary Accent
        ========================================================================== */
-    --teal-50: #f0fdfa;
-    --teal-100: #ccfbf1;
-    --teal-200: #99f6e4;
-    --teal-300: #5eead4;
-    --teal-400: #2dd4bf;
-    --teal-500: #14b8a6;
-    --teal-600: #0d9488;
-    --teal-700: #0f766e;
-    --teal-800: #115e59;
-    --teal-900: #134e4a;
-
-    --primary: var(--teal-700);
-    --primary-light: var(--teal-100);
-    --primary-dark: var(--teal-900);
+    --teal: #0f766e;
+    --teal-light: #ccfbf1;
+    --teal-dark: #115e59;
 
     /* ==========================================================================
-       Semantic Colors (used with intention)
+       Dimension Colors (use consistently everywhere)
        ========================================================================== */
-
-    /* Purple - Canonical/Source of Truth */
-    --purple-50: #faf5ff;
-    --purple-100: #ede9fe;
-    --purple-500: #8b5cf6;
-    --purple-600: #7c3aed;
-    --purple-700: #6d28d9;
-    --canonical: var(--purple-600);
-    --canonical-light: var(--purple-100);
-
-    /* Teal/Cyan - BSTK/RentSync Enterprise */
-    --cyan-50: #ecfeff;
-    --cyan-100: #cffafe;
-    --cyan-500: #06b6d4;
-    --cyan-600: #0891b2;
-    --cyan-700: #0e7490;
-    --enterprise: var(--cyan-600);
-    --enterprise-light: var(--cyan-100);
-
-    /* Green - ILS Platforms */
-    --green-50: #f0fdf4;
-    --green-100: #dcfce7;
-    --green-500: #22c55e;
-    --green-600: #16a34a;
-    --green-700: #15803d;
-    --ils: var(--green-600);
-    --ils-light: var(--green-100);
-
-    /* Orange - Spacelist/Commercial */
-    --orange-50: #fffbeb;
-    --orange-100: #fef3c7;
-    --orange-500: #f59e0b;
-    --orange-600: #d97706;
-    --orange-700: #b45309;
-    --commercial: var(--orange-600);
-    --commercial-light: var(--orange-100);
-
-    /* Pink - Purpose/Housing Types */
-    --pink-50: #fdf2f8;
-    --pink-100: #fce7f3;
-    --pink-500: #ec4899;
-    --pink-600: #db2777;
-    --pink-700: #be185d;
-    --purpose: var(--pink-600);
-    --purpose-light: var(--pink-100);
-
-    /* Blue - Mappings/Translations */
-    --blue-50: #eff6ff;
-    --blue-100: #dbeafe;
-    --blue-500: #3b82f6;
-    --blue-600: #2563eb;
-    --blue-700: #1d4ed8;
-    --mapping: var(--blue-600);
-    --mapping-light: var(--blue-100);
-
-    /* Amber - Niche/Specialty */
-    --amber-50: #fffbeb;
-    --amber-100: #fef3c7;
-    --amber-500: #f59e0b;
-    --amber-600: #d97706;
-    --niche: var(--amber-500);
-    --niche-light: var(--amber-100);
-
-    /* ==========================================================================
-       Neutrals - Slate Gray Scale
-       ========================================================================== */
-    --slate-50: #f8fafc;
-    --slate-100: #f1f5f9;
-    --slate-200: #e2e8f0;
-    --slate-300: #cbd5e1;
-    --slate-400: #94a3b8;
-    --slate-500: #64748b;
-    --slate-600: #475569;
-    --slate-700: #334155;
-    --slate-800: #1e293b;
-    --slate-900: #0f172a;
-    --slate-950: #020617;
-
-    /* ==========================================================================
-       Status Colors
-       ========================================================================== */
-    --success: #16a34a;
-    --success-light: #dcfce7;
-    --warning: #d97706;
-    --warning-light: #fef3c7;
-    --error: #dc2626;
-    --error-light: #fee2e2;
-    --info: #0891b2;
-    --info-light: #cffafe;
-
-    /* ==========================================================================
-       Dimension Colors (for sentence formula & cards)
-       ========================================================================== */
-    --dim-sector: var(--slate-600);
-    --dim-structure: var(--teal-600);
-    --dim-subtype: var(--teal-500);
-    --dim-unit: var(--blue-600);
-    --dim-listing: var(--green-600);
-    --dim-purpose: var(--pink-600);
-    --dim-ownership: var(--purple-600);
+    --dim-sector: #8b5cf6;
+    --dim-sector-light: #ede9fe;
+    --dim-structure: #f59e0b;
+    --dim-structure-light: #fef3c7;
+    --dim-subtype: #f97316;
+    --dim-subtype-light: #ffedd5;
+    --dim-unit: #0f766e;
+    --dim-unit-light: #ccfbf1;
+    --dim-listing: #22c55e;
+    --dim-listing-light: #dcfce7;
+    --dim-purpose: #ec4899;
+    --dim-purpose-light: #fce7f3;
 
     /* ==========================================================================
        Platform Colors
        ========================================================================== */
-    --platform-rentals: var(--green-600);
-    --platform-bstk: var(--cyan-600);
-    --platform-rentsync: var(--cyan-600);
-    --platform-spacelist: var(--orange-600);
-    --platform-woodcabins: var(--amber-500);
-    --platform-rentfaster: var(--blue-600);
-    --platform-rentboard: var(--green-500);
-    --platform-rentcanada: var(--teal-600);
+    --platform-ils: #22c55e;
+    --platform-ils-light: #dcfce7;
+    --platform-enterprise: #0891b2;
+    --platform-enterprise-light: #cffafe;
+    --platform-commercial: #d97706;
+    --platform-commercial-light: #fef3c7;
+
+    /* ==========================================================================
+       Status Colors
+       ========================================================================== */
+    --status-clean: #22c55e;
+    --status-clean-light: #dcfce7;
+    --status-decision: #f59e0b;
+    --status-decision-light: #fef3c7;
+    --status-tbd: #64748b;
+    --status-tbd-light: #f1f5f9;
+    --status-merge: #8b5cf6;
+    --status-merge-light: #ede9fe;
+
+    /* ==========================================================================
+       Neutrals (simplified gray scale)
+       ========================================================================== */
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
 
     /* ==========================================================================
        Typography
        ========================================================================== */
-    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Fira Mono', 'Droid Sans Mono', 'Source Code Pro', monospace;
-
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-    --text-4xl: 2.25rem;
-
-    --leading-tight: 1.25;
-    --leading-normal: 1.5;
-    --leading-relaxed: 1.625;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
 
     /* ==========================================================================
        Spacing
        ========================================================================== */
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-5: 1.25rem;
-    --space-6: 1.5rem;
-    --space-8: 2rem;
-    --space-10: 2.5rem;
-    --space-12: 3rem;
-    --space-16: 4rem;
-    --space-20: 5rem;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+
+    /* ==========================================================================
+       Borders
+       ========================================================================== */
+    --radius-sm: 4px;
+    --radius: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+    --radius-xl: 12px;
 
     /* ==========================================================================
        Shadows
        ========================================================================== */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-
-    /* ==========================================================================
-       Border Radius
-       ========================================================================== */
-    --radius-sm: 0.25rem;
-    --radius: 0.375rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 0.75rem;
-    --radius-xl: 1rem;
-    --radius-full: 9999px;
-
-    /* ==========================================================================
-       Transitions
-       ========================================================================== */
-    --transition-fast: 150ms ease;
-    --transition: 200ms ease;
-    --transition-slow: 300ms ease;
-
-    /* ==========================================================================
-       Layout
-       ========================================================================== */
-    --max-width: 1600px;
-    --header-height: 4rem;
-    --tabs-height: 3.5rem;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 }

@@ -42,7 +42,7 @@ function loadTabContent(tabId) {
  * Initialize main tab navigation
  */
 function initTabs() {
-    var tabs = document.querySelectorAll('.tab');
+    var tabs = document.querySelectorAll('.nav-tab');
     var tabContents = document.querySelectorAll('.tab-content');
 
     tabs.forEach(function(tab) {

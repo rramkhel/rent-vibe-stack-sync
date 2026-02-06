@@ -1,135 +1,84 @@
 /**
  * Property Classification Showcase - Layout
- * Sprint 4.1: Foundation & Design System
- *
- * Header, tab navigation, main content area
+ * Sprint 4.1.1: Finalized Design System (L2 style)
  */
 
 /* ==========================================================================
-   Page Header
+   Header (L2 style - logo square, white background)
    ========================================================================== */
 
-.page-header {
-    background-color: var(--slate-900);
-    color: white;
-    padding: var(--space-4) var(--space-6);
+.site-header {
+    padding: var(--space-5) var(--space-10);
+    border-bottom: 1px solid var(--gray-200);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    position: relative;
-    min-height: var(--header-height);
+    gap: var(--space-4);
+    background: var(--white);
 }
 
-/* Teal accent bar at top */
-.page-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--teal-500), var(--teal-700));
+.site-logo {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--teal) 0%, #14b8a6 100%);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
 }
 
-.page-header h1 {
-    font-size: var(--text-xl);
+.site-title {
+    font-size: 18px;
     font-weight: 600;
-    color: white;
-    margin: 0;
+    color: var(--gray-900);
 }
 
-.header-meta {
-    font-size: var(--text-sm);
-    color: var(--slate-400);
-    margin-top: var(--space-1);
-}
-
-.header-badge {
-    background-color: var(--teal-700);
-    color: white;
-    font-size: var(--text-xs);
-    font-weight: 500;
-    padding: var(--space-1) var(--space-3);
-    border-radius: var(--radius-full);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+.site-subtitle {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-top: 2px;
 }
 
 /* ==========================================================================
-   Tab Navigation
+   Navigation Tabs (L2 style - underline tabs)
    ========================================================================== */
 
-.tabs-container {
-    background-color: white;
-    border-bottom: 1px solid var(--slate-200);
+.site-nav {
+    padding: 0 var(--space-10);
+    display: flex;
+    gap: var(--space-8);
+    border-bottom: 1px solid var(--gray-200);
+    background: var(--white);
     position: sticky;
     top: 0;
     z-index: 50;
-    box-shadow: var(--shadow-sm);
 }
 
-.tabs {
-    display: flex;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 var(--space-4);
-    gap: var(--space-1);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.tab {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-3) var(--space-4);
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: var(--slate-600);
-    font-size: var(--text-sm);
+.nav-tab {
+    padding: var(--space-4) 0;
+    font-size: 14px;
     font-weight: 500;
+    color: var(--gray-500);
+    text-decoration: none;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s ease;
     cursor: pointer;
-    white-space: nowrap;
-    transition: all var(--transition-fast);
-    position: relative;
 }
 
-.tab:hover {
-    color: var(--slate-900);
-    background-color: var(--slate-50);
+.nav-tab:hover {
+    color: var(--gray-700);
+    text-decoration: none;
 }
 
-.tab.active {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
-}
-
-.tab-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    background-color: var(--slate-200);
-    color: var(--slate-600);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    border-radius: var(--radius-full);
-    transition: all var(--transition-fast);
-}
-
-.tab.active .tab-number {
-    background-color: var(--primary);
-    color: white;
-}
-
-.tab:hover .tab-number {
-    background-color: var(--slate-300);
-}
-
-.tab.active:hover .tab-number {
-    background-color: var(--primary);
+.nav-tab.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
 }
 
 /* ==========================================================================
@@ -137,10 +86,8 @@
    ========================================================================== */
 
 .main-content {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: var(--space-6);
-    min-height: calc(100vh - var(--header-height) - var(--tabs-height));
+    padding: var(--space-8) var(--space-10);
+    max-width: 1400px;
 }
 
 /* Tab content panels */
@@ -150,18 +97,24 @@
 
 .tab-content.active {
     display: block;
-    animation: fadeIn var(--transition) ease-out;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(4px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ==========================================================================
+   Section Titles (L4 style)
+   ========================================================================== */
+
+.section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: var(--space-5);
+}
+
+.section-subtitle {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-top: calc(-1 * var(--space-3));
+    margin-bottom: var(--space-5);
 }
 
 /* ==========================================================================
@@ -177,7 +130,7 @@
 .sub-tabs {
     display: inline-flex;
     gap: var(--space-1);
-    background-color: var(--slate-100);
+    background: var(--gray-100);
     padding: var(--space-1);
     border-radius: var(--radius-lg);
 }
@@ -187,21 +140,21 @@
     background: none;
     border: none;
     border-radius: var(--radius-md);
-    color: var(--slate-600);
-    font-size: var(--text-sm);
+    color: var(--gray-600);
+    font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.15s ease;
 }
 
 .sub-tab:hover {
-    color: var(--slate-900);
-    background-color: white;
+    color: var(--gray-900);
+    background: var(--white);
 }
 
 .sub-tab.active {
-    background-color: white;
-    color: var(--primary);
+    background: var(--white);
+    color: var(--teal);
     box-shadow: var(--shadow-sm);
 }
 
@@ -211,70 +164,4 @@
 
 .sub-tab-content.active {
     display: block;
-}
-
-/* ==========================================================================
-   Section Layout
-   ========================================================================== */
-
-.section {
-    margin-bottom: var(--space-8);
-}
-
-.section:last-child {
-    margin-bottom: 0;
-}
-
-.section-header {
-    margin-bottom: var(--space-4);
-}
-
-.section-title {
-    font-size: var(--text-xl);
-    font-weight: 600;
-    color: var(--slate-900);
-    margin-bottom: var(--space-2);
-}
-
-.section-subtitle {
-    font-size: var(--text-base);
-    color: var(--slate-500);
-}
-
-/* Grid layouts */
-.grid-2 {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
-}
-
-.grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-4);
-}
-
-.grid-4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-4);
-}
-
-.grid-6 {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: var(--space-4);
-}
-
-/* ==========================================================================
-   Footer (if needed)
-   ========================================================================== */
-
-.page-footer {
-    background-color: var(--slate-900);
-    color: var(--slate-400);
-    padding: var(--space-4) var(--space-6);
-    text-align: center;
-    font-size: var(--text-sm);
-    margin-top: auto;
 }

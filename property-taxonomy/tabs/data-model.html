@@ -1,96 +1,51 @@
 <!-- Tab 2: Data Model -->
-<div class="section">
-    <h2>The 6 Dimensions</h2>
-    <p class="text-muted">Every property classification can be described using exactly 6 dimensions.</p>
+<h2 class="section-title">The 6 Dimensions</h2>
+<p class="section-subtitle">Every property classification can be described using exactly 6 dimensions.</p>
 
-    <div class="grid-3" style="margin-top: var(--space-6);">
-        <div class="dimension-card" data-dimension="sector">
-            <div class="dimension-header">
-                <span class="dimension-name">Sector</span>
-                <span class="dimension-count">2 values</span>
-            </div>
-            <div class="dimension-values">
-                <span class="dimension-value">Residential</span>
-                <span class="dimension-value">Commercial</span>
-            </div>
-        </div>
+<div class="dim-grid">
+    <div class="dim-card has-color dim-sector">
+        <div class="dim-card-name">Sector</div>
+        <div class="dim-card-count">2</div>
+        <div class="dim-card-label">values</div>
+    </div>
 
-        <div class="dimension-card" data-dimension="structure">
-            <div class="dimension-header">
-                <span class="dimension-name">Structure Type</span>
-                <span class="dimension-count">12+ values</span>
-            </div>
-            <div class="dimension-values">
-                <span class="dimension-value">House</span>
-                <span class="dimension-value">Apartment</span>
-                <span class="dimension-value">Condo</span>
-                <span class="dimension-value">Office</span>
-                <span class="dimension-value">...</span>
-            </div>
-        </div>
+    <div class="dim-card has-color dim-structure">
+        <div class="dim-card-name">Structure Type</div>
+        <div class="dim-card-count">12+</div>
+        <div class="dim-card-label">values</div>
+    </div>
 
-        <div class="dimension-card" data-dimension="subtype">
-            <div class="dimension-header">
-                <span class="dimension-name">Structure Subtype</span>
-                <span class="dimension-count">20+ values</span>
-            </div>
-            <div class="dimension-values">
-                <span class="dimension-value">Detached</span>
-                <span class="dimension-value">High Rise</span>
-                <span class="dimension-value">A-Frame</span>
-                <span class="dimension-value">Class A</span>
-                <span class="dimension-value">...</span>
-            </div>
-        </div>
+    <div class="dim-card has-color dim-subtype">
+        <div class="dim-card-name">Structure Subtype</div>
+        <div class="dim-card-count">20+</div>
+        <div class="dim-card-label">values</div>
+    </div>
 
-        <div class="dimension-card" data-dimension="unit">
-            <div class="dimension-header">
-                <span class="dimension-name">Unit Type</span>
-                <span class="dimension-count">9 values</span>
-            </div>
-            <div class="dimension-values">
-                <span class="dimension-value">Entire Unit</span>
-                <span class="dimension-value">Basement</span>
-                <span class="dimension-value">Room</span>
-                <span class="dimension-value">Suite</span>
-                <span class="dimension-value">...</span>
-            </div>
-        </div>
+    <div class="dim-card has-color dim-unit">
+        <div class="dim-card-name">Unit Type</div>
+        <div class="dim-card-count">9</div>
+        <div class="dim-card-label">values</div>
+    </div>
 
-        <div class="dimension-card" data-dimension="listing">
-            <div class="dimension-header">
-                <span class="dimension-name">Listing Type</span>
-                <span class="dimension-count">4 values</span>
-            </div>
-            <div class="dimension-values">
-                <span class="dimension-value">Rent</span>
-                <span class="dimension-value">Sale</span>
-                <span class="dimension-value">Lease</span>
-                <span class="dimension-value">Sublet</span>
-            </div>
-        </div>
+    <div class="dim-card has-color dim-listing">
+        <div class="dim-card-name">Listing Type</div>
+        <div class="dim-card-count">4</div>
+        <div class="dim-card-label">values</div>
+    </div>
 
-        <div class="dimension-card" data-dimension="purpose">
-            <div class="dimension-header">
-                <span class="dimension-name">Purpose</span>
-                <span class="dimension-count">7 values</span>
-            </div>
-            <div class="dimension-values">
-                <span class="dimension-value">Conventional</span>
-                <span class="dimension-value">Student</span>
-                <span class="dimension-value">Senior</span>
-                <span class="dimension-value">Vacation</span>
-                <span class="dimension-value">...</span>
-            </div>
-        </div>
+    <div class="dim-card has-color dim-purpose">
+        <div class="dim-card-name">Purpose</div>
+        <div class="dim-card-count">7</div>
+        <div class="dim-card-label">values</div>
     </div>
 </div>
 
-<div class="section">
-    <h2>The Sentence Formula</h2>
-    <p class="text-muted">Every listing resolves to a human-readable sentence.</p>
+<h2 class="section-title">The Sentence Formula</h2>
+<p class="section-subtitle">Every listing resolves to a human-readable sentence.</p>
 
-    <div class="sentence-formula" style="margin-top: var(--space-4);">
+<div class="sentence-box">
+    <div class="sentence-label">Canonical Sentence</div>
+    <div class="sentence-text">
         A <span class="dim dim-purpose">conventional</span>
         <span class="dim dim-listing">rental</span>
         <span class="dim dim-unit">basement</span>
@@ -99,41 +54,51 @@
     </div>
 </div>
 
-<div class="section">
-    <h2>Key Concepts</h2>
+<h2 class="section-title">Key Concepts</h2>
 
-    <div class="callout callout-concept">
+<div class="callout callout-purple has-icon">
+    <div class="callout-icon">&#x1F4CA;</div>
+    <div>
         <div class="callout-title">Scope is Derived, Not Declared</div>
-        <div class="callout-content">
-            <p>Single-family vs multi-family is NOT a dimension. It's calculated from unit count.</p>
-            <code style="display: block; margin-top: var(--space-2);">IF property.units.count == 1 → Single-family billing<br>IF property.units.count > 1 → Multi-family billing</code>
+        <div class="callout-text">
+            Single-family vs multi-family is NOT a dimension. It's calculated from unit count.
+            <code style="display: block; margin-top: 8px;">IF property.units.count == 1 → Single-family billing<br>IF property.units.count > 1 → Multi-family billing</code>
         </div>
     </div>
+</div>
 
-    <div class="callout callout-concept">
+<div class="callout callout-amber has-icon">
+    <div class="callout-icon">&#x1F3D8;</div>
+    <div>
         <div class="callout-title">Community is a Wrapper, Not a Type</div>
-        <div class="callout-content">
-            <p>"Community" exists outside the property hierarchy. It's a Listing Structure concept:</p>
-            <ul style="margin-top: var(--space-2);">
+        <div class="callout-text">
+            "Community" exists outside the property hierarchy. It's a Listing Structure concept:
+            <ul style="margin-top: 8px; margin-left: 20px;">
                 <li><strong>Unit</strong> — One unit, one listing (Sarah's basement)</li>
                 <li><strong>Building</strong> — One building, multiple units (50-unit apartment)</li>
                 <li><strong>Community</strong> — Multiple buildings grouped (Development of 200 townhomes)</li>
             </ul>
         </div>
     </div>
+</div>
 
-    <div class="callout callout-concept">
+<div class="callout callout-teal has-icon">
+    <div class="callout-icon">&#x1F3E0;</div>
+    <div>
         <div class="callout-title">Condo is Ownership, Not Structure</div>
-        <div class="callout-content">
-            <p>"Condo" is about ownership model, not building shape. A high-rise can be condo. A townhouse can be condo. Resolution: Condo lives in a separate Ownership/Tenure attribute, not in Structure Type.</p>
+        <div class="callout-text">
+            "Condo" is about ownership model, not building shape. A high-rise can be condo. A townhouse can be condo. Resolution: Condo lives in a separate Ownership/Tenure attribute, not in Structure Type.
         </div>
     </div>
+</div>
 
-    <div class="callout callout-concept">
+<div class="callout callout-green has-icon">
+    <div class="callout-icon">&#x1F4B0;</div>
+    <div>
         <div class="callout-title">Billing is Decoupled from Classification</div>
-        <div class="callout-content">
-            <p>"Nobody should be changing how they structure their data to save on billing." — Steven</p>
-            <p>The data model should reflect reality, not billing optimization.</p>
+        <div class="callout-text">
+            "Nobody should be changing how they structure their data to save on billing." — Steven<br>
+            The data model should reflect reality, not billing optimization.
         </div>
     </div>
 </div>

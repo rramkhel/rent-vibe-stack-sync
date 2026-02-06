@@ -1,11 +1,11 @@
 <!-- Tab 4: Data Flow -->
-<div class="section">
-    <h2>Architecture Diagram</h2>
-    <p class="text-muted">How data flows through the classification system.</p>
+<h2 class="section-title">Architecture Diagram</h2>
+<p class="section-subtitle">How data flows through the classification system.</p>
 
-    <div class="card" style="margin-top: var(--space-6); padding: var(--space-8); text-align: center;">
+<div class="card">
+    <div class="card-body" style="text-align: center;">
         <!-- ASCII-style architecture diagram -->
-        <pre style="font-family: var(--font-mono); font-size: var(--text-sm); line-height: 1.8; text-align: left; display: inline-block; background: var(--slate-900); color: var(--slate-100); padding: var(--space-6); border-radius: var(--radius-lg);">
+        <pre style="font-family: var(--font-mono); font-size: 12px; line-height: 1.8; text-align: left; display: inline-block; background: var(--gray-900); color: var(--gray-100); padding: var(--space-6); border-radius: var(--radius-lg); overflow-x: auto;">
 ┌─────────────────────────────────────────────────────────────────┐
 │                      EXTERNAL SOURCES                           │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐        │
@@ -57,54 +57,61 @@
     </div>
 </div>
 
-<div class="section">
-    <h2>Listing Lifecycle</h2>
+<h2 class="section-title" style="margin-top: var(--space-8);">Listing Lifecycle</h2>
 
-    <div class="grid-3" style="margin-top: var(--space-4);">
-        <div class="card card-accent green">
-            <div class="card-body">
-                <h3 style="margin-bottom: var(--space-2);">1. Ingest</h3>
-                <p class="text-muted" style="font-size: var(--text-sm);">Data arrives from various sources. Validated and normalized to canonical schema.</p>
-            </div>
+<div class="grid-3">
+    <div class="card">
+        <div class="card-header">
+            <span class="badge badge-green">1</span>
         </div>
-
-        <div class="card card-accent purple">
-            <div class="card-body">
-                <h3 style="margin-bottom: var(--space-2);">2. Store</h3>
-                <p class="text-muted" style="font-size: var(--text-sm);">Canonical representation persisted. Full granularity preserved. "The Bible."</p>
-            </div>
+        <div class="card-body">
+            <h4 class="card-title">Ingest</h4>
+            <p class="text-muted text-small">Data arrives from various sources. Validated and normalized to canonical schema.</p>
         </div>
+    </div>
 
-        <div class="card card-accent blue">
-            <div class="card-body">
-                <h3 style="margin-bottom: var(--space-2);">3. Display</h3>
-                <p class="text-muted" style="font-size: var(--text-sm);">Per-platform mapping applied. Simplified for consumers, full for enterprise.</p>
-            </div>
+    <div class="card">
+        <div class="card-header">
+            <span class="badge badge-purple">2</span>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Store</h4>
+            <p class="text-muted text-small">Canonical representation persisted. Full granularity preserved. "The Bible."</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="badge badge-teal">3</span>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Display</h4>
+            <p class="text-muted text-small">Per-platform mapping applied. Simplified for consumers, full for enterprise.</p>
         </div>
     </div>
 </div>
 
-<div class="section">
-    <h2>Example Flow</h2>
+<h2 class="section-title" style="margin-top: var(--space-8);">Example Flow</h2>
 
-    <div class="code-block" style="margin-top: var(--space-4);">
-<span class="comment">// 1. BSTK sends simplified input</span>
+<div class="card">
+    <div class="card-body">
+        <pre style="font-family: var(--font-mono); font-size: 12px; line-height: 1.6; margin: 0; background: var(--gray-50); padding: var(--space-4); border-radius: var(--radius-md);"><span style="color: var(--gray-400);">// 1. BSTK sends simplified input</span>
 {
-  <span class="property">"property_type"</span>: <span class="string">"House"</span>,
-  <span class="property">"unit_type"</span>: <span class="string">"Basement"</span>
+  <span style="color: var(--teal);">"property_type"</span>: <span style="color: var(--dim-listing);">"House"</span>,
+  <span style="color: var(--teal);">"unit_type"</span>: <span style="color: var(--dim-listing);">"Basement"</span>
 }
 
-<span class="comment">// 2. Ingest layer infers and normalizes</span>
+<span style="color: var(--gray-400);">// 2. Ingest layer infers and normalizes</span>
 {
-  <span class="property">"sector"</span>: <span class="string">"Residential"</span>,       <span class="comment">// inferred from House</span>
-  <span class="property">"structureType"</span>: <span class="string">"House"</span>,
-  <span class="property">"structureSubtype"</span>: <span class="string">"Unknown"</span>,  <span class="comment">// not provided</span>
-  <span class="property">"unitType"</span>: <span class="string">"Basement"</span>,
-  <span class="property">"listingType"</span>: <span class="string">"Rent"</span>,        <span class="comment">// platform default</span>
-  <span class="property">"purpose"</span>: <span class="string">"Conventional"</span>      <span class="comment">// default</span>
+  <span style="color: var(--teal);">"sector"</span>: <span style="color: var(--dim-listing);">"Residential"</span>,       <span style="color: var(--gray-400);">// inferred from House</span>
+  <span style="color: var(--teal);">"structureType"</span>: <span style="color: var(--dim-listing);">"House"</span>,
+  <span style="color: var(--teal);">"structureSubtype"</span>: <span style="color: var(--dim-listing);">"Unknown"</span>,  <span style="color: var(--gray-400);">// not provided</span>
+  <span style="color: var(--teal);">"unitType"</span>: <span style="color: var(--dim-listing);">"Basement"</span>,
+  <span style="color: var(--teal);">"listingType"</span>: <span style="color: var(--dim-listing);">"Rent"</span>,        <span style="color: var(--gray-400);">// platform default</span>
+  <span style="color: var(--teal);">"purpose"</span>: <span style="color: var(--dim-listing);">"Conventional"</span>      <span style="color: var(--gray-400);">// default</span>
 }
 
-<span class="comment">// 3. Display on Rentals.ca</span>
-<span class="string">"House · Basement"</span>
+<span style="color: var(--gray-400);">// 3. Display on Rentals.ca</span>
+<span style="color: var(--dim-listing);">"House · Basement"</span></pre>
     </div>
 </div>
