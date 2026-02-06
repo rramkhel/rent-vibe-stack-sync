@@ -1,117 +1,209 @@
 <!-- Tab 4: Data Flow -->
-<h2 class="section-title">Architecture Diagram</h2>
-<p class="section-subtitle">How data flows through the classification system.</p>
 
-<div class="card">
-    <div class="card-body" style="text-align: center;">
-        <!-- ASCII-style architecture diagram -->
-        <pre style="font-family: var(--font-mono); font-size: 12px; line-height: 1.8; text-align: left; display: inline-block; background: var(--gray-900); color: var(--gray-100); padding: var(--space-6); border-radius: var(--radius-lg); overflow-x: auto;">
-┌─────────────────────────────────────────────────────────────────┐
-│                      EXTERNAL SOURCES                           │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐        │
-│  │  BSTK    │  │ RentSync │  │   API    │  │  Import  │        │
-│  │  Input   │  │  Input   │  │  Input   │  │  Files   │        │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘        │
-└───────┼─────────────┼─────────────┼─────────────┼───────────────┘
-        │             │             │             │
-        └──────────┬──┴──────┬──────┴──────┬──────┘
-                   │         │             │
-                   ▼         ▼             ▼
-        ┌──────────────────────────────────────────┐
-        │         INGEST / NORMALIZE                │
-        │  • Validate input                         │
-        │  • Map to canonical dimensions            │
-        │  • Infer missing values                   │
-        └────────────────────┬─────────────────────┘
-                             │
-                             ▼
-        ┌──────────────────────────────────────────┐
-        │       CANONICAL DATA STORE                │
-        │  ┌────────────────────────────────────┐  │
-        │  │ sector: Residential                │  │
-        │  │ structureType: House               │  │
-        │  │ structureSubtype: Detached         │  │
-        │  │ unitType: Basement                 │  │
-        │  │ listingType: Rent                  │  │
-        │  │ purpose: Conventional              │  │
-        │  └────────────────────────────────────┘  │
-        │           "The Bible"                    │
-        └────────────────────┬─────────────────────┘
-                             │
-                             ▼
-        ┌──────────────────────────────────────────┐
-        │         PLATFORM MAPPING LAYER            │
-        │  • Per-platform translation tables        │
-        │  • Visibility rules                       │
-        │  • Display formatting                     │
-        └────────────────────┬─────────────────────┘
-                             │
-        ┌────────┬───────────┼───────────┬─────────┐
-        │        │           │           │         │
-        ▼        ▼           ▼           ▼         ▼
-┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
-│Rentals  │ │  BSTK   │ │RentSync │ │Spacelist│ │ Future  │
-│   .ca   │ │         │ │         │ │         │ │Platforms│
-└─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘
-        </pre>
-    </div>
-</div>
+<!-- Section 1: The Listing Lifecycle -->
+<section class="content-section">
+    <h2 class="section-title">The Listing Lifecycle</h2>
+    <p class="section-subtitle">How a property listing moves through our systems:</p>
 
-<h2 class="section-title" style="margin-top: var(--space-8);">Listing Lifecycle</h2>
-
-<div class="grid-3">
-    <div class="card">
-        <div class="card-header">
-            <span class="badge badge-green">1</span>
+    <div class="flow-steps">
+        <div class="flow-step">
+            <div class="flow-step-number">1</div>
+            <div class="flow-step-title">Ingest</div>
+            <div class="flow-step-desc">Platform sends data</div>
         </div>
-        <div class="card-body">
-            <h4 class="card-title">Ingest</h4>
-            <p class="text-muted text-small">Data arrives from various sources. Validated and normalized to canonical schema.</p>
+        <div class="flow-step">
+            <div class="flow-step-number">2</div>
+            <div class="flow-step-title">Translate</div>
+            <div class="flow-step-desc">Convert to canonical</div>
+        </div>
+        <div class="flow-step">
+            <div class="flow-step-number">3</div>
+            <div class="flow-step-title">Store</div>
+            <div class="flow-step-desc">Save in canonical format</div>
+        </div>
+        <div class="flow-step">
+            <div class="flow-step-number">4</div>
+            <div class="flow-step-title">Display</div>
+            <div class="flow-step-desc">Translate for each platform</div>
         </div>
     </div>
+</section>
 
-    <div class="card">
-        <div class="card-header">
-            <span class="badge badge-purple">2</span>
+<hr class="divider">
+
+<!-- Section 2: System Architecture -->
+<section class="content-section">
+    <h2 class="section-title">System Architecture</h2>
+    <p class="section-subtitle">The complete data flow across our ecosystem:</p>
+
+    <div class="diagram-container">
+        <!-- External Partners Row -->
+        <div class="diagram-external-zone">
+            <div class="diagram-zone-label">External Partners (outside our scope)</div>
+            <div class="diagram-spokes">
+                <div class="diagram-box future">
+                    <div class="diagram-box-title">Zumper</div>
+                </div>
+                <div class="diagram-box future">
+                    <div class="diagram-box-title">Kijiji</div>
+                </div>
+                <div class="diagram-box future">
+                    <div class="diagram-box-title">MLS</div>
+                </div>
+                <div class="diagram-box future">
+                    <div class="diagram-box-title">Roomies</div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <h4 class="card-title">Store</h4>
-            <p class="text-muted text-small">Canonical representation persisted. Full granularity preserved. "The Bible."</p>
+
+        <div class="diagram-arrow-down">&#x21D5; Their mappings</div>
+
+        <!-- Canonical Hub -->
+        <div class="diagram-hub">
+            <div class="diagram-box canonical large">
+                <div class="diagram-box-title">&#x1F4D6; Canonical System (The Bible)</div>
+                <div class="diagram-box-subtitle">Sector • Structure • Unit Type • Listing Type • Purpose</div>
+            </div>
+        </div>
+
+        <div class="diagram-arrow-down">↓ Our mappings</div>
+
+        <!-- Our Platforms Row -->
+        <div class="diagram-spokes">
+            <div class="diagram-box platform">
+                <div class="diagram-box-title">BSTK / RentSync</div>
+                <div class="diagram-box-subtitle">Enterprise Clients</div>
+            </div>
+            <div class="diagram-box platform">
+                <div class="diagram-box-title">ILS Network</div>
+                <div class="diagram-box-subtitle">Rentals.ca, RentFaster, etc.</div>
+            </div>
+            <div class="diagram-box platform">
+                <div class="diagram-box-title">Spacelist</div>
+                <div class="diagram-box-subtitle">Commercial</div>
+            </div>
         </div>
     </div>
+</section>
 
-    <div class="card">
-        <div class="card-header">
-            <span class="badge badge-teal">3</span>
+<hr class="divider">
+
+<!-- Section 3: Example Full Journey -->
+<section class="content-section">
+    <h2 class="section-title">Example: Full Journey</h2>
+    <p class="section-subtitle">A BSTK listing displayed on Rentals.ca:</p>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-teal">Step 1</span>
+                <span class="card-title">BSTK Sends Data</span>
+            </div>
+            <div class="card-body">
+                <div class="example-row">
+                    <span class="example-label">Property Type:</span>
+                    <span class="example-value">Apartment</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Apt Type:</span>
+                    <span class="example-value">Basement</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Listing Type:</span>
+                    <span class="example-value">Rental</span>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <h4 class="card-title">Display</h4>
-            <p class="text-muted text-small">Per-platform mapping applied. Simplified for consumers, full for enterprise.</p>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-purple">Step 2</span>
+                <span class="card-title">Stored as Canonical</span>
+            </div>
+            <div class="card-body">
+                <div class="example-row">
+                    <span class="example-label">Sector:</span>
+                    <span class="example-value">Residential</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Structure Type:</span>
+                    <span class="example-value">Apartment Building</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Unit Type:</span>
+                    <span class="example-value">Basement</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Listing Type:</span>
+                    <span class="example-value">Rent</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Source:</span>
+                    <span class="example-value">BSTK-12345</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-green">Step 3</span>
+                <span class="card-title">Displayed on Rentals.ca</span>
+            </div>
+            <div class="card-body">
+                <div class="example-row">
+                    <span class="example-label">Property Type:</span>
+                    <span class="example-value">Apartment</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Apt Type:</span>
+                    <span class="example-value">Basement</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-amber">Step 3b</span>
+                <span class="card-title">Displayed on RentFaster</span>
+            </div>
+            <div class="card-body">
+                <div class="example-row">
+                    <span class="example-label">Property Category:</span>
+                    <span class="example-value">Single Unit</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">SU Property Type:</span>
+                    <span class="example-value">Basement</span>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<h2 class="section-title" style="margin-top: var(--space-8);">Example Flow</h2>
+<!-- Section 4: Key Takeaways -->
+<section class="content-section">
+    <div class="callout callout-teal has-icon">
+        <div class="callout-icon">&#x1F4A1;</div>
+        <div>
+            <div class="callout-title">Why This Matters</div>
+            <div class="callout-text">
+                <strong>Single source of truth:</strong> No matter where a listing came from or where it's displayed,
+                the canonical data is the definitive record.<br><br>
 
-<div class="card">
-    <div class="card-body">
-        <pre style="font-family: var(--font-mono); font-size: 12px; line-height: 1.6; margin: 0; background: var(--gray-50); padding: var(--space-4); border-radius: var(--radius-md);"><span style="color: var(--gray-400);">// 1. BSTK sends simplified input</span>
-{
-  <span style="color: var(--teal);">"property_type"</span>: <span style="color: var(--dim-listing);">"House"</span>,
-  <span style="color: var(--teal);">"unit_type"</span>: <span style="color: var(--dim-listing);">"Basement"</span>
-}
+                <strong>Platform flexibility:</strong> Each platform can show data in its own format without
+                requiring the source to change anything.<br><br>
 
-<span style="color: var(--gray-400);">// 2. Ingest layer infers and normalizes</span>
-{
-  <span style="color: var(--teal);">"sector"</span>: <span style="color: var(--dim-listing);">"Residential"</span>,       <span style="color: var(--gray-400);">// inferred from House</span>
-  <span style="color: var(--teal);">"structureType"</span>: <span style="color: var(--dim-listing);">"House"</span>,
-  <span style="color: var(--teal);">"structureSubtype"</span>: <span style="color: var(--dim-listing);">"Unknown"</span>,  <span style="color: var(--gray-400);">// not provided</span>
-  <span style="color: var(--teal);">"unitType"</span>: <span style="color: var(--dim-listing);">"Basement"</span>,
-  <span style="color: var(--teal);">"listingType"</span>: <span style="color: var(--dim-listing);">"Rent"</span>,        <span style="color: var(--gray-400);">// platform default</span>
-  <span style="color: var(--teal);">"purpose"</span>: <span style="color: var(--dim-listing);">"Conventional"</span>      <span style="color: var(--gray-400);">// default</span>
-}
-
-<span style="color: var(--gray-400);">// 3. Display on Rentals.ca</span>
-<span style="color: var(--dim-listing);">"House · Basement"</span></pre>
+                <strong>Future-proof:</strong> New platforms can be added by creating a new mapping layer —
+                no changes to the core data model required.
+            </div>
+        </div>
     </div>
+</section>
+
+<!-- External Note -->
+<div class="external-note">
+    <strong>&#x1F4DD; Note on External Data:</strong>
+    The external integrations (Zumper, Kijiji, MLS, Roomies) shown at the top are managed separately.
+    Our job is to make sure the canonical system doesn't break those integrations when we make changes.
+    Before modifying or removing any canonical value, check with the integration team.
 </div>

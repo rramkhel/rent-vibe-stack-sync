@@ -1,136 +1,301 @@
 <!-- Tab 3: Platform Mappings -->
-<h2 class="section-title">Platform Overview</h2>
-<p class="section-subtitle">How canonical data maps to each platform's schema.</p>
 
-<div class="platform-grid">
-    <div class="platform-card">
-        <div class="platform-card-header ils">
-            <span class="badge badge-green">ILS</span>
-            Rentals.ca
-        </div>
-        <div class="platform-card-body">
-            <div class="platform-display">Consumer-facing, simplified</div>
-            <div class="platform-note">Simplified categories for renters. Maps granular subtypes to broad categories.</div>
+<!-- Section 1: Same Data, Different Displays -->
+<section class="content-section">
+    <h2 class="section-title">Same Data, Different Displays</h2>
+    <p class="section-subtitle">The canonical system stores detailed data. Each platform decides how much detail to show.</p>
+
+    <div class="callout callout-amber has-icon">
+        <div class="callout-icon">&#x1F3AF;</div>
+        <div>
+            <div class="callout-title">The Problem We're Solving</div>
+            <div class="callout-text">
+                A "Yurt" needs to display as "House" on Rentals.ca (renters don't search for yurts),
+                but should remain "Yurt" on a niche glamping site. The canonical system stores "Yurt" —
+                each platform's mapping decides what to show.
+            </div>
         </div>
     </div>
+</section>
 
-    <div class="platform-card">
-        <div class="platform-card-header enterprise">
-            <span class="badge badge-teal">Enterprise</span>
-            BSTK / RentSync
-        </div>
-        <div class="platform-card-body">
-            <div class="platform-display">Full granularity, unit-based</div>
-            <div class="platform-note">Full dimensional model exposed. Property managers get complete control.</div>
-        </div>
-    </div>
+<!-- Section 2: How Mapping Works -->
+<section class="content-section">
+    <h2 class="section-title">How Mapping Works</h2>
 
-    <div class="platform-card">
-        <div class="platform-card-header commercial">
-            <span class="badge badge-amber">Commercial</span>
-            Spacelist
+    <div class="comparison-container">
+        <div class="comparison-side">
+            <div class="comparison-header canonical">Stored in Canonical</div>
+            <div class="comparison-body">
+                <div class="example-row">
+                    <span class="example-label">Sector:</span>
+                    <span class="example-value">Residential</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Structure:</span>
+                    <span class="example-value">Cottage</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Subtype:</span>
+                    <span class="example-value">A-Frame</span>
+                </div>
+            </div>
         </div>
-        <div class="platform-card-body">
-            <div class="platform-display">Office, Retail, Industrial</div>
-            <div class="platform-note">Commercial-specific fields: sqft, NNN lease, zoning. Different schema entirely.</div>
-        </div>
-    </div>
 
-    <div class="platform-card">
-        <div class="platform-card-header ils">
-            <span class="badge badge-green">Niche</span>
-            WoodCabins
-        </div>
-        <div class="platform-card-body">
-            <div class="platform-display">Vacation, cabin rentals</div>
-            <div class="platform-note">Specialty platform. A-Frame, Yurt, Treehouse are first-class citizens here.</div>
-        </div>
-    </div>
+        <div class="comparison-arrow">→</div>
 
-    <div class="platform-card">
-        <div class="platform-card-header ils">
-            <span class="badge badge-green">ILS</span>
-            RentFaster
-        </div>
-        <div class="platform-card-body">
-            <div class="platform-display">Property Category + Type</div>
-            <div class="platform-note">Different schema structure. Uses Property Category + types.</div>
-        </div>
-    </div>
-
-    <div class="platform-card">
-        <div class="platform-card-header ils">
-            <span class="badge badge-green">ILS</span>
-            RentBoard / RentCanada
-        </div>
-        <div class="platform-card-body">
-            <div class="platform-display">Simpler schemas</div>
-            <div class="platform-note">Simpler ILS platforms with fewer categories.</div>
+        <div class="comparison-side">
+            <div class="comparison-header platform">Displayed on Each Platform</div>
+            <div class="comparison-body">
+                <div class="example-row">
+                    <span class="example-label">Rentals.ca:</span>
+                    <span class="example-value">House</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">BSTK:</span>
+                    <span class="example-value">House</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">WoodCabins:</span>
+                    <span class="example-value">A-Frame</span>
+                </div>
+                <div class="example-row">
+                    <span class="example-label">Spacelist:</span>
+                    <span class="example-value text-muted">hidden</span>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<h2 class="section-title" style="margin-top: var(--space-8);">Bidirectional Mapping</h2>
+<hr class="divider">
 
-<div class="callout callout-teal">
-    <div class="callout-title">Outbound: Canonical → Platform</div>
-    <div class="callout-text">
-        Granular canonical data maps to simplified platform display. Lossless in terms of what we store, simplified for what we show.
+<!-- Section 3: Full Mapping Table -->
+<section class="content-section">
+    <h2 class="section-title">Mapping Table</h2>
+    <p class="section-subtitle">How structure types translate across platforms:</p>
+
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Canonical Value</th>
+                        <th><span class="badge badge-green">ILS Sites</span></th>
+                        <th><span class="badge badge-teal">BSTK/RentSync</span></th>
+                        <th><span class="badge badge-amber">Spacelist</span></th>
+                        <th><span class="badge badge-gray">WoodCabins</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Detached House</strong></td>
+                        <td>House</td>
+                        <td>House</td>
+                        <td class="text-muted">hidden</td>
+                        <td class="text-muted">hidden</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Semi-Detached</strong></td>
+                        <td>House</td>
+                        <td>Semi-Detached</td>
+                        <td class="text-muted">hidden</td>
+                        <td class="text-muted">hidden</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Townhouse</strong></td>
+                        <td>Townhouse</td>
+                        <td>Townhouse</td>
+                        <td class="text-muted">hidden</td>
+                        <td class="text-muted">hidden</td>
+                    </tr>
+                    <tr>
+                        <td><strong>A-Frame</strong></td>
+                        <td>House</td>
+                        <td>House</td>
+                        <td class="text-muted">hidden</td>
+                        <td>A-Frame</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Yurt</strong></td>
+                        <td>House</td>
+                        <td>House</td>
+                        <td class="text-muted">hidden</td>
+                        <td>Yurt</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cabin</strong></td>
+                        <td>House</td>
+                        <td>House</td>
+                        <td class="text-muted">hidden</td>
+                        <td>Cabin</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lowrise Apartment</strong></td>
+                        <td>Apartment</td>
+                        <td>Low Rise</td>
+                        <td class="text-muted">hidden</td>
+                        <td class="text-muted">hidden</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Highrise Apartment</strong></td>
+                        <td>Apartment</td>
+                        <td>High Rise</td>
+                        <td class="text-muted">hidden</td>
+                        <td class="text-muted">hidden</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Office (Class A)</strong></td>
+                        <td class="text-muted">hidden</td>
+                        <td class="text-muted">hidden</td>
+                        <td>Class A Office</td>
+                        <td class="text-muted">hidden</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Office (Class B)</strong></td>
+                        <td class="text-muted">hidden</td>
+                        <td class="text-muted">hidden</td>
+                        <td>Class B Office</td>
+                        <td class="text-muted">hidden</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Warehouse</strong></td>
+                        <td class="text-muted">hidden</td>
+                        <td class="text-muted">hidden</td>
+                        <td>Warehouse</td>
+                        <td class="text-muted">hidden</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Retail</strong></td>
+                        <td class="text-muted">hidden</td>
+                        <td class="text-muted">hidden</td>
+                        <td>Retail</td>
+                        <td class="text-muted">hidden</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+</section>
 
-<div class="callout callout-amber">
-    <div class="callout-title">Inbound: Platform → Canonical</div>
-    <div class="callout-text">
-        Can be "lossy" — if BSTK sends "House", we can't know if it's detached, cabin, or yurt. We store what we receive and infer where possible.
+<hr class="divider">
+
+<!-- Section 4: Search Filter Aggregation -->
+<section class="content-section">
+    <h2 class="section-title">Search Filter Aggregation</h2>
+    <p class="section-subtitle">When a renter searches for "House" on Rentals.ca, what do they actually get?</p>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">&#x1F50D; User selects "House" filter on Rentals.ca</div>
+        </div>
+        <div class="card-body">
+            <p class="text-muted mb-4">The system finds all canonical types that map to "House" for ILS:</p>
+
+            <div class="tag-cloud">
+                <span class="badge badge-teal">Detached House</span>
+                <span class="badge badge-teal">Semi-Detached</span>
+                <span class="badge badge-teal">Link House</span>
+                <span class="badge badge-teal">Mobile Home</span>
+                <span class="badge badge-teal">Cabin</span>
+                <span class="badge badge-teal">A-Frame</span>
+                <span class="badge badge-teal">Yurt</span>
+                <span class="badge badge-teal">Treehouse</span>
+                <span class="badge badge-teal">Cottage</span>
+                <span class="badge badge-teal">Chalet</span>
+            </div>
+
+            <p class="text-muted text-small mt-4">
+                All these listings appear in the "House" search results, even though they're stored
+                with their specific canonical type. The renter sees what they expect; the data stays precise.
+            </p>
+        </div>
     </div>
-</div>
+</section>
 
-<h2 class="section-title" style="margin-top: var(--space-8);">Mapping Table</h2>
-<p class="section-subtitle">Example of how canonical values map to each platform.</p>
+<!-- Section 5: Bidirectional Mapping -->
+<section class="content-section">
+    <div class="callout callout-teal has-icon">
+        <div class="callout-icon">&#x21D4;</div>
+        <div>
+            <div class="callout-title">Mapping is Bidirectional</div>
+            <div class="callout-text">
+                <strong>Outbound (Canonical → Platform):</strong> For display. Deterministic and lossless —
+                every canonical value maps to exactly one platform display value.<br><br>
 
-<div class="card">
-    <div class="card-body" style="padding: 0;">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Canonical</th>
-                    <th>Rentals.ca</th>
-                    <th>BSTK</th>
-                    <th>Spacelist</th>
-                    <th>WoodCabins</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>House / Detached</code></td>
-                    <td>House</td>
-                    <td>House - Detached</td>
-                    <td>—</td>
-                    <td>House</td>
-                </tr>
-                <tr>
-                    <td><code>Cottage / A-Frame</code></td>
-                    <td>House</td>
-                    <td>Cottage</td>
-                    <td>—</td>
-                    <td>A-Frame Cabin</td>
-                </tr>
-                <tr>
-                    <td><code>Apartment / High Rise</code></td>
-                    <td>Apartment</td>
-                    <td>Apartment - High Rise</td>
-                    <td>—</td>
-                    <td>—</td>
-                </tr>
-                <tr>
-                    <td><code>Office / Class A</code></td>
-                    <td>—</td>
-                    <td>—</td>
-                    <td>Class A Office</td>
-                    <td>—</td>
-                </tr>
-            </tbody>
-        </table>
+                <strong>Inbound (Platform → Canonical):</strong> For storage. Can be <em>lossy</em> —
+                if BSTK sends "House", we might not know if it's a detached house, cabin, or yurt.
+                That's why we capture detail at the source whenever possible.
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+<hr class="divider">
+
+<!-- Section 6: Platform Overview -->
+<section class="content-section">
+    <h2 class="section-title">Platform Overview</h2>
+    <p class="section-subtitle">What each platform shows and hides:</p>
+
+    <div class="grid-3">
+        <div class="card">
+            <div class="card-header" style="background: var(--platform-enterprise-light); border-bottom-color: var(--platform-enterprise-light);">
+                <div class="card-title" style="color: #0e7490;">&#x1F3E2; BSTK / RentSync</div>
+            </div>
+            <div class="card-body">
+                <p class="text-small text-muted mb-4">Enterprise property management</p>
+                <p class="text-small"><strong>Shows:</strong></p>
+                <ul class="compact-list">
+                    <li>Full residential taxonomy</li>
+                    <li>Detailed structure subtypes</li>
+                    <li>All unit types</li>
+                </ul>
+                <p class="text-small mt-4"><strong>Hides:</strong></p>
+                <ul class="compact-list">
+                    <li>Commercial types</li>
+                    <li>Niche subtypes (show as "House")</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" style="background: var(--platform-ils-light); border-bottom-color: var(--platform-ils-light);">
+                <div class="card-title" style="color: #15803d;">&#x1F310; ILS Network</div>
+            </div>
+            <div class="card-body">
+                <p class="text-small text-muted mb-4">Rentals.ca, RentFaster, etc.</p>
+                <p class="text-small"><strong>Shows:</strong></p>
+                <ul class="compact-list">
+                    <li>Standard residential types</li>
+                    <li>Renter-friendly names</li>
+                    <li>Purpose filters (Student, etc.)</li>
+                </ul>
+                <p class="text-small mt-4"><strong>Hides:</strong></p>
+                <ul class="compact-list">
+                    <li>Commercial types</li>
+                    <li>Niche types (collapse to "House")</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" style="background: var(--platform-commercial-light); border-bottom-color: var(--platform-commercial-light);">
+                <div class="card-title" style="color: #b45309;">&#x1F3EC; Spacelist</div>
+            </div>
+            <div class="card-body">
+                <p class="text-small text-muted mb-4">Commercial real estate</p>
+                <p class="text-small"><strong>Shows:</strong></p>
+                <ul class="compact-list">
+                    <li>Full commercial taxonomy</li>
+                    <li>Class A/B/C distinctions</li>
+                    <li>Industrial subtypes</li>
+                </ul>
+                <p class="text-small mt-4"><strong>Hides:</strong></p>
+                <ul class="compact-list">
+                    <li>All residential types</li>
+                    <li>Purpose dimension unused</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

@@ -706,3 +706,158 @@
 .external-note strong {
     color: var(--gray-800);
 }
+
+/* ==========================================================================
+   Comparison Container (Sprint 4.3)
+   ========================================================================== */
+
+.comparison-container {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+}
+
+.comparison-side {
+    flex: 1;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+.comparison-header {
+    padding: var(--space-3) var(--space-5);
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.comparison-header.canonical {
+    background: var(--teal-light);
+    color: var(--teal-dark);
+}
+
+.comparison-header.platform {
+    background: var(--dim-listing-light);
+    color: #15803d;
+}
+
+.comparison-body {
+    padding: var(--space-5);
+}
+
+.comparison-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-400);
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Tag Cloud (Sprint 4.3)
+   ========================================================================== */
+
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+/* ==========================================================================
+   Compact Lists (Sprint 4.3)
+   ========================================================================== */
+
+.compact-list {
+    margin: 0;
+    padding-left: var(--space-5);
+    font-size: 13px;
+    color: var(--gray-600);
+}
+
+.compact-list li {
+    margin-bottom: var(--space-1);
+}
+
+/* ==========================================================================
+   Flow Steps (Sprint 4.3)
+   ========================================================================== */
+
+.flow-steps {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.flow-step {
+    flex: 1;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    text-align: center;
+    position: relative;
+}
+
+.flow-step::after {
+    content: '→';
+    position: absolute;
+    right: -18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+    font-size: 20px;
+    z-index: 1;
+}
+
+.flow-step:last-child::after {
+    display: none;
+}
+
+.flow-step-number {
+    width: 32px;
+    height: 32px;
+    background: var(--teal);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0 auto var(--space-3);
+}
+
+.flow-step-title {
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: var(--space-1);
+}
+
+.flow-step-desc {
+    font-size: 13px;
+    color: var(--gray-500);
+}
+
+/* ==========================================================================
+   Diagram External Zone (Sprint 4.3)
+   ========================================================================== */
+
+.diagram-external-zone {
+    background: var(--gray-100);
+    border: 1px dashed var(--gray-300);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    margin-bottom: var(--space-4);
+}
+
+.diagram-zone-label {
+    font-size: 11px;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: var(--space-4);
+}
