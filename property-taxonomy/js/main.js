@@ -1,5 +1,7 @@
 /**
- * Property Taxonomy Demo - Main JavaScript
+ * Property Classification Showcase - Main JavaScript
+ * Sprint 4.1: Foundation & Design System
+ *
  * Handles tab navigation and dynamic content loading
  */
 
@@ -21,15 +23,23 @@ function loadTabContent(tabId) {
             container.innerHTML = html;
             container.dataset.loaded = 'true';
 
-            // Initialize examples browser after its HTML loads
-            if (tabId === 'examples' && typeof initExampleBrowser === 'function') {
-                initExampleBrowser();
+            // Initialize sub-tabs if this is the migration tab
+            if (tabId === 'migration') {
+                initSubTabs();
             }
+
+            // Initialize live examples if needed
+            if (tabId === 'live-examples' && typeof initLiveExamples === 'function') {
+                initLiveExamples();
+            }
+        })
+        .catch(function(error) {
+            container.innerHTML = '<div class="placeholder-box"><div class="placeholder-title">Content Loading Error</div><div class="placeholder-text">Could not load ' + tabId + '.html</div></div>';
         });
 }
 
 /**
- * Initialize tab navigation
+ * Initialize main tab navigation
  */
 function initTabs() {
     var tabs = document.querySelectorAll('.tab');
@@ -63,7 +73,7 @@ function initTabs() {
         });
     });
 
-    // Keyboard navigation
+    // Keyboard navigation for tabs
     tabs.forEach(function(tab, index) {
         tab.addEventListener('keydown', function(e) {
             var newIndex;
@@ -86,6 +96,36 @@ function initTabs() {
                 tabs[newIndex].focus();
                 tabs[newIndex].click();
             }
+        });
+    });
+}
+
+/**
+ * Initialize sub-tab navigation (for Migration tab)
+ */
+function initSubTabs() {
+    var subTabs = document.querySelectorAll('.sub-tab');
+    var subTabContents = document.querySelectorAll('.sub-tab-content');
+
+    if (!subTabs.length) return;
+
+    subTabs.forEach(function(subTab) {
+        subTab.addEventListener('click', function() {
+            var targetId = subTab.dataset.subtab;
+
+            // Update active sub-tab
+            subTabs.forEach(function(t) {
+                t.classList.remove('active');
+            });
+            subTab.classList.add('active');
+
+            // Update active sub-tab content
+            subTabContents.forEach(function(content) {
+                content.classList.remove('active');
+                if (content.id === targetId) {
+                    content.classList.add('active');
+                }
+            });
         });
     });
 }

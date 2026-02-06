@@ -1,0 +1,124 @@
+<!-- Tab 7: Live Examples -->
+<div class="section">
+    <h2>Interactive Classification Tool</h2>
+    <p class="text-muted">Select dimensions to see canonical output and platform mappings.</p>
+
+    <div class="placeholder-box" style="margin-top: var(--space-6);">
+        <div class="placeholder-icon">🎮</div>
+        <div class="placeholder-title">Live Examples Tool — Coming in Phase 5</div>
+        <div class="placeholder-text">
+            Interactive tool with dropdowns for all 6 dimensions, preset examples, and real-time platform mapping display.
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Preview: Example Layout</h2>
+
+    <div class="grid-2" style="margin-top: var(--space-4);">
+        <!-- Left: Input Panel -->
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Input Panel</h4>
+                <p class="card-subtitle">Select dimension values</p>
+            </div>
+            <div class="card-body">
+                <div style="margin-bottom: var(--space-4);">
+                    <label style="display: block; font-size: var(--text-sm); font-weight: 500; margin-bottom: var(--space-2);">Sector</label>
+                    <select class="btn btn-secondary" style="width: 100%; text-align: left;" disabled>
+                        <option>Residential</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: var(--space-4);">
+                    <label style="display: block; font-size: var(--text-sm); font-weight: 500; margin-bottom: var(--space-2);">Structure Type</label>
+                    <select class="btn btn-secondary" style="width: 100%; text-align: left;" disabled>
+                        <option>House</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: var(--space-4);">
+                    <label style="display: block; font-size: var(--text-sm); font-weight: 500; margin-bottom: var(--space-2);">Structure Subtype</label>
+                    <select class="btn btn-secondary" style="width: 100%; text-align: left;" disabled>
+                        <option>Detached</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: var(--space-4);">
+                    <label style="display: block; font-size: var(--text-sm); font-weight: 500; margin-bottom: var(--space-2);">Unit Type</label>
+                    <select class="btn btn-secondary" style="width: 100%; text-align: left;" disabled>
+                        <option>Basement</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: var(--space-4);">
+                    <label style="display: block; font-size: var(--text-sm); font-weight: 500; margin-bottom: var(--space-2);">Listing Type</label>
+                    <select class="btn btn-secondary" style="width: 100%; text-align: left;" disabled>
+                        <option>Rent</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="display: block; font-size: var(--text-sm); font-weight: 500; margin-bottom: var(--space-2);">Purpose</label>
+                    <select class="btn btn-secondary" style="width: 100%; text-align: left;" disabled>
+                        <option>Conventional</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Output Panel -->
+        <div>
+            <!-- Canonical Sentence -->
+            <div class="sentence-formula" style="margin-bottom: var(--space-4);">
+                A <span class="dim dim-purpose">conventional</span>
+                <span class="dim dim-listing">rental</span>
+                <span class="dim dim-unit">basement</span>
+                in a <span class="dim dim-subtype">detached</span>
+                <span class="dim dim-structure">house</span>
+            </div>
+
+            <!-- Platform Cards -->
+            <div class="platform-card" style="margin-bottom: var(--space-3);">
+                <div class="platform-header rentals">
+                    <span class="badge badge-ils">ILS</span>
+                    <div class="platform-name">Rentals.ca</div>
+                </div>
+                <div class="platform-body">
+                    <p style="font-weight: 600; margin-bottom: var(--space-2);">House · Basement</p>
+                    <p class="text-muted" style="font-size: var(--text-sm); margin: 0;">Filters: Basement, House</p>
+                </div>
+            </div>
+
+            <div class="platform-card" style="margin-bottom: var(--space-3);">
+                <div class="platform-header bstk">
+                    <span class="badge badge-enterprise">Enterprise</span>
+                    <div class="platform-name">BSTK / RentSync</div>
+                </div>
+                <div class="platform-body">
+                    <p style="font-weight: 600; margin-bottom: var(--space-2);">House - Detached · Basement Suite</p>
+                    <p class="text-muted" style="font-size: var(--text-sm); margin: 0;">Full granularity displayed</p>
+                </div>
+            </div>
+
+            <div class="platform-card" style="opacity: 0.5;">
+                <div class="platform-header spacelist">
+                    <span class="badge badge-commercial">Commercial</span>
+                    <div class="platform-name">Spacelist</div>
+                </div>
+                <div class="platform-body">
+                    <p class="text-muted" style="font-size: var(--text-sm); margin: 0;">Not applicable — Residential listing</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Preset Examples</h2>
+    <p class="text-muted">Quick scenarios to explore the system.</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4);">
+        <button class="btn btn-secondary" disabled>Basement in House</button>
+        <button class="btn btn-secondary" disabled>High-Rise Portfolio</button>
+        <button class="btn btn-secondary" disabled>A-Frame Cabin</button>
+        <button class="btn btn-secondary" disabled>Class A Office</button>
+        <button class="btn btn-secondary" disabled>Student Room</button>
+        <button class="btn btn-secondary" disabled>Condo Unit</button>
+    </div>
+</div>

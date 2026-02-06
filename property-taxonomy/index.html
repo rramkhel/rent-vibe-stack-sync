@@ -5,18 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Property Classification System — RentSync Data Architecture</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Commissioner:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/diagrams.css">
-    <link rel="stylesheet" href="css/code-blocks.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/examples.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -30,38 +23,44 @@
         <span class="header-badge">Internal Review</span>
     </header>
 
-    <!-- Tab Navigation -->
-    <nav class="tabs-container" role="tablist" aria-label="Demo sections">
+    <!-- Tab Navigation - 7 Tabs -->
+    <nav class="tabs-container" role="tablist" aria-label="Documentation sections">
         <div class="tabs">
             <button class="tab active" data-tab="overview" role="tab" aria-selected="true" aria-controls="overview" id="tab-overview">
-                <span class="tab-icon" aria-hidden="true">🎯</span> Overview
+                <span class="tab-number">1</span> Overview
             </button>
             <button class="tab" data-tab="data-model" role="tab" aria-selected="false" aria-controls="data-model" id="tab-data-model">
-                <span class="tab-icon" aria-hidden="true">📐</span> Data Model
+                <span class="tab-number">2</span> Data Model
             </button>
-            <button class="tab" data-tab="input-flows" role="tab" aria-selected="false" aria-controls="input-flows" id="tab-input-flows">
-                <span class="tab-icon" aria-hidden="true">📥</span> Input Flows
+            <button class="tab" data-tab="platform-mappings" role="tab" aria-selected="false" aria-controls="platform-mappings" id="tab-platform-mappings">
+                <span class="tab-number">3</span> Platform Mappings
             </button>
-            <button class="tab" data-tab="syndication" role="tab" aria-selected="false" aria-controls="syndication" id="tab-syndication">
-                <span class="tab-icon" aria-hidden="true">🔄</span> Syndication
+            <button class="tab" data-tab="data-flow" role="tab" aria-selected="false" aria-controls="data-flow" id="tab-data-flow">
+                <span class="tab-number">4</span> Data Flow
             </button>
-            <button class="tab" data-tab="examples" role="tab" aria-selected="false" aria-controls="examples" id="tab-examples">
-                <span class="tab-icon" aria-hidden="true">💡</span> Live Examples
+            <button class="tab" data-tab="reference" role="tab" aria-selected="false" aria-controls="reference" id="tab-reference">
+                <span class="tab-number">5</span> Complete Reference
+            </button>
+            <button class="tab" data-tab="migration" role="tab" aria-selected="false" aria-controls="migration" id="tab-migration">
+                <span class="tab-number">6</span> Migration Mapping
+            </button>
+            <button class="tab" data-tab="live-examples" role="tab" aria-selected="false" aria-controls="live-examples" id="tab-live-examples">
+                <span class="tab-number">7</span> Live Examples
             </button>
         </div>
     </nav>
 
     <!-- Tab Content — loaded dynamically from tabs/*.html -->
-    <main id="main-content">
+    <main id="main-content" class="main-content">
         <div id="overview" class="tab-content active" role="tabpanel" aria-labelledby="tab-overview" tabindex="0"></div>
         <div id="data-model" class="tab-content" role="tabpanel" aria-labelledby="tab-data-model" tabindex="0"></div>
-        <div id="input-flows" class="tab-content" role="tabpanel" aria-labelledby="tab-input-flows" tabindex="0"></div>
-        <div id="syndication" class="tab-content" role="tabpanel" aria-labelledby="tab-syndication" tabindex="0"></div>
-        <div id="examples" class="tab-content" role="tabpanel" aria-labelledby="tab-examples" tabindex="0"></div>
+        <div id="platform-mappings" class="tab-content" role="tabpanel" aria-labelledby="tab-platform-mappings" tabindex="0"></div>
+        <div id="data-flow" class="tab-content" role="tabpanel" aria-labelledby="tab-data-flow" tabindex="0"></div>
+        <div id="reference" class="tab-content" role="tabpanel" aria-labelledby="tab-reference" tabindex="0"></div>
+        <div id="migration" class="tab-content" role="tabpanel" aria-labelledby="tab-migration" tabindex="0"></div>
+        <div id="live-examples" class="tab-content" role="tabpanel" aria-labelledby="tab-live-examples" tabindex="0"></div>
     </main>
 
-    <script src="js/examples-data.js"></script>
-    <script src="js/examples.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

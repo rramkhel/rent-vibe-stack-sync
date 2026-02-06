@@ -1,0 +1,110 @@
+<!-- Tab 4: Data Flow -->
+<div class="section">
+    <h2>Architecture Diagram</h2>
+    <p class="text-muted">How data flows through the classification system.</p>
+
+    <div class="card" style="margin-top: var(--space-6); padding: var(--space-8); text-align: center;">
+        <!-- ASCII-style architecture diagram -->
+        <pre style="font-family: var(--font-mono); font-size: var(--text-sm); line-height: 1.8; text-align: left; display: inline-block; background: var(--slate-900); color: var(--slate-100); padding: var(--space-6); border-radius: var(--radius-lg);">
+┌─────────────────────────────────────────────────────────────────┐
+│                      EXTERNAL SOURCES                           │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐        │
+│  │  BSTK    │  │ RentSync │  │   API    │  │  Import  │        │
+│  │  Input   │  │  Input   │  │  Input   │  │  Files   │        │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘        │
+└───────┼─────────────┼─────────────┼─────────────┼───────────────┘
+        │             │             │             │
+        └──────────┬──┴──────┬──────┴──────┬──────┘
+                   │         │             │
+                   ▼         ▼             ▼
+        ┌──────────────────────────────────────────┐
+        │         INGEST / NORMALIZE                │
+        │  • Validate input                         │
+        │  • Map to canonical dimensions            │
+        │  • Infer missing values                   │
+        └────────────────────┬─────────────────────┘
+                             │
+                             ▼
+        ┌──────────────────────────────────────────┐
+        │       CANONICAL DATA STORE                │
+        │  ┌────────────────────────────────────┐  │
+        │  │ sector: Residential                │  │
+        │  │ structureType: House               │  │
+        │  │ structureSubtype: Detached         │  │
+        │  │ unitType: Basement                 │  │
+        │  │ listingType: Rent                  │  │
+        │  │ purpose: Conventional              │  │
+        │  └────────────────────────────────────┘  │
+        │           "The Bible"                    │
+        └────────────────────┬─────────────────────┘
+                             │
+                             ▼
+        ┌──────────────────────────────────────────┐
+        │         PLATFORM MAPPING LAYER            │
+        │  • Per-platform translation tables        │
+        │  • Visibility rules                       │
+        │  • Display formatting                     │
+        └────────────────────┬─────────────────────┘
+                             │
+        ┌────────┬───────────┼───────────┬─────────┐
+        │        │           │           │         │
+        ▼        ▼           ▼           ▼         ▼
+┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
+│Rentals  │ │  BSTK   │ │RentSync │ │Spacelist│ │ Future  │
+│   .ca   │ │         │ │         │ │         │ │Platforms│
+└─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘
+        </pre>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Listing Lifecycle</h2>
+
+    <div class="grid-3" style="margin-top: var(--space-4);">
+        <div class="card card-accent green">
+            <div class="card-body">
+                <h3 style="margin-bottom: var(--space-2);">1. Ingest</h3>
+                <p class="text-muted" style="font-size: var(--text-sm);">Data arrives from various sources. Validated and normalized to canonical schema.</p>
+            </div>
+        </div>
+
+        <div class="card card-accent purple">
+            <div class="card-body">
+                <h3 style="margin-bottom: var(--space-2);">2. Store</h3>
+                <p class="text-muted" style="font-size: var(--text-sm);">Canonical representation persisted. Full granularity preserved. "The Bible."</p>
+            </div>
+        </div>
+
+        <div class="card card-accent blue">
+            <div class="card-body">
+                <h3 style="margin-bottom: var(--space-2);">3. Display</h3>
+                <p class="text-muted" style="font-size: var(--text-sm);">Per-platform mapping applied. Simplified for consumers, full for enterprise.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Example Flow</h2>
+
+    <div class="code-block" style="margin-top: var(--space-4);">
+<span class="comment">// 1. BSTK sends simplified input</span>
+{
+  <span class="property">"property_type"</span>: <span class="string">"House"</span>,
+  <span class="property">"unit_type"</span>: <span class="string">"Basement"</span>
+}
+
+<span class="comment">// 2. Ingest layer infers and normalizes</span>
+{
+  <span class="property">"sector"</span>: <span class="string">"Residential"</span>,       <span class="comment">// inferred from House</span>
+  <span class="property">"structureType"</span>: <span class="string">"House"</span>,
+  <span class="property">"structureSubtype"</span>: <span class="string">"Unknown"</span>,  <span class="comment">// not provided</span>
+  <span class="property">"unitType"</span>: <span class="string">"Basement"</span>,
+  <span class="property">"listingType"</span>: <span class="string">"Rent"</span>,        <span class="comment">// platform default</span>
+  <span class="property">"purpose"</span>: <span class="string">"Conventional"</span>      <span class="comment">// default</span>
+}
+
+<span class="comment">// 3. Display on Rentals.ca</span>
+<span class="string">"House · Basement"</span>
+    </div>
+</div>
