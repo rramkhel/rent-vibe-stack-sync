@@ -1,7 +1,5 @@
 {
-  "functions": {
-    "middleware.js": {
-      "runtime": "edge"
-    }
-  }
+  "buildCommand": "",
+  "installCommand": "",
+  "framework": null
 }
