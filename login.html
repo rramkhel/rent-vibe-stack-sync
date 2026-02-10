@@ -166,8 +166,19 @@
   </div>
 
   <script>
-    // If already authenticated, redirect to home
+    // If already authenticated OR on localhost, redirect to home
     (function() {
+      var isLocalhost = window.location.hostname === 'localhost' ||
+                        window.location.hostname === '127.0.0.1';
+
+      // On localhost, just go straight to home
+      if (isLocalhost) {
+        document.cookie = 'rvss_auth=valid; path=/';
+        window.location.replace('/');
+        return;
+      }
+
+      // On production, check if already logged in
       var hasAuth = document.cookie.split(';').some(function(c) {
         return c.trim().indexOf('rvss_auth=') === 0;
       });

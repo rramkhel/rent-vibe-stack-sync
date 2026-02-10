@@ -76,7 +76,7 @@
                     <tr>
                         <td><span class="badge badge-amber">Structure Type</span></td>
                         <td>What kind of building?</td>
-                        <td><code>house</code>, <code>apartment_bldg</code>, <code>multi_unit_lr</code>, <code>cottage</code>, <code>office</code>, <code>retail</code>, <code>industrial</code></td>
+                        <td><code>house</code>, <code>townhouse_plex</code>, <code>apartment_bldg</code>, <code>cottage</code>, <code>office</code>, <code>retail</code>, <code>industrial</code></td>
                         <td><span class="badge badge-gray">1:1</span> — one per property</td>
                     </tr>
                     <tr>
@@ -88,7 +88,7 @@
                     <tr>
                         <td><span class="badge badge-teal">Unit Type</span></td>
                         <td>What portion is listed?</td>
-                        <td><code>entire</code>, <code>basement</code>, <code>suite</code>, <code>room_private</code>, <code>room_shared</code>, <code>floor</code>, <code>loft</code>, <code>spot</code></td>
+                        <td><code>entire</code>, <code>main_floor</code>, <code>basement</code>, <code>suite</code>, <code>loft</code>, <code>studio</code>, <code>room_private</code></td>
                         <td><span class="badge badge-gray">1:1</span> — one per listing</td>
                     </tr>
                     <tr>
@@ -370,7 +370,7 @@
                         <td><strong>Structure Type</strong></td>
                         <td>
                             <em style="color: var(--gray-400); font-size: 11px;">Residential:</em>
-                            <code>house</code>, <code>multi_unit_lr</code>, <code>apartment_bldg</code>, <code>cottage</code><br>
+                            <code>house</code>, <code>townhouse_plex</code>, <code>apartment_bldg</code>, <code>cottage</code><br>
                             <em style="color: var(--gray-400); font-size: 11px;">Commercial:</em>
                             <code>office</code>, <code>retail</code>, <code>industrial</code>, <code>hospitality</code>, <code>recreation</code>, <code>land</code>, <code>parking</code>
                         </td>
@@ -381,7 +381,7 @@
                         <td>
                             <em style="color: var(--gray-400); font-size: 11px;">House:</em>
                             <code>detached</code>, <code>mobile</code>, <code>garden_home</code><br>
-                            <em style="color: var(--gray-400); font-size: 11px;">Multi-Unit Low-Rise:</em>
+                            <em style="color: var(--gray-400); font-size: 11px;">Townhouse / Plex:</em>
                             <code>semi</code>, <code>townhouse</code>, <code>duplex</code>, <code>triplex</code>, <code>fourplex</code><br>
                             <em style="color: var(--gray-400); font-size: 11px;">Apartment Building:</em>
                             <code>low_rise</code>, <code>mid_rise</code>, <code>high_rise</code>, <code>walkup</code><br>
@@ -395,7 +395,16 @@
                     <tr>
                         <td><strong>Unit Type</strong></td>
                         <td>
-                            <code>entire</code>, <code>basement</code>, <code>suite</code>, <code>room_private</code>, <code>room_shared</code>, <code>floor</code>, <code>loft</code>, <code>spot</code>
+                            <em style="color: var(--gray-400); font-size: 11px;">Whole / portions:</em>
+                            <code>entire</code>, <code>main_floor</code>, <code>suite</code>, <code>basement</code><br>
+                            <em style="color: var(--gray-400); font-size: 11px;">Specialty layouts:</em>
+                            <code>loft</code>, <code>studio</code><br>
+                            <em style="color: var(--gray-400); font-size: 11px;">Accessory units:</em>
+                            <code>garden_suite</code>, <code>garage_suite</code><br>
+                            <em style="color: var(--gray-400); font-size: 11px;">Rooms:</em>
+                            <code>room_private</code>, <code>room_shared</code><br>
+                            <em style="color: var(--gray-400); font-size: 11px;">Commercial:</em>
+                            <code>floor</code>, <code>spot</code>
                         </td>
                         <td><span class="badge badge-teal">Yes</span></td>
                     </tr>
