@@ -63,6 +63,7 @@
                         <th>Dimension</th>
                         <th>Question It Answers</th>
                         <th>Example Values</th>
+                        <th>Cardinality</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,36 +71,46 @@
                         <td><span class="badge badge-purple">Sector</span></td>
                         <td>What broad category?</td>
                         <td><code>residential</code>, <code>commercial</code></td>
+                        <td><span class="badge badge-gray">1:1</span> — one per property</td>
                     </tr>
                     <tr>
                         <td><span class="badge badge-amber">Structure Type</span></td>
                         <td>What kind of building?</td>
-                        <td><code>house</code>, <code>apartment_bldg</code>, <code>office</code>, <code>cottage</code></td>
+                        <td><code>house</code>, <code>apartment_bldg</code>, <code>multi_unit_lr</code>, <code>cottage</code>, <code>office</code>, <code>retail</code>, <code>industrial</code></td>
+                        <td><span class="badge badge-gray">1:1</span> — one per property</td>
                     </tr>
                     <tr>
                         <td><span class="badge badge-orange">Structure Subtype</span></td>
                         <td>What specific variation?</td>
-                        <td><code>detached</code>, <code>semi</code>, <code>townhouse</code>, <code>aframe</code>, <code>yurt</code>, <code>class_a</code></td>
+                        <td><code>detached</code>, <code>semi</code>, <code>townhouse</code>, <code>duplex</code>, <code>low_rise</code>, <code>high_rise</code>, <code>aframe</code>, <code>yurt</code>, <code>class_a</code></td>
+                        <td><span class="badge badge-gray">1:1</span> — one per property</td>
                     </tr>
                     <tr>
                         <td><span class="badge badge-teal">Unit Type</span></td>
                         <td>What portion is listed?</td>
-                        <td><code>entire</code>, <code>basement</code>, <code>suite</code>, <code>room</code></td>
+                        <td><code>entire</code>, <code>basement</code>, <code>suite</code>, <code>room_private</code>, <code>room_shared</code>, <code>floor</code>, <code>loft</code>, <code>spot</code></td>
+                        <td><span class="badge badge-gray">1:1</span> — one per listing</td>
                     </tr>
                     <tr>
                         <td><span class="badge badge-green">Listing Type</span></td>
                         <td>What's the transaction?</td>
-                        <td><code>rent</code>, <code>sale</code>, <code>lease</code>, <code>sublet</code></td>
+                        <td><code>rent</code>, <code>sale</code>, <code>lease</code></td>
+                        <td><span class="badge badge-gray">1:1</span> — one per listing</td>
                     </tr>
                     <tr>
                         <td><span class="badge badge-pink">Purpose</span></td>
-                        <td>Who is it for?</td>
-                        <td><code>standard</code>, <code>student</code>, <code>senior</code>, <code>vacation</code>, <code>corporate</code></td>
+                        <td>Who/what is it for?</td>
+                        <td><code>standard</code>, <code>student</code>, <code>senior</code>, <code>corporate</code>, <code>vacation</code>, <code>short_term</code>, <code>military</code></td>
+                        <td><span class="badge badge-teal">1:N</span> — a listing can have multiple</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <p class="text-muted" style="margin-top: 12px; font-size: 13px;">
+        Most dimensions are 1:1 — a property has exactly one sector, one structure type, etc. Purpose is the exception: a listing can be tagged as both Student and Short-Term simultaneously.
+    </p>
 </section>
 
 <!-- Section 3: The Classification Sentence -->
@@ -358,41 +369,46 @@
                     <tr>
                         <td><strong>Structure Type</strong></td>
                         <td>
-                            <code>house</code>, <code>apartment_bldg</code>, <code>cottage</code>, <code>multiplex</code>,
-                            <code>office</code>, <code>retail</code>, <code>industrial</code>, <code>warehouse</code>,
-                            <code>land</code>, <code>mixed_use</code>, <code>special</code>, <code>mobile</code>
+                            <em style="color: var(--gray-400); font-size: 11px;">Residential:</em>
+                            <code>house</code>, <code>multi_unit_lr</code>, <code>apartment_bldg</code>, <code>cottage</code><br>
+                            <em style="color: var(--gray-400); font-size: 11px;">Commercial:</em>
+                            <code>office</code>, <code>retail</code>, <code>industrial</code>, <code>hospitality</code>, <code>recreation</code>, <code>land</code>, <code>parking</code>
                         </td>
                         <td><span class="badge badge-teal">Yes</span></td>
                     </tr>
                     <tr>
                         <td><strong>Structure Subtype</strong></td>
                         <td>
-                            <strong>House:</strong> <code>detached</code>, <code>semi</code>, <code>townhouse</code>, <code>row</code>, <code>link</code>, <code>stacked</code><br>
-                            <strong>Cottage:</strong> <code>cabin</code>, <code>aframe</code>, <code>yurt</code>, <code>treehouse</code>, <code>chalet</code>, <code>bunkie</code><br>
-                            <strong>Apartment:</strong> <code>lowrise</code>, <code>midrise</code>, <code>highrise</code>, <code>walkup</code><br>
-                            <strong>Office:</strong> <code>class_a</code>, <code>class_b</code>, <code>class_c</code>, <code>flex</code>
+                            <em style="color: var(--gray-400); font-size: 11px;">House:</em>
+                            <code>detached</code>, <code>mobile</code>, <code>garden_home</code><br>
+                            <em style="color: var(--gray-400); font-size: 11px;">Multi-Unit Low-Rise:</em>
+                            <code>semi</code>, <code>townhouse</code>, <code>duplex</code>, <code>triplex</code>, <code>fourplex</code><br>
+                            <em style="color: var(--gray-400); font-size: 11px;">Apartment Building:</em>
+                            <code>low_rise</code>, <code>mid_rise</code>, <code>high_rise</code>, <code>walkup</code><br>
+                            <em style="color: var(--gray-400); font-size: 11px;">Cottage/Cabin:</em>
+                            <code>cottage</code>, <code>cabin</code>, <code>aframe</code>, <code>chalet</code>, <code>yurt</code>, <code>treehouse</code><br>
+                            <em style="color: var(--gray-400); font-size: 11px;">Commercial:</em>
+                            <code>class_a</code>, <code>class_b</code>, <code>class_c</code>, <code>coworking</code>, <code>storefront</code>, <code>mall</code>, <code>strip_mall</code>, <code>warehouse</code>, <code>manufacturing</code>, <code>flex</code>, <code>storage</code>, <code>hotel</code>, <code>motel</code>, <code>bnb</code>, <code>marina</code>, <code>campground</code>, <code>agricultural</code>, <code>vacant</code>
                         </td>
                         <td><span class="badge badge-teal">Yes</span></td>
                     </tr>
                     <tr>
                         <td><strong>Unit Type</strong></td>
                         <td>
-                            <code>entire</code>, <code>basement</code>, <code>main_floor</code>, <code>upper</code>,
-                            <code>suite</code>, <code>room_private</code>, <code>room_shared</code>, <code>floor</code>,
-                            <code>loft</code>, <code>garage_suite</code>, <code>laneway</code>
+                            <code>entire</code>, <code>basement</code>, <code>suite</code>, <code>room_private</code>, <code>room_shared</code>, <code>floor</code>, <code>loft</code>, <code>spot</code>
                         </td>
                         <td><span class="badge badge-teal">Yes</span></td>
                     </tr>
                     <tr>
                         <td><strong>Listing Type</strong></td>
-                        <td><code>rent</code>, <code>sale</code>, <code>lease</code>, <code>sublet</code></td>
+                        <td><code>rent</code>, <code>sale</code>, <code>lease</code></td>
                         <td><span class="badge badge-gray">Fixed</span></td>
                     </tr>
                     <tr>
                         <td><strong>Purpose</strong></td>
                         <td>
                             <code>standard</code>, <code>student</code>, <code>senior</code>, <code>corporate</code>,
-                            <code>vacation</code>, <code>military</code>, <code>short_term</code>
+                            <code>vacation</code>, <code>short_term</code>, <code>military</code>
                         </td>
                         <td><span class="badge badge-teal">Yes</span></td>
                     </tr>

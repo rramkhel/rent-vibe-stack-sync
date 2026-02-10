@@ -1,0 +1,586 @@
+<!-- Tab: Taxonomy Tree -->
+
+<section class="content-section">
+    <h2 class="section-title">Taxonomy Tree</h2>
+    <p class="section-subtitle">The complete hierarchy of canonical values, organized by Sector → Structure Type → Structure Subtype. Each subtype row shows which Unit Types, Listing Types, and Purposes are valid for that classification.</p>
+</section>
+
+<div class="callout callout-purple has-icon">
+    <div class="callout-icon">&#x1F9EA;</div>
+    <div>
+        <div class="callout-title">The Roll-Up Test</div>
+        <div class="callout-text">
+            Categorization uses the "roll-up test": if a platform only shows the parent category, would a user expect to find this subtype there? This is why Townhouse lives under Multi-Unit Low-Rise (not House) — a user searching "House" wouldn't expect attached housing.
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<!-- RESIDENTIAL SECTOR -->
+<section class="content-section">
+    <h3 class="section-title">Residential Sector</h3>
+
+    <!-- House -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">House</div>
+                <div class="card-subtitle">Standalone single-dwelling structures</div>
+            </div>
+            <span class="badge badge-purple">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Detached</strong> <code>detached</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Basement</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Room</span></td>
+                        <td><span class="badge badge-green">Rent</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mobile / Manufactured</strong> <code>mobile</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Rent</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-pink">Standard</span> <span class="badge badge-pink">Senior</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Garden Home</strong> <code>garden_home</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Basement</span> <span class="badge badge-teal">Suite</span></td>
+                        <td><span class="badge badge-green">Rent</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Multi-Unit Low-Rise -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Multi-Unit Low-Rise</div>
+                <div class="card-subtitle">Attached housing, 2-6 units, shares walls</div>
+            </div>
+            <span class="badge badge-purple">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Semi-Detached</strong> <code>semi</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Basement</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Room</span></td>
+                        <td><span class="badge badge-green">Rent</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Townhouse / Row</strong> <code>townhouse</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Basement</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Room</span></td>
+                        <td><span class="badge badge-green">Rent</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Duplex</strong> <code>duplex</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Basement</span> <span class="badge badge-teal">Suite</span></td>
+                        <td><span class="badge badge-green">Rent</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Triplex</strong> <code>triplex</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span></td>
+                        <td><span class="badge badge-green">Rent</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fourplex</strong> <code>fourplex</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span></td>
+                        <td><span class="badge badge-green">Rent</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Apartment Building -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Apartment Building</div>
+                <div class="card-subtitle">Multi-unit rental buildings, 5+ units</div>
+            </div>
+            <span class="badge badge-purple">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Low Rise</strong> <code>low_rise</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Basement</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Room</span> <span class="badge badge-teal">Loft</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mid Rise</strong> <code>mid_rise</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Room</span> <span class="badge badge-teal">Loft</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>High Rise</strong> <code>high_rise</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Room</span> <span class="badge badge-teal">Loft</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Walk-up</strong> <code>walkup</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Room</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-gray">Any</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Cottage / Cabin -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Cottage / Cabin</div>
+                <div class="card-subtitle">Recreational and rural dwellings</div>
+            </div>
+            <span class="badge badge-purple">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cottage</strong> <code>cottage</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-pink">Vacation</span> <span class="badge badge-pink">Short-Term</span> <span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cabin</strong> <code>cabin</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-pink">Vacation</span> <span class="badge badge-pink">Short-Term</span> <span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>A-Frame</strong> <code>aframe</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-pink">Vacation</span> <span class="badge badge-pink">Short-Term</span> <span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chalet</strong> <code>chalet</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-pink">Vacation</span> <span class="badge badge-pink">Short-Term</span> <span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Yurt</strong> <code>yurt</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-pink">Vacation</span> <span class="badge badge-pink">Short-Term</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Treehouse</strong> <code>treehouse</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Rent</span></td>
+                        <td><span class="badge badge-pink">Vacation</span> <span class="badge badge-pink">Short-Term</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- COMMERCIAL SECTOR -->
+<section class="content-section">
+    <h3 class="section-title">Commercial Sector</h3>
+
+    <!-- Office Building -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Office Building</div>
+                <div class="card-subtitle">Professional workspace properties</div>
+            </div>
+            <span class="badge badge-amber">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Class A</strong> <code>class_a</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Floor</span></td>
+                        <td><span class="badge badge-green">Lease</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-pink">Standard</span> <span class="badge badge-pink">Corporate</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Class B</strong> <code>class_b</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Floor</span></td>
+                        <td><span class="badge badge-green">Lease</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-pink">Standard</span> <span class="badge badge-pink">Corporate</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Class C</strong> <code>class_c</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Floor</span></td>
+                        <td><span class="badge badge-green">Lease</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-pink">Standard</span> <span class="badge badge-pink">Corporate</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Co-working</strong> <code>coworking</code></td>
+                        <td><span class="badge badge-teal">Suite</span> <span class="badge badge-teal">Spot</span></td>
+                        <td><span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Standard</span> <span class="badge badge-pink">Corporate</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Retail -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Retail</div>
+                <div class="card-subtitle">Consumer-facing commercial spaces</div>
+            </div>
+            <span class="badge badge-amber">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Storefront</strong> <code>storefront</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span></td>
+                        <td><span class="badge badge-green">Lease</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mall / Shopping Centre</strong> <code>mall</code></td>
+                        <td><span class="badge badge-teal">Suite</span></td>
+                        <td><span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Strip Mall</strong> <code>strip_mall</code></td>
+                        <td><span class="badge badge-teal">Suite</span></td>
+                        <td><span class="badge badge-green">Lease</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Industrial -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Industrial</div>
+                <div class="card-subtitle">Manufacturing, storage, and distribution</div>
+            </div>
+            <span class="badge badge-amber">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Warehouse</strong> <code>warehouse</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Floor</span></td>
+                        <td><span class="badge badge-green">Lease</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Manufacturing</strong> <code>manufacturing</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Lease</span> <span class="badge badge-green">Sale</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flex Space</strong> <code>flex</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span></td>
+                        <td><span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Storage Facility</strong> <code>storage</code></td>
+                        <td><span class="badge badge-teal">Entire</span> <span class="badge badge-teal">Suite</span></td>
+                        <td><span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Hospitality -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Hospitality</div>
+                <div class="card-subtitle">Accommodation and lodging</div>
+            </div>
+            <span class="badge badge-amber">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Hotel</strong> <code>hotel</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Sale</span> <span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Motel</strong> <code>motel</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Sale</span> <span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>B&B</strong> <code>bnb</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Sale</span> <span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Vacation</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Recreation -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Recreation</div>
+                <div class="card-subtitle">Leisure and outdoor facilities</div>
+            </div>
+            <span class="badge badge-amber">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Marina</strong> <code>marina</code></td>
+                        <td><span class="badge badge-teal">Spot</span></td>
+                        <td><span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Campground</strong> <code>campground</code></td>
+                        <td><span class="badge badge-teal">Spot</span></td>
+                        <td><span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Vacation</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Land -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Land</div>
+                <div class="card-subtitle">Undeveloped or agricultural property</div>
+            </div>
+            <span class="badge badge-amber">Structure Type</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Subtype</th>
+                        <th>Valid Unit Types</th>
+                        <th>Valid Listing Types</th>
+                        <th>Valid Purposes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Agricultural</strong> <code>agricultural</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Sale</span> <span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vacant Lot</strong> <code>vacant</code></td>
+                        <td><span class="badge badge-teal">Entire</span></td>
+                        <td><span class="badge badge-green">Sale</span> <span class="badge badge-green">Lease</span></td>
+                        <td><span class="badge badge-pink">Standard</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- Deferred Decisions -->
+<section class="content-section">
+    <h3 class="section-title">Deferred Decisions</h3>
+    <p class="section-subtitle">Items removed from the core tree, parked for focused stakeholder decisions.</p>
+
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Question</th>
+                        <th>Current Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Luxury</strong></td>
+                        <td>Subtype or quality attribute?</td>
+                        <td>Attribute (amenity tier) — not a structure type</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Loft</strong></td>
+                        <td>Unit Type or Structure Subtype?</td>
+                        <td>Currently in Unit Type — needs confirmation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Main Floor / Garage Suite / Laneway Suite</strong></td>
+                        <td>Specific unit types or collapse to "Suite" + location attribute?</td>
+                        <td>TBD — stakeholder input needed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sublet</strong></td>
+                        <td>Listing Type or Purpose?</td>
+                        <td>Listing Type (can't be both)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lease-to-Own / Rent-to-Own</strong></td>
+                        <td>Low volume — deprecate or keep?</td>
+                        <td>Needs stakeholder sign-off</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Co-op</strong></td>
+                        <td>Ownership attribute, Purpose, or Listing Type?</td>
+                        <td>Ownership attribute</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- Related Attributes -->
+<section class="content-section">
+    <h3 class="section-title">Related Attributes</h3>
+    <p class="section-subtitle">Data tracked alongside the main taxonomy tree.</p>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Ownership / Tenure</div>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">Tracked as an attribute, not a dimension:</p>
+                <p>
+                    <code>freehold</code>, <code>condo</code>, <code>coop</code>, <code>leasehold</code>, <code>rental</code>, <code>own_other</code>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Listing Structure</div>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">Derived, not declared:</p>
+                <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                    <li><strong>Unit</strong> (units == 1) → single-family billing</li>
+                    <li><strong>Building</strong> (units > 1) → multi-family billing</li>
+                    <li><strong>Community</strong> (buildings > 1) → wrapper for marketing/billing</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

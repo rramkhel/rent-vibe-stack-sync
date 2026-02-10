@@ -1,6 +1,6 @@
 <!-- Tab 3: Platform Mappings -->
 
-<!-- Section 1: Same Data, Different Displays -->
+<!-- Section 1: Introduction -->
 <section class="content-section">
     <h2 class="section-title">Same Data, Different Displays</h2>
     <p class="section-subtitle">The canonical system stores detailed data. Each platform decides how much detail to show.</p>
@@ -18,158 +18,403 @@
     </div>
 </section>
 
-<!-- Section 2: How Mapping Works -->
+<!-- Section 2: Legend -->
 <section class="content-section">
-    <h2 class="section-title">How Mapping Works</h2>
-
-    <div class="comparison-container">
-        <div class="comparison-side">
-            <div class="comparison-header canonical">Stored in Canonical</div>
-            <div class="comparison-body">
-                <div class="example-row">
-                    <span class="example-label">Sector:</span>
-                    <span class="example-value">Residential</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Structure:</span>
-                    <span class="example-value">Cottage</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Subtype:</span>
-                    <span class="example-value">A-Frame</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="comparison-arrow">→</div>
-
-        <div class="comparison-side">
-            <div class="comparison-header platform">Displayed on Each Platform</div>
-            <div class="comparison-body">
-                <div class="example-row">
-                    <span class="example-label">Rentals.ca:</span>
-                    <span class="example-value">House</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">BSTK:</span>
-                    <span class="example-value">House</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">WoodCabins:</span>
-                    <span class="example-value">A-Frame</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Spacelist:</span>
-                    <span class="example-value text-muted">hidden</span>
-                </div>
-            </div>
-        </div>
+    <h3 class="section-title">Legend</h3>
+    <div class="tag-cloud" style="margin-bottom: 24px;">
+        <span style="color: #15803d; font-weight: 500;">Green text</span> = same name on platform as canonical &nbsp;&nbsp;
+        <span style="color: #d97706; font-weight: 500;">Amber text</span> = renamed for this platform &nbsp;&nbsp;
+        <span style="color: #2563eb; font-weight: 500;">Blue text</span> = collapsed into a parent category &nbsp;&nbsp;
+        <span style="color: #9ca3af; font-style: italic;">Gray italic</span> = hidden / not shown on this platform
     </div>
 </section>
 
 <hr class="divider">
 
-<!-- Section 3: Full Mapping Table -->
+<!-- Section 3: Mapping Tables by Structure Type -->
 <section class="content-section">
-    <h2 class="section-title">Mapping Table</h2>
-    <p class="section-subtitle">How structure types translate across platforms:</p>
+    <h2 class="section-title">Mapping by Structure Type</h2>
+    <p class="section-subtitle">How each structure type group maps across the four platform families.</p>
 
+    <!-- House -->
     <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">House</div>
+                <div class="card-subtitle">Standalone single-dwelling structures</div>
+            </div>
+            <span class="badge badge-purple">Residential</span>
+        </div>
         <div class="card-body" style="padding: 0;">
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Canonical Value</th>
-                        <th><span class="badge badge-green">ILS Sites</span></th>
-                        <th><span class="badge badge-teal">BSTK/RentSync</span></th>
+                        <th>Canonical Subtype</th>
+                        <th><span class="badge badge-teal">BSTK / RentSync</span></th>
+                        <th><span class="badge badge-green">ILS Network</span></th>
                         <th><span class="badge badge-amber">Spacelist</span></th>
                         <th><span class="badge badge-gray">WoodCabins</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Detached House</strong></td>
-                        <td>House</td>
-                        <td>House</td>
-                        <td class="text-muted">hidden</td>
-                        <td class="text-muted">hidden</td>
+                        <td><code>detached</code></td>
+                        <td style="color: #15803d;">House → Detached</td>
+                        <td style="color: #15803d;">House</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                     <tr>
-                        <td><strong>Semi-Detached</strong></td>
-                        <td>House</td>
-                        <td>Semi-Detached</td>
-                        <td class="text-muted">hidden</td>
-                        <td class="text-muted">hidden</td>
+                        <td><code>mobile</code></td>
+                        <td style="color: #15803d;">Mobile Home</td>
+                        <td style="color: #2563eb;">House <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                     <tr>
-                        <td><strong>Townhouse</strong></td>
-                        <td>Townhouse</td>
-                        <td>Townhouse</td>
-                        <td class="text-muted">hidden</td>
-                        <td class="text-muted">hidden</td>
+                        <td><code>garden_home</code></td>
+                        <td style="color: #15803d;">Garden Home</td>
+                        <td style="color: #2563eb;">House <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Multi-Unit Low-Rise -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Multi-Unit Low-Rise</div>
+                <div class="card-subtitle">Attached housing, 2-6 units, shares walls</div>
+            </div>
+            <span class="badge badge-purple">Residential</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Canonical Subtype</th>
+                        <th><span class="badge badge-teal">BSTK / RentSync</span></th>
+                        <th><span class="badge badge-green">ILS Network</span></th>
+                        <th><span class="badge badge-amber">Spacelist</span></th>
+                        <th><span class="badge badge-gray">WoodCabins</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>semi</code></td>
+                        <td style="color: #15803d;">Semi House</td>
+                        <td style="color: #2563eb;">House <em>or</em> Duplex</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                     <tr>
-                        <td><strong>A-Frame</strong></td>
-                        <td>House</td>
-                        <td>House</td>
-                        <td class="text-muted">hidden</td>
-                        <td>A-Frame</td>
+                        <td><code>townhouse</code></td>
+                        <td style="color: #15803d;">Town House</td>
+                        <td style="color: #15803d;">Townhouse</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                     <tr>
-                        <td><strong>Yurt</strong></td>
-                        <td>House</td>
-                        <td>House</td>
-                        <td class="text-muted">hidden</td>
-                        <td>Yurt</td>
+                        <td><code>duplex</code></td>
+                        <td style="color: #15803d;">Duplex</td>
+                        <td style="color: #15803d;">Duplex</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                     <tr>
-                        <td><strong>Cabin</strong></td>
-                        <td>House</td>
-                        <td>House</td>
-                        <td class="text-muted">hidden</td>
-                        <td>Cabin</td>
+                        <td><code>triplex</code></td>
+                        <td style="color: #15803d;">Triplex</td>
+                        <td style="color: #2563eb;">House <em>or</em> Multi-Unit <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                     <tr>
-                        <td><strong>Lowrise Apartment</strong></td>
-                        <td>Apartment</td>
-                        <td>Low Rise</td>
-                        <td class="text-muted">hidden</td>
-                        <td class="text-muted">hidden</td>
+                        <td><code>fourplex</code></td>
+                        <td style="color: #15803d;">Fourplex</td>
+                        <td style="color: #2563eb;">House <em>or</em> Multi-Unit <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Apartment Building -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Apartment Building</div>
+                <div class="card-subtitle">Multi-unit rental buildings, 5+ units</div>
+            </div>
+            <span class="badge badge-purple">Residential</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Canonical Subtype</th>
+                        <th><span class="badge badge-teal">BSTK / RentSync</span></th>
+                        <th><span class="badge badge-green">ILS Network</span></th>
+                        <th><span class="badge badge-amber">Spacelist</span></th>
+                        <th><span class="badge badge-gray">WoodCabins</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>low_rise</code></td>
+                        <td style="color: #15803d;">Low Rise Apartment</td>
+                        <td style="color: #2563eb;">Apartment <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                     <tr>
-                        <td><strong>Highrise Apartment</strong></td>
-                        <td>Apartment</td>
-                        <td>High Rise</td>
-                        <td class="text-muted">hidden</td>
-                        <td class="text-muted">hidden</td>
+                        <td><code>mid_rise</code></td>
+                        <td style="color: #15803d;">Mid Rise Apartment</td>
+                        <td style="color: #2563eb;">Apartment <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                     <tr>
-                        <td><strong>Office (Class A)</strong></td>
-                        <td class="text-muted">hidden</td>
-                        <td class="text-muted">hidden</td>
-                        <td>Class A Office</td>
-                        <td class="text-muted">hidden</td>
+                        <td><code>high_rise</code></td>
+                        <td style="color: #15803d;">High Rise Apartment</td>
+                        <td style="color: #2563eb;">Apartment <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                     <tr>
-                        <td><strong>Office (Class B)</strong></td>
-                        <td class="text-muted">hidden</td>
-                        <td class="text-muted">hidden</td>
-                        <td>Class B Office</td>
-                        <td class="text-muted">hidden</td>
+                        <td><code>walkup</code></td>
+                        <td style="color: #d97706;">Low Rise Apartment <span style="color: var(--gray-400); font-size: 11px;">(renamed)</span></td>
+                        <td style="color: #2563eb;">Apartment <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Cottage / Cabin -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Cottage / Cabin</div>
+                <div class="card-subtitle">Recreational and rural dwellings</div>
+            </div>
+            <span class="badge badge-purple">Residential</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Canonical Subtype</th>
+                        <th><span class="badge badge-teal">BSTK / RentSync</span></th>
+                        <th><span class="badge badge-green">ILS Network</span></th>
+                        <th><span class="badge badge-amber">Spacelist</span></th>
+                        <th><span class="badge badge-gray">WoodCabins</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>cottage</code></td>
+                        <td style="color: #15803d;">Cottage</td>
+                        <td style="color: #2563eb;">House <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Cottage</td>
                     </tr>
                     <tr>
-                        <td><strong>Warehouse</strong></td>
-                        <td class="text-muted">hidden</td>
-                        <td class="text-muted">hidden</td>
-                        <td>Warehouse</td>
-                        <td class="text-muted">hidden</td>
+                        <td><code>cabin</code></td>
+                        <td style="color: #15803d;">Cabin</td>
+                        <td style="color: #2563eb;">House <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Cabin</td>
                     </tr>
                     <tr>
-                        <td><strong>Retail</strong></td>
-                        <td class="text-muted">hidden</td>
-                        <td class="text-muted">hidden</td>
-                        <td>Retail</td>
-                        <td class="text-muted">hidden</td>
+                        <td><code>aframe</code></td>
+                        <td style="color: #d97706;">Cabin <span style="color: var(--gray-400); font-size: 11px;">(renamed)</span></td>
+                        <td style="color: #2563eb;">House <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">A-Frame</td>
+                    </tr>
+                    <tr>
+                        <td><code>chalet</code></td>
+                        <td style="color: #d97706;">Cabin <span style="color: var(--gray-400); font-size: 11px;">(renamed)</span></td>
+                        <td style="color: #2563eb;">House <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Chalet</td>
+                    </tr>
+                    <tr>
+                        <td><code>yurt</code></td>
+                        <td style="color: #d97706;">Cabin <span style="color: var(--gray-400); font-size: 11px;">(renamed)</span></td>
+                        <td style="color: #2563eb;">House <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Yurt</td>
+                    </tr>
+                    <tr>
+                        <td><code>treehouse</code></td>
+                        <td style="color: #d97706;">Cabin <span style="color: var(--gray-400); font-size: 11px;">(renamed)</span></td>
+                        <td style="color: #2563eb;">House <span style="color: var(--gray-400); font-size: 11px;">(collapsed)</span></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Treehouse</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Office Building -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Office Building</div>
+                <div class="card-subtitle">Professional workspace properties</div>
+            </div>
+            <span class="badge badge-amber">Commercial</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Canonical Subtype</th>
+                        <th><span class="badge badge-teal">BSTK / RentSync</span></th>
+                        <th><span class="badge badge-green">ILS Network</span></th>
+                        <th><span class="badge badge-amber">Spacelist</span></th>
+                        <th><span class="badge badge-gray">WoodCabins</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>class_a</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Office — Class A</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                    <tr>
+                        <td><code>class_b</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Office — Class B</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                    <tr>
+                        <td><code>class_c</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Office — Class C</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                    <tr>
+                        <td><code>coworking</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Co-working</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Retail -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Retail</div>
+                <div class="card-subtitle">Consumer-facing commercial spaces</div>
+            </div>
+            <span class="badge badge-amber">Commercial</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Canonical Subtype</th>
+                        <th><span class="badge badge-teal">BSTK / RentSync</span></th>
+                        <th><span class="badge badge-green">ILS Network</span></th>
+                        <th><span class="badge badge-amber">Spacelist</span></th>
+                        <th><span class="badge badge-gray">WoodCabins</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>storefront</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Retail — Storefront</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                    <tr>
+                        <td><code>mall</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Retail — Mall</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                    <tr>
+                        <td><code>strip_mall</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Retail — Strip Mall</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Industrial -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Industrial</div>
+                <div class="card-subtitle">Manufacturing, storage, and distribution</div>
+            </div>
+            <span class="badge badge-amber">Commercial</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Canonical Subtype</th>
+                        <th><span class="badge badge-teal">BSTK / RentSync</span></th>
+                        <th><span class="badge badge-green">ILS Network</span></th>
+                        <th><span class="badge badge-amber">Spacelist</span></th>
+                        <th><span class="badge badge-gray">WoodCabins</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>warehouse</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Industrial — Warehouse</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                    <tr>
+                        <td><code>manufacturing</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Industrial — Manufacturing</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                    <tr>
+                        <td><code>flex</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Industrial — Flex</td>
+                        <td class="text-muted"><em>hidden</em></td>
+                    </tr>
+                    <tr>
+                        <td><code>storage</code></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td class="text-muted"><em>hidden</em></td>
+                        <td style="color: #15803d;">Industrial — Storage</td>
+                        <td class="text-muted"><em>hidden</em></td>
                     </tr>
                 </tbody>
             </table>
@@ -179,52 +424,77 @@
 
 <hr class="divider">
 
-<!-- Section 4: Search Filter Aggregation -->
+<!-- Section 4: Unit Type Overrides -->
 <section class="content-section">
-    <h2 class="section-title">Search Filter Aggregation</h2>
-    <p class="section-subtitle">When a renter searches for "House" on Rentals.ca, what do they actually get?</p>
+    <h2 class="section-title">Unit Type Overrides</h2>
+    <p class="section-subtitle">How Unit Types affect ILS display — some unit types override the structure type.</p>
 
     <div class="card">
-        <div class="card-header">
-            <div class="card-title">&#x1F50D; User selects "House" filter on Rentals.ca</div>
-        </div>
-        <div class="card-body">
-            <p class="text-muted mb-4">The system finds all canonical types that map to "House" for ILS:</p>
-
-            <div class="tag-cloud">
-                <span class="badge badge-teal">Detached House</span>
-                <span class="badge badge-teal">Semi-Detached</span>
-                <span class="badge badge-teal">Link House</span>
-                <span class="badge badge-teal">Mobile Home</span>
-                <span class="badge badge-teal">Cabin</span>
-                <span class="badge badge-teal">A-Frame</span>
-                <span class="badge badge-teal">Yurt</span>
-                <span class="badge badge-teal">Treehouse</span>
-                <span class="badge badge-teal">Cottage</span>
-                <span class="badge badge-teal">Chalet</span>
-            </div>
-
-            <p class="text-muted text-small mt-4">
-                All these listings appear in the "House" search results, even though they're stored
-                with their specific canonical type. The renter sees what they expect; the data stays precise.
-            </p>
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Canonical Unit Type</th>
+                        <th><span class="badge badge-teal">BSTK / RentSync</span></th>
+                        <th><span class="badge badge-green">ILS Display</span></th>
+                        <th><span class="badge badge-amber">Spacelist</span></th>
+                        <th><span class="badge badge-gray">WoodCabins</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>entire</code></td>
+                        <td>Entire Unit</td>
+                        <td><em>(implied — not shown separately)</em></td>
+                        <td>Entire</td>
+                        <td><em>(implied)</em></td>
+                    </tr>
+                    <tr>
+                        <td><code>basement</code></td>
+                        <td>Basement</td>
+                        <td><strong style="color: #7c3aed;">Overrides to Property Type: "Apartment", Apt Type: "Basement"</strong></td>
+                        <td class="text-muted">n/a</td>
+                        <td class="text-muted">n/a</td>
+                    </tr>
+                    <tr>
+                        <td><code>suite</code></td>
+                        <td>Suite</td>
+                        <td><em>(uses parent structure type)</em></td>
+                        <td>Suite</td>
+                        <td class="text-muted">n/a</td>
+                    </tr>
+                    <tr>
+                        <td><code>room_private</code></td>
+                        <td>Room</td>
+                        <td><strong style="color: #7c3aed;">Overrides to Property Type: "Room"</strong></td>
+                        <td class="text-muted">n/a</td>
+                        <td class="text-muted">n/a</td>
+                    </tr>
+                    <tr>
+                        <td><code>room_shared</code></td>
+                        <td>Room (Shared)</td>
+                        <td><strong style="color: #7c3aed;">Overrides to Property Type: "Room"</strong></td>
+                        <td class="text-muted">n/a</td>
+                        <td class="text-muted">n/a</td>
+                    </tr>
+                    <tr>
+                        <td><code>floor</code></td>
+                        <td>Floor</td>
+                        <td class="text-muted">n/a</td>
+                        <td>Floor</td>
+                        <td class="text-muted">n/a</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</section>
 
-<!-- Section 5: Bidirectional Mapping -->
-<section class="content-section">
-    <div class="callout callout-teal has-icon">
-        <div class="callout-icon">&#x21D4;</div>
+    <div class="callout callout-purple has-icon" style="margin-top: 16px;">
+        <div class="callout-icon">&#x1F4A1;</div>
         <div>
-            <div class="callout-title">Mapping is Bidirectional</div>
+            <div class="callout-title">Why This Matters</div>
             <div class="callout-text">
-                <strong>Outbound (Canonical → Platform):</strong> For display. Deterministic and lossless —
-                every canonical value maps to exactly one platform display value.<br><br>
-
-                <strong>Inbound (Platform → Canonical):</strong> For storage. Can be <em>lossy</em> —
-                if BSTK sends "House", we might not know if it's a detached house, cabin, or yurt.
-                That's why we capture detail at the source whenever possible.
+                On ILS sites, "Room" and "Basement" aren't structure types — they're Unit Types that override the display. A "Room" in a Townhouse displays as Property Type: "Room" on Rentals.ca, not "Townhouse." This is how we support third-party feeds like Roomies without needing "Room" as a Structure Type.
             </div>
         </div>
     </div>
@@ -232,69 +502,69 @@
 
 <hr class="divider">
 
-<!-- Section 6: Platform Overview -->
+<!-- Section 5: Ownership Display Overrides -->
 <section class="content-section">
-    <h2 class="section-title">Platform Overview</h2>
-    <p class="section-subtitle">What each platform shows and hides:</p>
+    <h2 class="section-title">Ownership Display Overrides</h2>
+    <p class="section-subtitle">How ownership attributes affect platform display.</p>
 
-    <div class="grid-3">
-        <div class="card">
-            <div class="card-header" style="background: var(--platform-enterprise-light); border-bottom-color: var(--platform-enterprise-light);">
-                <div class="card-title" style="color: #0e7490;">&#x1F3E2; BSTK / RentSync</div>
-            </div>
-            <div class="card-body">
-                <p class="text-small text-muted mb-4">Enterprise property management</p>
-                <p class="text-small"><strong>Shows:</strong></p>
-                <ul class="compact-list">
-                    <li>Full residential taxonomy</li>
-                    <li>Detailed structure subtypes</li>
-                    <li>All unit types</li>
-                </ul>
-                <p class="text-small mt-4"><strong>Hides:</strong></p>
-                <ul class="compact-list">
-                    <li>Commercial types</li>
-                    <li>Niche subtypes (show as "House")</li>
-                </ul>
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Ownership Value</th>
+                        <th><span class="badge badge-teal">BSTK / RentSync</span></th>
+                        <th><span class="badge badge-green">ILS Display</span></th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>condo</code></td>
+                        <td>Ownership field: "Condo"</td>
+                        <td><strong style="color: #7c3aed;">Overrides to Property Type: "Condo"</strong></td>
+                        <td>Replaces structure type in ILS display</td>
+                    </tr>
+                    <tr>
+                        <td><code>coop</code></td>
+                        <td>Ownership field: "Co-op"</td>
+                        <td>Category tag: "Co-op Housing"</td>
+                        <td>Adds filter tag, doesn't replace type</td>
+                    </tr>
+                    <tr>
+                        <td><code>freehold</code></td>
+                        <td>Ownership field: "Freehold"</td>
+                        <td><em>(no override — uses structure type)</em></td>
+                        <td>Default behavior</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="callout callout-amber has-icon" style="margin-top: 16px;">
+        <div class="callout-icon">&#x1F3E2;</div>
+        <div>
+            <div class="callout-title">"Condo" on ILS = Ownership, not Structure</div>
+            <div class="callout-text">
+                When a renter searches for "Condo" on Rentals.ca, the system queries all listings where <code>ownership = condo</code>, regardless of structure type. This means high-rises, townhouses, and even houses can appear in Condo search results.
             </div>
         </div>
+    </div>
+</section>
 
-        <div class="card">
-            <div class="card-header" style="background: var(--platform-ils-light); border-bottom-color: var(--platform-ils-light);">
-                <div class="card-title" style="color: #15803d;">&#x1F310; ILS Network</div>
-            </div>
-            <div class="card-body">
-                <p class="text-small text-muted mb-4">Rentals.ca, RentFaster, etc.</p>
-                <p class="text-small"><strong>Shows:</strong></p>
-                <ul class="compact-list">
-                    <li>Standard residential types</li>
-                    <li>Renter-friendly names</li>
-                    <li>Purpose filters (Student, etc.)</li>
-                </ul>
-                <p class="text-small mt-4"><strong>Hides:</strong></p>
-                <ul class="compact-list">
-                    <li>Commercial types</li>
-                    <li>Niche types (collapse to "House")</li>
-                </ul>
-            </div>
-        </div>
+<hr class="divider">
 
-        <div class="card">
-            <div class="card-header" style="background: var(--platform-commercial-light); border-bottom-color: var(--platform-commercial-light);">
-                <div class="card-title" style="color: #b45309;">&#x1F3EC; Spacelist</div>
-            </div>
-            <div class="card-body">
-                <p class="text-small text-muted mb-4">Commercial real estate</p>
-                <p class="text-small"><strong>Shows:</strong></p>
-                <ul class="compact-list">
-                    <li>Full commercial taxonomy</li>
-                    <li>Class A/B/C distinctions</li>
-                    <li>Industrial subtypes</li>
-                </ul>
-                <p class="text-small mt-4"><strong>Hides:</strong></p>
-                <ul class="compact-list">
-                    <li>All residential types</li>
-                    <li>Purpose dimension unused</li>
-                </ul>
+<!-- Section 6: How to Add a Platform -->
+<section class="content-section">
+    <h2 class="section-title">How to Add a Platform</h2>
+
+    <div class="callout callout-teal has-icon">
+        <div class="callout-icon">&#x2795;</div>
+        <div>
+            <div class="callout-title">Adding a new platform requires zero schema changes</div>
+            <div class="callout-text">
+                Decide which canonical values are visible, pick display names, add rows to the mapping table. Everything not explicitly mapped is hidden by default. WoodCabins.ca demonstrates this — it only sees Cottage/Cabin subtypes while everything else is invisible.
             </div>
         </div>
     </div>
