@@ -1,155 +1,633 @@
 <!-- Tab 5: Complete Reference -->
-<h2 class="section-title">Dimension Values</h2>
-<p class="section-subtitle">Complete list of all values for each dimension.</p>
+<div class="section-header">
+    <h2 class="section-title">Complete Reference</h2>
+    <p class="section-subtitle">The authoritative source for all classification values and platform schemas</p>
+</div>
 
-<div class="placeholder-box mb-6">
-    <div class="placeholder-icon">&#x1F4CA;</div>
-    <div class="placeholder-title">Full Reference Data — Coming in Phase 3</div>
-    <div class="placeholder-text">
-        This section will contain complete dimension values extracted from the Excel mapping files.
+<!-- Stats Row -->
+<div class="stats-row">
+    <div class="stat">
+        <div class="stat-value">47</div>
+        <div class="stat-label">Property Types</div>
+    </div>
+    <div class="stat">
+        <div class="stat-value">6</div>
+        <div class="stat-label">Dimensions</div>
+    </div>
+    <div class="stat">
+        <div class="stat-value">4</div>
+        <div class="stat-label">ILS Platforms</div>
+    </div>
+    <div class="stat">
+        <div class="stat-value">8</div>
+        <div class="stat-label">Housing Types</div>
+    </div>
+    <div class="stat">
+        <div class="stat-value">7</div>
+        <div class="stat-label">Ownership Types</div>
     </div>
 </div>
 
-<h2 class="section-title">Quick Reference</h2>
+<!-- Reference Navigation -->
+<nav class="reference-nav">
+    <a href="#ref-property-types">Property Types (47)</a>
+    <a href="#ref-housing-types">Housing Types (8)</a>
+    <a href="#ref-ownership-types">Ownership Types (7)</a>
+    <a href="#ref-ils-schemas">ILS Platform Schemas</a>
+    <a href="#ref-full-mapping">Full Mapping Table</a>
+</nav>
 
-<!-- Sector -->
-<div class="expandable open">
-    <div class="expandable-header">
-        <span class="expandable-title">Sector (2 values)</span>
-        <span class="expandable-icon">&#x25BC;</span>
-    </div>
-    <div class="expandable-content">
-        <div class="dimension-values">
-            <span class="dimension-value">Residential</span>
-            <span class="dimension-value">Commercial</span>
+<hr class="divider">
+
+<!-- Section 1: Property Types -->
+<section id="ref-property-types" class="content-section">
+    <h3 class="section-title">Property Types (47 Total)</h3>
+    <p class="section-subtitle">Organized by category from the Excel source data</p>
+
+    <!-- Residential SF -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Residential (SF) — Single Family</div>
+                <div class="card-subtitle">18 property types, restricted to one unit</div>
+            </div>
+            <span class="badge badge-purple">18 types</span>
+        </div>
+        <div class="card-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Property Type</th>
+                        <th>Residential Type</th>
+                        <th>Default Billing</th>
+                        <th>Restricted To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="cell-type">Basement</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Loft</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Main Floor</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Single Room (Private)</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Single Room (Shared)</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">House <span class="cell-default">(importer default)</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Semi House</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Town House</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Single-family Home</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Mobile Home</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Condo Unit</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Cabin</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Cottage</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Duplex</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Triplex</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Fourplex</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Garden Home</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                    <tr><td class="cell-type">Garage Suite</td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag sf">single-family</span></td><td><span class="cell-tag one">One unit</span></td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 
-<!-- Structure Type -->
-<div class="expandable">
-    <div class="expandable-header">
-        <span class="expandable-title">Structure Type (Residential)</span>
-        <span class="expandable-icon">&#x25BC;</span>
-    </div>
-    <div class="expandable-content">
-        <div class="dimension-values">
-            <span class="dimension-value">House</span>
-            <span class="dimension-value">Apartment Building</span>
-            <span class="dimension-value">Condo Building</span>
-            <span class="dimension-value">Multiplex</span>
-            <span class="dimension-value">Cottage</span>
-            <span class="dimension-value">Manufactured</span>
+    <!-- Residential MF -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Residential (MF) — Multi-Family</div>
+                <div class="card-subtitle">9 property types, multiple units allowed</div>
+            </div>
+            <span class="badge badge-teal">9 types</span>
+        </div>
+        <div class="card-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Property Type</th>
+                        <th>Residential Type</th>
+                        <th>Default Billing</th>
+                        <th>Restricted To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="cell-type">Low Rise Apartment</td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag multi">Multiple units</span></td></tr>
+                    <tr><td class="cell-type">Mid Rise Apartment <span class="cell-default">(importer default)</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag multi">Multiple units</span></td></tr>
+                    <tr><td class="cell-type">High Rise Apartment</td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag multi">Multiple units</span></td></tr>
+                    <tr><td class="cell-type">Luxury Apartment</td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag multi">Multiple units</span></td></tr>
+                    <tr><td class="cell-type">Town House Community</td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag multi">Multiple units</span></td></tr>
+                    <tr><td class="cell-type">Home/House Community</td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag multi">Multiple units</span></td></tr>
+                    <tr><td class="cell-type">Condo Community</td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag multi">Multiple units</span></td></tr>
+                    <tr><td class="cell-type">Multi-Unit House (Multiplex)</td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag multi">Multiple units</span></td></tr>
+                    <tr><td class="cell-type">Rooms</td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag mf">multi-family</span></td><td><span class="cell-tag multi">Multiple units</span></td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 
-<!-- Structure Type Commercial -->
-<div class="expandable">
-    <div class="expandable-header">
-        <span class="expandable-title">Structure Type (Commercial)</span>
-        <span class="expandable-icon">&#x25BC;</span>
-    </div>
-    <div class="expandable-content">
-        <div class="dimension-values">
-            <span class="dimension-value">Office Building</span>
-            <span class="dimension-value">Retail</span>
-            <span class="dimension-value">Industrial</span>
-            <span class="dimension-value">Warehouse</span>
-            <span class="dimension-value">Hospitality</span>
-            <span class="dimension-value">Land</span>
+    <!-- Commercial -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Commercial</div>
+                <div class="card-subtitle">6 commercial property types</div>
+            </div>
+            <span class="badge badge-amber">6 types</span>
+        </div>
+        <div class="card-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Property Type</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="cell-type">Industrial</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Land / Acreage</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Office <span class="cell-default">(default)</span></td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Retail</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Warehouse</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Speciality</td><td class="cell-na">—</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 
-<!-- Structure Subtype -->
-<div class="expandable">
-    <div class="expandable-header">
-        <span class="expandable-title">Structure Subtype (examples)</span>
-        <span class="expandable-icon">&#x25BC;</span>
-    </div>
-    <div class="expandable-content">
-        <p class="text-muted text-small mb-4">Subtypes are grouped by Structure Type:</p>
-        <p class="text-small"><strong>House:</strong> Detached, Semi-Detached, Townhouse, Row, Mobile</p>
-        <p class="text-small"><strong>Apartment:</strong> Low Rise, Mid Rise, High Rise, Walk-up</p>
-        <p class="text-small"><strong>Cottage:</strong> Cabin, A-Frame, Yurt, Treehouse</p>
-        <p class="text-small"><strong>Office:</strong> Class A, Class B, Class C</p>
-        <p class="text-small"><strong>Multiplex:</strong> Duplex, Triplex, Fourplex</p>
-    </div>
-</div>
-
-<!-- Unit Type -->
-<div class="expandable">
-    <div class="expandable-header">
-        <span class="expandable-title">Unit Type</span>
-        <span class="expandable-icon">&#x25BC;</span>
-    </div>
-    <div class="expandable-content">
-        <div class="dimension-values">
-            <span class="dimension-value">Entire Unit</span>
-            <span class="dimension-value">Basement</span>
-            <span class="dimension-value">Main Floor</span>
-            <span class="dimension-value">Suite</span>
-            <span class="dimension-value">Room (Private)</span>
-            <span class="dimension-value">Room (Shared)</span>
-            <span class="dimension-value">Floor</span>
-            <span class="dimension-value">Garage Suite</span>
-            <span class="dimension-value">Loft</span>
+    <!-- Recreation -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Recreation</div>
+                <div class="card-subtitle">5 recreation/hospitality property types</div>
+            </div>
+            <span class="badge badge-green">5 types</span>
+        </div>
+        <div class="card-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Property Type</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="cell-type">Leisure</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Hotel <span class="cell-default">(default)</span></td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Marina</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Motel</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Campground</td><td class="cell-na">—</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 
-<!-- Listing Type -->
-<div class="expandable">
-    <div class="expandable-header">
-        <span class="expandable-title">Listing Type</span>
-        <span class="expandable-icon">&#x25BC;</span>
-    </div>
-    <div class="expandable-content">
-        <div class="dimension-values">
-            <span class="dimension-value">Rent</span>
-            <span class="dimension-value">Sale</span>
-            <span class="dimension-value">Lease</span>
-            <span class="dimension-value">Sublet <span class="badge badge-tbd" style="margin-left: 4px;">TBD</span></span>
+    <!-- Other -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Other</div>
+                <div class="card-subtitle">6 miscellaneous property types</div>
+            </div>
+            <span class="badge badge-gray">6 types</span>
+        </div>
+        <div class="card-body">
+            <div class="note-box">
+                Items marked with a note indicate data cleanup needed (duplicates, unclear definitions).
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Property Type</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="cell-type">Agricultural</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Campground <span class="cell-note">(duplicate)</span></td><td>Duplicate of Recreation > Campground</td></tr>
+                    <tr><td class="cell-type">Construction / New Development</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Storage Facility</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Sub-division</td><td class="cell-na">—</td></tr>
+                    <tr><td class="cell-type">Parking</td><td class="cell-na">—</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Purpose -->
-<div class="expandable">
-    <div class="expandable-header">
-        <span class="expandable-title">Purpose</span>
-        <span class="expandable-icon">&#x25BC;</span>
-    </div>
-    <div class="expandable-content">
-        <div class="dimension-values">
-            <span class="dimension-value">Conventional/Standard</span>
-            <span class="dimension-value">Student</span>
-            <span class="dimension-value">Senior (55+)</span>
-            <span class="dimension-value">Military/Veteran</span>
-            <span class="dimension-value">Corporate</span>
-            <span class="dimension-value">Vacation</span>
-            <span class="dimension-value">Short-Term</span>
+<hr class="divider">
+
+<!-- Section 2: Housing Types -->
+<section id="ref-housing-types" class="content-section">
+    <h3 class="section-title">Housing Types (8)</h3>
+    <p class="section-subtitle">These map to the Purpose dimension in the new model</p>
+
+    <div class="callout callout-purple has-icon">
+        <span class="callout-icon">&#x1F4A1;</span>
+        <div>
+            <div class="callout-title">Housing Types are Attributes</div>
+            <div class="callout-text">
+                Housing Types can apply to any residential property, regardless of structure. A "Student Basement" and "Student High-Rise Apartment" are both valid combinations. This is why Housing Type became the "Purpose" dimension.
+            </div>
         </div>
     </div>
-</div>
 
-<h2 class="section-title mt-6">Platform Schemas</h2>
-<p class="section-subtitle">Each platform's field structure.</p>
-
-<div class="placeholder-box">
-    <div class="placeholder-icon">&#x1F50C;</div>
-    <div class="placeholder-title">Platform Schemas — Coming in Phase 3</div>
-    <div class="placeholder-text">
-        Expandable sections for BSTK, RentSync, Rentals.ca, RentFaster, RentBoard, RentCanada, Spacelist, WoodCabins.
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Housing Types</div>
+                <div class="card-subtitle">Applies to residential properties only</div>
+            </div>
+            <span class="badge badge-pink">8 types</span>
+        </div>
+        <div class="card-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Housing Type</th>
+                        <th>Maps To (New Model)</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="cell-type">Family/Conventional</td><td>Purpose: Standard</td><td>Default, general purpose</td></tr>
+                    <tr><td class="cell-type">Student</td><td>Purpose: Student</td><td>Near campus, student-oriented</td></tr>
+                    <tr><td class="cell-type">Military/Veteran</td><td>Purpose: Military</td><td>Military base proximity</td></tr>
+                    <tr><td class="cell-type">Corporate</td><td>Purpose: Corporate</td><td>Business/executive housing</td></tr>
+                    <tr><td class="cell-type">Short Term</td><td>Purpose: Short-Term</td><td>&lt; 12 month rentals</td></tr>
+                    <tr><td class="cell-type">Senior</td><td>Purpose: Senior</td><td>55+ age-restricted</td></tr>
+                    <tr><td class="cell-type">Vacation</td><td>Purpose: Vacation</td><td>Holiday/recreational</td></tr>
+                    <tr><td class="cell-type">Sublet <span class="badge badge-tbd" style="margin-left: 4px;">Changed</span></td><td>Transaction Type: Sublet</td><td>Changed from Housing Type to Transaction Type</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+</section>
+
+<hr class="divider">
+
+<!-- Section 3: Ownership Types -->
+<section id="ref-ownership-types" class="content-section">
+    <h3 class="section-title">Ownership Types (7)</h3>
+    <p class="section-subtitle">Current ownership classification with migration notes</p>
+
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Ownership Types</div>
+                <div class="card-subtitle">Several types have unclear mappings in the new model</div>
+            </div>
+            <span class="badge badge-teal">7 types</span>
+        </div>
+        <div class="card-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Ownership Type</th>
+                        <th>Maps To</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="cell-type">Co-op Housing</td><td>Ownership: Co-op</td><td><span class="badge badge-tbd">TBD</span> Could also be Purpose?</td></tr>
+                    <tr><td class="cell-type">Condo Association</td><td><span class="cell-question">?</span></td><td>Unclear — deprecate?</td></tr>
+                    <tr><td class="cell-type">Lease (long-term)</td><td>Transaction Type: Lease</td><td>—</td></tr>
+                    <tr><td class="cell-type">Own</td><td>Transaction Type: Sale</td><td>—</td></tr>
+                    <tr><td class="cell-type">Rental (short-term)</td><td>Transaction Type: Rent + Purpose: Short-Term</td><td>Split into two fields</td></tr>
+                    <tr><td class="cell-type">Lease-to-Own</td><td><span class="cell-question">?</span></td><td><span class="badge badge-tbd">TBD</span> Low volume, may deprecate</td></tr>
+                    <tr><td class="cell-type">Rent-to-Own</td><td><span class="cell-question">?</span></td><td><span class="badge badge-tbd">TBD</span> Low volume, may deprecate</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- Section 4: ILS Platform Schemas -->
+<section id="ref-ils-schemas" class="content-section">
+    <h3 class="section-title">ILS Platform Schemas</h3>
+    <p class="section-subtitle">Field structures for each ILS platform from Sheet 2 of the Excel</p>
+
+    <div class="note-box info">
+        <strong>Note from Excel:</strong> Louer is on the Rentals tech stack (same schema as Rentals.ca)
+    </div>
+
+    <div class="ils-grid">
+        <!-- Rentals.ca -->
+        <div class="ils-card">
+            <div class="ils-card-header rentals">Rentals.ca / TorontoRentals / Louer</div>
+            <div class="ils-card-body">
+                <div class="ils-field">
+                    <div class="ils-field-name">Property Type</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Condo</span>
+                        <span class="ils-value">Apartment</span>
+                        <span class="ils-value">House</span>
+                        <span class="ils-value">Room</span>
+                    </div>
+                </div>
+                <div class="ils-field">
+                    <div class="ils-field-name">Condo Type</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Condo</span>
+                    </div>
+                </div>
+                <div class="ils-field">
+                    <div class="ils-field-name">Apartment Type</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Apartment</span>
+                        <span class="ils-value">Studio</span>
+                        <span class="ils-value">Bachelor</span>
+                        <span class="ils-value">Basement</span>
+                        <span class="ils-value">Duplex</span>
+                        <span class="ils-value">Loft</span>
+                    </div>
+                </div>
+                <div class="ils-field">
+                    <div class="ils-field-name">House Type</div>
+                    <div class="ils-values">
+                        <span class="ils-value">House</span>
+                        <span class="ils-value">Town House</span>
+                        <span class="ils-value">Multi-Unit</span>
+                        <span class="ils-value">Cabin</span>
+                        <span class="ils-value">Cottage</span>
+                    </div>
+                </div>
+                <div class="ils-field">
+                    <div class="ils-field-name">Room Type</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Room</span>
+                    </div>
+                </div>
+                <div class="ils-field">
+                    <div class="ils-field-name">Categories (Filters)</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Corporate Housing</span>
+                        <span class="ils-value">Student Housing</span>
+                        <span class="ils-value">Senior Housing</span>
+                        <span class="ils-value">Co-op Housing</span>
+                        <span class="ils-value">Sublet</span>
+                        <span class="ils-value">Vacation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RentFaster -->
+        <div class="ils-card">
+            <div class="ils-card-header rentfaster">RentFaster</div>
+            <div class="ils-card-body">
+                <div class="ils-field">
+                    <div class="ils-field-name">Property Category</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Single Unit</span>
+                        <span class="ils-value">Apartment</span>
+                    </div>
+                </div>
+                <div class="ils-field">
+                    <div class="ils-field-name">Single Unit Property Type</div>
+                    <div class="ils-values">
+                        <span class="ils-value">House</span>
+                        <span class="ils-value">Townhouse</span>
+                        <span class="ils-value">Condo Unit</span>
+                        <span class="ils-value">Duplex</span>
+                        <span class="ils-value">Basement</span>
+                        <span class="ils-value">Main Floor</span>
+                        <span class="ils-value">Room For Rent</span>
+                        <span class="ils-value">Loft</span>
+                        <span class="ils-value">Vacation Home</span>
+                        <span class="ils-value">Parking Spot</span>
+                        <span class="ils-value">Acreage</span>
+                        <span class="ils-value">Office Space</span>
+                        <span class="ils-value">Mobile</span>
+                        <span class="ils-value">Storage</span>
+                    </div>
+                </div>
+                <div class="ils-field">
+                    <div class="ils-field-name">Apartment Type</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Apartment</span>
+                    </div>
+                </div>
+                <div class="ils-field">
+                    <div class="ils-field-name">Unit Type (within Apartment category)</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Loft</span>
+                        <span class="ils-value">Townhouse</span>
+                        <span class="ils-value">Duplex</span>
+                        <span class="ils-value">Room For Rent</span>
+                        <span class="ils-value">Mobile</span>
+                        <span class="ils-value">Office Space</span>
+                        <span class="ils-value">Parking Spot</span>
+                        <span class="ils-value">Apartment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RentBoard -->
+        <div class="ils-card">
+            <div class="ils-card-header rentboard">RentBoard</div>
+            <div class="ils-card-body">
+                <div class="ils-field">
+                    <div class="ils-field-name">Property Type</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Apartment</span>
+                        <span class="ils-value">Basement</span>
+                        <span class="ils-value">Commercial</span>
+                        <span class="ils-value">Condo</span>
+                        <span class="ils-value">Duplex</span>
+                        <span class="ils-value">House</span>
+                        <span class="ils-value">Main Floor</span>
+                        <span class="ils-value">Room</span>
+                        <span class="ils-value">Townhouse</span>
+                        <span class="ils-value">Other</span>
+                    </div>
+                </div>
+                <div class="ils-field">
+                    <div class="ils-field-name">Unit Details</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Furnished</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RentCanada -->
+        <div class="ils-card">
+            <div class="ils-card-header rentcanada">RentCanada / Zoeken</div>
+            <div class="ils-card-body">
+                <div class="ils-field">
+                    <div class="ils-field-name">Property Type</div>
+                    <div class="ils-values">
+                        <span class="ils-value">Apartment</span>
+                        <span class="ils-value">House</span>
+                        <span class="ils-value">Condo</span>
+                        <span class="ils-value">Townhouse</span>
+                        <span class="ils-value">Room</span>
+                        <span class="ils-value">Furnished</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- Section 5: Full Mapping Table -->
+<section id="ref-full-mapping" class="content-section">
+    <h3 class="section-title">Full Mapping Table</h3>
+    <p class="section-subtitle">Complete property type mapping from Sheet 1: "Mapping to Rentals Network"</p>
+
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Complete Property Type Mapping</div>
+                <div class="card-subtitle">All rows from Excel source</div>
+            </div>
+            <span class="badge badge-gray">Full Data</span>
+        </div>
+        <div class="card-body">
+            <div class="legend-box">
+                <div class="legend-title">Legend (from Excel)</div>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #fef3c7; border: 1px solid #fcd34d;"></span>
+                        Property type exists, needs mapping
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #dcfce7; border: 1px solid #86efac;"></span>
+                        New property type needs to be created
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #fee2e2; border: 1px solid #fca5a5;"></span>
+                        Something needs to be addressed
+                    </div>
+                </div>
+            </div>
+
+            <div class="mapping-table-wrapper">
+                <table class="data-table mapping-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 180px;">Property Type</th>
+                            <th style="width: 90px;">Res. Type</th>
+                            <th style="width: 90px;">Billing</th>
+                            <th style="width: 80px;">Restricted</th>
+                            <th style="min-width: 200px;">Rentals.ca / TorontoRentals</th>
+                            <th style="min-width: 120px;">RentBoard</th>
+                            <th style="min-width: 120px;">RentCanada</th>
+                            <th style="min-width: 220px;">RentFaster</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- RESIDENTIAL SF -->
+                        <tr class="category-row">
+                            <td colspan="8">RESIDENTIAL (SF) — Single Family — 18 types</td>
+                        </tr>
+                        <tr><td class="cell-type">Basement</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: Apartment, Apt Type: Basement</td><td class="cell-mapping">Basement</td><td class="cell-mapping">Basement</td><td class="cell-mapping">Single Unit, SU Type: Basement</td></tr>
+                        <tr><td class="cell-type">Loft</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: Apartment, Apt Type: Loft</td><td class="cell-mapping">Loft</td><td class="cell-mapping">Loft</td><td class="cell-mapping">Single Unit, SU Type: Loft</td></tr>
+                        <tr><td class="cell-type">Main Floor</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: Apartment, Apt Type: Main Floor</td><td class="cell-mapping">Main Floor</td><td class="cell-mapping">Main Floor</td><td class="cell-mapping">Single Unit, SU Type: Main Floor</td></tr>
+                        <tr><td class="cell-type">Single Room (Private)</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: Room, Room Type: Private Room</td><td class="cell-mapping">Room</td><td class="cell-mapping">Room</td><td class="cell-mapping">Single Unit, SU Type: Room for Rent</td></tr>
+                        <tr><td class="cell-type">Single Room (Shared)</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: Room, Room Type: Shared Room</td><td class="cell-mapping">Room</td><td class="cell-mapping">Room</td><td class="cell-mapping">Single Unit, SU Type: Room for Rent</td></tr>
+                        <tr><td class="cell-type">House <span class="cell-default">(default)</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, House Type: House</td><td class="cell-mapping">House</td><td class="cell-mapping">House</td><td class="cell-mapping">Single Unit, SU Type: House</td></tr>
+                        <tr><td class="cell-type">Semi House</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, House Type: Semi House</td><td class="cell-mapping">House</td><td class="cell-mapping">House</td><td class="cell-mapping">Single Unit, SU Type: House</td></tr>
+                        <tr><td class="cell-type">Town House</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, House Type: Town House</td><td class="cell-mapping">Townhouse</td><td class="cell-mapping">Townhouse</td><td class="cell-mapping">Single Unit, SU Type: Townhouse</td></tr>
+                        <tr><td class="cell-type">Single-family Home</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, House Type: Single-family Home</td><td class="cell-mapping">House</td><td class="cell-mapping">House</td><td class="cell-mapping">Single Unit, SU Type: House</td></tr>
+                        <tr><td class="cell-type">Mobile Home</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, House Type: Mobile Home</td><td class="cell-mapping">Other</td><td class="cell-mapping">Other</td><td class="cell-mapping">Single Unit, SU Type: Other</td></tr>
+                        <tr><td class="cell-type">Condo Unit</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: Condo, Condo Type: Condo</td><td class="cell-mapping">Condo</td><td class="cell-mapping">Condo</td><td class="cell-mapping">Single Unit, SU Type: Condo Unit</td></tr>
+                        <tr><td class="cell-type">Cabin</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, House Type: Cabin</td><td class="cell-mapping">Other</td><td class="cell-mapping">Other</td><td class="cell-mapping">Single Unit, SU Type: Other</td></tr>
+                        <tr><td class="cell-type">Cottage</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, House Type: Cottage</td><td class="cell-mapping">Other</td><td class="cell-mapping">Other</td><td class="cell-mapping">Single Unit, SU Type: Other</td></tr>
+                        <tr><td class="cell-type">Duplex</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: Apartment, Apt Type: Duplex</td><td class="cell-mapping">Duplex</td><td class="cell-mapping">Duplex</td><td class="cell-mapping">Single Unit, SU Type: Duplex</td></tr>
+                        <tr><td class="cell-type">Triplex</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, Apt Type: Triplex</td><td class="cell-mapping">Triplex</td><td class="cell-mapping">Triplex</td><td class="cell-mapping">Single Unit, SU Type: Triplex</td></tr>
+                        <tr><td class="cell-type">Fourplex</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, Apt Type: Fourplex</td><td class="cell-mapping">Fourplex</td><td class="cell-mapping">Fourplex</td><td class="cell-mapping">Single Unit, SU Type: Fourplex</td></tr>
+                        <tr><td class="cell-type">Garden Home</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, House Type: Garden Home</td><td class="cell-mapping">Other</td><td class="cell-mapping">Other</td><td class="cell-mapping">Single Unit, SU Type: Other</td></tr>
+                        <tr><td class="cell-type">Garage Suite</td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag sf">SF</span></td><td><span class="cell-tag one">One</span></td><td class="cell-mapping">Property Type: House, House Type: Garage Suite</td><td class="cell-mapping">Other</td><td class="cell-mapping">Other</td><td class="cell-mapping">Single Unit, SU Type: Garage Suite</td></tr>
+
+                        <!-- RESIDENTIAL MF -->
+                        <tr class="category-row">
+                            <td colspan="8">RESIDENTIAL (MF) — Multi-Family — 9 types</td>
+                        </tr>
+                        <tr><td class="cell-type">Low Rise Apartment</td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag multi">Multi</span></td><td class="cell-mapping">Property Type: Apartment, Apt Type: Apartment</td><td class="cell-mapping">Apartment</td><td class="cell-mapping">Apartment</td><td class="cell-mapping">Apartment, Unit Type: Apartment</td></tr>
+                        <tr><td class="cell-type">Mid Rise Apartment <span class="cell-default">(default)</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag multi">Multi</span></td><td class="cell-mapping">Property Type: Apartment, Apt Type: Apartment</td><td class="cell-mapping">Apartment</td><td class="cell-mapping">Apartment</td><td class="cell-mapping">Apartment, Unit Type: Apartment</td></tr>
+                        <tr><td class="cell-type">High Rise Apartment</td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag multi">Multi</span></td><td class="cell-mapping">Property Type: Apartment, Apt Type: Apartment</td><td class="cell-mapping">Apartment</td><td class="cell-mapping">Apartment</td><td class="cell-mapping">Apartment, Unit Type: Apartment</td></tr>
+                        <tr><td class="cell-type">Luxury Apartment</td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag multi">Multi</span></td><td class="cell-mapping">Property Type: Apartment, Apt Type: Apartment</td><td class="cell-mapping">Apartment</td><td class="cell-mapping">Apartment</td><td class="cell-mapping">Apartment, Unit Type: Apartment</td></tr>
+                        <tr><td class="cell-type">Town House Community</td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag multi">Multi</span></td><td class="cell-mapping">Property Type: House, House Type: Town House Community</td><td class="cell-mapping">Townhouse</td><td class="cell-mapping">Townhouse</td><td class="cell-mapping">Apartment, Unit Type: Townhouse</td></tr>
+                        <tr><td class="cell-type">Home/House Community</td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag multi">Multi</span></td><td class="cell-mapping">Property Type: House, House Type: Home Community</td><td class="cell-mapping">House</td><td class="cell-mapping">House</td><td class="cell-mapping">Apartment, Unit Type: House</td></tr>
+                        <tr><td class="cell-type">Condo Community</td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag multi">Multi</span></td><td class="cell-mapping">Property Type: Condo, Condo Type: Condo Community</td><td class="cell-mapping">Condo</td><td class="cell-mapping">Condo</td><td class="cell-mapping">Apartment, Unit Type: Condo</td></tr>
+                        <tr><td class="cell-type">Multi-Unit House (Multiplex)</td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag multi">Multi</span></td><td class="cell-mapping">Property Type: House, House Type: Multi Unit House</td><td class="cell-mapping">House</td><td class="cell-mapping">House</td><td class="cell-mapping">Apartment, Unit Type: Multi Unit House</td></tr>
+                        <tr><td class="cell-type">Rooms</td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag mf">MF</span></td><td><span class="cell-tag multi">Multi</span></td><td class="cell-mapping">Property Type: Room, Room Type: Room</td><td class="cell-mapping">Room</td><td class="cell-mapping">Room</td><td class="cell-mapping">Apartment, Unit Type: Room for Rent</td></tr>
+
+                        <!-- COMMERCIAL -->
+                        <tr class="category-row commercial">
+                            <td colspan="8">COMMERCIAL — 6 types</td>
+                        </tr>
+                        <tr><td class="cell-type">Industrial</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Land / Acreage</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Single Unit, SU Type: Acreage</td></tr>
+                        <tr><td class="cell-type">Office <span class="cell-default">(default)</span></td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Single Unit + Apt, Type: Office Space</td></tr>
+                        <tr><td class="cell-type">Retail</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Warehouse</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Speciality</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+
+                        <!-- RECREATION -->
+                        <tr class="category-row recreation">
+                            <td colspan="8">RECREATION — 5 types</td>
+                        </tr>
+                        <tr><td class="cell-type">Leisure</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Hotel <span class="cell-default">(default)</span></td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Marina</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Motel</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Campground</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+
+                        <!-- OTHER -->
+                        <tr class="category-row other">
+                            <td colspan="8">OTHER — 6 types</td>
+                        </tr>
+                        <tr><td class="cell-type">Agricultural</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Campground <span class="cell-note">(duplicate)</span></td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Construction / New Development</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Storage Facility</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Single Unit, SU Type: Storage</td></tr>
+                        <tr><td class="cell-type">Sub-division</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Parking</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Commercial</td><td class="cell-mapping">Single Unit + Apt, Type: Parking Spot</td></tr>
+
+                        <!-- HOUSING TYPES -->
+                        <tr class="category-row housing">
+                            <td colspan="8">HOUSING TYPES — 8 types (applies to residential only)</td>
+                        </tr>
+                        <tr><td class="cell-type">Family Housing / Conventional Rental</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Category: Family Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Student Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Category: Student Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Military / Veteran Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Category: Veteran Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Corporate Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Category: Corporate Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr class="needs-attention"><td class="cell-type">Short Term Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td style="color: #b45309;">No mapping</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Senior Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Category: Senior Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr><td class="cell-type">Vacation Home(s)</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Category: Vacation Home</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Single Unit, SU Type: Vacation Home</td></tr>
+                        <tr><td class="cell-type">Sublet(s)</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Category: Sublets</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+
+                        <!-- OWNERSHIP TYPES -->
+                        <tr class="category-row ownership">
+                            <td colspan="8">OWNERSHIP TYPES — 7 types</td>
+                        </tr>
+                        <tr><td class="cell-type">Co-op Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-mapping">Category: Co-op Housing</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr class="needs-attention"><td class="cell-type">Condo Association</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-question">?</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr class="needs-attention"><td class="cell-type">Lease (long-term)</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-question">?</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr class="needs-attention"><td class="cell-type">Own</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-question">?</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr class="needs-attention"><td class="cell-type">Rental (short-term)</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-question">?</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr class="needs-attention"><td class="cell-type">Lease-to-Own</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-question">?</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                        <tr class="needs-attention"><td class="cell-type">Rent-to-Own</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-question">?</td><td class="cell-na">—</td><td class="cell-na">—</td><td class="cell-na">—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
 
 <script>
-// Simple expandable toggle
-document.querySelectorAll('.expandable-header').forEach(function(header) {
-    header.addEventListener('click', function() {
-        this.parentElement.classList.toggle('open');
+// Smooth scroll for reference navigation
+document.querySelectorAll('.reference-nav a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     });
 });
 </script>

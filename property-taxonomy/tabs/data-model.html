@@ -76,23 +76,23 @@
                     <tr>
                         <td><span class="badge badge-amber">Structure Type</span></td>
                         <td>What kind of building?</td>
-                        <td><code>house</code>, <code>townhouse_plex</code>, <code>apartment_bldg</code>, <code>cottage</code>, <code>office</code>, <code>retail</code>, <code>industrial</code></td>
+                        <td><code>house</code>, <code>townhouse_plex</code>, <code>apartment_bldg</code>, <code>cabin</code></td>
                         <td><span class="badge badge-gray">1:1</span> — one per property</td>
                     </tr>
                     <tr>
                         <td><span class="badge badge-orange">Structure Subtype</span></td>
                         <td>What specific variation?</td>
-                        <td><code>detached</code>, <code>semi</code>, <code>townhouse</code>, <code>duplex</code>, <code>low_rise</code>, <code>high_rise</code>, <code>aframe</code>, <code>yurt</code>, <code>class_a</code></td>
+                        <td><code>detached</code>, <code>mobile</code>, <code>semi</code>, <code>townhouse</code>, <code>duplex</code>, <code>triplex</code></td>
                         <td><span class="badge badge-gray">1:1</span> — one per property</td>
                     </tr>
                     <tr>
                         <td><span class="badge badge-teal">Unit Type</span></td>
                         <td>What portion is listed?</td>
-                        <td><code>entire</code>, <code>main_floor</code>, <code>basement</code>, <code>suite</code>, <code>loft</code>, <code>studio</code>, <code>room_private</code></td>
+                        <td><code>entire</code>, <code>main_floor</code>, <code>basement</code>, <code>suite</code>, <code>loft</code>, <code>studio</code></td>
                         <td><span class="badge badge-gray">1:1</span> — one per listing</td>
                     </tr>
                     <tr>
-                        <td><span class="badge badge-green">Listing Type</span></td>
+                        <td><span class="badge badge-green">Transaction Type</span></td>
                         <td>What's the transaction?</td>
                         <td><code>rent</code>, <code>sale</code>, <code>lease</code></td>
                         <td><span class="badge badge-gray">1:1</span> — one per listing</td>
@@ -100,7 +100,7 @@
                     <tr>
                         <td><span class="badge badge-pink">Purpose</span></td>
                         <td>Who/what is it for?</td>
-                        <td><code>standard</code>, <code>student</code>, <code>senior</code>, <code>corporate</code>, <code>vacation</code>, <code>short_term</code>, <code>military</code></td>
+                        <td><code>standard</code>, <code>student</code>, <code>senior</code>, <code>vacation</code></td>
                         <td><span class="badge badge-teal">1:N</span> — a listing can have multiple</td>
                     </tr>
                 </tbody>
@@ -122,146 +122,60 @@
         <div class="sentence-label">The Formula</div>
         <div class="sentence-text">
             A <span class="dim dim-purpose">[purpose]</span>
-            <span class="dim dim-listing">[listing type]</span>
+            <span class="dim dim-listing">[transaction]</span>
             <span class="dim dim-unit">[unit type]</span>
             in a <span class="dim dim-subtype">[subtype]</span>
             <span class="dim dim-structure">[structure]</span>
         </div>
     </div>
 
-    <!-- Example 1: Student Basement Rental -->
-    <div class="card">
-        <div class="card-header">
-            <div>
-                <div class="card-title">&#x1F4DD; Example: Student Basement Rental</div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="example-sentence">
-                <strong>Full sentence:</strong> "A <span class="dim dim-purpose">student</span>
-                <span class="dim dim-listing">rental</span>
-                <span class="dim dim-unit">basement</span>
-                in a <span class="dim dim-subtype">detached</span>
-                <span class="dim dim-structure">house</span>"
-            </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
 
-            <div class="example-breakdown">
-                <div class="example-row">
-                    <span class="example-label">Sector:</span>
-                    <span class="example-value">Residential</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Structure Type:</span>
-                    <span class="example-value">House</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Structure Subtype:</span>
-                    <span class="example-value">Detached</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Unit Type:</span>
-                    <span class="example-value">Basement</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Listing Type:</span>
-                    <span class="example-value">Rent</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Purpose:</span>
-                    <span class="example-value">Student</span>
+        <div class="card">
+            <div class="card-header" style="padding: 12px 16px;">
+                <div class="card-title" style="font-size: 13px;">&#x1F3E0; Student Basement Rental</div>
+            </div>
+            <div class="card-body" style="padding: 12px 16px;">
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+                    <div><span style="color: var(--gray-500);">Sector:</span> <strong>Residential</strong></div>
+                    <div><span style="color: var(--gray-500);">Structure:</span> <strong>House → Detached</strong></div>
+                    <div><span style="color: var(--gray-500);">Unit Type:</span> <strong>Basement</strong></div>
+                    <div><span style="color: var(--gray-500);">Transaction:</span> <strong>Rent</strong></div>
+                    <div><span style="color: var(--gray-500);">Purpose:</span> <strong>Student</strong></div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Example 2: Commercial Office Lease -->
-    <div class="card">
-        <div class="card-header">
-            <div>
-                <div class="card-title">&#x1F3E2; Example: Commercial Office Lease</div>
+        <div class="card">
+            <div class="card-header" style="padding: 12px 16px;">
+                <div class="card-title" style="font-size: 13px;">&#x1F3E2; Corporate Office Lease</div>
+            </div>
+            <div class="card-body" style="padding: 12px 16px;">
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+                    <div><span style="color: var(--gray-500);">Sector:</span> <strong>Commercial</strong></div>
+                    <div><span style="color: var(--gray-500);">Structure:</span> <strong>Office → Class A</strong></div>
+                    <div><span style="color: var(--gray-500);">Unit Type:</span> <strong>Floor</strong></div>
+                    <div><span style="color: var(--gray-500);">Transaction:</span> <strong>Lease</strong></div>
+                    <div><span style="color: var(--gray-500);">Purpose:</span> <strong>Corporate</strong></div>
+                </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="example-sentence">
-                <strong>Full sentence:</strong> "A <span class="dim dim-purpose">corporate</span>
-                <span class="dim dim-listing">lease</span> of a
-                <span class="dim dim-unit">floor</span>
-                in a <span class="dim dim-subtype">Class A</span>
-                <span class="dim dim-structure">office building</span>"
-            </div>
 
-            <div class="example-breakdown">
-                <div class="example-row">
-                    <span class="example-label">Sector:</span>
-                    <span class="example-value">Commercial</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Structure Type:</span>
-                    <span class="example-value">Office Building</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Structure Subtype:</span>
-                    <span class="example-value">Class A</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Unit Type:</span>
-                    <span class="example-value">Floor</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Listing Type:</span>
-                    <span class="example-value">Lease</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Purpose:</span>
-                    <span class="example-value">Corporate</span>
+        <div class="card">
+            <div class="card-header" style="padding: 12px 16px;">
+                <div class="card-title" style="font-size: 13px;">&#x1F3D5; Vacation Cabin Rental</div>
+            </div>
+            <div class="card-body" style="padding: 12px 16px;">
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+                    <div><span style="color: var(--gray-500);">Sector:</span> <strong>Residential</strong></div>
+                    <div><span style="color: var(--gray-500);">Structure:</span> <strong>Cabin → A-Frame</strong></div>
+                    <div><span style="color: var(--gray-500);">Unit Type:</span> <strong>Entire</strong></div>
+                    <div><span style="color: var(--gray-500);">Transaction:</span> <strong>Rent</strong></div>
+                    <div><span style="color: var(--gray-500);">Purpose:</span> <strong>Vacation</strong></div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Example 3: Vacation Cabin Rental -->
-    <div class="card">
-        <div class="card-header">
-            <div>
-                <div class="card-title">&#x1F3D5; Example: Vacation Cabin Rental</div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="example-sentence">
-                <strong>Full sentence:</strong> "A <span class="dim dim-purpose">vacation</span>
-                <span class="dim dim-listing">rental</span> of an
-                <span class="dim dim-unit">entire</span>
-                <span class="dim dim-subtype">A-Frame</span>
-                <span class="dim dim-structure">cabin</span>"
-            </div>
-
-            <div class="example-breakdown">
-                <div class="example-row">
-                    <span class="example-label">Sector:</span>
-                    <span class="example-value">Residential</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Structure Type:</span>
-                    <span class="example-value">Cottage</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Structure Subtype:</span>
-                    <span class="example-value">A-Frame</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Unit Type:</span>
-                    <span class="example-value">Entire</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Listing Type:</span>
-                    <span class="example-value">Rent</span>
-                </div>
-                <div class="example-row">
-                    <span class="example-label">Purpose:</span>
-                    <span class="example-value">Vacation</span>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 
@@ -409,7 +323,7 @@
                         <td><span class="badge badge-teal">Yes</span></td>
                     </tr>
                     <tr>
-                        <td><strong>Listing Type</strong></td>
+                        <td><strong>Transaction Type</strong></td>
                         <td><code>rent</code>, <code>sale</code>, <code>lease</code></td>
                         <td><span class="badge badge-gray">Fixed</span></td>
                     </tr>

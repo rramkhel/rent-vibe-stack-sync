@@ -4,149 +4,852 @@
 <div class="sub-tabs-container">
     <div class="sub-tabs">
         <button class="sub-tab active" data-subtab="matrix-view">Matrix View</button>
-        <button class="sub-tab" data-subtab="sankey-view">Sankey Diagram</button>
-        <button class="sub-tab" data-subtab="interactive-view">Interactive Explorer</button>
+        <button class="sub-tab disabled" data-subtab="sankey-view">Sankey Diagram <span class="coming-soon">Soon</span></button>
+        <button class="sub-tab disabled" data-subtab="interactive-view">Interactive Explorer <span class="coming-soon">Soon</span></button>
     </div>
 </div>
 
 <!-- Matrix View (active) -->
 <div id="matrix-view" class="sub-tab-content active">
-    <h2 class="section-title">Old → New Mapping Matrix</h2>
-    <p class="section-subtitle">How existing property types map to the new 6-dimension model.</p>
+    <div class="section-header">
+        <h2 class="section-title">Migration Mapping: Old → New</h2>
+        <p class="section-subtitle">How existing 47 property types transform into the 6-dimension canonical model. Status markers indicate data cleanup and decisions needed.</p>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+        <div class="stat">
+            <div class="stat-value">47</div>
+            <div class="stat-label">Property Types</div>
+        </div>
+        <div class="stat success">
+            <div class="stat-value">42</div>
+            <div class="stat-label">Clean Mappings</div>
+        </div>
+        <div class="stat warning">
+            <div class="stat-value">5</div>
+            <div class="stat-label">Need Decisions</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Housing → Purpose</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">7</div>
+            <div class="stat-label">Ownership → TBD</div>
+        </div>
+    </div>
+
+    <!-- Dimension Overview Cards -->
+    <div class="dim-grid mb-6">
+        <div class="dim-card sector">
+            <div class="dim-card-label">Target 1</div>
+            <div class="dim-card-name">Sector</div>
+        </div>
+        <div class="dim-card structure">
+            <div class="dim-card-label">Target 2</div>
+            <div class="dim-card-name">Structure Type</div>
+        </div>
+        <div class="dim-card subtype">
+            <div class="dim-card-label">Target 3</div>
+            <div class="dim-card-name">Subtype</div>
+        </div>
+        <div class="dim-card unit">
+            <div class="dim-card-label">Target 4</div>
+            <div class="dim-card-name">Unit Type</div>
+        </div>
+        <div class="dim-card listing">
+            <div class="dim-card-label">Target 5</div>
+            <div class="dim-card-name">Transaction Type</div>
+        </div>
+        <div class="dim-card purpose">
+            <div class="dim-card-label">Target 6</div>
+            <div class="dim-card-name">Purpose</div>
+        </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend-box">
+        <div class="legend-title">Status Legend</div>
+        <div class="legend-items">
+            <div class="legend-item">
+                <span class="badge badge-clean">&#x2713; Clean</span>
+                <span>Direct mapping, no decisions needed</span>
+            </div>
+            <div class="legend-item">
+                <span class="badge badge-decision">&#x26A0;&#xFE0F; Decision</span>
+                <span>Requires decision or clarification</span>
+            </div>
+            <div class="legend-item">
+                <span class="badge badge-merge">&#x1F504; Merge</span>
+                <span>Consolidate with another type</span>
+            </div>
+            <div class="legend-item">
+                <span class="badge badge-tbd">&#x1F4DD; TBD</span>
+                <span>Still under discussion</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Migration Table -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Property Type Migration Table</div>
+                <div class="card-subtitle">47 existing types → 6 dimensions</div>
+            </div>
+            <div class="header-stats">
+                <span class="badge badge-clean">42 Clean</span>
+                <span class="badge badge-decision">5 Decisions</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="mapping-table-wrapper">
+                <table class="data-table mapping-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 180px;">Old Property Type</th>
+                            <th style="width: 80px;">Old Res Type</th>
+                            <th style="width: 30px;"></th>
+                            <th>→ Sector</th>
+                            <th>→ Structure</th>
+                            <th>→ Subtype</th>
+                            <th>→ Unit Type</th>
+                            <th>→ Listing</th>
+                            <th>→ Purpose</th>
+                            <th style="width: 140px;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- RESIDENTIAL SF -->
+                        <tr class="category-row residential-sf">
+                            <td colspan="10">RESIDENTIAL (SF) — Single Family — 18 types</td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Basement</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">House</span></td>
+                            <td><span class="cell-chip subtype">Any</span></td>
+                            <td><span class="cell-chip unit">Basement</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Loft</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Apartment Bldg</span></td>
+                            <td><span class="cell-chip subtype">Loft</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Main Floor</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">House</span></td>
+                            <td><span class="cell-chip subtype">Any</span></td>
+                            <td><span class="cell-chip unit">Suite</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Single Room (Private)</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Any</span></td>
+                            <td><span class="cell-chip subtype">Any</span></td>
+                            <td><span class="cell-chip unit">Room</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Single Room (Shared)</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Any</span></td>
+                            <td><span class="cell-chip subtype">Any</span></td>
+                            <td><span class="cell-chip unit">Room</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-decision">&#x26A0;&#xFE0F; Shared attr?</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">House <span class="cell-default">(default)</span></td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">House</span></td>
+                            <td><span class="cell-chip subtype">Detached</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Semi House</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">House</span></td>
+                            <td><span class="cell-chip subtype">Semi-Detached</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Town House</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">House</span></td>
+                            <td><span class="cell-chip subtype">Townhouse</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Single-family Home</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">House</span></td>
+                            <td><span class="cell-chip subtype">Detached</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-merge">&#x1F504; = House</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Mobile Home</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">House</span></td>
+                            <td><span class="cell-chip subtype">Mobile</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Condo Unit</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Condo Bldg</span></td>
+                            <td><span class="cell-chip subtype">Standard</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Cabin</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Cottage</span></td>
+                            <td><span class="cell-chip subtype">Cabin</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Vacation</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Cottage</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Cottage</span></td>
+                            <td><span class="cell-chip subtype">Cottage</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Vacation</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Duplex</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Multiplex</span></td>
+                            <td><span class="cell-chip subtype">Duplex</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Triplex</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Multiplex</span></td>
+                            <td><span class="cell-chip subtype">Triplex</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Fourplex</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Multiplex</span></td>
+                            <td><span class="cell-chip subtype">Fourplex</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Garden Home</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">House</span></td>
+                            <td><span class="cell-chip subtype">Garden Home</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Garage Suite</td>
+                            <td class="cell-old">single-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">House</span></td>
+                            <td><span class="cell-chip subtype">Any</span></td>
+                            <td><span class="cell-chip unit">Suite</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-decision">&#x26A0;&#xFE0F; Suite type?</span></td>
+                        </tr>
+
+                        <!-- RESIDENTIAL MF -->
+                        <tr class="category-row residential-mf">
+                            <td colspan="10">RESIDENTIAL (MF) — Multi-Family — 9 types</td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Low Rise Apartment</td>
+                            <td class="cell-old">multi-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Apartment Bldg</span></td>
+                            <td><span class="cell-chip subtype">Low Rise</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Mid Rise Apartment <span class="cell-default">(default)</span></td>
+                            <td class="cell-old">multi-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Apartment Bldg</span></td>
+                            <td><span class="cell-chip subtype">Mid Rise</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">High Rise Apartment</td>
+                            <td class="cell-old">multi-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Apartment Bldg</span></td>
+                            <td><span class="cell-chip subtype">High Rise</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Luxury Apartment</td>
+                            <td class="cell-old">multi-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Apartment Bldg</span></td>
+                            <td><span class="cell-chip subtype">Luxury</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Town House Community</td>
+                            <td class="cell-old">multi-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Community</span></td>
+                            <td><span class="cell-chip subtype">Townhouse</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Home/House Community</td>
+                            <td class="cell-old">multi-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Community</span></td>
+                            <td><span class="cell-chip subtype">House</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Condo Community</td>
+                            <td class="cell-old">multi-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Community</span></td>
+                            <td><span class="cell-chip subtype">Condo</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Multi-Unit House (Multiplex)</td>
+                            <td class="cell-old">multi-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Multiplex</span></td>
+                            <td><span class="cell-chip subtype">Multi-Unit</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Rooms</td>
+                            <td class="cell-old">multi-family</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-res">Residential</span></td>
+                            <td><span class="cell-chip struct">Any</span></td>
+                            <td><span class="cell-chip subtype">Any</span></td>
+                            <td><span class="cell-chip unit">Room</span></td>
+                            <td><span class="cell-chip listing">Rent</span></td>
+                            <td><span class="cell-chip purpose">Standard</span></td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+
+                        <!-- COMMERCIAL -->
+                        <tr class="category-row commercial">
+                            <td colspan="10">COMMERCIAL — 6 types</td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Industrial</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Industrial</span></td>
+                            <td><span class="cell-chip subtype">Standard</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Lease</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Land / Acreage</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Land</span></td>
+                            <td><span class="cell-chip subtype">Acreage</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Sale</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Office <span class="cell-default">(default)</span></td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Office Bldg</span></td>
+                            <td><span class="cell-chip subtype">Standard</span></td>
+                            <td><span class="cell-chip unit">Floor</span></td>
+                            <td><span class="cell-chip listing">Lease</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Retail</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Retail</span></td>
+                            <td><span class="cell-chip subtype">Standard</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Lease</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Warehouse</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Industrial</span></td>
+                            <td><span class="cell-chip subtype">Warehouse</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Lease</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Speciality</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Specialty</span></td>
+                            <td><span class="cell-chip subtype">Other</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Lease</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+
+                        <!-- RECREATION -->
+                        <tr class="category-row recreation">
+                            <td colspan="10">RECREATION — 5 types</td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Leisure</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Recreation</span></td>
+                            <td><span class="cell-chip subtype">Leisure</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Lease</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Hotel <span class="cell-default">(default)</span></td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Hospitality</span></td>
+                            <td><span class="cell-chip subtype">Hotel</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Sale</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Marina</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Recreation</span></td>
+                            <td><span class="cell-chip subtype">Marina</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Sale</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Motel</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Hospitality</span></td>
+                            <td><span class="cell-chip subtype">Motel</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Sale</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Campground</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Recreation</span></td>
+                            <td><span class="cell-chip subtype">Campground</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Sale</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+
+                        <!-- OTHER -->
+                        <tr class="category-row other">
+                            <td colspan="10">OTHER — 6 types</td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Agricultural</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Land</span></td>
+                            <td><span class="cell-chip subtype">Agricultural</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Sale</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Campground <span class="cell-note">(duplicate)</span></td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td colspan="6" style="color: var(--gray-500); font-style: italic;">→ Merge with Recreation/Campground</td>
+                            <td><span class="badge badge-merge">&#x1F504; Merge</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Construction / New Dev</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Land</span></td>
+                            <td><span class="cell-chip subtype">Development</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Sale</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Storage Facility</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Industrial</span></td>
+                            <td><span class="cell-chip subtype">Storage</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Lease</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Sub-division</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Land</span></td>
+                            <td><span class="cell-chip subtype">Subdivision</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Sale</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-clean">&#x2713; Clean</span></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-type">Parking</td>
+                            <td class="cell-old">—</td>
+                            <td class="cell-arrow">→</td>
+                            <td><span class="cell-chip sector-com">Commercial</span></td>
+                            <td><span class="cell-chip struct">Parking</span></td>
+                            <td><span class="cell-chip subtype">Standard</span></td>
+                            <td><span class="cell-chip unit">Entire</span></td>
+                            <td><span class="cell-chip listing">Lease</span></td>
+                            <td class="cell-na">—</td>
+                            <td><span class="badge badge-decision">&#x26A0;&#xFE0F; Also res?</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Housing Types Migration -->
+    <div class="section-divider"></div>
+
+    <div class="section-header">
+        <h2 class="section-title">Housing Types → Purpose Dimension</h2>
+        <p class="section-subtitle">Existing Housing Types migrate to the Purpose dimension</p>
+    </div>
 
     <div class="card">
-        <div class="card-body" style="padding: 0;">
+        <div class="card-body">
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Old Category</th>
-                        <th>Old Type</th>
-                        <th class="col-sector">→ Sector</th>
-                        <th class="col-structure">→ Structure</th>
-                        <th class="col-subtype">→ Subtype</th>
-                        <th class="col-unit">→ Unit</th>
+                        <th>Old Housing Type</th>
+                        <th>→ New Dimension</th>
+                        <th>→ New Value</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>House</td>
-                        <td>House</td>
-                        <td>Residential</td>
-                        <td>House</td>
-                        <td>Any</td>
-                        <td>Entire Unit</td>
-                        <td><span class="badge badge-clean">Clean</span></td>
-                    </tr>
-                    <tr>
-                        <td>House</td>
-                        <td>Basement</td>
-                        <td>Residential</td>
-                        <td>House</td>
-                        <td>Any</td>
-                        <td>Basement</td>
-                        <td><span class="badge badge-clean">Clean</span></td>
-                    </tr>
-                    <tr>
-                        <td>Apartment</td>
-                        <td>Apartment</td>
-                        <td>Residential</td>
-                        <td>Apartment</td>
-                        <td>Any</td>
-                        <td>Entire Unit</td>
-                        <td><span class="badge badge-clean">Clean</span></td>
-                    </tr>
-                    <tr>
-                        <td>Condo</td>
-                        <td>Condo</td>
-                        <td>Residential</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td><span class="badge badge-decision">Decision</span></td>
-                    </tr>
-                    <tr>
-                        <td>Townhouse</td>
-                        <td>Townhouse</td>
-                        <td>Residential</td>
-                        <td>House</td>
-                        <td>Townhouse</td>
-                        <td>Entire Unit</td>
-                        <td><span class="badge badge-clean">Clean</span></td>
-                    </tr>
-                    <tr>
-                        <td>Room</td>
-                        <td>Room</td>
-                        <td>Residential</td>
-                        <td>Any</td>
-                        <td>Any</td>
-                        <td>Room</td>
-                        <td><span class="badge badge-clean">Clean</span></td>
-                    </tr>
-                    <tr>
-                        <td>Commercial</td>
-                        <td>Office</td>
-                        <td>Commercial</td>
-                        <td>Office</td>
-                        <td>Any</td>
-                        <td>—</td>
-                        <td><span class="badge badge-clean">Clean</span></td>
-                    </tr>
-                    <tr>
-                        <td>—</td>
-                        <td>Loft</td>
-                        <td>Residential</td>
-                        <td>?</td>
-                        <td>?</td>
-                        <td>?</td>
-                        <td><span class="badge badge-decision">Decision</span></td>
-                    </tr>
+                    <tr><td class="cell-type">Family/Conventional</td><td>Purpose</td><td><span class="cell-chip purpose">Standard</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td></tr>
+                    <tr><td class="cell-type">Student</td><td>Purpose</td><td><span class="cell-chip purpose">Student</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td></tr>
+                    <tr><td class="cell-type">Military/Veteran</td><td>Purpose</td><td><span class="cell-chip purpose">Military</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td></tr>
+                    <tr><td class="cell-type">Corporate</td><td>Purpose</td><td><span class="cell-chip purpose">Corporate</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td></tr>
+                    <tr><td class="cell-type">Short Term</td><td>Purpose</td><td><span class="cell-chip purpose">Short-Term</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td></tr>
+                    <tr><td class="cell-type">Senior</td><td>Purpose</td><td><span class="cell-chip purpose">Senior</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td></tr>
+                    <tr><td class="cell-type">Vacation</td><td>Purpose</td><td><span class="cell-chip purpose">Vacation</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td></tr>
+                    <tr><td class="cell-type">Sublet</td><td>Transaction Type</td><td><span class="cell-chip listing">Sublet</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <h2 class="section-title mt-8">Open Decisions</h2>
+    <!-- Ownership Types Resolution -->
+    <div class="section-divider"></div>
 
-    <div class="callout callout-amber">
-        <div class="callout-title">Loft: Structure Subtype vs Unit Type?</div>
-        <div class="callout-text">
-            Is a loft a type of unit within a building, or a subtype of building architecture?
+    <div class="section-header">
+        <h2 class="section-title">Ownership Types → Resolution</h2>
+        <p class="section-subtitle">Existing Ownership Types map to various destinations</p>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Old Ownership Type</th>
+                        <th>→ Resolution</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="cell-type">Co-op Housing</td><td>Ownership attribute: Co-op</td><td><span class="badge badge-tbd">&#x1F4DD; TBD</span></td><td class="notes-col">Could also be Purpose?</td></tr>
+                    <tr><td class="cell-type">Condo Association</td><td class="cell-question">?</td><td><span class="badge badge-tbd">&#x1F4DD; TBD</span></td><td class="notes-col">Metadata about building, not listing type</td></tr>
+                    <tr><td class="cell-type">Lease (long-term)</td><td><span class="cell-chip listing">Lease</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td><td class="notes-col">Maps to Transaction Type</td></tr>
+                    <tr><td class="cell-type">Own</td><td><span class="cell-chip listing">Sale</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td><td class="notes-col">Maps to Transaction Type</td></tr>
+                    <tr><td class="cell-type">Rental (short-term)</td><td><span class="cell-chip listing">Rent</span> + <span class="cell-chip purpose">Short-Term</span></td><td><span class="badge badge-clean">&#x2713; Clean</span></td><td class="notes-col">Split into two fields</td></tr>
+                    <tr><td class="cell-type">Lease-to-Own</td><td class="cell-question">?</td><td><span class="badge badge-tbd">&#x1F4DD; TBD</span></td><td class="notes-col">Hybrid — add as new Transaction Type?</td></tr>
+                    <tr><td class="cell-type">Rent-to-Own</td><td class="cell-question">?</td><td><span class="badge badge-tbd">&#x1F4DD; TBD</span></td><td class="notes-col">Hybrid — add as new Transaction Type?</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div class="callout callout-amber">
-        <div class="callout-title">Main Floor / Garage Suite</div>
-        <div class="callout-text">
-            Specific unit types or should they map to generic "Suite"?
-        </div>
+    <!-- Open Decisions Summary -->
+    <div class="section-divider"></div>
+
+    <div class="section-header">
+        <h2 class="section-title">Open Decisions Summary</h2>
+        <p class="section-subtitle">All items requiring decisions before migration can be finalized</p>
     </div>
 
-    <div class="callout callout-amber">
-        <div class="callout-title">Garden Home</div>
-        <div class="callout-text">
-            New subtype of House, or map to Detached?
+    <div class="grid-2">
+        <!-- Structure / Subtype Decisions -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Structure / Subtype Decisions</div>
+                <span class="badge badge-decision">8 items</span>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Decision</th>
+                            <th>Options</th>
+                            <th>Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Loft</td><td>Structure Subtype vs Unit Type</td><td class="recommendation">Unit Type</td></tr>
+                        <tr><td>Main Floor / Garage Suite</td><td>Specific unit types or map to "Suite"?</td><td class="recommendation">Specific types</td></tr>
+                        <tr><td>Garden Home</td><td>New subtype or map to Detached?</td><td class="recommendation">New subtype</td></tr>
+                        <tr><td>Duplex/Triplex/Fourplex</td><td>Subtypes under House or separate?</td><td class="recommendation">Multiplex type</td></tr>
+                        <tr><td>Community</td><td>Structure Type or property wrapper?</td><td class="recommendation">Wrapper concept</td></tr>
+                        <tr><td>Luxury</td><td>Subtype or quality flag?</td><td class="recommendation">Quality flag</td></tr>
+                        <tr><td>Hospitality</td><td>New Structure Type for Hotel/Motel?</td><td class="recommendation">Yes</td></tr>
+                        <tr><td>Parking</td><td>Structure Type or special category?</td><td class="recommendation">Both</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <div class="callout callout-amber">
-        <div class="callout-title">Luxury</div>
-        <div class="callout-text">
-            Should "Luxury" be a subtype, or a separate quality flag?
+        <!-- Commercial Taxonomy Decisions -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Commercial Taxonomy Decisions</div>
+                <span class="badge badge-decision">5 items</span>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Decision</th>
+                            <th>Options</th>
+                            <th>Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Office Classes</td><td>Add Class A/B/C subtypes?</td><td class="recommendation">Yes (Spacelist)</td></tr>
+                        <tr><td>Industrial subtypes</td><td>Warehouse, Manufacturing, Flex?</td><td class="recommendation">Add all</td></tr>
+                        <tr><td>Retail subtypes</td><td>Storefront, Mall, Strip Mall?</td><td class="recommendation">Add all</td></tr>
+                        <tr><td>Speciality</td><td>Keep or deprecate?</td><td class="recommendation">Clarify or deprecate</td></tr>
+                        <tr><td>Leisure</td><td>Keep or deprecate?</td><td class="recommendation">Clarify or deprecate</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <div class="callout callout-amber">
-        <div class="callout-title">Sublet</div>
-        <div class="callout-text">
-            Is this a Purpose or a Listing Type?
+        <!-- Purpose / Transaction Type Decisions -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Purpose / Transaction Type Decisions</div>
+                <span class="badge badge-decision">5 items</span>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Decision</th>
+                            <th>Options</th>
+                            <th>Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Short Term</td><td>Purpose or Transaction Type modifier?</td><td class="recommendation">Purpose</td></tr>
+                        <tr><td>Sublet</td><td>Purpose or Transaction Type?</td><td class="recommendation">Transaction Type</td></tr>
+                        <tr><td>Co-op</td><td>Purpose, Listing, or Structure attr?</td><td class="recommendation">Ownership attr</td></tr>
+                        <tr><td>Lease-to-Own / Rent-to-Own</td><td>New listing types or deprecate?</td><td class="recommendation">Deprecate (low vol)</td></tr>
+                        <tr><td>Condo Association</td><td>What is this?</td><td class="recommendation">Deprecate</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <div class="callout callout-amber">
-        <div class="callout-title">Co-op</div>
-        <div class="callout-text">
-            Purpose, Listing Type, or a Structure attribute?
+        <!-- Data Cleanup Items -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Data Cleanup Required</div>
+                <span class="badge badge-merge">3 items</span>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Issue</th>
+                            <th>Resolution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Duplicate Campground</td><td>Merge Recreation and Other entries</td></tr>
+                        <tr><td>Construction / New Dev</td><td>Define use case or deprecate</td></tr>
+                        <tr><td>Sub-division</td><td>Clarify: Residential or Commercial sector?</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -157,7 +860,8 @@
         <div class="placeholder-icon">&#x1F4CA;</div>
         <div class="placeholder-title">Sankey Diagram — Coming Soon</div>
         <div class="placeholder-text">
-            Visual flow diagram showing how old categories flow into new dimensions.
+            Visual flow diagram showing how old categories flow into new dimensional model.<br>
+            Lines will show volume/count of types flowing from old → new.
         </div>
     </div>
 </div>
@@ -168,7 +872,8 @@
         <div class="placeholder-icon">&#x1F50D;</div>
         <div class="placeholder-title">Interactive Explorer — Coming Soon</div>
         <div class="placeholder-text">
-            Click on old types to see their new mapping, or filter by decision status.
+            Select an old property type to see its new dimensional breakdown,<br>
+            or select a new dimension value to see all old types that map to it.
         </div>
     </div>
 </div>

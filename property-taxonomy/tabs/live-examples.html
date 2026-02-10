@@ -1,130 +1,672 @@
-<!-- Tab 7: Live Examples -->
-<h2 class="section-title">Interactive Classification Tool</h2>
-<p class="section-subtitle">Select dimensions to see canonical output and platform mappings.</p>
-
-<div class="placeholder-box mb-8">
-    <div class="placeholder-icon">&#x1F3AE;</div>
-    <div class="placeholder-title">Live Examples Tool — Coming in Phase 5</div>
-    <div class="placeholder-text">
-        Interactive tool with dropdowns for all 6 dimensions, preset examples, and real-time platform mapping display.
-    </div>
+<!-- Tab 7: Live Examples - Interactive Classification Tool -->
+<div class="section-header">
+    <h2 class="section-title">Live Examples</h2>
+    <p class="section-subtitle">Select classification dimensions to see the canonical sentence and platform displays in real-time</p>
 </div>
 
-<h2 class="section-title">Preview: Example Layout</h2>
+<!-- Preset Buttons -->
+<div class="preset-buttons" id="preset-buttons">
+    <button class="preset-btn" onclick="loadPreset('basement-house')">Basement in House</button>
+    <button class="preset-btn" onclick="loadPreset('highrise-portfolio')">High-Rise Portfolio</button>
+    <button class="preset-btn" onclick="loadPreset('aframe-cabin')">A-Frame Cabin</button>
+    <button class="preset-btn" onclick="loadPreset('class-a-office')">Class A Office</button>
+    <button class="preset-btn" onclick="loadPreset('student-room')">Student Room</button>
+    <button class="preset-btn" onclick="loadPreset('condo-unit')">Condo Unit</button>
+</div>
 
-<div class="grid-2">
-    <!-- Left: Input Panel -->
-    <div class="card">
-        <div class="card-header">
-            <div>
-                <div class="card-title">Input Panel</div>
-                <div class="card-subtitle">Select dimension values</div>
-            </div>
+<!-- Main Layout: Input + Output -->
+<div class="live-examples-layout">
+    <!-- Input Panel (Left) -->
+    <div class="input-panel">
+        <div class="input-panel-title">Classification Inputs</div>
+
+        <div class="form-group">
+            <label class="form-label" for="input-sector">Sector</label>
+            <select class="form-select" id="input-sector" onchange="onSectorChange()">
+                <option value="residential">Residential</option>
+                <option value="commercial">Commercial</option>
+            </select>
         </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label class="form-label">Sector</label>
-                <select class="form-select" disabled>
-                    <option>Residential</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Structure Type</label>
-                <select class="form-select" disabled>
-                    <option>House</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Structure Subtype</label>
-                <select class="form-select" disabled>
-                    <option>Detached</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Unit Type</label>
-                <select class="form-select" disabled>
-                    <option>Basement</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Listing Type</label>
-                <select class="form-select" disabled>
-                    <option>Rent</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Purpose</label>
-                <select class="form-select" disabled>
-                    <option>Conventional</option>
-                </select>
-            </div>
+
+        <div class="form-group">
+            <label class="form-label" for="input-structure">Structure Type</label>
+            <select class="form-select" id="input-structure" onchange="onStructureChange()">
+                <option value="">Select...</option>
+            </select>
         </div>
+
+        <div class="form-group">
+            <label class="form-label" for="input-subtype">Structure Subtype</label>
+            <select class="form-select" id="input-subtype" onchange="updateDisplay()">
+                <option value="">Any / Not specified</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="input-unit">Unit Type</label>
+            <select class="form-select" id="input-unit" onchange="updateDisplay()">
+                <option value="entire">Entire Unit</option>
+                <option value="basement">Basement</option>
+                <option value="main_floor">Main Floor</option>
+                <option value="upper">Upper Floor</option>
+                <option value="suite">Suite</option>
+                <option value="room_private">Room (Private)</option>
+                <option value="room_shared">Room (Shared)</option>
+                <option value="floor">Floor</option>
+                <option value="loft">Loft</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="input-listing">Transaction Type</label>
+            <select class="form-select" id="input-listing" onchange="updateDisplay()">
+                <option value="rent">Rent</option>
+                <option value="sale">Sale</option>
+                <option value="lease">Lease</option>
+                <option value="sublet">Sublet</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="purpose-group">
+            <label class="form-label" for="input-purpose">Purpose</label>
+            <select class="form-select" id="input-purpose" onchange="updateDisplay()">
+                <option value="standard">Standard/Conventional</option>
+                <option value="student">Student</option>
+                <option value="senior">Senior (55+)</option>
+                <option value="corporate">Corporate</option>
+                <option value="vacation">Vacation</option>
+                <option value="military">Military</option>
+                <option value="short_term">Short-Term</option>
+            </select>
+        </div>
+
+        <button class="btn btn-secondary btn-random" onclick="loadRandomPreset()">
+            <span>Random Example</span>
+        </button>
     </div>
 
-    <!-- Right: Output Panel -->
-    <div>
+    <!-- Output Panel (Right) -->
+    <div class="output-panel">
         <!-- Canonical Sentence -->
-        <div class="sentence-box mb-4">
-            <div class="sentence-label">Canonical Sentence</div>
-            <div class="sentence-text">
-                A <span class="dim dim-purpose">conventional</span>
-                <span class="dim dim-listing">rental</span>
-                <span class="dim dim-unit">basement</span>
-                in a <span class="dim dim-subtype">detached</span>
-                <span class="dim dim-structure">house</span>
+        <div class="sentence-box">
+            <div class="sentence-label">Canonical Classification</div>
+            <div class="sentence-text" id="sentence-text">
+                Select a structure type to see the canonical sentence
             </div>
         </div>
 
-        <!-- Platform Cards -->
-        <div class="platform-card mb-4">
-            <div class="platform-card-header ils">
-                <span class="badge badge-green">ILS</span>
-                Rentals.ca
-            </div>
-            <div class="platform-card-body">
-                <div class="platform-display">House · Basement</div>
-                <div class="platform-filters">
-                    <span class="platform-filter">Basement</span>
-                    <span class="platform-filter">House</span>
-                </div>
-                <div class="platform-hidden">
-                    <span class="platform-hidden-item">Detached</span>
-                    <span class="platform-hidden-item">Freehold</span>
-                </div>
+        <!-- Key Insight (hidden by default) -->
+        <div class="key-insight" id="key-insight">
+            <div class="key-insight-icon">&#x1F4A1;</div>
+            <div>
+                <div class="key-insight-title">Key Insight</div>
+                <div class="key-insight-text" id="insight-text"></div>
             </div>
         </div>
 
-        <div class="platform-card mb-4">
-            <div class="platform-card-header enterprise">
-                <span class="badge badge-teal">Enterprise</span>
-                BSTK / RentSync
-            </div>
-            <div class="platform-card-body">
-                <div class="platform-display">House - Detached · Basement Suite</div>
-                <div class="platform-note">Full granularity displayed</div>
-            </div>
-        </div>
-
-        <div class="platform-card disabled">
-            <div class="platform-card-header commercial">
-                <span class="badge badge-amber">Commercial</span>
-                Spacelist
-            </div>
-            <div class="platform-card-body">
-                <div class="platform-note">Not applicable — Residential listing</div>
-            </div>
+        <!-- Platform Display -->
+        <div class="platform-section-title">Platform Display</div>
+        <div class="platform-grid" id="platform-grid">
+            <!-- Generated by JavaScript -->
         </div>
     </div>
 </div>
 
-<h2 class="section-title mt-8">Preset Examples</h2>
-<p class="section-subtitle">Quick scenarios to explore the system.</p>
+<script>
+// =============================================================================
+// DATA: Dropdown Options
+// =============================================================================
 
-<div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4);">
-    <button class="btn btn-secondary" disabled>Basement in House</button>
-    <button class="btn btn-secondary" disabled>High-Rise Portfolio</button>
-    <button class="btn btn-secondary" disabled>A-Frame Cabin</button>
-    <button class="btn btn-secondary" disabled>Class A Office</button>
-    <button class="btn btn-secondary" disabled>Student Room</button>
-    <button class="btn btn-secondary" disabled>Condo Unit</button>
-</div>
+var structureOptions = {
+    residential: [
+        { value: 'house', label: 'House' },
+        { value: 'apartment_bldg', label: 'Apartment Building' },
+        { value: 'condo_bldg', label: 'Condo Building' },
+        { value: 'multiplex', label: 'Multiplex' },
+        { value: 'cottage', label: 'Cottage' },
+        { value: 'manufactured', label: 'Manufactured Home' }
+    ],
+    commercial: [
+        { value: 'office_bldg', label: 'Office Building' },
+        { value: 'retail', label: 'Retail' },
+        { value: 'industrial', label: 'Industrial' },
+        { value: 'hospitality', label: 'Hospitality' },
+        { value: 'land', label: 'Land' },
+        { value: 'parking', label: 'Parking' }
+    ]
+};
+
+var subtypeOptions = {
+    house: [
+        { value: 'detached', label: 'Detached' },
+        { value: 'semi', label: 'Semi-Detached' },
+        { value: 'townhouse', label: 'Townhouse' },
+        { value: 'row', label: 'Row House' },
+        { value: 'mobile', label: 'Mobile Home' }
+    ],
+    apartment_bldg: [
+        { value: 'lowrise', label: 'Low Rise' },
+        { value: 'midrise', label: 'Mid Rise' },
+        { value: 'highrise', label: 'High Rise' },
+        { value: 'walkup', label: 'Walk-up' }
+    ],
+    condo_bldg: [
+        { value: 'lowrise', label: 'Low Rise' },
+        { value: 'midrise', label: 'Mid Rise' },
+        { value: 'highrise', label: 'High Rise' }
+    ],
+    cottage: [
+        { value: 'cottage', label: 'Cottage' },
+        { value: 'cabin', label: 'Cabin' },
+        { value: 'aframe', label: 'A-Frame' },
+        { value: 'yurt', label: 'Yurt' },
+        { value: 'treehouse', label: 'Treehouse' },
+        { value: 'tiny', label: 'Tiny Home' }
+    ],
+    multiplex: [
+        { value: 'duplex', label: 'Duplex' },
+        { value: 'triplex', label: 'Triplex' },
+        { value: 'fourplex', label: 'Fourplex' }
+    ],
+    office_bldg: [
+        { value: 'class_a', label: 'Class A' },
+        { value: 'class_b', label: 'Class B' },
+        { value: 'class_c', label: 'Class C' },
+        { value: 'coworking', label: 'Coworking' }
+    ],
+    industrial: [
+        { value: 'warehouse', label: 'Warehouse' },
+        { value: 'manufacturing', label: 'Manufacturing' },
+        { value: 'flex', label: 'Flex Space' },
+        { value: 'light', label: 'Light Industrial' }
+    ],
+    retail: [
+        { value: 'storefront', label: 'Storefront' },
+        { value: 'mall', label: 'Mall Space' },
+        { value: 'strip', label: 'Strip Mall' }
+    ],
+    hospitality: [
+        { value: 'hotel', label: 'Hotel' },
+        { value: 'motel', label: 'Motel' },
+        { value: 'resort', label: 'Resort' }
+    ],
+    land: [
+        { value: 'acreage', label: 'Acreage' },
+        { value: 'development', label: 'Development' },
+        { value: 'agricultural', label: 'Agricultural' }
+    ]
+};
+
+var labelMap = {
+    structure: {
+        house: 'House', apartment_bldg: 'Apartment Building', condo_bldg: 'Condo Building',
+        multiplex: 'Multiplex', cottage: 'Cottage', manufactured: 'Manufactured Home',
+        office_bldg: 'Office Building', retail: 'Retail', industrial: 'Industrial',
+        hospitality: 'Hospitality', land: 'Land', parking: 'Parking'
+    },
+    subtype: {
+        detached: 'Detached', semi: 'Semi-Detached', townhouse: 'Townhouse', row: 'Row House',
+        mobile: 'Mobile', lowrise: 'Low Rise', midrise: 'Mid Rise', highrise: 'High Rise',
+        walkup: 'Walk-up', cottage: 'Cottage', cabin: 'Cabin', aframe: 'A-Frame',
+        yurt: 'Yurt', treehouse: 'Treehouse', tiny: 'Tiny Home', duplex: 'Duplex',
+        triplex: 'Triplex', fourplex: 'Fourplex', class_a: 'Class A', class_b: 'Class B',
+        class_c: 'Class C', coworking: 'Coworking', warehouse: 'Warehouse',
+        manufacturing: 'Manufacturing', flex: 'Flex', light: 'Light Industrial',
+        storefront: 'Storefront', mall: 'Mall', strip: 'Strip Mall', hotel: 'Hotel',
+        motel: 'Motel', resort: 'Resort', acreage: 'Acreage', development: 'Development',
+        agricultural: 'Agricultural'
+    },
+    unit: {
+        entire: 'Entire Unit', basement: 'Basement', main_floor: 'Main Floor',
+        upper: 'Upper Floor', suite: 'Suite', room_private: 'Private Room',
+        room_shared: 'Shared Room', floor: 'Floor', loft: 'Loft'
+    },
+    listing: { rent: 'Rental', sale: 'Sale', lease: 'Lease', sublet: 'Sublet' },
+    purpose: {
+        standard: 'Conventional', student: 'Student', senior: 'Senior',
+        corporate: 'Corporate', vacation: 'Vacation', military: 'Military',
+        short_term: 'Short-Term'
+    }
+};
+
+// =============================================================================
+// DATA: Presets
+// =============================================================================
+
+var presets = [
+    {
+        id: 'basement-house',
+        values: { sector: 'residential', structure: 'house', subtype: 'detached', unit: 'basement', listing: 'rent', purpose: 'standard' },
+        keyInsight: null
+    },
+    {
+        id: 'highrise-portfolio',
+        values: { sector: 'residential', structure: 'apartment_bldg', subtype: 'highrise', unit: 'entire', listing: 'rent', purpose: 'standard' },
+        keyInsight: null
+    },
+    {
+        id: 'aframe-cabin',
+        values: { sector: 'residential', structure: 'cottage', subtype: 'aframe', unit: 'entire', listing: 'rent', purpose: 'vacation' },
+        keyInsight: 'A-Frame is a niche property type. While WoodCabins provides first-class support, mainstream ILS platforms collapse it to "House" or "Vacation Home".'
+    },
+    {
+        id: 'class-a-office',
+        values: { sector: 'commercial', structure: 'office_bldg', subtype: 'class_a', unit: 'floor', listing: 'lease', purpose: null },
+        keyInsight: 'Commercial listings only appear on commercial platforms. Class distinctions (A/B/C) are preserved on Spacelist but lost on residential-focused platforms.'
+    },
+    {
+        id: 'student-room',
+        values: { sector: 'residential', structure: 'house', subtype: 'townhouse', unit: 'room_private', listing: 'rent', purpose: 'student' },
+        keyInsight: 'Purpose (Student) is an attribute that can apply to ANY structure type. A student can rent a room in a house, an apartment, or even a condo.'
+    },
+    {
+        id: 'condo-unit',
+        values: { sector: 'residential', structure: 'apartment_bldg', subtype: 'highrise', unit: 'entire', listing: 'rent', purpose: 'standard', ownership: 'condo' },
+        keyInsight: 'Condo is OWNERSHIP, not structure! The building is a High Rise Apartment \u2014 the UNIT is condo-owned. This is why "Condo" isn\'t a Structure Type in the canonical model.'
+    }
+];
+
+// =============================================================================
+// FUNCTIONS: Dropdown Updates
+// =============================================================================
+
+function onSectorChange() {
+    var sector = document.getElementById('input-sector').value;
+    var structureSelect = document.getElementById('input-structure');
+    var options = structureOptions[sector] || [];
+
+    structureSelect.innerHTML = '<option value="">Select...</option>';
+    options.forEach(function(opt) {
+        structureSelect.innerHTML += '<option value="' + opt.value + '">' + opt.label + '</option>';
+    });
+
+    // Clear subtype
+    document.getElementById('input-subtype').innerHTML = '<option value="">Any / Not specified</option>';
+
+    // Hide/show purpose for commercial
+    var purposeGroup = document.getElementById('purpose-group');
+    purposeGroup.style.display = sector === 'commercial' ? 'none' : 'block';
+
+    updateDisplay();
+}
+
+function onStructureChange() {
+    var structure = document.getElementById('input-structure').value;
+    var subtypeSelect = document.getElementById('input-subtype');
+    var options = subtypeOptions[structure] || [];
+
+    subtypeSelect.innerHTML = '<option value="">Any / Not specified</option>';
+    options.forEach(function(opt) {
+        subtypeSelect.innerHTML += '<option value="' + opt.value + '">' + opt.label + '</option>';
+    });
+
+    updateDisplay();
+}
+
+// =============================================================================
+// FUNCTIONS: Preset Loading
+// =============================================================================
+
+function loadPreset(presetId) {
+    var preset = presets.find(function(p) { return p.id === presetId; });
+    if (!preset) return;
+
+    // Update preset button states
+    var btns = document.querySelectorAll('.preset-btn');
+    btns.forEach(function(btn) { btn.classList.remove('active'); });
+    event.target.classList.add('active');
+
+    // Set sector and update structure options
+    document.getElementById('input-sector').value = preset.values.sector;
+    onSectorChange();
+
+    // Set structure and update subtype options
+    document.getElementById('input-structure').value = preset.values.structure;
+    onStructureChange();
+
+    // Set remaining values
+    document.getElementById('input-subtype').value = preset.values.subtype || '';
+    document.getElementById('input-unit').value = preset.values.unit;
+    document.getElementById('input-listing').value = preset.values.listing;
+
+    if (preset.values.purpose) {
+        document.getElementById('input-purpose').value = preset.values.purpose;
+    }
+
+    // Update display
+    updateDisplay();
+
+    // Show key insight if present
+    var insightEl = document.getElementById('key-insight');
+    if (preset.keyInsight) {
+        document.getElementById('insight-text').textContent = preset.keyInsight;
+        insightEl.classList.add('visible');
+    } else {
+        insightEl.classList.remove('visible');
+    }
+}
+
+function loadRandomPreset() {
+    var randomIndex = Math.floor(Math.random() * presets.length);
+    var preset = presets[randomIndex];
+
+    // Clear active states
+    var btns = document.querySelectorAll('.preset-btn');
+    btns.forEach(function(btn) { btn.classList.remove('active'); });
+
+    // Set values
+    document.getElementById('input-sector').value = preset.values.sector;
+    onSectorChange();
+    document.getElementById('input-structure').value = preset.values.structure;
+    onStructureChange();
+    document.getElementById('input-subtype').value = preset.values.subtype || '';
+    document.getElementById('input-unit').value = preset.values.unit;
+    document.getElementById('input-listing').value = preset.values.listing;
+    if (preset.values.purpose) {
+        document.getElementById('input-purpose').value = preset.values.purpose;
+    }
+
+    updateDisplay();
+
+    var insightEl = document.getElementById('key-insight');
+    if (preset.keyInsight) {
+        document.getElementById('insight-text').textContent = preset.keyInsight;
+        insightEl.classList.add('visible');
+    } else {
+        insightEl.classList.remove('visible');
+    }
+}
+
+// =============================================================================
+// FUNCTIONS: Display Updates
+// =============================================================================
+
+function getValues() {
+    return {
+        sector: document.getElementById('input-sector').value,
+        structure: document.getElementById('input-structure').value,
+        subtype: document.getElementById('input-subtype').value,
+        unit: document.getElementById('input-unit').value,
+        listing: document.getElementById('input-listing').value,
+        purpose: document.getElementById('input-purpose').value
+    };
+}
+
+function getLabel(type, value) {
+    return (labelMap[type] && labelMap[type][value]) || value || '';
+}
+
+function updateDisplay() {
+    var values = getValues();
+    updateSentence(values);
+    renderPlatformCards(values);
+
+    // Hide key insight when manually changing values
+    document.getElementById('key-insight').classList.remove('visible');
+
+    // Clear active preset button
+    var btns = document.querySelectorAll('.preset-btn');
+    btns.forEach(function(btn) { btn.classList.remove('active'); });
+}
+
+function updateSentence(values) {
+    var sentenceEl = document.getElementById('sentence-text');
+
+    if (!values.structure) {
+        sentenceEl.innerHTML = 'Select a structure type to see the canonical sentence';
+        return;
+    }
+
+    var purpose = values.purpose && values.purpose !== 'standard' ? getLabel('purpose', values.purpose) : '';
+    var listing = getLabel('listing', values.listing);
+    var unit = getLabel('unit', values.unit);
+    var subtype = values.subtype ? getLabel('subtype', values.subtype) : '';
+    var structure = getLabel('structure', values.structure);
+
+    var sentence = '"A ';
+    if (purpose) sentence += '<span class="dim dim-purpose">' + purpose + '</span> ';
+    sentence += '<span class="dim dim-listing">' + listing + '</span> ';
+    sentence += '<span class="dim dim-unit">' + unit + '</span> ';
+    if (subtype) sentence += 'in a <span class="dim dim-subtype">' + subtype + '</span> ';
+    sentence += '<span class="dim dim-structure">' + structure + '</span>"';
+
+    sentenceEl.innerHTML = sentence;
+}
+
+// =============================================================================
+// FUNCTIONS: Platform Mapping Logic
+// =============================================================================
+
+function getPlatformDisplays(values) {
+    var displays = {};
+
+    // Rentals.ca
+    displays.rentals = getRentalsDisplay(values);
+
+    // RentFaster
+    displays.rentfaster = getRentFasterDisplay(values);
+
+    // BSTK / RentSync
+    displays.bstk = getBSTKDisplay(values);
+
+    // Spacelist (Lease)
+    displays.spacelist_lease = getSpacelistDisplay(values, 'lease');
+
+    // Spacelist (Sale)
+    displays.spacelist_sale = getSpacelistDisplay(values, 'sale');
+
+    // WoodCabins
+    displays.woodcabins = getWoodCabinsDisplay(values);
+
+    return displays;
+}
+
+function getRentalsDisplay(values) {
+    if (values.sector === 'commercial') {
+        return { visible: false, reason: 'Commercial listing not shown on residential ILS' };
+    }
+
+    var typeMap = {
+        house: 'House', apartment_bldg: 'Apartment', condo_bldg: 'Condo',
+        multiplex: 'House', cottage: 'House', manufactured: 'House'
+    };
+
+    var unitMap = {
+        basement: 'Basement', loft: 'Loft', room_private: 'Private Room', room_shared: 'Shared Room'
+    };
+
+    var propertyType = typeMap[values.structure] || 'House';
+    var unitType = unitMap[values.unit];
+    var display = unitType ? propertyType + ' \u00b7 ' + unitType : propertyType;
+
+    var filters = [];
+    if (unitType) filters.push(unitType);
+    if (values.purpose && values.purpose !== 'standard') {
+        filters.push(getLabel('purpose', values.purpose) + ' Housing');
+    }
+
+    var hidden = [];
+    if (values.subtype && !['lowrise', 'midrise', 'highrise'].includes(values.subtype)) {
+        hidden.push(getLabel('subtype', values.subtype));
+    }
+
+    var note = '';
+    if (values.structure === 'cottage') {
+        note = 'Cottage/Cabin collapsed to House';
+    }
+
+    return { visible: true, display: display, filters: filters, hidden: hidden, note: note };
+}
+
+function getRentFasterDisplay(values) {
+    if (values.sector === 'commercial') {
+        if (values.structure === 'office_bldg') {
+            return { visible: true, display: 'Office Space', filters: [], hidden: ['Class A/B/C'], note: 'No office class distinction' };
+        }
+        return { visible: false, reason: 'Commercial transaction type not supported' };
+    }
+
+    var typeMap = {
+        house: 'House', apartment_bldg: 'Apartment', condo_bldg: 'Condo Unit',
+        multiplex: 'Duplex', cottage: 'Vacation Home', manufactured: 'Mobile'
+    };
+
+    var unitMap = {
+        basement: 'Basement', main_floor: 'Main Floor', room_private: 'Room For Rent',
+        room_shared: 'Room For Rent', loft: 'Loft'
+    };
+
+    var propertyType = unitMap[values.unit] || typeMap[values.structure] || 'House';
+    var category = values.unit === 'entire' ? 'Apartment' : 'Single Unit';
+
+    if (['basement', 'main_floor', 'room_private', 'room_shared', 'loft'].includes(values.unit)) {
+        category = 'Single Unit';
+    }
+
+    return { visible: true, display: category + ' \u00b7 ' + propertyType, filters: [], hidden: [], note: '' };
+}
+
+function getBSTKDisplay(values) {
+    if (values.sector === 'commercial') {
+        return { visible: false, reason: 'BSTK focuses on residential property management' };
+    }
+
+    var structure = getLabel('structure', values.structure);
+    var subtype = values.subtype ? getLabel('subtype', values.subtype) : '';
+    var unit = getLabel('unit', values.unit);
+
+    var display = unit;
+    if (subtype) display += ' in ' + subtype;
+    display += ' ' + structure;
+
+    var filters = [];
+    if (values.purpose && values.purpose !== 'standard') {
+        filters.push('Purpose: ' + getLabel('purpose', values.purpose));
+    }
+
+    return { visible: true, display: display, filters: filters, hidden: [], note: 'Full granularity preserved' };
+}
+
+function getSpacelistDisplay(values, listingType) {
+    if (values.sector === 'residential') {
+        return { visible: false, reason: 'Residential listing on commercial platform' };
+    }
+
+    if (listingType === 'lease' && values.listing !== 'lease') {
+        return { visible: false, reason: 'Not a lease listing' };
+    }
+
+    if (listingType === 'sale' && values.listing !== 'sale') {
+        return { visible: false, reason: 'Not a sale listing' };
+    }
+
+    var subtype = values.subtype ? getLabel('subtype', values.subtype) + ' ' : '';
+    var structure = getLabel('structure', values.structure);
+    var display = subtype + structure;
+
+    var filters = [];
+    if (values.subtype) filters.push(getLabel('subtype', values.subtype));
+    filters.push(structure.replace(' Building', ''));
+
+    return { visible: true, display: display, filters: filters, hidden: [], note: 'Full commercial taxonomy' };
+}
+
+function getWoodCabinsDisplay(values) {
+    if (values.sector === 'commercial') {
+        return { visible: false, reason: 'Commercial listing' };
+    }
+
+    if (values.purpose !== 'vacation' && values.structure !== 'cottage') {
+        return { visible: false, reason: 'Not a vacation/cabin property' };
+    }
+
+    var subtypeMap = { cabin: 'Cabin', aframe: 'A-Frame', cottage: 'Cottage', yurt: 'Yurt', treehouse: 'Treehouse', tiny: 'Tiny Home' };
+    var display = subtypeMap[values.subtype] || 'Cabin';
+
+    var filters = [display, 'Vacation'];
+    var note = '';
+
+    if (values.subtype === 'aframe') {
+        note = 'First-class A-Frame support!';
+    }
+
+    return { visible: true, display: display, filters: filters, hidden: [], note: note, highlight: values.subtype === 'aframe' };
+}
+
+// =============================================================================
+// FUNCTIONS: Render Platform Cards
+// =============================================================================
+
+function renderPlatformCards(values) {
+    var displays = getPlatformDisplays(values);
+    var grid = document.getElementById('platform-grid');
+
+    var platforms = [
+        { key: 'rentals', name: 'Rentals.ca', icon: '&#x1F310;', headerClass: 'rentals' },
+        { key: 'rentfaster', name: 'RentFaster', icon: '&#x1F310;', headerClass: 'rentfaster' },
+        { key: 'bstk', name: 'BSTK / RentSync', icon: '&#x1F3E2;', headerClass: 'bstk' },
+        { key: 'spacelist_lease', name: 'Spacelist (Lease)', icon: '&#x1F3EC;', headerClass: 'spacelist' },
+        { key: 'spacelist_sale', name: 'Spacelist (Sale)', icon: '&#x1F3EC;', headerClass: 'spacelist' },
+        { key: 'woodcabins', name: 'WoodCabins', icon: '&#x1F3D5;', headerClass: 'woodcabins' }
+    ];
+
+    grid.innerHTML = platforms.map(function(p) {
+        var d = displays[p.key] || { visible: false, reason: 'No mapping' };
+        return renderPlatformCard(p, d);
+    }).join('');
+}
+
+function renderPlatformCard(platform, display) {
+    var visible = display.visible;
+    var displayText = display.display || '(Hidden)';
+    var filters = display.filters || [];
+    var hidden = display.hidden || [];
+    var note = display.note || display.reason || '';
+    var highlight = display.highlight;
+
+    var headerClass = visible ? platform.headerClass : 'disabled-header';
+
+    var html = '<div class="platform-card ' + (visible ? '' : 'disabled') + '">';
+    html += '<div class="platform-card-header ' + headerClass + '">';
+    html += '<span>' + platform.icon + '</span> ' + platform.name;
+    html += '</div>';
+    html += '<div class="platform-card-body">';
+    html += '<div class="platform-display">' + (visible ? displayText : '(Hidden)') + '</div>';
+
+    if (filters.length > 0) {
+        html += '<div class="platform-filters">';
+        filters.forEach(function(f) {
+            html += '<span class="platform-filter">' + f + '</span>';
+        });
+        html += '</div>';
+    }
+
+    if (hidden.length > 0) {
+        html += '<div class="platform-hidden">';
+        hidden.forEach(function(h) {
+            html += '<span class="platform-hidden-item">' + h + '</span>';
+        });
+        html += '</div>';
+    }
+
+    if (note) {
+        html += '<div class="platform-note' + (highlight ? ' highlight' : '') + '">' + note + '</div>';
+    }
+
+    html += '</div></div>';
+    return html;
+}
+
+// =============================================================================
+// INITIALIZATION
+// =============================================================================
+
+function initLiveExamples() {
+    onSectorChange();
+    // Load the first preset by default
+    loadPreset('basement-house');
+}
+
+// Initialize when tab loads
+initLiveExamples();
+</script>
