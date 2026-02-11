@@ -1,15 +1,274 @@
-<!-- Tab 2: Listing Builder -->
+<!-- Tab 2: Interactive Listing Builder -->
 <section class="section">
-    <h1>Interactive Listing Builder</h1>
-    <p class="section-subtitle">Build a listing by selecting values for each dimension</p>
+    <h2 class="section-title">Interactive Listing Builder</h2>
+    <p class="section-subtitle">Build a listing by selecting values — see how data flows through the system.</p>
 
-    <div class="placeholder-box">
-        <strong>Sprint 4.3 will build:</strong>
-        <ul style="text-align: left; margin-top: 1rem;">
-            <li>Cascading dropdown selectors for all 6 dimensions</li>
-            <li>Live sentence formula display</li>
-            <li>Platform translation cards (Zillow, Apartments.com, etc.)</li>
-            <li>TAXONOMY data model in taxonomy-data.js</li>
-        </ul>
+    <div class="builder-layout">
+        <!-- Left Side: Inputs -->
+        <div class="builder-sidebar">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Build Your Listing</div>
+                </div>
+                <div class="card-body">
+                    <!-- Path Selector -->
+                    <div class="form-group">
+                        <label class="form-label">Choose Your Path</label>
+                        <div class="path-toggle">
+                            <button type="button" class="btn builder-path-btn active" id="path-unit-first">Unit-First</button>
+                            <button type="button" class="btn builder-path-btn" id="path-structure-first">Structure-First</button>
+                        </div>
+                    </div>
+
+                    <hr class="form-divider">
+
+                    <!-- Unit-First Inputs -->
+                    <div id="unit-first-inputs">
+                        <div class="form-group">
+                            <label class="form-label">Unit Type <span class="required">*</span></label>
+                            <select id="uf-unit-type" class="form-select">
+                                <option value="">Select unit type...</option>
+                                <optgroup label="Self-sufficient (no building needed)">
+                                    <option value="apartment">Apartment</option>
+                                    <option value="basement">Basement</option>
+                                    <option value="room_private">Room (Private)</option>
+                                    <option value="room_shared">Room (Shared)</option>
+                                    <option value="office">Office Space</option>
+                                    <option value="parking">Parking</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="uf-building-toggle-group" style="display: none;">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="uf-know-building">
+                                <span>Know the building type? (optional)</span>
+                            </label>
+                        </div>
+
+                        <div id="uf-building-details" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Property Type</label>
+                                <select id="uf-property-type" class="form-select">
+                                    <option value="">Select property type...</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="uf-subtype-group" style="display: none;">
+                                <label class="form-label">Subtype</label>
+                                <select id="uf-subtype" class="form-select">
+                                    <option value="">Select subtype...</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="uf-variant-group" style="display: none;">
+                                <label class="form-label">Variant</label>
+                                <select id="uf-variant" class="form-select">
+                                    <option value="">None</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Structure-First Inputs -->
+                    <div id="structure-first-inputs" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Sector <span class="required">*</span></label>
+                            <select id="sf-sector" class="form-select">
+                                <option value="">Select sector...</option>
+                                <option value="residential">Residential</option>
+                                <option value="commercial">Commercial</option>
+                                <option value="recreation">Recreation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="sf-property-type-group" style="display: none;">
+                            <label class="form-label">Property Type <span class="required">*</span></label>
+                            <select id="sf-property-type" class="form-select">
+                                <option value="">Select property type...</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="sf-subtype-group" style="display: none;">
+                            <label class="form-label">Subtype</label>
+                            <select id="sf-subtype" class="form-select">
+                                <option value="">Select subtype...</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="sf-variant-group" style="display: none;">
+                            <label class="form-label">Variant</label>
+                            <select id="sf-variant" class="form-select">
+                                <option value="">None</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="sf-unit-type-group" style="display: none;">
+                            <label class="form-label">Unit Type <span class="required">*</span></label>
+                            <select id="sf-unit-type" class="form-select">
+                                <option value="">Select unit type...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr class="form-divider">
+
+                    <!-- Transaction -->
+                    <div class="form-group">
+                        <label class="form-label">Transaction <span class="required">*</span></label>
+                        <select id="transaction" class="form-select">
+                            <option value="">Select transaction...</option>
+                            <option value="rent">Rent</option>
+                            <option value="sale">Sale</option>
+                            <option value="lease">Lease</option>
+                        </select>
+                    </div>
+
+                    <hr class="form-divider">
+                    <div class="form-divider-label">Metadata</div>
+
+                    <!-- Metadata -->
+                    <div class="form-group">
+                        <label class="form-label">Purpose</label>
+                        <select id="purpose" class="form-select">
+                            <option value="standard">Standard</option>
+                            <option value="student">Student</option>
+                            <option value="senior">Senior</option>
+                            <option value="military_veteran">Military/Veteran</option>
+                            <option value="corporate">Corporate</option>
+                            <option value="vacation">Vacation</option>
+                            <option value="short_term">Short-Term</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Ownership</label>
+                        <select id="ownership" class="form-select">
+                            <option value="rental">Rental</option>
+                            <option value="freehold">Freehold</option>
+                            <option value="condo">Condo</option>
+                            <option value="coop">Co-op</option>
+                            <option value="leasehold">Leasehold</option>
+                            <option value="lease_to_own">Lease-to-Own</option>
+                            <option value="rent_to_own">Rent-to-Own</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="community-toggle">
+                            <span>Part of a Community</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group" id="community-name-group" style="display: none;">
+                        <label class="form-label">Community Name</label>
+                        <input type="text" id="community-name" class="form-input" placeholder="e.g., Maple Heights">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Live Output -->
+        <div class="builder-output">
+            <!-- Section A: The Collapsed Sentence -->
+            <div class="card mb-6">
+                <div class="card-header">
+                    <div class="card-title">The Listing</div>
+                </div>
+                <div class="card-body">
+                    <div class="sentence-box" id="output-sentence">
+                        <div class="sentence-text" id="sentence-text">
+                            <span class="text-muted">Select a unit type and transaction to see your listing...</span>
+                        </div>
+                        <div class="sentence-meta" id="sentence-meta"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section B: Canonical Storage -->
+            <div class="card mb-6">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Canonical Storage</div>
+                        <div class="card-subtitle">How the system stores this listing</div>
+                    </div>
+                    <div class="view-toggle">
+                        <button type="button" class="view-toggle-btn active" data-view="visual">Visual</button>
+                        <button type="button" class="view-toggle-btn" data-view="json">JSON</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="canonical-visual" class="canonical-view">
+                        <div class="b-row"><span class="badge badge-purple">Sector</span> <span class="b-val null" id="cv-sector">—</span></div>
+                        <div class="b-row"><span class="badge badge-amber">Property Type</span> <span class="b-val null" id="cv-property-type">null</span></div>
+                        <div class="b-row"><span class="badge badge-orange">Subtype</span> <span class="b-val null" id="cv-subtype">null</span></div>
+                        <div class="b-row"><span class="badge badge-cyan">Variant</span> <span class="b-val null" id="cv-variant">null</span></div>
+                        <div class="b-row"><span class="badge badge-teal">Unit Type</span> <span class="b-val null" id="cv-unit-type">—</span></div>
+                        <div class="b-row"><span class="badge badge-green">Transaction</span> <span class="b-val null" id="cv-transaction">—</span></div>
+                        <hr class="meta-divider">
+                        <div class="b-row"><span class="badge badge-gray">Purpose</span> <span class="b-val" id="cv-purpose">standard</span></div>
+                        <div class="b-row"><span class="badge badge-gray">Ownership</span> <span class="b-val" id="cv-ownership">rental</span></div>
+                        <div class="b-row"><span class="badge badge-gray">Community</span> <span class="b-val null" id="cv-community">null</span></div>
+                    </div>
+                    <div id="canonical-json" class="canonical-view json-view" style="display: none;">
+                        <pre id="json-output">{
+  "sector": null,
+  "property_type": null,
+  "subtype": null,
+  "variant": null,
+  "unit_type": null,
+  "transaction": null,
+  "metadata": {
+    "purpose": "standard",
+    "ownership": "rental",
+    "community": null
+  }
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section C: Platform Display -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Platform Display</div>
+                        <div class="card-subtitle">How this listing appears on each platform</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="platform-grid">
+                        <div class="platform-card">
+                            <div class="platform-card-header enterprise">BSTK / RentSync</div>
+                            <div class="platform-card-body">
+                                <div class="platform-display" id="platform-bstk">
+                                    <span class="text-muted">Select a listing type to see output</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="platform-card">
+                            <div class="platform-card-header ils">Rentals.ca / RentFaster</div>
+                            <div class="platform-card-body">
+                                <div class="platform-display" id="platform-ils">
+                                    <span class="text-muted">Select a listing type to see output</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="platform-card">
+                            <div class="platform-card-header commercial">Spacelist</div>
+                            <div class="platform-card-body">
+                                <div class="platform-display" id="platform-spacelist">
+                                    <span class="text-muted">Select a listing type to see output</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="platform-card">
+                            <div class="platform-card-header mls">MLS / Roomies</div>
+                            <div class="platform-card-body">
+                                <div class="platform-display" id="platform-mls">
+                                    <span class="text-muted">Select a listing type to see output</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
