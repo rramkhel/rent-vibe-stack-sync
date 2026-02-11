@@ -699,3 +699,108 @@ body {
 .json-view .json-key { color: #93c5fd; }
 .json-view .json-string { color: #86efac; }
 .json-view .json-null { color: var(--gray-500); }
+
+/* ========================================
+   SYNDICATION DIAGRAM
+   ======================================== */
+.syndication-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.syndication-source {
+  background: var(--teal);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-8);
+  text-align: center;
+}
+
+.syndication-source-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.syndication-source-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: var(--space-1);
+}
+
+.syndication-arrow {
+  padding: var(--space-3) 0;
+}
+
+.syndication-targets {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.syndication-target {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  text-align: center;
+  min-width: 140px;
+  background: var(--white);
+}
+
+.syndication-target.enterprise { border-top: 3px solid var(--platform-enterprise); }
+.syndication-target.ils { border-top: 3px solid var(--platform-ils); }
+.syndication-target.commercial { border-top: 3px solid var(--platform-commercial); }
+.syndication-target.mls { border-top: 3px solid var(--platform-mls); }
+
+.syndication-target-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.syndication-target-sub {
+  font-size: 11px;
+  color: var(--gray-500);
+  margin-top: 2px;
+}
+
+.syndication-target-direction {
+  font-size: 10px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: var(--space-2);
+}
+
+/* ========================================
+   STAT CARDS
+   ======================================== */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--teal);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-top: var(--space-3);
+}
