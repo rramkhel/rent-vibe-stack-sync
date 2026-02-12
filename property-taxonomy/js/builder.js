@@ -654,6 +654,8 @@
     }
 
     function updateSentence() {
+        if (!elements.sentenceText || !elements.sentenceMeta) return;
+
         if (!state.unitType || !state.transaction) {
             elements.sentenceText.innerHTML = '<span class="text-muted">Select a unit type and transaction to see your listing...</span>';
             elements.sentenceMeta.innerHTML = '';
@@ -738,6 +740,8 @@
     }
 
     function updateCanonicalJson() {
+        if (!elements.jsonOutput) return;
+
         // Build amenities object only if there are selections
         let amenities = null;
         const hasPropertyAmenities = Object.keys(state.amenities.property).length > 0;
@@ -811,6 +815,11 @@
     }
 
     function updatePlatformDisplay() {
+        // Defensive check for elements
+        if (!elements.platformBstk || !elements.platformIls || !elements.platformSpacelist || !elements.platformMls) {
+            return;
+        }
+
         if (!state.unitType || !state.transaction) {
             const placeholder = '<span class="text-muted">Select a listing type to see output</span>';
             elements.platformBstk.innerHTML = placeholder;
