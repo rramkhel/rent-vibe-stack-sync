@@ -909,15 +909,196 @@ body {
 }
 
 /* ========================================
-   PROPERTY HIERARCHY TREE
+   PROPERTY HIERARCHY TREE (Collapsible)
    ======================================== */
+
+/* Tree controls */
+.tree-ctrl {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--gray-200);
+  background: var(--gray-50);
+  color: var(--gray-600);
+  cursor: pointer;
+}
+.tree-ctrl:hover {
+  background: var(--gray-100);
+  color: var(--gray-800);
+}
+.tree-ctrl.active {
+  background: var(--teal-light);
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+/* Tree node structure */
+.tree-node {
+  margin-bottom: 2px;
+}
+.tree-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.1s;
+  user-select: none;
+}
+.tree-header:hover {
+  background: var(--gray-50);
+}
+.tree-header.open {
+  background: var(--gray-50);
+}
+.tree-toggle {
+  font-size: 9px;
+  width: 14px;
+  color: var(--gray-400);
+  transition: transform 0.12s;
+  flex-shrink: 0;
+}
+.tree-header.open > .tree-toggle {
+  transform: rotate(90deg);
+}
+.tree-header.leaf > .tree-toggle {
+  visibility: hidden;
+}
+.tree-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+.tree-code {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gray-500);
+  padding: 1px 5px;
+  background: var(--gray-100);
+  border-radius: 3px;
+}
+.tree-desc {
+  font-size: 11px;
+  color: var(--gray-400);
+  font-style: italic;
+}
+.tree-children {
+  padding-left: 24px;
+  border-left: 1px solid var(--gray-200);
+  margin-left: 18px;
+  display: none;
+}
+.tree-children.open {
+  display: block;
+}
+
+/* Sector headers */
+.tree-sector-hdr {
+  padding: 10px 16px;
+  border-radius: 6px 6px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+.tree-sector-hdr.residential {
+  background: var(--dim-sector-light);
+  color: #6d28d9;
+}
+.tree-sector-hdr.commercial {
+  background: var(--dim-subtype-light);
+  color: #c2410c;
+}
+.tree-sector-hdr.recreation {
+  background: var(--dim-structure-light);
+  color: #92400e;
+}
+.tree-sector-hdr.other {
+  background: var(--gray-100);
+  color: var(--gray-700);
+}
+
+/* Column headers and subtype rows */
+.tree-col-headers {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 6px 12px;
+  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-500);
+}
+.tree-subtype-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 5px 12px;
+  border-top: 1px solid var(--gray-100);
+  align-items: center;
+  font-size: 12px;
+}
+.tree-subtype-row:hover {
+  background: var(--gray-50);
+}
+
+/* Chips for variants, units, transactions */
+.chip {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 1px 7px;
+  border-radius: 3px;
+  margin: 1px 2px;
+  white-space: nowrap;
+}
+.chip-variant {
+  background: var(--dim-variant-light);
+  color: #0e7490;
+}
+.chip-unit {
+  background: var(--dim-unit-light);
+  color: var(--teal-dark);
+}
+.chip-transaction {
+  background: var(--dim-transaction-light);
+  color: #15803d;
+}
+.chip-any {
+  background: var(--gray-100);
+  color: var(--gray-400);
+  font-style: italic;
+}
+
+/* Cardinality and catch-all badges */
+.badge-cardinality {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: var(--gray-100);
+  color: var(--gray-500);
+}
+.badge-catchall {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(34,197,94,0.1);
+  color: #15803d;
+}
+
+/* Legacy tree classes (kept for backward compat) */
 .tree-sector {
   margin-bottom: var(--space-6);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
-
 .tree-sector-header {
   padding: var(--space-3) var(--space-5);
   font-size: 14px;
@@ -925,31 +1106,25 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
 .tree-sector-purple .tree-sector-header {
   background: var(--dim-sector-light);
   color: #6d28d9;
 }
-
 .tree-sector-orange .tree-sector-header {
   background: var(--dim-subtype-light);
   color: #c2410c;
 }
-
 .tree-sector-amber .tree-sector-header {
   background: var(--dim-structure-light);
   color: #b45309;
 }
-
 .tree-sector-gray .tree-sector-header {
   background: var(--gray-100);
   color: var(--gray-600);
 }
-
 .tree-type {
   border-top: 1px solid var(--gray-100);
 }
-
 .tree-type-header {
   padding: var(--space-3) var(--space-5);
   font-size: 13px;
@@ -957,7 +1132,6 @@ body {
   color: var(--gray-800);
   background: var(--gray-50);
 }
-
 .tree-row {
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -967,15 +1141,12 @@ body {
   border-top: 1px solid var(--gray-50);
   font-size: 13px;
 }
-
 .tree-row:hover {
   background: var(--gray-50);
 }
-
 .tree-subtype {
   color: var(--gray-700);
 }
-
 .tree-variants {
   color: var(--gray-500);
   font-style: italic;

@@ -15,6 +15,12 @@
 
     <!-- Sub-tab 1: Property Hierarchy -->
     <div class="sub-panel active" id="ref-hierarchy">
+        <!-- Controls bar -->
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+            <button class="tree-ctrl active" onclick="toggleAllTree(true)">Expand All</button>
+            <button class="tree-ctrl" onclick="toggleAllTree(false)">Collapse All</button>
+        </div>
+
         <div id="property-hierarchy-tree">
             <!-- Generated from TAXONOMY by initReferenceTree() -->
         </div>
@@ -925,6 +931,105 @@
 </section>
 
 <script>
+// Transaction rules per property type
+const TRANSACTION_RULES = {
+    'house': ['rent', 'sale'],
+    'townhouse_plex': ['rent', 'sale'],
+    'apartment_bldg': ['rent'],
+    'other_res': ['rent'],
+    'office': ['rent', 'sale', 'lease'],
+    'retail': ['sale', 'lease'],
+    'industrial': ['sale', 'lease'],
+    'parking_pty': ['lease'],
+    'hospitality': ['sale', 'lease'],
+    'leisure': ['lease'],
+    'land': ['sale', 'lease'],
+    'specialty': [],
+    'other_other': ['sale']
+};
+
+// Unit types per subtype (simplified — "other" catch-alls accept any)
+const UNIT_TYPE_RULES = {
+    // House
+    'detached': ['entire', 'main_floor', 'suite', 'basement', 'room'],
+    'mobile': ['entire'],
+    'cabin': ['entire'],
+    // T/Plex
+    'semi': ['entire', 'main_floor', 'suite', 'basement', 'room'],
+    'townhouse': ['entire', 'main_floor', 'suite', 'basement', 'room'],
+    'duplex': ['entire', 'main_floor', 'suite', 'basement', 'room'],
+    'triplex': ['entire', 'main_floor', 'suite', 'basement', 'room'],
+    'fourplex': ['entire', 'main_floor', 'suite', 'basement', 'room'],
+    'multiplex': ['entire', 'main_floor', 'suite', 'basement', 'room'],
+    // Apt Bldg
+    'low_rise': ['suite', 'apartment', 'room'],
+    'mid_rise': ['suite', 'apartment', 'room'],
+    'high_rise': ['suite', 'apartment', 'room'],
+    'walk_up': ['suite', 'apartment', 'room'],
+    // Office
+    'class_a': ['entire', 'office', 'floor'],
+    'class_b': ['entire', 'office', 'floor'],
+    'class_c': ['entire', 'office', 'floor'],
+    'coworking': ['office', 'spot'],
+    // Retail
+    'storefront': ['entire', 'suite'],
+    'mall': ['suite'],
+    'strip_mall': ['suite'],
+    // Industrial
+    'warehouse': ['entire', 'floor'],
+    'manufacturing': ['entire'],
+    'flex': ['entire', 'suite', 'spot'],
+    'storage': ['entire', 'suite'],
+    // Parking
+    'garage': ['entire', 'parking', 'floor', 'spot'],
+    'surface_lot': ['entire', 'parking', 'spot'],
+    // Hospitality
+    'hotel': ['entire'],
+    'motel': ['entire'],
+    'bnb': ['entire'],
+    'inn': ['entire'],
+    // Leisure
+    'marina': ['spot'],
+    'campground': ['spot'],
+    'stable': ['spot'],
+    // Land
+    'agricultural': ['entire'],
+    'acreage': ['entire'],
+    'vacant': ['entire'],
+    // Other
+    'subdivision': ['entire']
+};
+
+const UNIT_TYPE_LABELS = {
+    'entire': 'Entire', 'main_floor': 'Main Fl', 'suite': 'Suite', 'basement': 'Bsmt',
+    'apartment': 'Apt', 'room': 'Room', 'office': 'Office', 'parking': 'Parking',
+    'floor': 'Floor', 'spot': 'Spot'
+};
+
+const TRANSACTION_LABELS = { 'rent': 'Rent', 'sale': 'Sale', 'lease': 'Lease' };
+
+// Toggle tree node
+function toggleTree(el) {
+    const ch = el.nextElementSibling;
+    if (!ch || !ch.classList.contains('tree-children')) return;
+    el.classList.toggle('open');
+    ch.classList.toggle('open');
+}
+
+// Expand/collapse all
+function toggleAllTree(open) {
+    document.querySelectorAll('#ref-hierarchy .tree-header').forEach(h => {
+        const ch = h.nextElementSibling;
+        if (!ch || !ch.classList.contains('tree-children')) return;
+        if (open) { h.classList.add('open'); ch.classList.add('open'); }
+        else { h.classList.remove('open'); ch.classList.remove('open'); }
+    });
+    // Update button states
+    document.querySelectorAll('#ref-hierarchy .tree-ctrl').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.includes(open ? 'Expand' : 'Collapse'));
+    });
+}
+
 // Initialize reference tree and sub-tabs when this tab loads
 (function() {
     function initReferenceTab() {
@@ -954,38 +1059,97 @@
         const container = document.getElementById('property-hierarchy-tree');
         if (!container || typeof TAXONOMY === 'undefined') return;
 
-        const sectorColors = {
-            residential: 'purple',
-            commercial: 'orange',
-            recreation: 'amber',
-            other: 'gray'
-        };
-
         let html = '';
 
         for (const [sectorKey, sector] of Object.entries(TAXONOMY)) {
-            const colorClass = sectorColors[sectorKey] || 'gray';
-
-            html += `<div class="tree-sector tree-sector-${colorClass}">`;
-            html += `<div class="tree-sector-header">${sector.label}</div>`;
+            // Sector node
+            html += `<div class="tree-node">`;
+            html += `<div class="tree-header open" onclick="toggleTree(this)">`;
+            html += `<span class="tree-toggle">▶</span>`;
+            html += `<span class="tree-sector-hdr ${sectorKey}">${sector.label}</span>`;
+            html += `<span class="tree-code">${sectorKey}</span>`;
+            html += `</div>`;
+            html += `<div class="tree-children open">`;
 
             for (const [typeKey, type] of Object.entries(sector.types)) {
-                html += `<div class="tree-type">`;
-                html += `<div class="tree-type-header">${type.label}</div>`;
+                // Property type node
+                const transactions = TRANSACTION_RULES[typeKey] || [];
+                html += `<div class="tree-node">`;
+                html += `<div class="tree-header open" onclick="toggleTree(this)">`;
+                html += `<span class="tree-toggle">▶</span>`;
+                html += `<span class="tree-label">${type.label}</span>`;
+                html += `<span class="tree-code">${typeKey}</span>`;
+                html += `</div>`;
+                html += `<div class="tree-children open">`;
+
+                // Column headers
+                html += `<div class="tree-col-headers">`;
+                html += `<div>Subtype</div><div>Variants</div><div>Unit Types</div><div>Transactions</div>`;
+                html += `</div>`;
 
                 for (const [subtypeKey, subtype] of Object.entries(type.subtypes)) {
-                    const variants = subtype.variants.map(v => VARIANT_LABELS[v] || v).join(', ');
+                    const isOther = subtypeKey.includes('other') || subtypeKey.includes('_other');
+                    const variants = subtype.variants || [];
+                    const unitTypes = UNIT_TYPE_RULES[subtypeKey] || [];
 
-                    html += `<div class="tree-row">`;
-                    html += `<div class="tree-subtype">${subtype.label}</div>`;
-                    html += `<div class="tree-variants">${variants || '—'}</div>`;
+                    html += `<div class="tree-subtype-row">`;
+
+                    // Subtype name + code + badges
+                    html += `<div>`;
+                    html += `<strong>${subtype.label}</strong> `;
+                    html += `<span class="tree-code">${subtypeKey}</span>`;
+                    if (isOther) html += ` <span class="badge-catchall">catch-all</span>`;
                     html += `</div>`;
+
+                    // Variants
+                    html += `<div>`;
+                    if (isOther) {
+                        html += `<span class="chip chip-any">Any</span>`;
+                    } else if (variants.length > 0) {
+                        variants.forEach(v => {
+                            const label = (typeof VARIANT_LABELS !== 'undefined' && VARIANT_LABELS[v]) || v;
+                            html += `<span class="chip chip-variant">${label}</span>`;
+                        });
+                    } else {
+                        html += `<span style="color: var(--gray-300);">—</span>`;
+                    }
+                    html += `</div>`;
+
+                    // Unit Types
+                    html += `<div>`;
+                    if (isOther) {
+                        html += `<span class="chip chip-any">Any</span>`;
+                    } else if (unitTypes.length > 0) {
+                        unitTypes.forEach(u => {
+                            const label = UNIT_TYPE_LABELS[u] || u;
+                            html += `<span class="chip chip-unit">${label}</span>`;
+                        });
+                    } else {
+                        html += `<span style="color: var(--gray-300);">—</span>`;
+                    }
+                    html += `</div>`;
+
+                    // Transactions
+                    html += `<div>`;
+                    if (isOther) {
+                        html += `<span class="chip chip-any">Any</span>`;
+                    } else if (transactions.length > 0) {
+                        transactions.forEach(t => {
+                            const label = TRANSACTION_LABELS[t] || t;
+                            html += `<span class="chip chip-transaction">${label}</span>`;
+                        });
+                    } else {
+                        html += `<span style="color: var(--gray-300);">—</span>`;
+                    }
+                    html += `</div>`;
+
+                    html += `</div>`; // end row
                 }
 
-                html += `</div>`;
+                html += `</div></div>`; // end type children + node
             }
 
-            html += `</div>`;
+            html += `</div></div>`; // end sector children + node
         }
 
         container.innerHTML = html;
