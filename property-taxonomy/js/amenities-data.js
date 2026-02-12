@@ -421,3 +421,165 @@ var AMENITIES_DATA = {
         values: ['Not specified', 'Included in rent', 'Tenant pays', 'Not available']
     }
 };
+
+/**
+ * Platform-Specific Amenity Display Rules
+ * Maps canonical amenity names to platform-specific display names and roll-ups
+ */
+var PLATFORM_AMENITY_RULES = {
+
+    // BSTK / RentSync — Full granularity, shows almost everything
+    bstk: {
+        renames: {
+            'Elevators': 'Elevator',
+            'Gym / Fitness Centre': 'Exercise Room',
+            'Laundry Facilities - On-site': 'Laundry Facility',
+            'Laundry Facilities - Every Floor': 'Laundry Room on Each Floor'
+        },
+        showAll: true
+    },
+
+    // Rentals.ca / TorontoRentals / Louer.ca — Mapped names + roll-ups for filters
+    rentals: {
+        renames: {
+            'Gym / Fitness Centre': 'Fitness Area',
+            'Laundry Facilities - On-site': 'Laundry Facilities',
+            'Laundry Facilities - Every Floor': 'Laundry Facilities',
+            'Social Room / Lounge': 'Party Room / Movie Room',
+            'Public Transit nearby': 'Bus Stop / Highway / Public Transit',
+            '24/7 Video Surveillance': 'Video Surveillance',
+            'Buzzer / Call Box / Intercom': 'Buzzer Entry',
+            'Heated Swimming Pool': 'Pool - Heated',
+            'Rooftop Patio': 'Rooftop Deck',
+            'Barbecues Allowed on Balconies': 'BBQ Area',
+            'Offleash Dog Area / Dog Run': 'Dog Park',
+            'Bike Storage': 'Bike Racks / Bike Room',
+            'Storage Room': 'Storage Lockers'
+        },
+        hidden: [
+            'Access for Disabled', 'Elevators', 'Visual / Audio Aids',
+            'BBQ Area', 'Bike-friendly / Bicycle Room', 'Business Centre',
+            'Recreation Room', 'Yoga / Dance Studio',
+            'Beach nearby', 'Bike Stand nearby', 'Cafe(s) nearby',
+            'Convenience Store(s) nearby', 'Dog Park(s) nearby',
+            'Hospital(s) nearby', 'Library nearby',
+            'Medical Service(s) nearby', 'Park(s) nearby',
+            'Pharmacy nearby', 'School(s) nearby',
+            'Cleaning / Janitor Services', 'Childcare Services',
+            'Dry Cleaning Services', 'Snow Removal Services',
+            'Package Services', 'Pet Wash Station',
+            'Garbage Chute', 'Noise Reduction Walls / Doors', 'Wet Bar',
+            'Courtyard', 'Fire Pit', 'Greenhouse', 'Porch',
+            'Private Yard', 'Outdoor Space', 'Shared Yard',
+            'Basketball Court(s)', 'Billiards / Pool / Snooker', 'Cabana',
+            "Children's Play Area", 'Pool Club House',
+            'Hot Tub', 'Indoor Swimming Pool', 'Jacuzzi', 'Outdoor Swimming Pool',
+            'Playground', 'Sauna', 'Sports Courts / Rooms',
+            'Tennis Court(s)', 'Ping Pong / Table Tennis',
+            'Racquetball Court', 'Outdoor Play Area',
+            'Rooftop BBQ', 'Rooftop Garden', 'Rooftop Lounge', 'Rooftop Terrace',
+            '24/7 Security On-site', 'Doorman', 'Keyless Entry',
+            'Key Fob Elevators', 'Night Patrol', 'Security On-site',
+            'Staff On-site', 'Video Surveillance'
+        ],
+        rollups: {
+            'Pool': {
+                trigger: ['Heated Swimming Pool', 'Indoor Swimming Pool', 'Outdoor Swimming Pool', 'Hot Tub', 'Jacuzzi'],
+                display: 'Pool: Yes'
+            },
+            'Rooftop': {
+                trigger: ['Rooftop BBQ', 'Rooftop Garden', 'Rooftop Lounge', 'Rooftop Patio', 'Rooftop Terrace'],
+                display: 'Rooftop Amenities: Yes'
+            }
+        }
+    },
+
+    // RentFaster — More rolled up than Rentals
+    rentfaster: {
+        renames: {
+            'Bike-friendly / Bicycle Room': 'Bike Room',
+            'Gym / Fitness Centre': 'Fitness Area',
+            'Laundry Facilities - On-site': 'Laundry - coin/card/shared',
+            'Laundry Facilities - Every Floor': 'Laundry - coin/card/shared',
+            'Social Room / Lounge': 'Party/Games Room',
+            'Public Transit nearby': 'Bus',
+            'Library nearby': 'Public Library',
+            'Mall(s) nearby': 'Shopping Center',
+            'Shopping nearby': 'Shopping Center',
+            'Park(s) nearby': 'Playground/Park',
+            'Concierge Services': 'Concierge',
+            'Beach Access': 'Lake Access',
+            'Guest Suites Available': 'Guest Suite',
+            'Fenced Yard': 'Fenced Backyard',
+            'Keyless Entry': 'Secure Entry',
+            'Staff On-site': 'On-site Management',
+            'Sports Courts / Rooms': 'Sports Complex',
+            'Wheelchair Access': 'Roll-in shower/extra wide hallways'
+        },
+        rollups: {
+            'Pool': {
+                trigger: ['Heated Swimming Pool', 'Indoor Swimming Pool', 'Outdoor Swimming Pool'],
+                display: 'Swimming Pool'
+            },
+            'Security': {
+                trigger: ['24/7 Security On-site', '24/7 Video Surveillance', 'Buzzer / Call Box / Intercom', 'Doorman', 'Keyless Entry', 'Key Fob Elevators', 'Night Patrol', 'Security On-site', 'Video Surveillance'],
+                display: 'Security'
+            },
+            'Recreation': {
+                trigger: ['Basketball Court(s)', 'Billiards / Pool / Snooker', "Children's Play Area", 'Playground', 'Sports Courts / Rooms', 'Tennis Court(s)', 'Ping Pong / Table Tennis', 'Racquetball Court', 'Outdoor Play Area'],
+                display: 'Rec Facilities'
+            }
+        },
+        nearbyWhitelist: ['Public Transit nearby', 'Mall(s) nearby', 'Shopping nearby', 'Library nearby', 'Park(s) nearby']
+    },
+
+    // RentBoard / RentCanada — Most simplified
+    rentboard: {
+        renames: {
+            'BBQ Area': 'Barbeque',
+            'Gym / Fitness Centre': 'Exercise/Health Facilities',
+            'Laundry Facilities - On-site': 'Laundry Facilities',
+            'Laundry Facilities - Every Floor': 'Laundry Facilities',
+            'Public Transit nearby': 'Near Bus Stop',
+            'Hospital(s) nearby': 'Near Hospital',
+            'Mall(s) nearby': 'Near Shopping Center',
+            'Shopping nearby': 'Near Shopping Center',
+            'Park(s) nearby': 'Near Park',
+            'School(s) nearby': 'Near School',
+            'Bike Stand nearby': 'Near Bike Path/Trail',
+            'Childcare Services': 'Daycare',
+            'Patio / Deck / Sun Deck': 'Patio & Deck',
+            '24/7 Video Surveillance': 'Security Surveillance',
+            'Video Surveillance': 'Security Surveillance',
+            'Staff On-site': 'On-site management'
+        },
+        rollups: {
+            'Pool': {
+                trigger: ['Heated Swimming Pool', 'Indoor Swimming Pool', 'Outdoor Swimming Pool', 'Hot Tub', 'Jacuzzi'],
+                display: 'Pool'
+            },
+            'Security': {
+                trigger: ['24/7 Security On-site', '24/7 Video Surveillance', 'Buzzer / Call Box / Intercom', 'Doorman', 'Keyless Entry', 'Security On-site', 'Video Surveillance'],
+                display: 'Security'
+            },
+            'Recreation': {
+                trigger: ['Basketball Court(s)', 'Billiards / Pool / Snooker', "Children's Play Area", 'Playground', 'Sports Courts / Rooms'],
+                display: 'Rec Facilities'
+            }
+        },
+        petDisplay: 'simple',
+        nearbyWhitelist: ['Public Transit nearby', 'Hospital(s) nearby', 'Mall(s) nearby', 'Shopping nearby', 'Park(s) nearby', 'School(s) nearby', 'Bike Stand nearby']
+    },
+
+    // Spacelist — Commercial only
+    spacelist: {
+        commercialOnly: true,
+        showCategories: ['Commercial', 'Commercial Unit']
+    },
+
+    // MLS — Inbound syndication, limited fields
+    mls: {
+        inboundOnly: true,
+        limitedFields: ['Parking', 'Pets', 'Laundry', 'A/C', 'Heating', 'Furnished']
+    }
+};

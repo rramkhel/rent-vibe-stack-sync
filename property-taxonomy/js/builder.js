@@ -278,6 +278,7 @@
                 state.amenities.pets.sizeRestriction = elements.dogSize.value || null;
                 updateAmenitiesCounter();
                 updateCanonicalJson();
+                updatePlatformDisplay();
             });
         }
         if (elements.petDeposit) {
@@ -285,6 +286,12 @@
         }
         if (elements.petMonthly) {
             elements.petMonthly.addEventListener('input', onPetInputChange);
+        }
+
+        // Reset button
+        const resetBtn = document.getElementById('builder-reset');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', resetBuilder);
         }
     }
 
@@ -330,6 +337,106 @@
             elements.sfVariantGroup.style.display = 'none';
             elements.sfUnitTypeGroup.style.display = 'none';
         }
+    }
+
+    function resetBuilder() {
+        // Reset full state including amenities
+        state = {
+            sector: null,
+            propertyType: null,
+            subtype: null,
+            variant: null,
+            unitType: null,
+            transaction: null,
+            purpose: 'standard',
+            ownership: 'rental',
+            community: null,
+            amenities: {
+                property: {},
+                unit: {},
+                parking: { availability: null, types: [], spotsIncluded: null, extraCostPerMonth: null },
+                pets: { policy: null, types: [], sizeRestriction: null, deposit: null, monthlyFee: null },
+                utilities: {}
+            }
+        };
+
+        // Reset classification form elements
+        elements.transaction.value = '';
+        elements.purpose.value = 'standard';
+        elements.ownership.value = 'rental';
+        elements.communityToggle.checked = false;
+        elements.communityNameGroup.style.display = 'none';
+        elements.communityName.value = '';
+
+        // Reset unit-first inputs
+        elements.ufUnitType.value = '';
+        elements.ufBuildingToggleGroup.style.display = 'none';
+        elements.ufKnowBuilding.checked = false;
+        elements.ufBuildingDetails.style.display = 'none';
+        elements.ufPropertyType.innerHTML = '<option value="">Select property type...</option>';
+        elements.ufSubtypeGroup.style.display = 'none';
+        elements.ufVariantGroup.style.display = 'none';
+
+        // Reset structure-first inputs
+        elements.sfSector.value = '';
+        elements.sfPropertyTypeGroup.style.display = 'none';
+        elements.sfSubtypeGroup.style.display = 'none';
+        elements.sfVariantGroup.style.display = 'none';
+        elements.sfUnitTypeGroup.style.display = 'none';
+
+        // Reset parking section
+        if (elements.parkingAvailability) elements.parkingAvailability.value = '';
+        if (elements.parkingTypesContainer) elements.parkingTypesContainer.classList.add('hidden');
+        if (elements.parkingPerUnit) elements.parkingPerUnit.classList.add('hidden');
+        if (elements.parkingSpots) elements.parkingSpots.value = '';
+        if (elements.parkingCost) elements.parkingCost.value = '';
+        if (elements.parkingTypesGrid) {
+            elements.parkingTypesGrid.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+        }
+
+        // Reset pet section
+        if (elements.petPolicy) elements.petPolicy.value = '';
+        if (elements.petTypesContainer) elements.petTypesContainer.classList.add('hidden');
+        if (elements.petRestrictions) elements.petRestrictions.classList.add('hidden');
+        if (elements.petFees) elements.petFees.classList.add('hidden');
+        if (elements.dogSize) elements.dogSize.value = '';
+        if (elements.petDeposit) elements.petDeposit.value = '';
+        if (elements.petMonthly) elements.petMonthly.value = '';
+        if (elements.petTypesGrid) {
+            elements.petTypesGrid.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+        }
+
+        // Reset utilities
+        if (elements.utilitiesGrid) {
+            elements.utilitiesGrid.querySelectorAll('.utility-toggle button').forEach(btn => {
+                btn.classList.remove('active-included', 'active-tenant', 'active-na');
+            });
+        }
+
+        // Reset all amenity checkboxes and enums
+        if (elements.propertyAmenitiesContainer) {
+            elements.propertyAmenitiesContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            elements.propertyAmenitiesContainer.querySelectorAll('select').forEach(sel => sel.selectedIndex = 0);
+        }
+        if (elements.unitAmenitiesContainer) {
+            elements.unitAmenitiesContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            elements.unitAmenitiesContainer.querySelectorAll('select').forEach(sel => sel.selectedIndex = 0);
+        }
+
+        // Collapse all amenity sections
+        expandAllAmenitySections(false);
+
+        // Switch to unit-first path (default)
+        currentPath = 'unit-first';
+        elements.pathUnitFirst.classList.add('active');
+        elements.pathStructureFirst.classList.remove('active');
+        elements.unitFirstInputs.style.display = 'block';
+        elements.structureFirstInputs.style.display = 'none';
+
+        // Update all outputs
+        updateAmenitiesCounter();
+        updateAmenitiesApplicability();
+        updateOutput();
     }
 
     // Unit-First Handlers
@@ -790,7 +897,303 @@
         }
         mls = communityPrefix + mls;
 
+        // Add amenities section to each platform
+        const amenitiesHtml = {
+            bstk: getAmenityDisplayHtml('bstk'),
+            ils: getAmenityDisplayHtml('rentals'),
+            spacelist: getAmenityDisplayHtml('spacelist'),
+            mls: getAmenityDisplayHtml('mls')
+        };
+
+        if (amenitiesHtml.bstk) bstk += amenitiesHtml.bstk;
+        if (amenitiesHtml.ils && isResidential) ils += amenitiesHtml.ils;
+        if (amenitiesHtml.spacelist && isCommercial) spacelist += amenitiesHtml.spacelist;
+        if (amenitiesHtml.mls) mls += amenitiesHtml.mls;
+
         return { bstk, ils, spacelist, mls };
+    }
+
+    function getAmenityDisplayHtml(platform) {
+        if (typeof PLATFORM_AMENITY_RULES === 'undefined') return '';
+
+        const rules = PLATFORM_AMENITY_RULES[platform];
+        if (!rules) return '';
+
+        const amenityDisplay = getAmenityDisplayForPlatform(platform);
+
+        // Check if there's anything to display
+        const hasContent = amenityDisplay.property.length > 0 ||
+                          amenityDisplay.unit.length > 0 ||
+                          amenityDisplay.rollups.length > 0 ||
+                          amenityDisplay.parking ||
+                          amenityDisplay.pets ||
+                          amenityDisplay.utilities ||
+                          amenityDisplay.note;
+
+        if (!hasContent) return '';
+
+        let html = '<div class="platform-amenities">';
+
+        // Roll-ups (show first as filters)
+        if (amenityDisplay.rollups.length > 0) {
+            html += '<div class="platform-amenity-group">';
+            amenityDisplay.rollups.forEach(r => {
+                html += `<span class="amenity-tag rollup">${r}</span>`;
+            });
+            html += '</div>';
+        }
+
+        // Property amenities
+        if (amenityDisplay.property.length > 0) {
+            html += '<div class="platform-amenity-group">';
+            html += '<span class="amenity-group-label">Building:</span>';
+            amenityDisplay.property.forEach(a => {
+                html += `<span class="amenity-tag">${a}</span>`;
+            });
+            html += '</div>';
+        }
+
+        // Unit amenities
+        if (amenityDisplay.unit.length > 0) {
+            html += '<div class="platform-amenity-group">';
+            html += '<span class="amenity-group-label">Unit:</span>';
+            amenityDisplay.unit.forEach(a => {
+                html += `<span class="amenity-tag">${a}</span>`;
+            });
+            html += '</div>';
+        }
+
+        // Parking
+        if (amenityDisplay.parking) {
+            html += `<div class="platform-amenity-structured">${amenityDisplay.parking}</div>`;
+        }
+
+        // Pets
+        if (amenityDisplay.pets) {
+            html += `<div class="platform-amenity-structured">${amenityDisplay.pets}</div>`;
+        }
+
+        // Utilities
+        if (amenityDisplay.utilities) {
+            html += `<div class="platform-amenity-structured">${amenityDisplay.utilities}</div>`;
+        }
+
+        // Note (for MLS inbound)
+        if (amenityDisplay.note) {
+            html += `<div class="platform-amenity-structured"><em>${amenityDisplay.note}</em></div>`;
+        }
+
+        html += '</div>';
+        return html;
+    }
+
+    function getAmenityDisplayForPlatform(platform) {
+        const rules = PLATFORM_AMENITY_RULES[platform];
+        const result = {
+            property: [],
+            unit: [],
+            parking: null,
+            pets: null,
+            utilities: null,
+            rollups: [],
+            note: null
+        };
+
+        if (!rules) return result;
+
+        // Handle MLS (inbound only)
+        if (rules.inboundOnly) {
+            const hasAny = Object.keys(state.amenities.property).length > 0 ||
+                          Object.keys(state.amenities.unit).length > 0 ||
+                          state.amenities.parking.availability ||
+                          state.amenities.pets.policy;
+            if (hasAny) {
+                result.note = 'Inbound data limited — would receive: ' + rules.limitedFields.join(', ');
+            }
+            return result;
+        }
+
+        // Handle Spacelist (commercial only)
+        if (rules.commercialOnly) {
+            const isCommercial = state.sector === 'commercial' || state.sector === 'recreation' || state.sector === 'other';
+            if (!isCommercial) {
+                return result;
+            }
+            // Only show commercial categories
+            Object.entries(state.amenities.property).forEach(([name, val]) => {
+                if (val) {
+                    const amenity = findAmenityByName(name, 'property');
+                    if (amenity && rules.showCategories.includes(amenity.category)) {
+                        result.property.push(name);
+                    }
+                }
+            });
+            Object.entries(state.amenities.unit).forEach(([name, val]) => {
+                if (val) {
+                    const amenity = findAmenityByName(name, 'unit');
+                    if (amenity && rules.showCategories.includes(amenity.category)) {
+                        result.unit.push(name);
+                    }
+                }
+            });
+            // Still show parking for commercial
+            result.parking = formatParkingDisplay(state.amenities.parking, platform);
+            return result;
+        }
+
+        // Track consumed amenities (for roll-ups)
+        const consumed = new Set();
+
+        // Check roll-ups first
+        if (rules.rollups) {
+            Object.entries(rules.rollups).forEach(([key, rollup]) => {
+                const triggered = rollup.trigger.some(amenityName => {
+                    return state.amenities.property[amenityName] ||
+                           state.amenities.unit[amenityName];
+                });
+                if (triggered) {
+                    result.rollups.push(rollup.display);
+                    rollup.trigger.forEach(t => consumed.add(t));
+                }
+            });
+        }
+
+        // Process property amenities
+        Object.entries(state.amenities.property).forEach(([name, val]) => {
+            if (!val || consumed.has(name)) return;
+
+            // Check if hidden
+            if (rules.hidden && rules.hidden.includes(name)) return;
+
+            // Check nearby whitelist
+            const amenity = findAmenityByName(name, 'property');
+            if (amenity && amenity.category === 'Nearby Services' && rules.nearbyWhitelist) {
+                if (!rules.nearbyWhitelist.includes(name)) return;
+            }
+
+            // Get display name
+            let displayName = name;
+            if (rules.renames && rules.renames[name]) {
+                displayName = rules.renames[name];
+                if (displayName === null) return; // Explicitly hidden
+            }
+
+            // Avoid duplicates
+            if (!result.property.includes(displayName)) {
+                result.property.push(displayName);
+            }
+        });
+
+        // Process unit amenities
+        Object.entries(state.amenities.unit).forEach(([name, val]) => {
+            if (!val || consumed.has(name)) return;
+
+            // Check if hidden
+            if (rules.hidden && rules.hidden.includes(name)) return;
+
+            // Get display name
+            let displayName = name;
+            if (rules.renames && rules.renames[name]) {
+                displayName = rules.renames[name];
+                if (displayName === null) return;
+            }
+
+            // For enum values, include the value
+            if (typeof val === 'string') {
+                displayName = `${displayName}: ${val}`;
+            }
+
+            if (!result.unit.includes(displayName)) {
+                result.unit.push(displayName);
+            }
+        });
+
+        // Format parking
+        result.parking = formatParkingDisplay(state.amenities.parking, platform);
+
+        // Format pets
+        result.pets = formatPetDisplay(state.amenities.pets, platform, rules);
+
+        // Format utilities
+        result.utilities = formatUtilitiesDisplay(state.amenities.utilities, platform);
+
+        return result;
+    }
+
+    function findAmenityByName(name, level) {
+        if (!AMENITIES_DATA) return null;
+        const list = level === 'property' ? AMENITIES_DATA.propertyAmenities : AMENITIES_DATA.unitAmenities;
+        return list.find(a => a.name === name);
+    }
+
+    function formatParkingDisplay(parking, platform) {
+        if (!parking.availability) return null;
+
+        let parts = [];
+        parts.push(parking.availability);
+
+        if (parking.types.length > 0) {
+            parts.push(parking.types.join(', '));
+        }
+
+        if (parking.spotsIncluded) {
+            parts.push(`${parking.spotsIncluded} spot${parking.spotsIncluded > 1 ? 's' : ''}`);
+        }
+
+        if (parking.extraCostPerMonth) {
+            parts.push(`+$${parking.extraCostPerMonth}/mo`);
+        }
+
+        return 'Parking: ' + parts.join(' — ');
+    }
+
+    function formatPetDisplay(pets, platform, rules) {
+        if (!pets.policy) return null;
+
+        // RentBoard shows simple yes/no
+        if (rules && rules.petDisplay === 'simple') {
+            return pets.policy.startsWith('Yes') ? 'Pets: Allowed' : 'Pets: Not Allowed';
+        }
+
+        let parts = [];
+        parts.push(pets.policy);
+
+        if (pets.types.length > 0) {
+            const typeStr = pets.types.join(', ');
+            if (pets.sizeRestriction && pets.types.includes('Dog')) {
+                const size = pets.sizeRestriction.replace(/.*\((.+)\).*/, '$1');
+                parts.push(`Dog (${size}), ` + pets.types.filter(t => t !== 'Dog').join(', '));
+            } else {
+                parts.push(typeStr);
+            }
+        }
+
+        if (pets.deposit) {
+            parts.push(`Deposit: $${pets.deposit}`);
+        }
+
+        if (pets.monthlyFee) {
+            parts.push(`$${pets.monthlyFee}/mo`);
+        }
+
+        return 'Pets: ' + parts.filter(p => p).join(' | ');
+    }
+
+    function formatUtilitiesDisplay(utilities, platform) {
+        const entries = Object.entries(utilities);
+        if (entries.length === 0) return null;
+
+        const parts = entries.map(([name, val]) => {
+            if (val === 'Included in rent') {
+                return `${name} ✓`;
+            } else if (val === 'Tenant pays') {
+                return `${name} (tenant)`;
+            }
+            return null;
+        }).filter(p => p);
+
+        if (parts.length === 0) return null;
+        return parts.join(' · ');
     }
 
     // Helper functions
@@ -1041,6 +1444,7 @@
                 }
                 updateAmenitiesCounter();
                 updateCanonicalJson();
+                updatePlatformDisplay();
             });
         });
 
@@ -1058,6 +1462,7 @@
                 }
                 updateAmenitiesCounter();
                 updateCanonicalJson();
+                updatePlatformDisplay();
             });
         });
     }
@@ -1172,6 +1577,7 @@
 
         updateAmenitiesCounter();
         updateCanonicalJson();
+        updatePlatformDisplay();
     }
 
     function onParkingTypeChange(e) {
@@ -1190,12 +1596,14 @@
 
         updateAmenitiesCounter();
         updateCanonicalJson();
+        updatePlatformDisplay();
     }
 
     function onParkingInputChange() {
         state.amenities.parking.spotsIncluded = elements.parkingSpots.value ? parseInt(elements.parkingSpots.value) : null;
         state.amenities.parking.extraCostPerMonth = elements.parkingCost.value ? parseFloat(elements.parkingCost.value) : null;
         updateCanonicalJson();
+        updatePlatformDisplay();
     }
 
     function onPetPolicyChange() {
@@ -1212,6 +1620,7 @@
 
         updateAmenitiesCounter();
         updateCanonicalJson();
+        updatePlatformDisplay();
     }
 
     function onPetTypeChange(e) {
@@ -1230,12 +1639,14 @@
 
         updateAmenitiesCounter();
         updateCanonicalJson();
+        updatePlatformDisplay();
     }
 
     function onPetInputChange() {
         state.amenities.pets.deposit = elements.petDeposit.value ? parseFloat(elements.petDeposit.value) : null;
         state.amenities.pets.monthlyFee = elements.petMonthly.value ? parseFloat(elements.petMonthly.value) : null;
         updateCanonicalJson();
+        updatePlatformDisplay();
     }
 
     function onUtilityToggle(e) {
@@ -1264,6 +1675,7 @@
 
         updateAmenitiesCounter();
         updateCanonicalJson();
+        updatePlatformDisplay();
     }
 
     function updateAmenitiesCounter() {
