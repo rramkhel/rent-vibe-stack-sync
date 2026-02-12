@@ -1,37 +1,456 @@
 <!-- Tab 3: Full Reference -->
 <section class="section">
-    <h1>Full Reference</h1>
-    <p class="section-subtitle">Complete property hierarchy, unit types, and transaction types</p>
+    <h2 class="section-title">Full Reference</h2>
+    <p class="section-subtitle">Complete data for due diligence — property hierarchy, unit types, and transaction rules.</p>
 
-    <!-- Sub-tab navigation placeholder -->
+    <!-- Sub-tab navigation -->
     <div class="sub-tabs">
-        <button class="sub-tab-btn active" data-subtab="ref-hierarchy">Property Hierarchy</button>
-        <button class="sub-tab-btn" data-subtab="ref-units">Unit Types</button>
-        <button class="sub-tab-btn" data-subtab="ref-transactions">Transaction Types</button>
-    </div>
-
-    <div class="sub-tab-panel active" id="ref-hierarchy">
-        <div class="placeholder-box">
-            <strong>Sprint 4.4 will build:</strong>
-            <ul style="text-align: left; margin-top: 1rem;">
-                <li>Full property hierarchy tree (Sector → Property Type → Subtype → Variant)</li>
-                <li>Color-coded by sector</li>
-                <li>All values from taxonomy spreadsheet</li>
-            </ul>
+        <div class="sub-tabs-inner">
+            <button class="sub-tab active" data-subtab="ref-hierarchy">Property Hierarchy</button>
+            <button class="sub-tab" data-subtab="ref-units">Unit Types</button>
+            <button class="sub-tab" data-subtab="ref-transactions">Transaction Types</button>
+            <button class="sub-tab" data-subtab="ref-mappings">Platform Mappings</button>
         </div>
     </div>
 
-    <div class="sub-tab-panel" id="ref-units">
-        <div class="placeholder-box">
-            <strong>Unit Types Reference</strong>
-            <p style="margin-top: 1rem;">Self-sufficient vs Structure-dependent unit types</p>
+    <!-- Sub-tab 1: Property Hierarchy -->
+    <div class="sub-panel active" id="ref-hierarchy">
+        <div id="property-hierarchy-tree">
+            <!-- Generated from TAXONOMY by initReferenceTree() -->
         </div>
     </div>
 
-    <div class="sub-tab-panel" id="ref-transactions">
-        <div class="placeholder-box">
-            <strong>Transaction Types Reference</strong>
-            <p style="margin-top: 1rem;">Rent, Sale, Lease transaction types</p>
+    <!-- Sub-tab 2: Unit Types -->
+    <div class="sub-panel" id="ref-units">
+        <!-- Self-sufficient Unit Types -->
+        <div class="card mb-6">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Self-Sufficient Unit Types</div>
+                    <div class="card-subtitle">These work without a property type — the unit IS the listing</div>
+                </div>
+                <span class="badge badge-teal">Unit-First</span>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Unit Type</th>
+                            <th>Code</th>
+                            <th>Implied Sector</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Apartment</strong></td>
+                            <td><code>apartment</code></td>
+                            <td>Residential</td>
+                            <td>Self-contained rental unit in any multi-unit building</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Basement</strong></td>
+                            <td><code>basement</code></td>
+                            <td>Residential</td>
+                            <td>Below-grade living space, typically in a house</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Room (Private)</strong></td>
+                            <td><code>room_private</code></td>
+                            <td>Residential</td>
+                            <td>Private room with shared common areas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Room (Shared)</strong></td>
+                            <td><code>room_shared</code></td>
+                            <td>Residential</td>
+                            <td>Shared room (dormitory-style)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Office Space</strong></td>
+                            <td><code>office</code></td>
+                            <td>Commercial</td>
+                            <td>Workspace for rent, building type optional</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parking</strong></td>
+                            <td><code>parking</code></td>
+                            <td>Commercial</td>
+                            <td>Parking spot for rent</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <!-- Structure-dependent Unit Types -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Structure-Dependent Unit Types</div>
+                    <div class="card-subtitle">These describe a portion of a known building type</div>
+                </div>
+                <span class="badge badge-amber">Structure-First</span>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Unit Type</th>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Common With</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Entire</strong></td>
+                            <td><code>entire</code></td>
+                            <td>The whole building/property</td>
+                            <td>Houses, cabins, hospitality</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Main Floor</strong></td>
+                            <td><code>main_floor</code></td>
+                            <td>Ground level of a multi-story building</td>
+                            <td>Houses, townhouses</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Suite</strong></td>
+                            <td><code>suite</code></td>
+                            <td>Self-contained unit within a building</td>
+                            <td>Plexes, apartments, commercial</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Floor</strong></td>
+                            <td><code>floor</code></td>
+                            <td>Entire floor of a commercial building</td>
+                            <td>Office, warehouse</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Spot</strong></td>
+                            <td><code>spot</code></td>
+                            <td>Single space (parking, marina slip, etc.)</td>
+                            <td>Parking, marina, campground</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sub-tab 3: Transaction Types -->
+    <div class="sub-panel" id="ref-transactions">
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Transaction Type Validity</div>
+                    <div class="card-subtitle">Which transactions are valid for each property type</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Property Type</th>
+                            <th>Subtype / Unit</th>
+                            <th style="text-align: center;">Rent</th>
+                            <th style="text-align: center;">Sale</th>
+                            <th style="text-align: center;">Lease</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Residential Structure-First -->
+                        <tr class="table-section-header">
+                            <td colspan="7"><strong>RESIDENTIAL (Structure-First)</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>House</td>
+                            <td>All subtypes</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Townhouse/Plex</td>
+                            <td>All subtypes</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Apartment Bldg</td>
+                            <td>All subtypes</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td>Sale via condo ownership attr</td>
+                        </tr>
+
+                        <!-- Residential Unit-First -->
+                        <tr class="table-section-header">
+                            <td colspan="7"><strong>RESIDENTIAL (Unit-First)</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>(any)</td>
+                            <td>Apartment</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>(any)</td>
+                            <td>Basement</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>(any)</td>
+                            <td>Room</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td></td>
+                        </tr>
+
+                        <!-- Commercial Structure-First -->
+                        <tr class="table-section-header">
+                            <td colspan="7"><strong>COMMERCIAL (Structure-First)</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Office</td>
+                            <td>Class A/B/C</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Retail</td>
+                            <td>All subtypes</td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Industrial</td>
+                            <td>Warehouse/Mfg/Flex/Storage</td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Industrial</td>
+                            <td>Construction/New Dev</td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td>Sale only (pre-sale)</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Parking</td>
+                            <td>Garage/Surface</td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td></td>
+                        </tr>
+
+                        <!-- Commercial Unit-First -->
+                        <tr class="table-section-header">
+                            <td colspan="7"><strong>COMMERCIAL (Unit-First)</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>(any)</td>
+                            <td>Office</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Office</td>
+                            <td>Co-working</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>(any)</td>
+                            <td>Parking</td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td></td>
+                        </tr>
+
+                        <!-- Recreation -->
+                        <tr class="table-section-header">
+                            <td colspan="7"><strong>RECREATION</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Hospitality</td>
+                            <td>All subtypes</td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td>Sale/lease of property</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Leisure</td>
+                            <td>Marina/Campground/Stable</td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td>Lease (spot)</td>
+                        </tr>
+
+                        <!-- Other -->
+                        <tr class="table-section-header">
+                            <td colspan="7"><strong>OTHER</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Land</td>
+                            <td>All subtypes</td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td>Sale or lease</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Other</td>
+                            <td>Subdivision</td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td style="text-align: center;"><span class="badge badge-green">Yes</span></td>
+                            <td style="text-align: center;"><span class="badge badge-gray">No</span></td>
+                            <td>Sale (development)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sub-tab 4: Platform Mappings -->
+    <div class="sub-panel" id="ref-mappings">
+        <div class="placeholder-box">
+            <div class="placeholder-box-title">Platform Mapping Rules</div>
+            <div class="placeholder-box-text">Coming soon. The canonical-to-platform translation tables will be documented here.</div>
+        </div>
+    </div>
+
+    <!-- Spreadsheet link utility bar -->
+    <div class="utility-bar mt-6">
+        This page explains the system. For the full canonical data, validation rules, and platform mappings:
+        <a href="#">Link to Google Sheet</a>
     </div>
 </section>
+
+<script>
+// Initialize reference tree and sub-tabs when this tab loads
+(function() {
+    function initReferenceTab() {
+        initSubTabs();
+        initReferenceTree();
+    }
+
+    function initSubTabs() {
+        const btns = document.querySelectorAll('#reference .sub-tab');
+        const panels = document.querySelectorAll('#reference .sub-panel');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.dataset.subtab;
+
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                panels.forEach(p => {
+                    p.classList.toggle('active', p.id === targetId);
+                });
+            });
+        });
+    }
+
+    function initReferenceTree() {
+        const container = document.getElementById('property-hierarchy-tree');
+        if (!container || typeof TAXONOMY === 'undefined') return;
+
+        const sectorColors = {
+            residential: 'purple',
+            commercial: 'orange',
+            recreation: 'amber',
+            other: 'gray'
+        };
+
+        let html = '';
+
+        for (const [sectorKey, sector] of Object.entries(TAXONOMY)) {
+            const colorClass = sectorColors[sectorKey] || 'gray';
+
+            html += `<div class="tree-sector tree-sector-${colorClass}">`;
+            html += `<div class="tree-sector-header">${sector.label}</div>`;
+
+            for (const [typeKey, type] of Object.entries(sector.types)) {
+                html += `<div class="tree-type">`;
+                html += `<div class="tree-type-header">${type.label}</div>`;
+
+                for (const [subtypeKey, subtype] of Object.entries(type.subtypes)) {
+                    const variants = subtype.variants.map(v => VARIANT_LABELS[v] || v).join(', ');
+
+                    html += `<div class="tree-row">`;
+                    html += `<div class="tree-subtype">${subtype.label}</div>`;
+                    html += `<div class="tree-variants">${variants || '—'}</div>`;
+                    html += `</div>`;
+                }
+
+                html += `</div>`;
+            }
+
+            html += `</div>`;
+        }
+
+        container.innerHTML = html;
+    }
+
+    // Initialize when tab loads
+    document.addEventListener('tabloaded', (e) => {
+        if (e.target.id === 'reference') {
+            initReferenceTab();
+        }
+    });
+
+    // Also try immediately
+    if (document.getElementById('property-hierarchy-tree')) {
+        initReferenceTab();
+    }
+})();
+</script>

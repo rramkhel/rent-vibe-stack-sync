@@ -907,3 +907,83 @@ body {
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+/* ========================================
+   PROPERTY HIERARCHY TREE
+   ======================================== */
+.tree-sector {
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.tree-sector-header {
+  padding: var(--space-3) var(--space-5);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tree-sector-purple .tree-sector-header {
+  background: var(--dim-sector-light);
+  color: #6d28d9;
+}
+
+.tree-sector-orange .tree-sector-header {
+  background: var(--dim-subtype-light);
+  color: #c2410c;
+}
+
+.tree-sector-amber .tree-sector-header {
+  background: var(--dim-structure-light);
+  color: #b45309;
+}
+
+.tree-sector-gray .tree-sector-header {
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+.tree-type {
+  border-top: 1px solid var(--gray-100);
+}
+
+.tree-type-header {
+  padding: var(--space-3) var(--space-5);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-800);
+  background: var(--gray-50);
+}
+
+.tree-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-5);
+  padding-left: var(--space-10);
+  border-top: 1px solid var(--gray-50);
+  font-size: 13px;
+}
+
+.tree-row:hover {
+  background: var(--gray-50);
+}
+
+.tree-subtype {
+  color: var(--gray-700);
+}
+
+.tree-variants {
+  color: var(--gray-500);
+  font-style: italic;
+}
+
+/* Table section header row */
+.table-section-header td {
+  background: var(--gray-50);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--gray-200);
+}
