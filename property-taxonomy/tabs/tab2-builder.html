@@ -160,6 +160,126 @@
                         <label class="form-label">Community Name</label>
                         <input type="text" id="community-name" class="form-input" placeholder="e.g., Maple Heights">
                     </div>
+
+                    <!-- Amenities Section -->
+                    <hr class="form-divider">
+
+                    <div class="amenities-header">
+                        <div class="form-divider-label" style="margin-bottom: 0;">Amenities & Attributes</div>
+                        <div class="amenities-controls">
+                            <button type="button" class="btn-xs" id="expand-all-amenities">Expand All</button>
+                            <button type="button" class="btn-xs" id="collapse-all-amenities">Collapse All</button>
+                        </div>
+                        <span class="amenities-counter empty" id="amenities-counter">0 selected</span>
+                    </div>
+
+                    <div class="amenities-context-notice" id="amenities-context-notice">
+                        <span class="text-muted">Select a property type above to see applicable amenities.</span>
+                    </div>
+
+                    <!-- Structured Sections: Parking, Pets, Utilities -->
+                    <div class="amenity-section structured" id="section-parking">
+                        <button type="button" class="amenity-section-header" data-section="parking">
+                            <span class="section-name">Parking</span>
+                            <span class="section-count" id="parking-count"></span>
+                            <span class="section-chevron">&#9656;</span>
+                        </button>
+                        <div class="amenity-section-body" id="body-parking">
+                            <div class="amenity-enum">
+                                <label class="form-label-sm">Parking Availability</label>
+                                <select class="form-select-sm" id="parking-availability">
+                                    <option value="">Not specified</option>
+                                    <option value="Yes - included in rent">Yes - included in rent</option>
+                                    <option value="Yes - available on property">Yes - available on property</option>
+                                    <option value="No parking available">No parking available</option>
+                                </select>
+                            </div>
+                            <div class="parking-types hidden" id="parking-types">
+                                <label class="form-label-sm">Parking Types</label>
+                                <div class="checkbox-grid" id="parking-types-grid"></div>
+                            </div>
+                            <div class="parking-per-unit hidden" id="parking-per-unit">
+                                <div class="input-row">
+                                    <label class="form-label-sm" style="flex:1;">Spots Included</label>
+                                    <input type="number" class="form-input-sm" id="parking-spots" style="width:80px;" min="0" placeholder="0">
+                                </div>
+                                <div class="input-row">
+                                    <label class="form-label-sm" style="flex:1;">Extra Cost/Month</label>
+                                    <span class="input-prefix">$</span>
+                                    <input type="number" class="form-input-sm" id="parking-cost" style="width:80px;" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="amenity-section structured" id="section-pets">
+                        <button type="button" class="amenity-section-header" data-section="pets">
+                            <span class="section-name">Pet Policy</span>
+                            <span class="section-count" id="pets-count"></span>
+                            <span class="section-chevron">&#9656;</span>
+                        </button>
+                        <div class="amenity-section-body" id="body-pets">
+                            <div class="amenity-enum">
+                                <label class="form-label-sm">Pet Policy</label>
+                                <select class="form-select-sm" id="pet-policy">
+                                    <option value="">Not specified</option>
+                                    <option value="Yes - pets welcome">Yes - pets welcome</option>
+                                    <option value="Yes - case by case">Yes - case by case</option>
+                                    <option value="No pets allowed">No pets allowed</option>
+                                </select>
+                            </div>
+                            <div class="pet-types hidden" id="pet-types">
+                                <label class="form-label-sm">Pet Types Allowed</label>
+                                <div class="checkbox-grid" id="pet-types-grid"></div>
+                            </div>
+                            <div class="pet-restrictions hidden" id="pet-restrictions">
+                                <label class="form-label-sm">Dog Size Restriction</label>
+                                <select class="form-select-sm" id="dog-size">
+                                    <option value="">No restriction</option>
+                                    <option value="Extra small only (<10 lbs)">Extra small only (&lt;10 lbs)</option>
+                                    <option value="Small (up to 25 lbs)">Small (up to 25 lbs)</option>
+                                    <option value="Medium (up to 50 lbs)">Medium (up to 50 lbs)</option>
+                                    <option value="Large (up to 75 lbs)">Large (up to 75 lbs)</option>
+                                    <option value="Extra large (75+ lbs)">Extra large (75+ lbs)</option>
+                                </select>
+                            </div>
+                            <div class="pet-fees hidden" id="pet-fees">
+                                <div class="input-row">
+                                    <label class="form-label-sm" style="flex:1;">Pet Deposit</label>
+                                    <span class="input-prefix">$</span>
+                                    <input type="number" class="form-input-sm" id="pet-deposit" style="width:80px;" min="0" placeholder="0">
+                                </div>
+                                <div class="input-row">
+                                    <label class="form-label-sm" style="flex:1;">Monthly Pet Fee</label>
+                                    <span class="input-prefix">$</span>
+                                    <input type="number" class="form-input-sm" id="pet-monthly" style="width:80px;" min="0" placeholder="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="amenity-section structured" id="section-utilities">
+                        <button type="button" class="amenity-section-header" data-section="utilities">
+                            <span class="section-name">Utilities</span>
+                            <span class="section-count" id="utilities-count"></span>
+                            <span class="section-chevron">&#9656;</span>
+                        </button>
+                        <div class="amenity-section-body" id="body-utilities">
+                            <div class="utility-grid" id="utilities-grid"></div>
+                        </div>
+                    </div>
+
+                    <!-- Property Amenities -->
+                    <div class="amenity-group-divider">
+                        <span>Property Amenities</span>
+                    </div>
+                    <div id="property-amenities-container"></div>
+
+                    <!-- Unit Amenities -->
+                    <div class="amenity-group-divider">
+                        <span>Unit Amenities</span>
+                    </div>
+                    <div id="unit-amenities-container"></div>
                 </div>
             </div>
         </div>

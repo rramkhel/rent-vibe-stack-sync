@@ -1455,3 +1455,442 @@ body {
   font-size: 12px;
   color: var(--gray-500);
 }
+
+/* ========================================
+   AMENITIES SECTION (Builder Tab 2)
+   ======================================== */
+
+/* Header with counter */
+.amenities-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.amenities-header .form-section-title {
+  flex: 1;
+  margin: 0;
+}
+
+.amenities-controls {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.amenities-counter {
+  font-size: 11px;
+  font-weight: 600;
+  padding: var(--space-1) var(--space-3);
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  border-radius: var(--radius);
+}
+
+.amenities-counter.empty {
+  background: var(--gray-100);
+  color: var(--gray-500);
+}
+
+/* Context notice */
+.amenities-context-notice {
+  font-size: 12px;
+  padding: var(--space-3);
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  margin-bottom: var(--space-4);
+}
+
+/* Collapsible section */
+.amenity-section {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  margin-bottom: 6px;
+  background: var(--white);
+}
+
+.amenity-section.structured {
+  border-color: rgba(15, 118, 110, 0.3);
+}
+
+.amenity-section.not-applicable {
+  display: none;
+}
+
+.amenity-section-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.amenity-section-header:hover {
+  background: var(--gray-50);
+}
+
+.amenity-section.open .amenity-section-header {
+  background: var(--gray-50);
+}
+
+.section-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.section-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+.section-count {
+  font-size: 11px;
+  color: var(--gray-500);
+}
+
+.section-count.has-selected {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.section-chevron {
+  font-size: 10px;
+  color: var(--gray-400);
+  transition: transform 0.15s;
+}
+
+.amenity-section.open .section-chevron {
+  transform: rotate(90deg);
+}
+
+.amenity-section-body {
+  display: none;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--gray-100);
+}
+
+.amenity-section.open .amenity-section-body {
+  display: block;
+}
+
+/* Compact checkbox */
+.amenity-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.amenity-checkbox.not-applicable {
+  display: none;
+}
+
+.amenity-checkbox input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--teal);
+  cursor: pointer;
+}
+
+.amenity-checkbox .amenity-name {
+  flex: 1;
+  color: var(--gray-700);
+}
+
+/* Tier indicator (small dot) */
+.amenity-tier {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.amenity-tier.tier-1 {
+  background: var(--teal);
+}
+
+.amenity-tier.tier-2 {
+  background: var(--gray-400);
+}
+
+.amenity-tier.tier-3 {
+  background: var(--gray-200);
+}
+
+/* Enum amenities (dropdowns) */
+.amenity-enum {
+  margin-bottom: var(--space-3);
+}
+
+.amenity-enum:last-child {
+  margin-bottom: 0;
+}
+
+.form-label-sm {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-500);
+  margin-bottom: var(--space-1);
+}
+
+.form-select-sm {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  font-size: 13px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--gray-700);
+  cursor: pointer;
+}
+
+.form-select-sm:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px var(--teal-light);
+}
+
+/* Small input */
+.form-input-sm {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  font-size: 13px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--gray-700);
+}
+
+.form-input-sm:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px var(--teal-light);
+}
+
+/* Utility toggle grid */
+.utility-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+.utility-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.utility-row.not-applicable {
+  display: none;
+}
+
+.utility-name {
+  flex: 1;
+  font-size: 13px;
+  color: var(--gray-700);
+}
+
+.utility-toggle {
+  display: flex;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.utility-toggle button {
+  padding: 3px 8px;
+  font-size: 10px;
+  border: none;
+  background: var(--white);
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.utility-toggle button:not(:last-child) {
+  border-right: 1px solid var(--gray-200);
+}
+
+.utility-toggle button:hover {
+  background: var(--gray-50);
+}
+
+.utility-toggle button.active-included {
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  font-weight: 600;
+}
+
+.utility-toggle button.active-tenant {
+  background: var(--gray-100);
+  color: var(--gray-700);
+  font-weight: 600;
+}
+
+.utility-toggle button.active-na {
+  background: var(--gray-50);
+  color: var(--gray-400);
+}
+
+/* Group dividers between property and unit amenities */
+.amenity-group-divider {
+  text-align: center;
+  margin: var(--space-4) 0 var(--space-3);
+  position: relative;
+}
+
+.amenity-group-divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 1px solid var(--gray-200);
+}
+
+.amenity-group-divider span {
+  position: relative;
+  background: var(--white);
+  padding: 0 var(--space-3);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  letter-spacing: 0.5px;
+}
+
+/* Structured section cascading fields */
+.parking-types,
+.parking-per-unit,
+.pet-types,
+.pet-restrictions,
+.pet-fees {
+  padding-top: var(--space-3);
+  margin-top: var(--space-3);
+  border-top: 1px dashed var(--gray-200);
+}
+
+.parking-types.hidden,
+.parking-per-unit.hidden,
+.pet-types.hidden,
+.pet-restrictions.hidden,
+.pet-fees.hidden {
+  display: none;
+}
+
+/* Checkbox grid for types */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+/* Input row with prefix */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.input-row:last-child {
+  margin-bottom: 0;
+}
+
+.input-prefix {
+  font-size: 13px;
+  color: var(--gray-500);
+  font-weight: 600;
+}
+
+/* Extra small button */
+.btn-xs {
+  padding: var(--space-1) var(--space-2);
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.btn-xs:hover {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+/* Amenities visual output */
+.amenities-output-section {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--gray-100);
+}
+
+.amenities-output-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-3);
+}
+
+.amenities-output-group {
+  margin-bottom: var(--space-3);
+}
+
+.amenities-output-group:last-child {
+  margin-bottom: 0;
+}
+
+.amenities-output-group-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-400);
+  margin-bottom: var(--space-1);
+}
+
+.amenities-output-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.amenity-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.amenity-badge.parking {
+  background: var(--dim-structure-light);
+  color: #b45309;
+}
+
+.amenity-badge.pets {
+  background: var(--dim-purpose-light);
+  color: #be185d;
+}
+
+.amenity-badge.utilities {
+  background: var(--dim-variant-light);
+  color: #0e7490;
+}
