@@ -31,6 +31,14 @@ async function loadTabContent(tabId) {
             // Initialize sub-tabs if present
             initSubTabs(panel);
 
+            // Execute any inline scripts from the loaded HTML
+            // (innerHTML doesn't run <script> tags automatically)
+            panel.querySelectorAll('script').forEach(oldScript => {
+                const newScript = document.createElement('script');
+                newScript.textContent = oldScript.textContent;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+
             // Dispatch event for tab-specific initialization
             panel.dispatchEvent(new CustomEvent('tabloaded', { bubbles: true }));
         } else {
@@ -58,8 +66,8 @@ function switchTab(tabId) {
 }
 
 function initSubTabs(container) {
-    const subTabBtns = container.querySelectorAll('.sub-tab-btn');
-    const subTabPanels = container.querySelectorAll('.sub-tab-panel');
+    const subTabBtns = container.querySelectorAll('.sub-tab');
+    const subTabPanels = container.querySelectorAll('.sub-panel');
 
     if (subTabBtns.length === 0) return;
 
