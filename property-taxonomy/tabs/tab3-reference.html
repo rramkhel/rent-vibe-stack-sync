@@ -38,6 +38,7 @@
                             <th>Unit Type</th>
                             <th>Code</th>
                             <th>Implied Sector</th>
+                            <th>Implied Property Type</th>
                             <th>Description</th>
                         </tr>
                     </thead>
@@ -46,96 +47,610 @@
                             <td><strong>Apartment</strong></td>
                             <td><code>apartment</code></td>
                             <td>Residential</td>
-                            <td>Self-contained rental unit in any multi-unit building</td>
+                            <td>Apartment Building (when known)</td>
+                            <td>Standard rental unit in a multi-unit building. Most common listing type.</td>
                         </tr>
                         <tr>
                             <td><strong>Basement</strong></td>
                             <td><code>basement</code></td>
                             <td>Residential</td>
-                            <td>Below-grade living space, typically in a house</td>
+                            <td>House (when known)</td>
+                            <td>Below-grade unit, typically in a house. Very common in Canadian market.</td>
                         </tr>
                         <tr>
                             <td><strong>Room (Private)</strong></td>
                             <td><code>room_private</code></td>
                             <td>Residential</td>
-                            <td>Private room with shared common areas</td>
+                            <td>— (any)</td>
+                            <td>Private room in a shared dwelling. Property type always optional.</td>
                         </tr>
                         <tr>
                             <td><strong>Room (Shared)</strong></td>
                             <td><code>room_shared</code></td>
                             <td>Residential</td>
-                            <td>Shared room (dormitory-style)</td>
+                            <td>— (any)</td>
+                            <td>Shared room in a shared dwelling. Property type always optional.</td>
                         </tr>
                         <tr>
                             <td><strong>Office Space</strong></td>
                             <td><code>office</code></td>
                             <td>Commercial</td>
-                            <td>Workspace for rent, building type optional</td>
+                            <td>Office Building (when known)</td>
+                            <td>Office unit — could be in a Class A tower or a co-working space.</td>
                         </tr>
                         <tr>
                             <td><strong>Parking</strong></td>
                             <td><code>parking</code></td>
                             <td>Commercial</td>
-                            <td>Parking spot for rent</td>
+                            <td>Parking (when known)</td>
+                            <td>Parking spot or space.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Structure-dependent Unit Types -->
-        <div class="card">
+        <div class="inline-note">
+            <strong>Why "self-sufficient"?</strong> These unit types carry enough meaning on their own that the building type is optional. When someone lists "a basement for rent," they rarely know or care whether it's in a detached house or a semi. When building info <em>is</em> known, it's stored as enrichment — nothing is lost.
+        </div>
+
+        <!-- Structure-dependent Unit Types - Validation Matrix -->
+        <div class="card mt-6">
             <div class="card-header">
                 <div>
                     <div class="card-title">Structure-Dependent Unit Types</div>
-                    <div class="card-subtitle">These describe a portion of a known building type</div>
+                    <div class="card-subtitle">These require a property type — the building defines the listing</div>
                 </div>
                 <span class="badge badge-amber">Structure-First</span>
             </div>
             <div class="card-body">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Unit Type</th>
-                            <th>Code</th>
-                            <th>Description</th>
-                            <th>Common With</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Entire</strong></td>
-                            <td><code>entire</code></td>
-                            <td>The whole building/property</td>
-                            <td>Houses, cabins, hospitality</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Main Floor</strong></td>
-                            <td><code>main_floor</code></td>
-                            <td>Ground level of a multi-story building</td>
-                            <td>Houses, townhouses</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Suite</strong></td>
-                            <td><code>suite</code></td>
-                            <td>Self-contained unit within a building</td>
-                            <td>Plexes, apartments, commercial</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Floor</strong></td>
-                            <td><code>floor</code></td>
-                            <td>Entire floor of a commercial building</td>
-                            <td>Office, warehouse</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Spot</strong></td>
-                            <td><code>spot</code></td>
-                            <td>Single space (parking, marina slip, etc.)</td>
-                            <td>Parking, marina, campground</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <p class="mb-4" style="font-size: 13px; color: var(--gray-600);">
+                    Structure-dependent unit types describe <em>what portion</em> of a building is being listed. They only make sense in context of a specific property type. Not every combination is valid — the matrix below shows which unit types apply to each subtype.
+                </p>
+
+                <div style="overflow-x: auto;">
+                    <table class="data-table" style="font-size: 12px;">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 180px; white-space: nowrap;">Subtype</th>
+                                <th style="white-space: nowrap;">Entire</th>
+                                <th style="white-space: nowrap;">Main Fl</th>
+                                <th style="white-space: nowrap;">Suite</th>
+                                <th style="white-space: nowrap;">Bsmt</th>
+                                <th style="white-space: nowrap;">Apt</th>
+                                <th style="white-space: nowrap;">Room</th>
+                                <th style="white-space: nowrap;">Office</th>
+                                <th style="white-space: nowrap;">Parking</th>
+                                <th style="white-space: nowrap;">Floor</th>
+                                <th style="white-space: nowrap;">Spot</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- RESIDENTIAL -->
+                            <tr style="background: var(--dim-sector-light);">
+                                <td colspan="11" style="font-weight: 700; color: #6d28d9;">RESIDENTIAL</td>
+                            </tr>
+                            <!-- House -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">House</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Detached</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Mobile</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Cabin</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (House)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                            <!-- Townhouse / Plex -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Townhouse / Plex</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Semi-Detached</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Townhouse</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Duplex</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Triplex</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Fourplex</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Multiplex</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (T/Plex)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                            <!-- Apartment Building -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Apartment Building</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Low Rise</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Mid Rise</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">High Rise</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Walk-up</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Apt Bldg)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                            <!-- Other Residential -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Other Residential</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Office</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Parking</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Res)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+
+                            <!-- COMMERCIAL -->
+                            <tr style="background: var(--dim-subtype-light);">
+                                <td colspan="11" style="font-weight: 700; color: #c2410c;">COMMERCIAL</td>
+                            </tr>
+                            <!-- Office -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Office</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Class A/B/C</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Co-working</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Office)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                            <!-- Retail -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Retail</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Storefront</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Mall</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Strip Mall</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Retail)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                            <!-- Industrial -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Industrial</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Warehouse</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Manufacturing</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Flex Space</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Storage</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Industrial)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                            <!-- Parking -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Parking</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Garage</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Surface Lot</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Parking)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+
+                            <!-- RECREATION -->
+                            <tr style="background: var(--dim-structure-light);">
+                                <td colspan="11" style="font-weight: 700; color: #92400e;">RECREATION</td>
+                            </tr>
+                            <!-- Hospitality -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Hospitality</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Hotel/Motel/B&B/Inn</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Hospitality)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                            <!-- Leisure -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Leisure</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Marina/Campground/Stable</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Leisure)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+
+                            <!-- OTHER -->
+                            <tr style="background: var(--gray-100);">
+                                <td colspan="11" style="font-weight: 700; color: var(--gray-700);">OTHER</td>
+                            </tr>
+                            <!-- Land -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Land</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Agricultural/Acreage/Vacant</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Land)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                            <!-- Specialty -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Specialty</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">TBD</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Specialty)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                            <!-- Other -->
+                            <tr style="background: var(--gray-50);">
+                                <td colspan="11" style="font-weight: 600; color: var(--gray-800);">Other</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px;">Subdivision</td>
+                                <td style="color: var(--teal); font-weight: 600;">✓</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                                <td style="color: var(--gray-300);">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 24px; font-style: italic; color: var(--gray-500);">Other (Other)</td>
+                                <td colspan="10" style="font-style: italic; color: var(--gray-400); text-align: center;">any</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
+
+        <div class="inline-note mt-6">
+            <strong>"Other" catch-alls accept any unit type.</strong> Every property type has an "Other" subtype that serves as an escape hatch for unrecognized values from acquisitions or edge cases. These are intentionally permissive — validation tightens as values are properly classified.
         </div>
     </div>
 
@@ -357,13 +872,48 @@
                 </table>
             </div>
         </div>
+
+        <div class="inline-note">
+            <strong>Rent vs Lease:</strong> "Rent" is month-to-month or short-term residential. "Lease" is a fixed-term commercial agreement. Residential properties don't use "lease" even though renters sign leases — the transaction type refers to the commercial/legal model, not the document.
+        </div>
     </div>
 
     <!-- Sub-tab 4: Platform Mappings -->
     <div class="sub-panel" id="ref-mappings">
-        <div class="placeholder-box">
-            <div class="placeholder-box-title">Platform Mapping Rules</div>
-            <div class="placeholder-box-text">Coming soon. The canonical-to-platform translation tables will be documented here.</div>
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Platform Mapping Rules</div>
+                    <div class="card-subtitle">How canonical values translate to each platform's display vocabulary</div>
+                </div>
+                <span class="badge badge-gray">Coming Soon</span>
+            </div>
+            <div class="card-body">
+                <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 16px;">
+                    Each platform has a mapping table that translates the canonical 6-dimension model into its own vocabulary. The same listing can display differently on BSTK, Rentals.ca, Spacelist, and MLS — without duplicating data.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;">
+                    <div style="padding: 12px; border-radius: 8px; border: 1px solid var(--platform-enterprise); border-top: 3px solid var(--platform-enterprise); background: var(--platform-enterprise-light);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--gray-800);">BSTK / RentSync</div>
+                        <div style="font-size: 11px; color: var(--gray-500); margin-top: 2px;">Full taxonomy, all fields</div>
+                    </div>
+                    <div style="padding: 12px; border-radius: 8px; border: 1px solid var(--platform-ils); border-top: 3px solid var(--platform-ils); background: var(--platform-ils-light);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--gray-800);">ILS Network</div>
+                        <div style="font-size: 11px; color: var(--gray-500); margin-top: 2px;">Simplified, renter-friendly</div>
+                    </div>
+                    <div style="padding: 12px; border-radius: 8px; border: 1px solid var(--platform-commercial); border-top: 3px solid var(--platform-commercial); background: var(--platform-commercial-light);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--gray-800);">Spacelist</div>
+                        <div style="font-size: 11px; color: var(--gray-500); margin-top: 2px;">Commercial only</div>
+                    </div>
+                    <div style="padding: 12px; border-radius: 8px; border: 1px solid var(--platform-mls); border-top: 3px solid var(--platform-mls); background: var(--platform-mls-light);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--gray-800);">MLS</div>
+                        <div style="font-size: 11px; color: var(--gray-500); margin-top: 2px;">Inbound feed mapping</div>
+                    </div>
+                </div>
+                <div class="inline-note">
+                    <strong>Platform mappings are configuration, not code.</strong> When we acquire a new platform, we add a mapping table — we don't restructure the data model. The full mapping tables will be documented here once the taxonomy is finalized. For now, the Listing Builder tab (Tab 2) demonstrates live platform output for any classification.
+                </div>
+            </div>
         </div>
     </div>
 
