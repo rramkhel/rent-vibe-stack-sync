@@ -861,3 +861,794 @@
     text-align: center;
     margin-bottom: var(--space-4);
 }
+
+/* ==========================================================================
+   Stats Row (Sprint 4.4)
+   ========================================================================== */
+
+.stats-row {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+    flex-wrap: wrap;
+}
+
+.stat {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-6);
+    text-align: center;
+    min-width: 100px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--purple);
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   Reference Navigation (Sprint 4.4)
+   ========================================================================== */
+
+.reference-nav {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+    flex-wrap: wrap;
+}
+
+.reference-nav a {
+    padding: var(--space-2) var(--space-4);
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    color: var(--gray-600);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.reference-nav a:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+/* ==========================================================================
+   Wide Mapping Tables (Sprint 4.4)
+   ========================================================================== */
+
+.mapping-table-wrapper {
+    overflow-x: auto;
+    margin: 0 calc(-1 * var(--space-6));
+    padding: 0 var(--space-6);
+}
+
+.mapping-table {
+    min-width: 1200px;
+}
+
+.mapping-table th,
+.mapping-table td {
+    white-space: nowrap;
+    font-size: 12px;
+    padding: var(--space-2) var(--space-3);
+}
+
+.mapping-table td {
+    vertical-align: top;
+}
+
+/* Row status colors from Excel legend */
+.mapping-table tr.new-modified {
+    background: #fef3c7;
+}
+
+.mapping-table tr.needs-mapping {
+    background: #ffedd5;
+}
+
+.mapping-table tr.needs-creation {
+    background: #dcfce7;
+}
+
+.mapping-table tr.needs-attention {
+    background: #fee2e2;
+}
+
+/* Category row styling */
+.mapping-table tr.category-row {
+    background: var(--purple-light);
+}
+
+.mapping-table tr.category-row td {
+    font-weight: 600;
+    color: var(--purple);
+    padding: var(--space-3) var(--space-3);
+    border-bottom: 2px solid var(--purple);
+}
+
+.mapping-table tr.category-row.commercial {
+    background: var(--dim-unit-light);
+}
+
+.mapping-table tr.category-row.commercial td {
+    color: var(--dim-unit);
+    border-bottom-color: var(--dim-unit);
+}
+
+.mapping-table tr.category-row.recreation {
+    background: var(--dim-listing-light);
+}
+
+.mapping-table tr.category-row.recreation td {
+    color: var(--dim-listing);
+    border-bottom-color: var(--dim-listing);
+}
+
+.mapping-table tr.category-row.other {
+    background: var(--dim-structure-light);
+}
+
+.mapping-table tr.category-row.other td {
+    color: #b45309;
+    border-bottom-color: #b45309;
+}
+
+.mapping-table tr.category-row.housing {
+    background: var(--dim-purpose-light);
+}
+
+.mapping-table tr.category-row.housing td {
+    color: #be185d;
+    border-bottom-color: #be185d;
+}
+
+.mapping-table tr.category-row.ownership {
+    background: var(--teal-light);
+}
+
+.mapping-table tr.category-row.ownership td {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+}
+
+/* Cell styling for mapping tables */
+.cell-type {
+    font-weight: 500;
+    color: var(--gray-900);
+}
+
+.cell-default {
+    color: var(--gray-400);
+    font-size: 10px;
+    font-style: italic;
+}
+
+.cell-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: 10px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.cell-tag.sf {
+    background: var(--dim-listing-light);
+    color: #15803d;
+}
+
+.cell-tag.mf {
+    background: var(--dim-unit-light);
+    color: #0e7490;
+}
+
+.cell-tag.one {
+    background: var(--teal-light);
+    color: var(--teal);
+}
+
+.cell-tag.multi {
+    background: var(--dim-structure-light);
+    color: #b45309;
+}
+
+.cell-mapping {
+    font-size: 11px;
+    color: var(--gray-600);
+    line-height: 1.5;
+    white-space: normal;
+    min-width: 160px;
+}
+
+.cell-na {
+    color: var(--gray-300);
+    font-style: italic;
+}
+
+.cell-question {
+    color: var(--dim-structure);
+    font-weight: 600;
+}
+
+.cell-note {
+    font-size: 10px;
+    color: var(--gray-400);
+    font-style: italic;
+}
+
+/* ==========================================================================
+   ILS Card Grid (Sprint 4.4)
+   ========================================================================== */
+
+.ils-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+}
+
+.ils-card {
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.ils-card-header {
+    padding: var(--space-3) var(--space-4);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.ils-card-header.rentals {
+    background: var(--dim-listing-light);
+    color: #15803d;
+}
+
+.ils-card-header.rentfaster {
+    background: var(--dim-structure-light);
+    color: #b45309;
+}
+
+.ils-card-header.rentboard {
+    background: var(--dim-unit-light);
+    color: #0e7490;
+}
+
+.ils-card-header.rentcanada {
+    background: var(--teal-light);
+    color: var(--teal);
+}
+
+.ils-card-body {
+    padding: var(--space-4);
+}
+
+.ils-field {
+    margin-bottom: var(--space-4);
+}
+
+.ils-field:last-child {
+    margin-bottom: 0;
+}
+
+.ils-field-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-2);
+}
+
+.ils-values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+}
+
+.ils-value {
+    padding: 3px 8px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    color: var(--gray-700);
+}
+
+/* ==========================================================================
+   Note Box (Sprint 4.4)
+   ========================================================================== */
+
+.note-box {
+    background: var(--dim-structure-light);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    font-size: 12px;
+    color: #92400e;
+    margin-bottom: var(--space-4);
+}
+
+.note-box.info {
+    background: var(--dim-unit-light);
+    border-color: #93c5fd;
+    color: #1e40af;
+}
+
+.note-box strong {
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Legend Box (Sprint 4.4)
+   ========================================================================== */
+
+.legend-box {
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.legend-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+}
+
+.legend-items {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 11px;
+    color: var(--gray-600);
+}
+
+.legend-color {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+}
+
+/* ==========================================================================
+   Migration Table Specifics (Sprint 4.5)
+   ========================================================================== */
+
+/* Header stats in card header */
+.header-stats {
+    display: flex;
+    gap: var(--space-2);
+}
+
+/* Coming soon badge for disabled tabs */
+.coming-soon {
+    font-size: 9px;
+    background: var(--gray-200);
+    color: var(--gray-500);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    margin-left: 4px;
+    font-weight: 500;
+}
+
+.sub-tab.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Dimension cards with color borders for migration */
+.dim-card.sector { border-left: 3px solid var(--purple); }
+.dim-card.structure { border-left: 3px solid #f59e0b; }
+.dim-card.subtype { border-left: 3px solid #ea580c; }
+.dim-card.unit { border-left: 3px solid var(--teal); }
+.dim-card.listing { border-left: 3px solid var(--dim-listing); }
+.dim-card.purpose { border-left: 3px solid #db2777; }
+
+/* Migration-specific category rows */
+.migration-table tr.category-row.residential-sf { background: var(--purple-light) !important; }
+.migration-table tr.category-row.residential-sf td { color: var(--purple); border-bottom-color: var(--purple) !important; }
+
+.migration-table tr.category-row.residential-mf { background: var(--dim-unit-light) !important; }
+.migration-table tr.category-row.residential-mf td { color: var(--dim-unit); border-bottom-color: var(--dim-unit) !important; }
+
+/* Migration cell value chips */
+.cell-chip {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.cell-chip.sector-res { background: var(--purple-light); color: var(--purple); }
+.cell-chip.sector-com { background: var(--dim-unit-light); color: #1e40af; }
+.cell-chip.struct { background: #fef3c7; color: #92400e; }
+.cell-chip.subtype { background: #fed7aa; color: #9a3412; }
+.cell-chip.unit { background: var(--teal-light); color: var(--teal); }
+.cell-chip.listing { background: var(--dim-listing-light); color: var(--dim-listing); }
+.cell-chip.purpose { background: #fce7f3; color: #be185d; }
+
+/* Status badges for migration */
+.badge-clean { background: var(--dim-listing-light); color: var(--dim-listing); }
+.badge-decision { background: var(--dim-structure-light); color: #b45309; }
+.badge-merge { background: var(--purple-light); color: var(--purple); }
+
+/* Arrow cell */
+.cell-arrow {
+    color: var(--gray-400);
+    font-size: 16px;
+    text-align: center;
+    font-weight: 300;
+}
+
+/* Old values column */
+.cell-old {
+    color: var(--gray-500);
+    font-size: 11px;
+}
+
+/* Section divider */
+.section-divider {
+    height: 1px;
+    background: var(--gray-200);
+    margin: var(--space-8) 0;
+}
+
+/* Two column grid for decisions */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+}
+
+/* Migration notes column */
+.migration-table .notes-col {
+    font-size: 11px;
+    color: var(--gray-500);
+    font-style: italic;
+    max-width: 200px;
+    white-space: normal;
+}
+
+/* Recommendation column styling */
+.recommendation {
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: 500;
+}
+
+/* Stat variants */
+.stat.success .stat-value { color: var(--dim-listing); }
+.stat.warning .stat-value { color: #b45309; }
+
+/* Margin utilities */
+.mt-8 { margin-top: var(--space-8); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-8 { margin-bottom: var(--space-8); }
+
+/* ==========================================================================
+   Live Examples Tool (Sprint 4.6)
+   ========================================================================== */
+
+/* Preset Buttons */
+.preset-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+}
+
+.preset-btn {
+    padding: var(--space-2) var(--space-4);
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.preset-btn:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    background: var(--teal-light);
+}
+
+.preset-btn.active {
+    border-color: var(--teal);
+    background: var(--teal);
+    color: var(--white);
+}
+
+/* Live Examples Layout */
+.live-examples-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-6);
+    align-items: start;
+}
+
+/* Input Panel */
+.input-panel {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    position: sticky;
+    top: 80px;
+}
+
+.input-panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: var(--space-4);
+}
+
+.input-panel .form-group {
+    margin-bottom: var(--space-4);
+}
+
+.input-panel .form-group:last-of-type {
+    margin-bottom: var(--space-5);
+}
+
+/* Output Panel */
+.output-panel {
+    min-height: 400px;
+}
+
+/* Canonical Sentence Box */
+.sentence-box {
+    background: linear-gradient(135deg, var(--purple-light) 0%, #e0e7ff 100%);
+    border: 1px solid var(--purple);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    margin-bottom: var(--space-6);
+}
+
+.sentence-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--purple);
+    margin-bottom: var(--space-2);
+}
+
+.sentence-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--gray-900);
+    line-height: 1.6;
+}
+
+.sentence-text .dim {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+.sentence-text .dim-sector { background: var(--purple-light); color: var(--purple); }
+.sentence-text .dim-structure { background: #fef3c7; color: #92400e; }
+.sentence-text .dim-subtype { background: #fed7aa; color: #9a3412; }
+.sentence-text .dim-unit { background: var(--teal-light); color: var(--teal); }
+.sentence-text .dim-listing { background: var(--dim-listing-light); color: var(--dim-listing); }
+.sentence-text .dim-purpose { background: #fce7f3; color: #be185d; }
+
+/* Key Insight Callout */
+.key-insight {
+    display: none;
+    background: var(--teal-light);
+    border: 1px solid var(--teal);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.key-insight.visible {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.key-insight-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.key-insight-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+    margin-bottom: 2px;
+}
+
+.key-insight-text {
+    font-size: 13px;
+    color: #0e7490;
+    line-height: 1.5;
+}
+
+/* Platform Grid */
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+}
+
+/* Platform Card */
+.platform-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all 0.15s ease;
+}
+
+.platform-card:hover {
+    border-color: var(--gray-300);
+    box-shadow: var(--shadow-sm);
+}
+
+.platform-card.disabled {
+    opacity: 0.6;
+}
+
+.platform-card.disabled:hover {
+    border-color: var(--gray-200);
+    box-shadow: none;
+}
+
+.platform-card-header {
+    padding: var(--space-3) var(--space-4);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.platform-card-header.rentals {
+    background: var(--dim-listing-light);
+    color: #15803d;
+}
+
+.platform-card-header.rentfaster {
+    background: var(--dim-structure-light);
+    color: #b45309;
+}
+
+.platform-card-header.bstk {
+    background: var(--teal-light);
+    color: var(--teal);
+}
+
+.platform-card-header.spacelist {
+    background: var(--purple-light);
+    color: var(--purple);
+}
+
+.platform-card-header.woodcabins {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.platform-card-header.disabled-header {
+    background: var(--gray-100);
+    color: var(--gray-400);
+}
+
+.platform-card-body {
+    padding: var(--space-4);
+}
+
+.platform-display {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: var(--space-3);
+}
+
+.platform-card.disabled .platform-display {
+    color: var(--gray-400);
+    font-style: italic;
+}
+
+.platform-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
+}
+
+.platform-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: var(--dim-listing-light);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    color: var(--dim-listing);
+    font-weight: 500;
+}
+
+.platform-filter::before {
+    content: '✓';
+    font-size: 10px;
+}
+
+.platform-hidden {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
+}
+
+.platform-hidden-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: var(--gray-100);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    color: var(--gray-500);
+    text-decoration: line-through;
+}
+
+.platform-note {
+    font-size: 11px;
+    color: var(--gray-500);
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.platform-note.highlight {
+    color: var(--teal);
+    font-style: normal;
+    font-weight: 500;
+}
+
+/* Random Button */
+.btn-random {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
+/* Section Title for Platform Display */
+.platform-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-500);
+    margin-bottom: var(--space-4);
+}

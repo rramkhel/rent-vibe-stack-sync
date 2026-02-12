@@ -1,15 +1,324 @@
 <!-- Tab 5: Decisions & Open Questions -->
-<section class="section">
-    <h1>Decisions & Open Questions</h1>
-    <p class="section-subtitle">The thinking behind the model and items needing PM input</p>
 
-    <div class="placeholder-box">
-        <strong>Sprint 4.6 will build:</strong>
-        <ul style="text-align: left; margin-top: 1rem;">
-            <li>Problems Solved table (10 problems, 10 solutions)</li>
-            <li>"The Pattern" Key Insight callout</li>
-            <li>11 Open Questions organized by category</li>
-            <li>Each question with options, recommendation, and sign-off needed</li>
-        </ul>
+<!-- ========================================
+     Section 1: Problems Solved & Tradeoffs
+     ======================================== -->
+<section class="section">
+    <h2 class="section-title">Problems Solved & Tradeoffs</h2>
+    <p class="section-subtitle">The thinking behind the model. Each row is a real problem we hit and how v4.2 resolves it.</p>
+
+    <div class="card mb-6">
+        <div class="card-header">
+            <div>
+                <div class="card-title">10 Problems, 10 Solutions</div>
+            </div>
+            <span class="badge badge-green">All resolved in v4.2</span>
+        </div>
+        <div class="card-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Problem</th>
+                        <th style="width: 35%;">Solution</th>
+                        <th style="width: 35%;">Rationale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"Apartment" was both a building type and a listing concept</td>
+                        <td>Split: Apt Bldg = property type, Apartment = self-sufficient unit type</td>
+                        <td>Renters search for "apartment," not "apartment building → mid rise → entire"</td>
+                    </tr>
+                    <tr>
+                        <td>Loft/Studio were unit types but describe layouts, not portions</td>
+                        <td>Moved to Property Variant</td>
+                        <td>A loft is a style of apartment, not a portion of a building like "basement"</td>
+                    </tr>
+                    <tr>
+                        <td>Garden Suite/Garage Suite were unit types but are accessory dwellings</td>
+                        <td>Moved to Property Variant of House</td>
+                        <td>They describe a secondary structure on the property, not a portion</td>
+                    </tr>
+                    <tr>
+                        <td>Rooms don't care about building type</td>
+                        <td>Room is self-sufficient — property type optional</td>
+                        <td>Nobody listing a room cares if it's in a house or townhouse</td>
+                    </tr>
+                    <tr>
+                        <td>Cabin/Cottage had its own Property Type for just 2 values</td>
+                        <td>Merged as House subtypes</td>
+                        <td>Physically standalone dwellings. Only 2 values doesn't justify top-level type</td>
+                    </tr>
+                    <tr>
+                        <td>Some listings are "building-first," others "unit-first"</td>
+                        <td>Unit Types split into self-sufficient vs structure-dependent</td>
+                        <td>Same model — property type just becomes nullable</td>
+                    </tr>
+                    <tr>
+                        <td>47+ inconsistent property types across platforms</td>
+                        <td>6 orthogonal dimensions + platform mapping layer</td>
+                        <td>Store canonically, display per-platform via configuration</td>
+                    </tr>
+                    <tr>
+                        <td>Regional naming (cabin vs cottage, townhouse vs rowhouse)</td>
+                        <td>Synonym groups concept (future)</td>
+                        <td>Same thing for search, landlord picks their label</td>
+                    </tr>
+                    <tr>
+                        <td>Purpose was a classification dimension but doesn't describe physical properties</td>
+                        <td>Moved to metadata alongside Ownership</td>
+                        <td>A basement is structurally identical whether "student" or "standard"</td>
+                    </tr>
+                    <tr>
+                        <td>"Condo" was treated as a property type on some platforms</td>
+                        <td>Condo is an Ownership value, not a property type</td>
+                        <td>A condo can be in a high-rise, townhouse, or detached house</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Key Insight callout - The Pattern -->
+    <div class="callout-insight teal">
+        <div class="callout-insight-title">The Pattern</div>
+        <div class="callout-insight-text">
+            Most of these problems came from conflating different concepts into a single "property type" field. The fix is always the same: separate the concepts into distinct dimensions, each answering one question. Property Type tells you what the building is. Unit Type tells you what you're renting. Variant tells you the style. They're orthogonal.
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     Section 2: Open Questions
+     ======================================== -->
+<section class="section">
+    <h2 class="section-title">Open Questions</h2>
+    <p class="section-subtitle">Items that need PM input before finalizing. Each includes a recommendation — flag anything you disagree with.</p>
+
+    <!-- Summary stats -->
+    <div class="question-stats mb-6">
+        <div class="question-stat teal">
+            <div class="question-stat-value">11</div>
+            <div class="question-stat-label">Open questions</div>
+        </div>
+        <div class="question-stat gray">
+            <div class="question-stat-value">3</div>
+            <div class="question-stat-label">Categories</div>
+        </div>
+    </div>
+
+    <!-- Category: Structure & Classification -->
+    <h3 class="category-title">Structure & Classification</h3>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">1</div>
+            <div class="question-title">Multiplex — subtype or container?</div>
+            <span class="badge badge-amber">Needs sign-off</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) Sibling subtype (standalone 5+ plex)</div>
+                <div class="question-option">B) Parent container for all plexes</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> A — standalone subtype. Keeps tree flat and predictable.
+            </div>
+            <div class="question-needs">Needs input from: <strong>Su, Steven</strong></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">2</div>
+            <div class="question-title">Luxury — where does it live?</div>
+            <span class="badge badge-gray">Needs PM input</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) Variant of Apt Bldg subtypes</div>
+                <div class="question-option">B) Quality attribute on any structure</div>
+                <div class="question-option">C) Remove</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> B — attribute, not structural
+            </div>
+            <div class="question-needs">Needs input from: <strong>Product team</strong></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">3</div>
+            <div class="question-title">Construction/New Dev — building type or lifecycle attribute?</div>
+            <span class="badge badge-gray">Needs PM input</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) Keep under Industrial</div>
+                <div class="question-option">B) Move to Other</div>
+                <div class="question-option">C) Lifecycle attribute</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> C — it's a state, not a building type. Parked under Industrial for now.
+            </div>
+            <div class="question-needs">Needs input from: <strong>Product team</strong></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">4</div>
+            <div class="question-title">Specialty category — what goes here?</div>
+            <span class="badge badge-gray">Needs PM input</span>
+        </div>
+        <div class="question-body">
+            <div class="question-rec">
+                <strong>Rec:</strong> Keep as placeholder, define values as encountered.
+            </div>
+            <div class="question-needs">Needs input from: <strong>Pablo, Su</strong></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">5</div>
+            <div class="question-title">'Other' at every level?</div>
+            <span class="badge badge-amber">Needs sign-off</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) Every dimension gets Other</div>
+                <div class="question-option">B) Only Property Type + Subtype</div>
+                <div class="question-option">C) Case by case</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> A — needed for backwards compat + futureproofing
+            </div>
+            <div class="question-needs">Needs input from: <strong>Stan, dev team</strong></div>
+        </div>
+    </div>
+
+    <!-- Category: Transaction & Lifecycle -->
+    <h3 class="category-title">Transaction & Lifecycle</h3>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">6</div>
+            <div class="question-title">Sublet — add back or keep removed?</div>
+            <span class="badge badge-gray">Needs PM input</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) Add as Transaction Type</div>
+                <div class="question-option">B) Keep removed</div>
+                <div class="question-option">C) Purpose flag</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> B — keep removed for now
+            </div>
+            <div class="question-needs">Needs input from: <strong>Pablo</strong></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">7</div>
+            <div class="question-title">Lease-to-Own / Rent-to-Own — deprecate?</div>
+            <span class="badge badge-gray">Needs PM input</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) Add as Transaction Types</div>
+                <div class="question-option">B) Deprecate</div>
+                <div class="question-option">C) Composite flag</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> B — deprecate (low volume)
+            </div>
+            <div class="question-needs">Needs input from: <strong>Steven, data team</strong></div>
+        </div>
+    </div>
+
+    <!-- Category: Ownership & Metadata -->
+    <h3 class="category-title">Ownership & Metadata</h3>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">8</div>
+            <div class="question-title">Co-op — where does it live?</div>
+            <span class="badge badge-gray">Needs PM input</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) Ownership attribute (like Condo)</div>
+                <div class="question-option">B) Purpose</div>
+                <div class="question-option">C) Structure attribute</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> A — ownership model
+            </div>
+            <div class="question-needs">Needs input from: <strong>Su</strong></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">9</div>
+            <div class="question-title">Condo Association — deprecate or remap?</div>
+            <span class="badge badge-gray">Needs PM input</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) Deprecate</div>
+                <div class="question-option">B) Map to Community wrapper + ownership=condo</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> A — unclear use case, likely legacy
+            </div>
+            <div class="question-needs">Needs input from: <strong>Su, Steven</strong></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">10</div>
+            <div class="question-title">Purpose cardinality — 1:1 or 1:N?</div>
+            <span class="badge badge-gray">Needs PM input</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) One purpose per listing</div>
+                <div class="question-option">B) Multiple (e.g., Student + Short-Term)</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> TBD — defer until Purpose is more fleshed out
+            </div>
+            <div class="question-needs">Needs input from: <strong>Product team</strong></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-number">11</div>
+            <div class="question-title">Synonym implementation — how?</div>
+            <span class="badge badge-gray">Needs PM input</span>
+        </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="question-option">A) Metadata on subtypes</div>
+                <div class="question-option">B) Separate synonym table</div>
+                <div class="question-option">C) Defer</div>
+            </div>
+            <div class="question-rec">
+                <strong>Rec:</strong> C — concept agreed, implementation deferred
+            </div>
+            <div class="question-needs">Needs input from: <strong>Dev team</strong></div>
+        </div>
+    </div>
+
+    <!-- Utility bar -->
+    <div class="utility-bar amber mt-6">
+        <strong>What's Blocking Launch:</strong> None of these open questions block the taxonomy model itself. Questions 1, 2, 3, 4, 5 should be resolved before implementation begins. The rest can be addressed during migration mapping or deferred.
     </div>
 </section>
