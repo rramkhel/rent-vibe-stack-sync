@@ -1,36 +1,309 @@
 <!-- Tab 4: Metadata -->
 <section class="section">
-    <h1>Metadata</h1>
-    <p class="section-subtitle">Ownership, Purpose, and Community — attributes that orbit the taxonomy</p>
+    <h2 class="section-title">Metadata</h2>
+    <p class="section-subtitle">Attributes that orbit the taxonomy — Ownership, Purpose, and Community.</p>
 
     <!-- Sub-tab navigation -->
     <div class="sub-tabs">
-        <button class="sub-tab-btn active" data-subtab="meta-ownership">Ownership</button>
-        <button class="sub-tab-btn" data-subtab="meta-purpose">Purpose</button>
-        <button class="sub-tab-btn" data-subtab="meta-community">Community</button>
-    </div>
-
-    <div class="sub-tab-panel active" id="meta-ownership">
-        <div class="placeholder-box">
-            <strong>Sprint 4.5 will build:</strong>
-            <ul style="text-align: left; margin-top: 1rem;">
-                <li>Ownership values table (Freehold, Condo, Co-op, etc.)</li>
-                <li>"The Condo Problem — solved" Key Insight callout</li>
-            </ul>
+        <div class="sub-tabs-inner">
+            <button class="sub-tab active" data-subtab="meta-ownership">Ownership</button>
+            <button class="sub-tab" data-subtab="meta-purpose">Purpose</button>
+            <button class="sub-tab" data-subtab="meta-community">Community</button>
         </div>
     </div>
 
-    <div class="sub-tab-panel" id="meta-purpose">
-        <div class="placeholder-box">
-            <strong>Purpose Values</strong>
-            <p style="margin-top: 1rem;">Standard, Student, Senior, Corporate, Vacation, Short-Term</p>
+    <!-- Sub-tab 1: Ownership -->
+    <div class="sub-panel active" id="meta-ownership">
+        <p class="section-intro">
+            Ownership describes <em>how</em> a property is held — not what the building looks like. A detached house can be freehold, condo, or co-op. A unit in a high-rise can be a condo or a rental. Ownership is tracked as a separate attribute, not as part of the taxonomy.
+        </p>
+
+        <!-- Key Insight callout - The Condo Problem -->
+        <div class="callout-insight purple mb-6">
+            <div class="callout-insight-title">The "Condo Problem" — solved</div>
+            <div class="callout-insight-text">
+                In the old system, "Condo" was a property type alongside "Apartment" and "House." But a condo isn't a type of building — it's a legal ownership model. A condo unit can be in a high-rise, a townhouse, or a detached house. By separating ownership from structure, we stop conflating two different questions: "what does the building look like?" and "who owns it?"
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Ownership Values</div>
+                    <div class="card-subtitle">One per property — tracked independently from all 6 taxonomy dimensions</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                            <th>ILS Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Freehold</strong></td>
+                            <td><code>freehold</code></td>
+                            <td>Own the land and building</td>
+                            <td>3BR detached house</td>
+                            <td>No special filter</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Condo</strong></td>
+                            <td><code>condo</code></td>
+                            <td>Own unit, share common areas</td>
+                            <td>1BR in high-rise</td>
+                            <td>ILS shows 'Condo' as searchable filter</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Co-op</strong></td>
+                            <td><code>coop</code></td>
+                            <td>Own shares in corporation</td>
+                            <td>Unit in co-op building</td>
+                            <td>Potentially</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Leasehold</strong></td>
+                            <td><code>leasehold</code></td>
+                            <td>Own building, lease the land</td>
+                            <td>Commercial property</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rental</strong></td>
+                            <td><code>rental</code></td>
+                            <td>Renting, no ownership</td>
+                            <td>Most ILS listings</td>
+                            <td>No (default — implied)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lease-to-Own</strong></td>
+                            <td><code>lease_to_own</code></td>
+                            <td>Lease ending in ownership</td>
+                            <td>Niche commercial</td>
+                            <td>Maps to lease</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rent-to-Own</strong></td>
+                            <td><code>rent_to_own</code></td>
+                            <td>Rent ending in ownership</td>
+                            <td>Niche residential</td>
+                            <td>Maps to rent</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <div class="sub-tab-panel" id="meta-community">
-        <div class="placeholder-box">
-            <strong>Community Wrapper</strong>
-            <p style="margin-top: 1rem;">Interactive demo showing Without/With Community hierarchy</p>
+    <!-- Sub-tab 2: Purpose -->
+    <div class="sub-panel" id="meta-purpose">
+        <p class="section-intro">
+            Purpose describes the audience or use case of a listing, not what the property physically is. A basement apartment near campus is structurally identical whether it's listed as "student" or "standard." Purpose is a filter and tag, not a classification axis.
+        </p>
+
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Purpose Values</div>
+                    <div class="card-subtitle">Audience or use case — not a classification dimension</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Code</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Standard</strong></td>
+                            <td><code>standard</code></td>
+                            <td>Default — general market</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Student</strong></td>
+                            <td><code>student</code></td>
+                            <td>Near campuses, student-friendly</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Senior</strong></td>
+                            <td><code>senior</code></td>
+                            <td>Senior living, 55+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Military/Veteran</strong></td>
+                            <td><code>military_veteran</code></td>
+                            <td>Military housing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Corporate</strong></td>
+                            <td><code>corporate</code></td>
+                            <td>Corporate housing/relocation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vacation</strong></td>
+                            <td><code>vacation</code></td>
+                            <td>Vacation rental</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Short-Term</strong></td>
+                            <td><code>short_term</code></td>
+                            <td>Short-term rental</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sub-tab 3: Community -->
+    <div class="sub-panel" id="meta-community">
+        <p class="section-intro">
+            Community is a display wrapper that groups multiple buildings under one brand name. It bumps the building down one level in the ILS search results — the community becomes the top-level card instead of individual buildings.
+        </p>
+
+        <!-- Key concept box -->
+        <div class="community-concept-box mb-6">
+            <div class="community-concept-title">Community bumps the building down one level in the display hierarchy.</div>
+            <div class="community-concept-subtitle">The community becomes the search result card. Buildings become a sub-grouping inside it.</div>
+        </div>
+
+        <!-- Wrapping examples -->
+        <div class="card mb-6">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Wrapping Examples</div>
+                    <div class="card-subtitle">How communities group different property types</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="community-examples">
+                    <div class="community-example">
+                        <div class="community-example-label">Condo Buildings</div>
+                        <div class="community-example-name">"Maple Heights"</div>
+                        <div class="community-example-desc">wraps 2 condo buildings</div>
+                    </div>
+                    <div class="community-example">
+                        <div class="community-example-label">Apartment Buildings</div>
+                        <div class="community-example-name">"Riverside Gardens"</div>
+                        <div class="community-example-desc">wraps 3 apt buildings</div>
+                    </div>
+                    <div class="community-example">
+                        <div class="community-example-label">Townhouses</div>
+                        <div class="community-example-name">"Oakwood Commons"</div>
+                        <div class="community-example-desc">wraps a row of townhouses</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visual hierarchy comparison -->
+        <h3 class="subsection-title">How It Works</h3>
+        <div class="grid-2 mb-6">
+            <!-- Without Community -->
+            <div class="card" style="border-top: 3px solid var(--gray-400);">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Without Community</div>
+                        <div class="card-subtitle">Building is the top-level result</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="hierarchy-demo">
+                        <div class="hierarchy-level hierarchy-building">
+                            <div class="hierarchy-label">Search Result Card</div>
+                            <div class="hierarchy-content">123 Main Street</div>
+                            <div class="hierarchy-meta">Building photo · 45 units · Apartment</div>
+                        </div>
+                        <div class="hierarchy-arrow">click</div>
+                        <div class="hierarchy-level hierarchy-units">
+                            <div class="hierarchy-label">Units</div>
+                            <div class="hierarchy-unit">Unit 101 · 1BR · $1,450</div>
+                            <div class="hierarchy-unit">Unit 205 · 2BR · $1,850</div>
+                            <div class="hierarchy-unit">Unit 312 · Studio · $1,100</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- With Community -->
+            <div class="card" style="border-top: 3px solid var(--teal);">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title" style="color: var(--teal);">With Community</div>
+                        <div class="card-subtitle">Community replaces building as top-level</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="hierarchy-demo">
+                        <div class="hierarchy-level hierarchy-community">
+                            <div class="hierarchy-label">Search Result Card</div>
+                            <div class="hierarchy-content">Riverside Gardens</div>
+                            <div class="hierarchy-meta">Community hero · 120 units across 3 buildings</div>
+                        </div>
+                        <div class="hierarchy-arrow teal">click</div>
+                        <div class="hierarchy-level hierarchy-buildings">
+                            <div class="hierarchy-label">Buildings</div>
+                            <div class="hierarchy-unit">123 Main St · 45 units</div>
+                            <div class="hierarchy-unit">125 Main St · 40 units</div>
+                            <div class="hierarchy-unit">200 River Rd · 35 units</div>
+                        </div>
+                        <div class="hierarchy-arrow">click building</div>
+                        <div class="hierarchy-level hierarchy-units">
+                            <div class="hierarchy-label">Units (123 Main St)</div>
+                            <div class="hierarchy-unit">Unit 101 · 1BR · $1,450</div>
+                            <div class="hierarchy-unit">Unit 205 · 2BR · $1,850</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="inline-note">
+            <strong>Open questions around community</strong> (mixed property types, billing, who creates) are being worked through separately. See the Decisions tab for details.
         </div>
     </div>
 </section>
+
+<script>
+// Initialize metadata sub-tabs when this tab loads
+(function() {
+    function initMetadataTab() {
+        const btns = document.querySelectorAll('#metadata .sub-tab');
+        const panels = document.querySelectorAll('#metadata .sub-panel');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.dataset.subtab;
+
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                panels.forEach(p => {
+                    p.classList.toggle('active', p.id === targetId);
+                });
+            });
+        });
+    }
+
+    // Initialize when tab loads
+    document.addEventListener('tabloaded', (e) => {
+        if (e.target.id === 'metadata') {
+            initMetadataTab();
+        }
+    });
+
+    // Also try immediately
+    if (document.getElementById('meta-ownership')) {
+        initMetadataTab();
+    }
+})();
+</script>

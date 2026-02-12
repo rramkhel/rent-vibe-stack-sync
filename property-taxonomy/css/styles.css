@@ -987,3 +987,173 @@ body {
   padding: var(--space-3) var(--space-4);
   border-bottom: 1px solid var(--gray-200);
 }
+
+/* ========================================
+   COMMUNITY COMPONENTS
+   ======================================== */
+.community-concept-box {
+  background: var(--teal-light);
+  border: 2px solid var(--teal);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.community-concept-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--teal-dark);
+  margin-bottom: var(--space-2);
+}
+
+.community-concept-subtitle {
+  font-size: 14px;
+  color: var(--teal);
+}
+
+.community-examples {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.community-example {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  text-align: center;
+}
+
+.community-example-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-2);
+}
+
+.community-example-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--teal);
+  margin-bottom: var(--space-1);
+}
+
+.community-example-desc {
+  font-size: 13px;
+  color: var(--gray-500);
+}
+
+/* Hierarchy Demo */
+.hierarchy-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-size: 13px;
+}
+
+.hierarchy-level {
+  padding: var(--space-4);
+  border: 2px solid var(--gray-300);
+}
+
+.hierarchy-level:first-child {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.hierarchy-level:last-child {
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.hierarchy-building {
+  background: var(--gray-100);
+}
+
+.hierarchy-community {
+  background: var(--teal-light);
+  border-color: var(--teal);
+}
+
+.hierarchy-buildings {
+  background: var(--gray-100);
+  border-color: var(--teal);
+  border-top: 1px dashed var(--teal);
+}
+
+.hierarchy-units {
+  background: var(--white);
+  border-top: 1px dashed var(--gray-300);
+}
+
+.hierarchy-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-1);
+}
+
+.hierarchy-community .hierarchy-label {
+  color: var(--teal);
+}
+
+.hierarchy-content {
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.hierarchy-community .hierarchy-content {
+  color: var(--teal-dark);
+}
+
+.hierarchy-meta {
+  color: var(--gray-500);
+  font-size: 12px;
+}
+
+.hierarchy-community .hierarchy-meta {
+  color: var(--teal);
+}
+
+.hierarchy-unit {
+  padding: 4px 8px;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--gray-600);
+  margin-bottom: 4px;
+}
+
+.hierarchy-unit:last-child {
+  margin-bottom: 0;
+}
+
+.hierarchy-buildings .hierarchy-unit {
+  background: var(--white);
+}
+
+.hierarchy-arrow {
+  text-align: center;
+  background: var(--gray-100);
+  border-left: 2px solid var(--gray-300);
+  border-right: 2px solid var(--gray-300);
+  padding: 4px;
+  color: var(--gray-400);
+  font-size: 11px;
+}
+
+.hierarchy-arrow.teal {
+  background: var(--teal-light);
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.subsection-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: var(--space-4);
+}

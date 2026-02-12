@@ -1,20 +1,11 @@
 /**
- * Community Demo - Interactive visualization
+ * Community Demo
  *
- * This file will be populated in Sprint 4.5 (Tab 4: Metadata)
- * Features:
- * - Mock search results
- * - Breadcrumb navigation
- * - Without/With Community comparison
+ * The community visualization is handled inline in tab4-metadata.html
+ * using static HTML hierarchy diagrams.
+ *
+ * This file is kept as a placeholder for potential future interactive
+ * community demo features (breadcrumb navigation, mock search results, etc.)
  */
 
-function initCommunityDemo() {
-    // Placeholder - will be implemented in Sprint 4.5
-}
-
-// Initialize when metadata tab is loaded
-document.addEventListener('tabloaded', (e) => {
-    if (e.target.id === 'metadata') {
-        initCommunityDemo();
-    }
-});
+// Placeholder - community functionality is in tab4-metadata.html
