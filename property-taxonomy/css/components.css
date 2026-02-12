@@ -1351,36 +1351,42 @@
    Live Examples Tool (Sprint 4.6)
    ========================================================================== */
 
-/* Preset Buttons */
-.preset-buttons {
+/* Preset Tabs (replaces preset-buttons) */
+.preset-tabs {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
+    border-bottom: 1px solid var(--gray-200);
     margin-bottom: var(--space-6);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
 
-.preset-btn {
-    padding: var(--space-2) var(--space-4);
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    font-size: 12px;
+.preset-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.preset-tab {
+    padding: var(--space-3) var(--space-4);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 13px;
     font-weight: 500;
-    color: var(--gray-600);
+    color: var(--gray-500);
     cursor: pointer;
     transition: all 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
-.preset-btn:hover {
-    border-color: var(--teal);
+.preset-tab:hover {
     color: var(--teal);
-    background: var(--teal-light);
 }
 
-.preset-btn.active {
-    border-color: var(--teal);
-    background: var(--teal);
-    color: var(--white);
+.preset-tab.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+    font-weight: 600;
 }
 
 /* Live Examples Layout */

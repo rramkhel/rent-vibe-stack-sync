@@ -4,14 +4,14 @@
     <p class="section-subtitle">Select classification dimensions to see the canonical sentence and platform displays in real-time</p>
 </div>
 
-<!-- Preset Buttons -->
-<div class="preset-buttons" id="preset-buttons">
-    <button class="preset-btn" onclick="loadPreset('basement-house')">Basement in House</button>
-    <button class="preset-btn" onclick="loadPreset('highrise-portfolio')">High-Rise Portfolio</button>
-    <button class="preset-btn" onclick="loadPreset('aframe-cabin')">A-Frame Cabin</button>
-    <button class="preset-btn" onclick="loadPreset('class-a-office')">Class A Office</button>
-    <button class="preset-btn" onclick="loadPreset('student-room')">Student Room</button>
-    <button class="preset-btn" onclick="loadPreset('condo-unit')">Condo Unit</button>
+<!-- Preset Tabs -->
+<div class="preset-tabs" id="preset-tabs">
+    <button class="preset-tab active" onclick="loadPresetTab(this, 'basement-house')">Basement in House</button>
+    <button class="preset-tab" onclick="loadPresetTab(this, 'highrise-portfolio')">High-Rise Portfolio</button>
+    <button class="preset-tab" onclick="loadPresetTab(this, 'aframe-cabin')">A-Frame Cabin</button>
+    <button class="preset-tab" onclick="loadPresetTab(this, 'class-a-office')">Class A Office</button>
+    <button class="preset-tab" onclick="loadPresetTab(this, 'student-room')">Student Room</button>
+    <button class="preset-tab" onclick="loadPresetTab(this, 'condo-unit')">Condo Unit</button>
 </div>
 
 <!-- Main Layout: Input + Output -->
@@ -307,36 +307,29 @@ function onStructureChange() {
 // FUNCTIONS: Preset Loading
 // =============================================================================
 
-function loadPreset(presetId) {
+function loadPresetTab(tabEl, presetId) {
+    // Update tab active states
+    var tabs = document.querySelectorAll('.preset-tab');
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    tabEl.classList.add('active');
+
+    // Load the preset
     var preset = presets.find(function(p) { return p.id === presetId; });
     if (!preset) return;
 
-    // Update preset button states
-    var btns = document.querySelectorAll('.preset-btn');
-    btns.forEach(function(btn) { btn.classList.remove('active'); });
-    event.target.classList.add('active');
-
-    // Set sector and update structure options
     document.getElementById('input-sector').value = preset.values.sector;
     onSectorChange();
-
-    // Set structure and update subtype options
     document.getElementById('input-structure').value = preset.values.structure;
     onStructureChange();
-
-    // Set remaining values
     document.getElementById('input-subtype').value = preset.values.subtype || '';
     document.getElementById('input-unit').value = preset.values.unit;
     document.getElementById('input-listing').value = preset.values.listing;
-
     if (preset.values.purpose) {
         document.getElementById('input-purpose').value = preset.values.purpose;
     }
 
-    // Update display
     updateDisplay();
 
-    // Show key insight if present
     var insightEl = document.getElementById('key-insight');
     if (preset.keyInsight) {
         document.getElementById('insight-text').textContent = preset.keyInsight;
@@ -351,8 +344,8 @@ function loadRandomPreset() {
     var preset = presets[randomIndex];
 
     // Clear active states
-    var btns = document.querySelectorAll('.preset-btn');
-    btns.forEach(function(btn) { btn.classList.remove('active'); });
+    var tabs = document.querySelectorAll('.preset-tab');
+    tabs.forEach(function(t) { t.classList.remove('active'); });
 
     // Set values
     document.getElementById('input-sector').value = preset.values.sector;
@@ -404,9 +397,9 @@ function updateDisplay() {
     // Hide key insight when manually changing values
     document.getElementById('key-insight').classList.remove('visible');
 
-    // Clear active preset button
-    var btns = document.querySelectorAll('.preset-btn');
-    btns.forEach(function(btn) { btn.classList.remove('active'); });
+    // Clear active preset tab
+    var tabs = document.querySelectorAll('.preset-tab');
+    tabs.forEach(function(t) { t.classList.remove('active'); });
 }
 
 function updateSentence(values) {
@@ -663,8 +656,11 @@ function renderPlatformCard(platform, display) {
 
 function initLiveExamples() {
     onSectorChange();
-    // Load the first preset by default
-    loadPreset('basement-house');
+    // Load the first preset via the tab system
+    var firstTab = document.querySelector('.preset-tab');
+    if (firstTab) {
+        loadPresetTab(firstTab, 'basement-house');
+    }
 }
 
 // Initialize when tab loads
