@@ -1,0 +1,2691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RentSync Property Classification System — v4</title>
+  <style>
+    /* ========================================
+       CSS VARIABLES & DESIGN TOKENS
+       ======================================== */
+    :root {
+      --teal: #0f766e;
+      --teal-light: #ccfbf1;
+      --teal-dark: #115e59;
+
+      --dim-sector: #8b5cf6;
+      --dim-sector-light: #ede9fe;
+      --dim-structure: #f59e0b;
+      --dim-structure-light: #fef3c7;
+      --dim-subtype: #f97316;
+      --dim-subtype-light: #ffedd5;
+      --dim-variant: #06b6d4;
+      --dim-variant-light: #cffafe;
+      --dim-unit: #0f766e;
+      --dim-unit-light: #ccfbf1;
+      --dim-transaction: #22c55e;
+      --dim-transaction-light: #dcfce7;
+      --dim-purpose: #ec4899;
+      --dim-purpose-light: #fce7f3;
+
+      --platform-ils: #22c55e;
+      --platform-ils-light: #dcfce7;
+      --platform-enterprise: #0891b2;
+      --platform-enterprise-light: #cffafe;
+      --platform-commercial: #d97706;
+      --platform-commercial-light: #fef3c7;
+      --platform-mls: #8b5cf6;
+      --platform-mls-light: #ede9fe;
+
+      --status-clean: #22c55e;
+      --status-clean-light: #dcfce7;
+      --status-decision: #f59e0b;
+      --status-decision-light: #fef3c7;
+      --status-tbd: #64748b;
+      --status-tbd-light: #f1f5f9;
+
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+      --space-12: 48px; --space-16: 64px;
+
+      --radius-sm: 4px; --radius: 6px; --radius-md: 8px;
+      --radius-lg: 10px; --radius-xl: 12px;
+
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08);
+    }
+
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--gray-50);
+      color: var(--gray-800);
+      line-height: 1.6;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ========================================
+       SITE HEADER
+       ======================================== */
+    .site-header {
+      padding: var(--space-5) var(--space-10);
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      background: var(--white);
+    }
+
+    .site-logo {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--teal) 0%, #14b8a6 100%);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white);
+      font-weight: 700; font-size: 13px; letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .site-title { font-size: 18px; font-weight: 600; color: var(--gray-900); }
+    .site-subtitle { font-size: 13px; color: var(--gray-500); margin-top: 2px; }
+
+    .site-version {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--gray-400);
+      background: var(--gray-100);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius);
+    }
+
+    /* ========================================
+       MAIN NAVIGATION
+       ======================================== */
+    .site-nav {
+      padding: 0 var(--space-10);
+      display: flex;
+      gap: var(--space-8);
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      overflow-x: auto;
+    }
+
+    .nav-tab {
+      padding: var(--space-4) 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-500);
+      text-decoration: none;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover { color: var(--gray-700); }
+    .nav-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+    /* ========================================
+       MAIN CONTENT AREA
+       ======================================== */
+    .main-content {
+      padding: var(--space-8) var(--space-10);
+      max-width: 1400px;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ========================================
+       SUB-TABS (floating pill bar)
+       ======================================== */
+    .sub-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .sub-tabs-inner {
+      display: inline-flex;
+      gap: var(--space-1);
+      background: var(--gray-100);
+      padding: var(--space-1);
+      border-radius: var(--radius-md);
+    }
+
+    .sub-tab {
+      padding: var(--space-2) var(--space-5);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-600);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .sub-tab:hover:not(.disabled) { color: var(--gray-800); background: var(--gray-200); }
+
+    .sub-tab.active {
+      background: var(--white);
+      color: var(--teal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sub-tab.disabled {
+      color: var(--gray-400);
+      cursor: default;
+    }
+
+    .sub-tab .coming-soon {
+      font-size: 9px;
+      background: var(--gray-200);
+      color: var(--gray-500);
+      padding: 1px 6px;
+      border-radius: var(--radius-sm);
+      margin-left: var(--space-1);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .sub-panel { display: none; }
+    .sub-panel.active { display: block; }
+
+    /* ========================================
+       SECTION COMPONENT
+       ======================================== */
+    .section {
+      margin-bottom: var(--space-8);
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: var(--space-5);
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: calc(-1 * var(--space-3));
+      margin-bottom: var(--space-5);
+    }
+
+    .section-intro {
+      font-size: 15px;
+      color: var(--gray-600);
+      line-height: 1.7;
+      max-width: 800px;
+      margin-bottom: var(--space-6);
+    }
+
+    /* ========================================
+       CARD COMPONENT
+       ======================================== */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--space-6);
+    }
+
+    .card-header {
+      padding: var(--space-5) var(--space-6);
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title { font-size: 15px; font-weight: 600; color: var(--gray-900); }
+    .card-subtitle { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+    .card-body { padding: var(--space-6); }
+
+    /* ========================================
+       CALLOUT COMPONENT
+       ======================================== */
+    .callout {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      padding: var(--space-5) var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .callout-title { font-size: 13px; font-weight: 600; color: var(--teal); margin-bottom: var(--space-2); }
+    .callout-text { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+
+    .callout.callout-teal { background: var(--teal-light); border-color: var(--teal-light); border-left-color: var(--teal); }
+    .callout.callout-teal .callout-title { color: var(--teal-dark); }
+    .callout.callout-teal .callout-text { color: var(--teal-dark); }
+
+    .callout.callout-purple { background: var(--dim-sector-light); border-color: var(--dim-sector-light); border-left-color: var(--dim-sector); }
+    .callout.callout-purple .callout-title { color: #6d28d9; }
+    .callout.callout-purple .callout-text { color: #5b21b6; }
+
+    .callout.callout-amber { background: var(--dim-structure-light); border-color: var(--dim-structure-light); border-left-color: var(--dim-structure); }
+    .callout.callout-amber .callout-title { color: #b45309; }
+    .callout.callout-amber .callout-text { color: #92400e; }
+
+    .callout.has-icon { display: flex; gap: var(--space-4); }
+    .callout-icon { font-size: 18px; flex-shrink: 0; }
+
+    /* ========================================
+       DATA TABLE
+       ======================================== */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: var(--space-3) var(--space-4);
+      background: var(--gray-50);
+      color: var(--gray-600);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .data-table td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-700);
+    }
+
+    .data-table tr:hover td { background: var(--gray-50); }
+
+    .data-table code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--gray-100);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--gray-700);
+    }
+
+    .data-table th.col-sector { color: var(--dim-sector); }
+    .data-table th.col-structure { color: var(--dim-structure); }
+    .data-table th.col-subtype { color: var(--dim-subtype); }
+    .data-table th.col-variant { color: var(--dim-variant); }
+    .data-table th.col-unit { color: var(--dim-unit); }
+    .data-table th.col-transaction { color: var(--dim-transaction); }
+    .data-table th.col-purpose { color: var(--dim-purpose); }
+
+    /* ========================================
+       BADGE COMPONENT
+       ======================================== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-teal { background: var(--teal-light); color: var(--teal); }
+    .badge-purple { background: var(--dim-sector-light); color: var(--dim-sector); }
+    .badge-amber { background: var(--dim-structure-light); color: #b45309; }
+    .badge-orange { background: var(--dim-subtype-light); color: #c2410c; }
+    .badge-cyan { background: var(--dim-variant-light); color: #0e7490; }
+    .badge-green { background: var(--dim-transaction-light); color: #15803d; }
+    .badge-pink { background: var(--dim-purpose-light); color: #be185d; }
+    .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+
+    /* ========================================
+       DIMENSION CARDS
+       ======================================== */
+    .dim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .dim-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5) var(--space-4);
+      text-align: center;
+    }
+
+    .dim-card.has-color { border-top: 3px solid var(--dim-color, var(--teal)); }
+    .dim-card.dim-sector { --dim-color: var(--dim-sector); }
+    .dim-card.dim-structure { --dim-color: var(--dim-structure); }
+    .dim-card.dim-subtype { --dim-color: var(--dim-subtype); }
+    .dim-card.dim-variant { --dim-color: var(--dim-variant); }
+    .dim-card.dim-unit { --dim-color: var(--dim-unit); }
+    .dim-card.dim-transaction { --dim-color: var(--dim-transaction); }
+    .dim-card.dim-purpose { --dim-color: var(--dim-purpose); }
+
+    .dim-card-name { font-size: 11px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.3px; }
+    .dim-card-count { font-size: 24px; font-weight: 700; color: var(--teal); margin-top: var(--space-2); }
+    .dim-card-label { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+    /* ========================================
+       SENTENCE FORMULA
+       ======================================== */
+    .sentence-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .sentence-label {
+      font-size: 10px; font-weight: 600; color: var(--gray-400);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: var(--space-3);
+    }
+
+    .sentence-text {
+      font-size: 17px; color: var(--gray-700); line-height: 1.7;
+    }
+
+    .sentence-text .dim {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: var(--radius);
+      font-weight: 500;
+      margin: 0 2px;
+    }
+
+    .sentence-text .dim-sector { background: var(--dim-sector-light); color: #6d28d9; }
+    .sentence-text .dim-structure { background: var(--dim-structure-light); color: #b45309; }
+    .sentence-text .dim-subtype { background: var(--dim-subtype-light); color: #c2410c; }
+    .sentence-text .dim-variant { background: var(--dim-variant-light); color: #0e7490; }
+    .sentence-text .dim-unit { background: var(--dim-unit-light); color: var(--teal-dark); }
+    .sentence-text .dim-transaction { background: var(--dim-transaction-light); color: #15803d; }
+    .sentence-text .dim-purpose { background: var(--dim-purpose-light); color: #be185d; }
+
+    /* ========================================
+       PLATFORM CARDS
+       ======================================== */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .platform-card {
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .platform-card.disabled { opacity: 0.5; }
+
+    .platform-card-header {
+      padding: var(--space-3) var(--space-4);
+      font-size: 13px; font-weight: 600;
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+
+    .platform-card-header.ils { background: var(--platform-ils-light); color: #15803d; }
+    .platform-card-header.enterprise { background: var(--platform-enterprise-light); color: #0e7490; }
+    .platform-card-header.commercial { background: var(--platform-commercial-light); color: #b45309; }
+    .platform-card-header.mls { background: var(--platform-mls-light); color: #6d28d9; }
+
+    .platform-card-body { padding: var(--space-4); }
+    .platform-display { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: var(--space-2); }
+    .platform-note { font-size: 12px; color: var(--gray-500); font-style: italic; }
+
+    /* ========================================
+       FORM ELEMENTS
+       ======================================== */
+    .form-group { margin-bottom: var(--space-4); }
+    .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: var(--space-2); }
+
+    .form-select {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      font-size: 14px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      background: var(--white);
+      color: var(--gray-700);
+      cursor: pointer;
+    }
+
+    .form-select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-light); }
+
+    /* ========================================
+       BUTTONS
+       ======================================== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: var(--space-3) var(--space-5);
+      font-size: 13px; font-weight: 600;
+      border-radius: var(--radius-md);
+      border: none; cursor: pointer;
+      transition: all 0.15s ease;
+      gap: var(--space-2);
+    }
+
+    .btn-primary { background: var(--teal); color: var(--white); }
+    .btn-primary:hover { background: var(--teal-dark); }
+    .btn-secondary { background: var(--gray-100); color: var(--gray-700); }
+    .btn-secondary:hover { background: var(--gray-200); }
+
+    /* ========================================
+       PLACEHOLDER
+       ======================================== */
+    .placeholder-box {
+      border: 2px dashed var(--gray-300);
+      border-radius: var(--radius-xl);
+      padding: var(--space-12) var(--space-8);
+      text-align: center;
+      color: var(--gray-400);
+    }
+
+    .placeholder-box-icon { font-size: 32px; margin-bottom: var(--space-3); }
+    .placeholder-box-title { font-size: 16px; font-weight: 600; color: var(--gray-500); margin-bottom: var(--space-2); }
+    .placeholder-box-text { font-size: 13px; max-width: 400px; margin: 0 auto; }
+
+    /* ========================================
+       UTILITIES
+       ======================================== */
+    .mb-4 { margin-bottom: var(--space-4); }
+    .mb-6 { margin-bottom: var(--space-6); }
+    .mb-8 { margin-bottom: var(--space-8); }
+    .mt-4 { margin-top: var(--space-4); }
+    .mt-6 { margin-top: var(--space-6); }
+    .text-center { text-align: center; }
+    .text-muted { color: var(--gray-500); }
+    .text-small { font-size: 12px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+
+    /* ========================================
+       BUILDER-SPECIFIC
+       ======================================== */
+    .builder-path-btn {
+      transition: all 0.15s ease;
+    }
+    .builder-path-btn.active {
+      background: var(--teal) !important;
+      color: var(--white) !important;
+    }
+    .builder-path-btn:not(.active) {
+      background: var(--gray-100) !important;
+      color: var(--gray-600) !important;
+    }
+
+    .purpose-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: var(--gray-100);
+      border-radius: var(--radius);
+      font-size: 12px;
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .purpose-tag:has(input:checked) {
+      background: var(--dim-purpose-light);
+      color: #be185d;
+    }
+    .purpose-tag input { width: 12px; height: 12px; accent-color: #ec4899; }
+
+    .b-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .b-val {
+      color: var(--gray-800);
+      font-weight: 500;
+    }
+    .b-val.null {
+      color: var(--gray-400);
+      font-style: italic;
+      font-weight: 400;
+    }
+    .b-val.highlight {
+      font-weight: 600;
+    }
+
+    /* ========================================
+       COMMUNITY DEMO
+       ======================================== */
+    .demo-result-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-2);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: var(--white);
+    }
+    .demo-result-card:hover {
+      border-color: var(--gray-400);
+      box-shadow: var(--shadow-md);
+      transform: translateX(2px);
+    }
+    .demo-result-card.community {
+      border-color: var(--teal);
+      background: var(--teal-light);
+    }
+    .demo-result-card.community:hover {
+      border-color: var(--teal-dark);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.15);
+    }
+    .demo-result-photo {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .demo-result-info { flex: 1; min-width: 0; }
+    .demo-result-name { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+    .demo-result-meta { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+    .demo-result-arrow { font-size: 16px; color: var(--gray-400); flex-shrink: 0; }
+
+    .demo-unit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      background: var(--gray-50);
+      border-radius: var(--radius);
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+    .demo-unit-name { font-weight: 500; color: var(--gray-700); }
+    .demo-unit-details { color: var(--gray-500); font-size: 12px; }
+    .demo-unit-price { font-weight: 600; color: var(--teal); font-size: 13px; }
+
+    .demo-breadcrumb-link {
+      color: var(--teal);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .demo-breadcrumb-link:hover { color: var(--teal-dark); }
+
+  </style>
+</head>
+<body>
+
+  <!-- ========================================
+       HEADER
+       ======================================== -->
+  <header class="site-header">
+    <div class="site-logo">RS</div>
+    <div>
+      <div class="site-title">Property Classification System</div>
+      <div class="site-subtitle">Universal Taxonomy for All Platforms</div>
+    </div>
+    <div class="site-version">v4 — Feb 2026</div>
+  </header>
+
+  <!-- ========================================
+       MAIN NAVIGATION — 5 sections
+       ======================================== -->
+  <nav class="site-nav">
+    <button class="nav-tab active" data-tab="solution">The Solution</button>
+    <button class="nav-tab" data-tab="builder">Listing Builder</button>
+    <button class="nav-tab" data-tab="reference">Full Reference</button>
+    <button class="nav-tab" data-tab="metadata">Community & Metadata</button>
+    <button class="nav-tab" data-tab="decisions">Decisions & Open Questions</button>
+  </nav>
+
+  <!-- ========================================
+       CONTENT AREA
+       ======================================== -->
+  <div class="main-content">
+
+    <!-- ==========================================
+         TAB 1: THE SOLUTION
+         ========================================== -->
+    <div class="tab-panel active" id="solution">
+
+      <!-- ---- PROBLEM FRAMING ---- -->
+      <div class="section">
+        <h2 class="section-title">What We're Solving</h2>
+        <p class="section-intro">
+          We have 47+ property type definitions spread across BSTK, RentSync, the ILS sites, and Spacelist — and they don't agree with each other. "Apartment" means something different on every platform. Rooms and basements are forced into building-level classifications they don't belong in. There's no clean way to represent a "loft apartment" vs a "studio" vs a "garden suite" without overloading a single field. And when we acquire a new platform, we start the mapping problem over again from scratch.
+        </p>
+        <p class="section-intro">
+          The solution: <strong>one canonical data model</strong> that stores listings in 7 orthogonal dimensions, with a <strong>platform mapping layer</strong> that translates to whatever each site needs. Store once, display everywhere.
+        </p>
+      </div>
+
+      <!-- ---- THE 7-DIMENSION MODEL ---- -->
+      <div class="section">
+        <h2 class="section-title">The 7-Dimension Model</h2>
+        <p class="section-subtitle">Every listing is described by 7 attributes. That's it.</p>
+
+        <!-- Dimension cards -->
+        <div class="dim-grid" style="grid-template-columns: repeat(7, 1fr);">
+          <div class="dim-card has-color dim-sector">
+            <div class="dim-card-name">Sector</div>
+            <div class="dim-card-count">4</div>
+            <div class="dim-card-label">values</div>
+          </div>
+          <div class="dim-card has-color dim-structure">
+            <div class="dim-card-name">Structure Type</div>
+            <div class="dim-card-count">11</div>
+            <div class="dim-card-label">types</div>
+          </div>
+          <div class="dim-card has-color dim-subtype">
+            <div class="dim-card-name">Subtype</div>
+            <div class="dim-card-count">40+</div>
+            <div class="dim-card-label">subtypes</div>
+          </div>
+          <div class="dim-card has-color dim-variant">
+            <div class="dim-card-name">Variant</div>
+            <div class="dim-card-count">10+</div>
+            <div class="dim-card-label">styles</div>
+          </div>
+          <div class="dim-card has-color dim-unit">
+            <div class="dim-card-name">Unit Type</div>
+            <div class="dim-card-count">11</div>
+            <div class="dim-card-label">types</div>
+          </div>
+          <div class="dim-card has-color dim-transaction">
+            <div class="dim-card-name">Transaction</div>
+            <div class="dim-card-count">3</div>
+            <div class="dim-card-label">types</div>
+          </div>
+          <div class="dim-card has-color dim-purpose">
+            <div class="dim-card-name">Purpose</div>
+            <div class="dim-card-count">7</div>
+            <div class="dim-card-label">tags</div>
+          </div>
+        </div>
+
+        <!-- Dimensions table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">The Seven Dimensions</div>
+            <div class="card-subtitle">Think of them as questions we answer about each listing.</div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 180px;">Dimension</th>
+                  <th style="width: 220px;">Question It Answers</th>
+                  <th>Example Values</th>
+                  <th style="width: 100px;">Required?</th>
+                  <th style="width: 180px;">Cardinality</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge-purple">Sector</span></td>
+                  <td>What broad category?</td>
+                  <td><code>residential</code>, <code>commercial</code>, <code>recreation</code>, <code>other</code></td>
+                  <td>Required</td>
+                  <td><span class="badge badge-gray">1:1</span> — one per property</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-amber">Structure Type</span></td>
+                  <td>What kind of building?</td>
+                  <td><code>house</code>, <code>townhouse_plex</code>, <code>apartment_bldg</code>, <code>office</code>, <code>retail</code></td>
+                  <td style="color: var(--dim-variant);">Optional*</td>
+                  <td><span class="badge badge-gray">1:1</span> — one per property</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-orange">Subtype</span></td>
+                  <td>What specific variation?</td>
+                  <td><code>detached</code>, <code>mobile</code>, <code>cabin</code>, <code>low_rise</code>, <code>duplex</code>, <code>class_a</code></td>
+                  <td>Optional</td>
+                  <td><span class="badge badge-gray">1:1</span> — one per property</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-cyan">Variant</span></td>
+                  <td>What style or refinement?</td>
+                  <td><code>loft</code>, <code>studio</code>, <code>penthouse</code>, <code>bungalow</code>, <code>garden_suite</code></td>
+                  <td>Optional</td>
+                  <td><span class="badge badge-gray">1:1</span> — one per property</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-teal">Unit Type</span></td>
+                  <td>What are you listing?</td>
+                  <td><code>apartment</code>, <code>basement</code>, <code>room</code>, <code>entire</code>, <code>suite</code>, <code>office</code></td>
+                  <td>Required</td>
+                  <td><span class="badge badge-gray">1:1</span> — one per listing</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-green">Transaction</span></td>
+                  <td>What's the deal?</td>
+                  <td><code>rent</code>, <code>sale</code>, <code>lease</code></td>
+                  <td>Required</td>
+                  <td><span class="badge badge-gray">1:1</span> — one per listing</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-pink">Purpose</span></td>
+                  <td>Who / what is it for?</td>
+                  <td><code>standard</code>, <code>student</code>, <code>senior</code>, <code>vacation</code>, <code>corporate</code></td>
+                  <td>Required</td>
+                  <td><span class="badge" style="background: var(--dim-purpose-light); color: #be185d;">1:N</span> — can have multiple</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Optional footnote -->
+        <div class="callout callout-teal">
+          <div class="callout-title">* Structure Type is optional for "unit-first" listings</div>
+          <div class="callout-text">
+            Some listings are defined by the unit, not the building. When someone lists "an apartment" or "a room for rent," they don't always know or care whether it's in a low-rise or high-rise. For these <strong>unit-first</strong> listings (apartment, basement, room, office, parking), Structure Type is nullable — the unit type IS the classification. When the building info is known, it's stored as enrichment. More on this below.
+          </div>
+        </div>
+
+        <!-- Sentence formula -->
+        <div class="sentence-box">
+          <div class="sentence-label">The Sentence Formula</div>
+          <div class="sentence-text">
+            A
+            <span class="dim dim-sector">Sector</span>
+            <span class="dim dim-structure">Structure</span>
+            <span class="dim dim-subtype">Subtype</span>
+            <span class="dim dim-variant">Variant</span>
+            <span class="dim dim-unit">Unit Type</span>
+            for
+            <span class="dim dim-transaction">Transaction</span>
+            targeting
+            <span class="dim dim-purpose">Purpose</span>
+          </div>
+          <div style="margin-top: var(--space-4); font-size: 13px; color: var(--gray-500);">
+            Example: A <span class="dim dim-sector" style="font-size: 13px;">Residential</span>
+            <span class="dim dim-structure" style="font-size: 13px;">Apartment Bldg</span>
+            <span class="dim dim-subtype" style="font-size: 13px;">Mid Rise</span>
+            <span class="dim dim-variant" style="font-size: 13px;">Loft</span>
+            <span class="dim dim-unit" style="font-size: 13px;">Apartment</span>
+            for <span class="dim dim-transaction" style="font-size: 13px;">Rent</span>
+            targeting <span class="dim dim-purpose" style="font-size: 13px;">Standard</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- UNIT-FIRST VS STRUCTURE-FIRST ---- -->
+      <div class="section">
+        <h2 class="section-title">Two Paths to a Listing</h2>
+        <p class="section-subtitle">Not every listing starts with "what building is this?"</p>
+
+        <div class="grid-2 mb-6">
+          <!-- Unit-first card -->
+          <div class="card" style="border-top: 3px solid var(--dim-unit);">
+            <div class="card-header">
+              <div>
+                <div class="card-title" style="color: var(--teal);">Unit-First</div>
+                <div class="card-subtitle">"I'm listing an apartment" — the unit IS the product</div>
+              </div>
+              <span class="badge badge-teal">Structure optional</span>
+            </div>
+            <div class="card-body">
+              <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-4);">
+                The renter searches for the unit type directly. Building details are background context — nice to have, not required.
+              </p>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                <span class="badge badge-teal">Apartment</span>
+                <span class="badge badge-teal">Basement</span>
+                <span class="badge badge-teal">Room</span>
+                <span class="badge badge-teal">Office</span>
+                <span class="badge badge-teal">Parking</span>
+              </div>
+              <div style="margin-top: var(--space-4); font-size: 12px; color: var(--gray-500);">
+                <em>"2BR apartment for rent"</em> — renter doesn't care if it's low-rise or mid-rise<br>
+                <em>"Private room available"</em> — doesn't matter if it's in a house or townhouse
+              </div>
+            </div>
+          </div>
+
+          <!-- Structure-first card -->
+          <div class="card" style="border-top: 3px solid var(--dim-structure);">
+            <div class="card-header">
+              <div>
+                <div class="card-title" style="color: #b45309;">Structure-First</div>
+                <div class="card-subtitle">"I'm listing my house" — the building IS the product</div>
+              </div>
+              <span class="badge badge-amber">Structure required</span>
+            </div>
+            <div class="card-body">
+              <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-4);">
+                The building type defines the listing. Unit type tells you what portion is available.
+              </p>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                <span class="badge badge-amber">Entire</span>
+                <span class="badge badge-amber">Main Floor</span>
+                <span class="badge badge-amber">Suite</span>
+                <span class="badge badge-amber">Floor</span>
+                <span class="badge badge-amber">Spot</span>
+              </div>
+              <div style="margin-top: var(--space-4); font-size: 12px; color: var(--gray-500);">
+                <em>"3BR detached house for rent"</em> — the house IS the listing<br>
+                <em>"Main floor of duplex"</em> — building type matters, unit type refines it
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">Same model, same database — just two entry points</div>
+          <div class="callout-text">
+            Both paths store data in the same 7 dimensions. The only difference is whether Structure Type is required (structure-first) or nullable (unit-first). When a unit-first listing does have building info — "2BR apartment in a mid-rise" — we store it as enrichment. Nothing is lost.
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- 5 EXAMPLES ---- -->
+      <div class="section">
+        <h2 class="section-title">How It Works: 5 Examples</h2>
+        <p class="section-subtitle">Real listings mapped through the model, then displayed per platform.</p>
+
+        <!-- Example 1: Apartment (unit-first) -->
+        <div class="card mb-6">
+          <div class="card-header">
+            <div>
+              <div class="card-title">🏢 "2BR apartment for rent downtown"</div>
+              <div class="card-subtitle">Unit-first — most common listing type</div>
+            </div>
+            <span class="badge badge-teal">Unit-first</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <!-- Canonical breakdown -->
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Canonical Storage</div>
+                <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px;">
+                  <div><span class="badge badge-purple" style="min-width: 90px;">Sector</span> <span style="color: var(--gray-700);">Residential</span></div>
+                  <div><span class="badge badge-amber" style="min-width: 90px;">Structure</span> <span style="color: var(--gray-400); font-style: italic;">null (unknown)</span></div>
+                  <div><span class="badge badge-orange" style="min-width: 90px;">Subtype</span> <span style="color: var(--gray-400); font-style: italic;">null</span></div>
+                  <div><span class="badge badge-cyan" style="min-width: 90px;">Variant</span> <span style="color: var(--gray-400); font-style: italic;">null</span></div>
+                  <div><span class="badge badge-teal" style="min-width: 90px;">Unit Type</span> <span style="color: var(--gray-700); font-weight: 600;">apartment</span></div>
+                  <div><span class="badge badge-green" style="min-width: 90px;">Transaction</span> <span style="color: var(--gray-700);">rent</span></div>
+                  <div><span class="badge badge-pink" style="min-width: 90px;">Purpose</span> <span style="color: var(--gray-700);">standard</span></div>
+                </div>
+              </div>
+              <!-- Platform display -->
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Platform Display</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header enterprise">🏢 BSTK / RentSync</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Property Type: Apartment</div>
+                    </div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header ils">🌐 Rentals.ca / RentFaster</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Property Type: Apartment</div>
+                    </div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header commercial">🏬 Spacelist</div>
+                    <div class="platform-card-body">
+                      <div class="platform-note">Not displayed (residential)</div>
+                    </div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header mls">📡 MLS / Roomies (inbound)</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Maps to: apartment</div>
+                      <div class="platform-note">Inbound "Apartment" → apartment unit type</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 2: Loft apartment (unit-first + variant) -->
+        <div class="card mb-6">
+          <div class="card-header">
+            <div>
+              <div class="card-title">✨ "Loft apartment downtown, mid-rise building"</div>
+              <div class="card-subtitle">Unit-first with enrichment — shows how Variant works</div>
+            </div>
+            <span class="badge badge-teal">Unit-first + enriched</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Canonical Storage</div>
+                <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px;">
+                  <div><span class="badge badge-purple" style="min-width: 90px;">Sector</span> <span style="color: var(--gray-700);">Residential</span></div>
+                  <div><span class="badge badge-amber" style="min-width: 90px;">Structure</span> <span style="color: var(--gray-700);">apartment_bldg</span></div>
+                  <div><span class="badge badge-orange" style="min-width: 90px;">Subtype</span> <span style="color: var(--gray-700);">mid_rise</span></div>
+                  <div><span class="badge badge-cyan" style="min-width: 90px;">Variant</span> <span style="color: #0e7490; font-weight: 600;">loft</span></div>
+                  <div><span class="badge badge-teal" style="min-width: 90px;">Unit Type</span> <span style="color: var(--gray-700); font-weight: 600;">apartment</span></div>
+                  <div><span class="badge badge-green" style="min-width: 90px;">Transaction</span> <span style="color: var(--gray-700);">rent</span></div>
+                  <div><span class="badge badge-pink" style="min-width: 90px;">Purpose</span> <span style="color: var(--gray-700);">standard</span></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Platform Display</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header enterprise">🏢 BSTK / RentSync</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Property Type: Apartment — Loft</div>
+                    </div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header ils">🌐 Rentals.ca / RentFaster</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Property Type: Apartment</div>
+                      <div class="platform-note">Apt Type override: "Loft"</div>
+                    </div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header commercial">🏬 Spacelist</div>
+                    <div class="platform-card-body"><div class="platform-note">Not displayed (residential)</div></div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header mls">📡 MLS / Roomies</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Maps to: apartment + loft tag</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 3: Detached house (structure-first) -->
+        <div class="card mb-6">
+          <div class="card-header">
+            <div>
+              <div class="card-title">🏠 "3BR detached house for rent"</div>
+              <div class="card-subtitle">Structure-first — the building IS the listing</div>
+            </div>
+            <span class="badge badge-amber">Structure-first</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Canonical Storage</div>
+                <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px;">
+                  <div><span class="badge badge-purple" style="min-width: 90px;">Sector</span> <span style="color: var(--gray-700);">Residential</span></div>
+                  <div><span class="badge badge-amber" style="min-width: 90px;">Structure</span> <span style="color: var(--gray-700); font-weight: 600;">house</span></div>
+                  <div><span class="badge badge-orange" style="min-width: 90px;">Subtype</span> <span style="color: var(--gray-700); font-weight: 600;">detached</span></div>
+                  <div><span class="badge badge-cyan" style="min-width: 90px;">Variant</span> <span style="color: var(--gray-400); font-style: italic;">null</span></div>
+                  <div><span class="badge badge-teal" style="min-width: 90px;">Unit Type</span> <span style="color: var(--gray-700);">entire</span></div>
+                  <div><span class="badge badge-green" style="min-width: 90px;">Transaction</span> <span style="color: var(--gray-700);">rent</span></div>
+                  <div><span class="badge badge-pink" style="min-width: 90px;">Purpose</span> <span style="color: var(--gray-700);">standard</span></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Platform Display</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header enterprise">🏢 BSTK / RentSync</div>
+                    <div class="platform-card-body"><div class="platform-display">Property Type: House — Detached</div></div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header ils">🌐 Rentals.ca / RentFaster</div>
+                    <div class="platform-card-body"><div class="platform-display">Property Type: House</div></div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header commercial">🏬 Spacelist</div>
+                    <div class="platform-card-body"><div class="platform-note">Not displayed (residential)</div></div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header mls">📡 MLS / Roomies</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Maps to: Single Family Detached</div>
+                      <div class="platform-note">MLS "Detached" inbound → house + detached</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 4: Basement near campus (unit-first, student) -->
+        <div class="card mb-6">
+          <div class="card-header">
+            <div>
+              <div class="card-title">🎓 "Basement suite near campus — students welcome"</div>
+              <div class="card-subtitle">Unit-first with purpose tag — shows 1:N potential</div>
+            </div>
+            <span class="badge badge-teal">Unit-first</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Canonical Storage</div>
+                <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px;">
+                  <div><span class="badge badge-purple" style="min-width: 90px;">Sector</span> <span style="color: var(--gray-700);">Residential</span></div>
+                  <div><span class="badge badge-amber" style="min-width: 90px;">Structure</span> <span style="color: var(--gray-400); font-style: italic;">null (unknown)</span></div>
+                  <div><span class="badge badge-orange" style="min-width: 90px;">Subtype</span> <span style="color: var(--gray-400); font-style: italic;">null</span></div>
+                  <div><span class="badge badge-cyan" style="min-width: 90px;">Variant</span> <span style="color: var(--gray-400); font-style: italic;">null</span></div>
+                  <div><span class="badge badge-teal" style="min-width: 90px;">Unit Type</span> <span style="color: var(--gray-700); font-weight: 600;">basement</span></div>
+                  <div><span class="badge badge-green" style="min-width: 90px;">Transaction</span> <span style="color: var(--gray-700);">rent</span></div>
+                  <div><span class="badge badge-pink" style="min-width: 90px;">Purpose</span> <span style="color: var(--gray-700); font-weight: 600;">student, standard</span></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Platform Display</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header enterprise">🏢 BSTK / RentSync</div>
+                    <div class="platform-card-body"><div class="platform-display">Property Type: Basement</div></div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header ils">🌐 Rentals.ca / RentFaster</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Property Type: Basement</div>
+                      <div class="platform-note">Filter: Student Housing ✓</div>
+                    </div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header commercial">🏬 Spacelist</div>
+                    <div class="platform-card-body"><div class="platform-note">Not displayed (residential)</div></div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header mls">📡 MLS / Roomies</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Maps to: basement unit</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 5: Commercial office (structure-first) -->
+        <div class="card mb-6">
+          <div class="card-header">
+            <div>
+              <div class="card-title">🏛️ "Class A office space, 3rd floor — corporate lease"</div>
+              <div class="card-subtitle">Commercial, structure-first — shows how sectors diverge</div>
+            </div>
+            <span class="badge badge-amber">Structure-first</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Canonical Storage</div>
+                <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px;">
+                  <div><span class="badge badge-purple" style="min-width: 90px;">Sector</span> <span style="color: var(--gray-700);">Commercial</span></div>
+                  <div><span class="badge badge-amber" style="min-width: 90px;">Structure</span> <span style="color: var(--gray-700); font-weight: 600;">office</span></div>
+                  <div><span class="badge badge-orange" style="min-width: 90px;">Subtype</span> <span style="color: var(--gray-700); font-weight: 600;">class_a</span></div>
+                  <div><span class="badge badge-cyan" style="min-width: 90px;">Variant</span> <span style="color: var(--gray-400); font-style: italic;">null</span></div>
+                  <div><span class="badge badge-teal" style="min-width: 90px;">Unit Type</span> <span style="color: var(--gray-700);">floor</span></div>
+                  <div><span class="badge badge-green" style="min-width: 90px;">Transaction</span> <span style="color: var(--gray-700);">lease</span></div>
+                  <div><span class="badge badge-pink" style="min-width: 90px;">Purpose</span> <span style="color: var(--gray-700);">corporate</span></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Platform Display</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header enterprise">🏢 BSTK / RentSync</div>
+                    <div class="platform-card-body"><div class="platform-display">Property Type: Office — Class A</div></div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header ils">🌐 Rentals.ca / RentFaster</div>
+                    <div class="platform-card-body"><div class="platform-note">Not displayed (commercial)</div></div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header commercial">🏬 Spacelist</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Property Type: Office — Class A</div>
+                      <div class="platform-note">Listing Type: Lease — Floor</div>
+                    </div>
+                  </div>
+                  <div class="platform-card" style="margin: 0;">
+                    <div class="platform-card-header mls">📡 MLS / Roomies</div>
+                    <div class="platform-card-body">
+                      <div class="platform-display">Maps to: Commercial Office</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- HOW DATA MOVES ---- -->
+      <div class="section">
+        <h2 class="section-title">How Data Moves</h2>
+        <p class="section-subtitle">One canonical system, multiple platform outputs — including inbound syndication.</p>
+
+        <div style="text-align: center; padding: var(--space-8) 0;">
+          <!-- Canonical system -->
+          <div style="display: inline-block; background: var(--teal-light); border: 2px solid var(--teal); border-radius: var(--radius-xl); padding: var(--space-6) var(--space-10); margin-bottom: var(--space-6);">
+            <div style="font-size: 20px; font-weight: 700; color: var(--teal-dark);">The Canonical System</div>
+            <div style="font-size: 13px; color: var(--teal); margin-top: var(--space-1);">Single Source of Truth — 7 Dimensions</div>
+          </div>
+
+          <div style="font-size: 28px; color: var(--gray-300); margin-bottom: var(--space-6);">↕</div>
+
+          <!-- Platform outputs -->
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-4); max-width: 1000px; margin: 0 auto;">
+            <div style="background: var(--platform-enterprise-light); border: 2px solid #0891b2; border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="font-size: 14px; font-weight: 600; color: #0e7490;">BSTK / RentSync</div>
+              <div style="font-size: 11px; color: #0e7490; margin-top: var(--space-1);">Enterprise</div>
+              <div style="font-size: 11px; color: #0e7490; margin-top: var(--space-2);">↕ bidirectional</div>
+            </div>
+            <div style="background: var(--platform-ils-light); border: 2px solid #22c55e; border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="font-size: 14px; font-weight: 600; color: #15803d;">ILS Network</div>
+              <div style="font-size: 11px; color: #15803d; margin-top: var(--space-1);">Rentals.ca, RentFaster</div>
+              <div style="font-size: 11px; color: #15803d; margin-top: var(--space-2);">↓ outbound</div>
+            </div>
+            <div style="background: var(--platform-commercial-light); border: 2px solid #d97706; border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="font-size: 14px; font-weight: 600; color: #b45309;">Spacelist</div>
+              <div style="font-size: 11px; color: #b45309; margin-top: var(--space-1);">Commercial</div>
+              <div style="font-size: 11px; color: #b45309; margin-top: var(--space-2);">↓ outbound</div>
+            </div>
+            <div style="background: var(--platform-mls-light); border: 2px solid #8b5cf6; border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="font-size: 14px; font-weight: 600; color: #6d28d9;">MLS</div>
+              <div style="font-size: 11px; color: #6d28d9; margin-top: var(--space-1);">Inbound syndication</div>
+              <div style="font-size: 11px; color: #6d28d9; margin-top: var(--space-2);">↑ inbound</div>
+            </div>
+            <div style="background: var(--platform-mls-light); border: 2px solid #8b5cf6; border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="font-size: 14px; font-weight: 600; color: #6d28d9;">Roomies</div>
+              <div style="font-size: 11px; color: #6d28d9; margin-top: var(--space-1);">Inbound syndication</div>
+              <div style="font-size: 11px; color: #6d28d9; margin-top: var(--space-2);">↑ inbound</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">Platform mappings are configuration, not code</div>
+          <div class="callout-text">
+            Each platform has a mapping table that translates canonical values to its display vocabulary. When we acquire a new platform, we add a mapping table — we don't restructure the data model. The canonical system is future-proof.
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- BACKWARDS COMPATIBILITY ---- -->
+      <div class="section">
+        <h2 class="section-title">Backwards Compatibility</h2>
+        <p class="section-subtitle">Every existing property type maps cleanly to the new model.</p>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-body" style="text-align: center;">
+              <div style="font-size: 28px; font-weight: 700; color: var(--status-clean);">47+</div>
+              <div style="font-size: 13px; color: var(--gray-500); margin-top: var(--space-1);">existing property types mapped</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="text-align: center;">
+              <div style="font-size: 28px; font-weight: 700; color: var(--status-clean);">0</div>
+              <div style="font-size: 13px; color: var(--gray-500); margin-top: var(--space-1);">data loss — every value is preserved</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="text-align: center;">
+              <div style="font-size: 28px; font-weight: 700; color: var(--teal);">1:1</div>
+              <div style="font-size: 13px; color: var(--gray-500); margin-top: var(--space-1);">each old type has one canonical mapping</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-teal">
+          <div class="callout-title">Migration is deterministic</div>
+          <div class="callout-text">
+            Every existing property type (from BSTK, RentSync, ILS, Spacelist) has exactly one canonical mapping. The full migration table is available in the reference spreadsheet. No judgment calls needed during data migration — it's a mechanical transformation.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         TAB 2: INTERACTIVE LISTING BUILDER
+         ========================================== -->
+    <div class="tab-panel" id="builder">
+
+      <div class="section">
+        <h2 class="section-title">Build a Listing</h2>
+        <p class="section-subtitle">Pick a starting point, fill in the details, and see how the data gets stored and displayed across platforms — live.</p>
+
+        <div class="grid-2 mb-6">
+          <div class="callout callout-teal" style="margin-bottom: 0;">
+            <div class="callout-title">Unit-First</div>
+            <div class="callout-text">
+              Start with what you're listing — an apartment, a basement suite, a room, office space, or parking. The building type is optional context. This is how most renters search and most landlords think.
+            </div>
+          </div>
+          <div class="callout callout-amber" style="margin-bottom: 0;">
+            <div class="callout-title">Structure-First</div>
+            <div class="callout-text">
+              Start with the building — a house, a duplex, a warehouse. Then specify which part is available (entire, main floor, suite, etc.). Use this when the building itself is the product.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 380px 1fr; gap: var(--space-8); align-items: start;">
+
+        <!-- ---- LEFT SIDE: INPUTS ---- -->
+        <div>
+          <div class="card" style="position: sticky; top: 80px;">
+            <div class="card-header">
+              <div class="card-title">Configure Listing</div>
+            </div>
+            <div class="card-body">
+
+              <!-- Path selector -->
+              <div class="form-group">
+                <label class="form-label">How do you want to start?</label>
+                <div style="display: flex; gap: var(--space-2);">
+                  <button class="btn btn-primary builder-path-btn active" data-path="unit" onclick="setBuilderPath('unit')" style="flex: 1; font-size: 12px;">Unit-First</button>
+                  <button class="btn btn-secondary builder-path-btn" data-path="structure" onclick="setBuilderPath('structure')" style="flex: 1; font-size: 12px;">Structure-First</button>
+                </div>
+              </div>
+
+              <!-- Unit-first: unit type first -->
+              <div id="builder-unit-first">
+                <div class="form-group">
+                  <label class="form-label"><span class="badge badge-teal" style="font-size: 9px;">Unit Type</span> What are you listing?</label>
+                  <select class="form-select" id="b-unit" onchange="updateBuilder()">
+                    <option value="">— Select —</option>
+                    <optgroup label="Self-sufficient (no building needed)">
+                      <option value="apartment">Apartment</option>
+                      <option value="basement">Basement</option>
+                      <option value="room_private">Room (Private)</option>
+                      <option value="room_shared">Room (Shared)</option>
+                      <option value="office">Office Space</option>
+                      <option value="parking">Parking</option>
+                    </optgroup>
+                  </select>
+                </div>
+
+                <div class="form-group" id="b-enrich-toggle" style="display: none;">
+                  <label style="display: flex; align-items: center; gap: var(--space-2); font-size: 13px; color: var(--gray-600); cursor: pointer;">
+                    <input type="checkbox" id="b-enrich" onchange="toggleEnrich()"> Know the building type? (optional)
+                  </label>
+                </div>
+
+                <div id="b-enrich-fields" style="display: none;">
+                  <div class="form-group">
+                    <label class="form-label"><span class="badge badge-amber" style="font-size: 9px;">Structure</span> Building type</label>
+                    <select class="form-select" id="b-struct-enrich" onchange="updateSubtypes('enrich'); updateBuilder();">
+                      <option value="">— Unknown —</option>
+                    </select>
+                  </div>
+                  <div class="form-group" id="b-sub-enrich-group" style="display: none;">
+                    <label class="form-label"><span class="badge badge-orange" style="font-size: 9px;">Subtype</span> Specific type</label>
+                    <select class="form-select" id="b-sub-enrich" onchange="updateVariants('enrich'); updateBuilder();"></select>
+                  </div>
+                  <div class="form-group" id="b-var-enrich-group" style="display: none;">
+                    <label class="form-label"><span class="badge badge-cyan" style="font-size: 9px;">Variant</span> Style</label>
+                    <select class="form-select" id="b-var-enrich" onchange="updateBuilder()"></select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Structure-first: structure type first -->
+              <div id="builder-struct-first" style="display: none;">
+                <div class="form-group">
+                  <label class="form-label"><span class="badge badge-purple" style="font-size: 9px;">Sector</span> Category</label>
+                  <select class="form-select" id="b-sector" onchange="updateStructureTypes(); updateBuilder();">
+                    <option value="">— Select —</option>
+                    <option value="residential">Residential</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="recreation">Recreation</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div class="form-group" id="b-struct-group" style="display: none;">
+                  <label class="form-label"><span class="badge badge-amber" style="font-size: 9px;">Structure</span> Building type</label>
+                  <select class="form-select" id="b-struct" onchange="updateSubtypes('struct'); updateBuilder();"></select>
+                </div>
+
+                <div class="form-group" id="b-sub-group" style="display: none;">
+                  <label class="form-label"><span class="badge badge-orange" style="font-size: 9px;">Subtype</span> Specific type</label>
+                  <select class="form-select" id="b-sub" onchange="updateVariants('struct'); updateUnitTypes(); updateBuilder();"></select>
+                </div>
+
+                <div class="form-group" id="b-var-group" style="display: none;">
+                  <label class="form-label"><span class="badge badge-cyan" style="font-size: 9px;">Variant</span> Style</label>
+                  <select class="form-select" id="b-var" onchange="updateBuilder()"></select>
+                </div>
+
+                <div class="form-group" id="b-unit-struct-group" style="display: none;">
+                  <label class="form-label"><span class="badge badge-teal" style="font-size: 9px;">Unit Type</span> What portion?</label>
+                  <select class="form-select" id="b-unit-struct" onchange="updateBuilder()"></select>
+                </div>
+              </div>
+
+              <!-- Always visible: transaction + purpose -->
+              <hr style="border: none; border-top: 1px solid var(--gray-200); margin: var(--space-4) 0;">
+
+              <div class="form-group">
+                <label class="form-label"><span class="badge badge-green" style="font-size: 9px;">Transaction</span> Deal type</label>
+                <select class="form-select" id="b-transaction" onchange="updateBuilder()">
+                  <option value="">— Select —</option>
+                  <option value="rent">Rent</option>
+                  <option value="sale">Sale</option>
+                  <option value="lease">Lease</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label"><span class="badge badge-pink" style="font-size: 9px;">Purpose</span> Who is it for? (select multiple)</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="b-purpose-container">
+                  <label class="purpose-tag"><input type="checkbox" value="standard" onchange="updateBuilder()" checked> Standard</label>
+                  <label class="purpose-tag"><input type="checkbox" value="student" onchange="updateBuilder()"> Student</label>
+                  <label class="purpose-tag"><input type="checkbox" value="senior" onchange="updateBuilder()"> Senior</label>
+                  <label class="purpose-tag"><input type="checkbox" value="corporate" onchange="updateBuilder()"> Corporate</label>
+                  <label class="purpose-tag"><input type="checkbox" value="vacation" onchange="updateBuilder()"> Vacation</label>
+                  <label class="purpose-tag"><input type="checkbox" value="short_term" onchange="updateBuilder()"> Short-Term</label>
+                  <label class="purpose-tag"><input type="checkbox" value="military" onchange="updateBuilder()"> Military</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- RIGHT SIDE: OUTPUT ---- -->
+        <div>
+
+          <!-- Canonical storage -->
+          <div class="card mb-6">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Canonical Storage</div>
+                <div class="card-subtitle">How this listing gets stored in the database</div>
+              </div>
+              <div style="display: flex; gap: var(--space-2); align-items: center;">
+                <span class="badge badge-gray" id="b-path-badge">Select a listing type</span>
+                <div style="display: inline-flex; background: var(--gray-100); border-radius: var(--radius); padding: 2px;">
+                  <button class="b-view-btn active" onclick="setCanonicalView('visual')" data-view="visual" style="padding: 3px 10px; font-size: 11px; border: none; background: var(--white); border-radius: var(--radius-sm); cursor: pointer; color: var(--gray-700); font-weight: 500; box-shadow: var(--shadow-sm);">Visual</button>
+                  <button class="b-view-btn" onclick="setCanonicalView('json')" data-view="json" style="padding: 3px 10px; font-size: 11px; border: none; background: transparent; border-radius: var(--radius-sm); cursor: pointer; color: var(--gray-500); font-weight: 500;">JSON</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Visual view -->
+              <div id="b-canonical-visual">
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;" id="b-canonical-rows">
+                  <div class="b-row"><span class="badge badge-purple" style="min-width: 100px;">Sector</span> <span id="bc-sector" class="b-val null">—</span></div>
+                  <div class="b-row"><span class="badge badge-amber" style="min-width: 100px;">Structure</span> <span id="bc-structure" class="b-val null">—</span></div>
+                  <div class="b-row"><span class="badge badge-orange" style="min-width: 100px;">Subtype</span> <span id="bc-subtype" class="b-val null">—</span></div>
+                  <div class="b-row"><span class="badge badge-cyan" style="min-width: 100px;">Variant</span> <span id="bc-variant" class="b-val null">—</span></div>
+                  <div class="b-row"><span class="badge badge-teal" style="min-width: 100px;">Unit Type</span> <span id="bc-unit" class="b-val null">—</span></div>
+                  <div class="b-row"><span class="badge badge-green" style="min-width: 100px;">Transaction</span> <span id="bc-transaction" class="b-val null">—</span></div>
+                  <div class="b-row"><span class="badge badge-pink" style="min-width: 100px;">Purpose</span> <span id="bc-purpose" class="b-val null">—</span></div>
+                </div>
+              </div>
+              <!-- JSON view -->
+              <div id="b-canonical-json" style="display: none;">
+                <pre id="b-json-output" style="background: var(--gray-900); color: #e2e8f0; padding: var(--space-5); border-radius: var(--radius-md); font-family: var(--font-mono); font-size: 13px; line-height: 1.6; overflow-x: auto; margin: 0;"></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sentence -->
+          <div class="sentence-box mb-6" id="b-sentence-box" style="display: none;">
+            <div class="sentence-label">This listing reads as</div>
+            <div class="sentence-text" id="b-sentence"></div>
+          </div>
+
+          <!-- Platform display -->
+          <div class="section-title mb-4" style="font-size: 13px;">How this listing displays on each platform</div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4);">
+            <!-- BSTK -->
+            <div class="platform-card">
+              <div class="platform-card-header enterprise">🏢 BSTK / RentSync</div>
+              <div class="platform-card-body" id="bp-bstk">
+                <div class="platform-note">Select a listing type to see output</div>
+              </div>
+            </div>
+            <!-- ILS -->
+            <div class="platform-card">
+              <div class="platform-card-header ils">🌐 Rentals.ca / RentFaster</div>
+              <div class="platform-card-body" id="bp-ils">
+                <div class="platform-note">Select a listing type to see output</div>
+              </div>
+            </div>
+            <!-- Spacelist -->
+            <div class="platform-card">
+              <div class="platform-card-header commercial">🏬 Spacelist</div>
+              <div class="platform-card-body" id="bp-spacelist">
+                <div class="platform-note">Select a listing type to see output</div>
+              </div>
+            </div>
+            <!-- MLS -->
+            <div class="platform-card">
+              <div class="platform-card-header mls">📡 MLS / Roomies</div>
+              <div class="platform-card-body" id="bp-mls">
+                <div class="platform-note">Select a listing type to see output</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         TAB 3: FULL REFERENCE (with sub-tabs)
+         ========================================== -->
+    <div class="tab-panel" id="reference">
+
+      <!-- Sub-tab bar -->
+      <div class="sub-tabs">
+        <div class="sub-tabs-inner">
+          <button class="sub-tab active" data-subtab="ref-hierarchy" data-parent="reference">Structure Hierarchy</button>
+          <button class="sub-tab" data-subtab="ref-unit-types" data-parent="reference">Unit Types</button>
+          <button class="sub-tab" data-subtab="ref-transactions" data-parent="reference">Transaction Types</button>
+          <button class="sub-tab" data-subtab="ref-platform-map" data-parent="reference">Platform Mappings</button>
+        </div>
+      </div>
+
+      <!-- Sub-tab: Structure Hierarchy -->
+      <div class="sub-panel active" id="ref-hierarchy">
+        <div class="section">
+          <h2 class="section-title">Complete Structure Hierarchy</h2>
+          <p class="section-subtitle">Type → Subtype → Variant for all 4 sectors.</p>
+          <!-- Full canonical tree -->
+        </div>
+      </div>
+
+      <!-- Sub-tab: Unit Types -->
+      <div class="sub-panel" id="ref-unit-types">
+        <div class="section">
+          <h2 class="section-title">Unit Types × Structure Validation</h2>
+          <p class="section-subtitle">Which unit types are valid for each structure type.</p>
+          <!-- Validation matrix -->
+        </div>
+      </div>
+
+      <!-- Sub-tab: Transaction Types -->
+      <div class="sub-panel" id="ref-transactions">
+        <div class="section">
+          <h2 class="section-title">Transaction Type Validation</h2>
+          <p class="section-subtitle">Rent / Sale / Lease per structure.</p>
+          <!-- Transaction matrix -->
+        </div>
+      </div>
+
+      <!-- Sub-tab: Platform Mappings -->
+      <div class="sub-panel" id="ref-platform-map">
+        <div class="section">
+          <h2 class="section-title">Platform Mapping Rules</h2>
+          <p class="section-subtitle">How canonical values translate to platform-specific displays.</p>
+          <!-- Roll-up rules, display name overrides -->
+        </div>
+      </div>
+
+      <!-- Spreadsheet link -->
+      <div class="callout callout-teal mt-6">
+        <div class="callout-title">📊 Full data available in spreadsheet</div>
+        <div class="callout-text">
+          The complete validation matrices and mapping tables are available in Google Sheets:
+          <a href="#" style="color: var(--teal); font-weight: 600;">[Link to Google Sheet — placeholder]</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         TAB 4: COMMUNITY & METADATA (with sub-tabs)
+         ========================================== -->
+    <div class="tab-panel" id="metadata">
+
+      <!-- Sub-tab bar -->
+      <div class="sub-tabs">
+        <div class="sub-tabs-inner">
+          <button class="sub-tab active" data-subtab="meta-ownership" data-parent="metadata">Ownership</button>
+          <button class="sub-tab" data-subtab="meta-community" data-parent="metadata">Community</button>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           SUB-TAB: OWNERSHIP
+           ========================================== -->
+      <div class="sub-panel active" id="meta-ownership">
+        <div class="section">
+          <h2 class="section-title">Ownership Types</h2>
+          <p class="section-intro">
+            Ownership describes <em>how</em> a property is held — not what the building looks like. A detached house can be freehold, condo, or co-op. A unit in a high-rise can be a condo or a rental. Ownership is tracked as a separate attribute, not as part of the taxonomy.
+          </p>
+
+          <!-- Condo problem callout -->
+          <div class="callout callout-purple mb-6">
+            <div class="callout-title">The "Condo Problem" — solved</div>
+            <div class="callout-text">
+              In the old system, "Condo" was a property type alongside "Apartment" and "House." But a condo isn't a type of building — it's a legal ownership model. A condo unit can be in a high-rise, a townhouse, or a detached house. By separating ownership from structure, we stop conflating two different questions: "what does the building look like?" and "who owns it?"
+            </div>
+          </div>
+
+          <!-- Ownership table -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Ownership Values</div>
+              <div class="card-subtitle">One per property — tracked independently from all 7 taxonomy dimensions</div>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 140px;">Value</th>
+                    <th>Description</th>
+                    <th style="width: 250px;">Example</th>
+                    <th style="width: 180px;">ILS Impact</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>freehold</code></td>
+                    <td>Owner holds both the building and the land outright. Most common for detached houses.</td>
+                    <td>3BR detached house, owner-occupied</td>
+                    <td>No special filter</td>
+                  </tr>
+                  <tr>
+                    <td><code>condo</code></td>
+                    <td>Owner holds the unit; common areas are shared and managed by a condo corporation. Monthly condo fees apply.</td>
+                    <td>1BR unit in a high-rise, owned by individual investor</td>
+                    <td><span class="badge badge-green" style="font-size: 10px;">Searchable filter</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>coop</code></td>
+                    <td>Owner holds shares in a cooperative corporation that owns the building. Board approval typically required for transactions.</td>
+                    <td>Unit in a co-op building, shareholder-occupied</td>
+                    <td><span class="badge badge-green" style="font-size: 10px;">Searchable filter</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>leasehold</code></td>
+                    <td>Owner holds the building but leases the land from a landowner (often First Nations, government, or institutional). Land lease has an expiry date.</td>
+                    <td>Townhouse on leased land in West Vancouver</td>
+                    <td>Flagged as leasehold</td>
+                  </tr>
+                  <tr>
+                    <td><code>rental</code></td>
+                    <td>Property is purpose-built rental — owned by an institution or landlord, not available for individual unit purchase.</td>
+                    <td>Purpose-built rental apartment building</td>
+                    <td>Default (most ILS listings)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Key insight -->
+          <div class="callout mb-6">
+            <div class="callout-title">Why this matters for the taxonomy</div>
+            <div class="callout-text">
+              Because ownership is a separate attribute, the same physical building can have different ownership types across its units. A converted house might have a freehold main floor and a condo basement suite. The taxonomy describes the building; ownership describes the legal arrangement. They don't interfere with each other.
+            </div>
+          </div>
+
+          <!-- What this replaces -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">What This Replaces</div>
+            </div>
+            <div class="card-body">
+              <div class="grid-2">
+                <div>
+                  <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">Before (old system)</div>
+                  <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--gray-600);">
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <span style="color: #ef4444;">✗</span> "Condo" as a property type
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <span style="color: #ef4444;">✗</span> "Condo Apartment" as a property type
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <span style="color: #ef4444;">✗</span> "Condo Townhouse" as a property type
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <span style="color: var(--gray-400);">→</span> 3 property types for one ownership model
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-3);">After (new system)</div>
+                  <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--gray-600);">
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <span style="color: var(--status-clean);">✓</span> Apartment in high-rise + <code>ownership: condo</code>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <span style="color: var(--status-clean);">✓</span> Townhouse + <code>ownership: condo</code>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <span style="color: var(--status-clean);">✓</span> Detached house + <code>ownership: condo</code>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <span style="color: var(--gray-400);">→</span> 1 ownership value, works with any structure
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================
+           SUB-TAB: COMMUNITY
+           ========================================== -->
+      <div class="sub-panel" id="meta-community">
+        <div class="section">
+          <h2 class="section-title">Community — Display Override</h2>
+          <p class="section-intro">
+            A Community is not a property type, not a structure type, and not a taxonomy dimension. It's a <strong>portfolio grouping</strong> — a way for property managers to present multiple buildings under a single brand name on ILS sites. When a community exists, it changes how listings appear in search results, but it doesn't change how data is classified or stored.
+          </p>
+        </div>
+
+        <!-- The key concept -->
+        <div style="background: var(--teal-light); border: 2px solid var(--teal); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; margin-bottom: var(--space-8);">
+          <div style="font-size: 18px; font-weight: 700; color: var(--teal-dark); margin-bottom: var(--space-2);">Community bumps the building down one level in the display hierarchy.</div>
+          <div style="font-size: 14px; color: var(--teal);">The community becomes the search result card. Buildings become a sub-grouping inside it.</div>
+        </div>
+
+        <!-- Without vs With Community -->
+        <div class="section">
+          <h2 class="section-title">How It Works</h2>
+          <div class="grid-2 mb-8">
+
+            <!-- Without Community -->
+            <div class="card" style="border-top: 3px solid var(--gray-400);">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Without Community</div>
+                  <div class="card-subtitle">Standard flow — building is the top-level result</div>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- Visual hierarchy -->
+                <div style="display: flex; flex-direction: column; gap: 0; font-size: 13px;">
+                  <!-- Search result -->
+                  <div style="background: var(--gray-100); border: 2px solid var(--gray-300); border-radius: var(--radius-md) var(--radius-md) 0 0; padding: var(--space-4);">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-1);">Search Result Card</div>
+                    <div style="font-weight: 600; color: var(--gray-800);">🏢 123 Main Street</div>
+                    <div style="color: var(--gray-500); font-size: 12px;">Building photo · 45 units · Apartment</div>
+                  </div>
+                  <!-- Arrow -->
+                  <div style="text-align: center; background: var(--gray-100); border-left: 2px solid var(--gray-300); border-right: 2px solid var(--gray-300); padding: 4px; color: var(--gray-400); font-size: 11px;">click ↓</div>
+                  <!-- Units -->
+                  <div style="background: var(--white); border: 2px solid var(--gray-300); border-top: 1px dashed var(--gray-300); border-radius: 0 0 var(--radius-md) var(--radius-md); padding: var(--space-4);">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-2);">Units</div>
+                    <div style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--gray-600);">
+                      <div style="padding: 4px 8px; background: var(--gray-50); border-radius: var(--radius-sm);">Unit 101 · 1BR · $1,450</div>
+                      <div style="padding: 4px 8px; background: var(--gray-50); border-radius: var(--radius-sm);">Unit 205 · 2BR · $1,850</div>
+                      <div style="padding: 4px 8px; background: var(--gray-50); border-radius: var(--radius-sm);">Unit 312 · Studio · $1,100</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- With Community -->
+            <div class="card" style="border-top: 3px solid var(--teal);">
+              <div class="card-header">
+                <div>
+                  <div class="card-title" style="color: var(--teal);">With Community</div>
+                  <div class="card-subtitle">Community replaces building as top-level result</div>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- Visual hierarchy -->
+                <div style="display: flex; flex-direction: column; gap: 0; font-size: 13px;">
+                  <!-- Search result: community -->
+                  <div style="background: var(--teal-light); border: 2px solid var(--teal); border-radius: var(--radius-md) var(--radius-md) 0 0; padding: var(--space-4);">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-1);">Search Result Card</div>
+                    <div style="font-weight: 600; color: var(--teal-dark);">🏘️ Riverside Gardens</div>
+                    <div style="color: var(--teal); font-size: 12px;">Community hero photo · 120 units across 3 buildings</div>
+                  </div>
+                  <!-- Arrow -->
+                  <div style="text-align: center; background: var(--teal-light); border-left: 2px solid var(--teal); border-right: 2px solid var(--teal); padding: 4px; color: var(--teal); font-size: 11px;">click ↓</div>
+                  <!-- Buildings -->
+                  <div style="background: var(--gray-100); border: 2px solid var(--teal); border-top: 1px dashed var(--teal); padding: var(--space-4);">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-2);">Buildings</div>
+                    <div style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--gray-600);">
+                      <div style="padding: 4px 8px; background: var(--white); border-radius: var(--radius-sm);">🏢 123 Main St · 45 units</div>
+                      <div style="padding: 4px 8px; background: var(--white); border-radius: var(--radius-sm);">🏢 125 Main St · 40 units</div>
+                      <div style="padding: 4px 8px; background: var(--white); border-radius: var(--radius-sm);">🏢 200 River Rd · 35 units</div>
+                    </div>
+                  </div>
+                  <!-- Arrow -->
+                  <div style="text-align: center; background: var(--gray-100); border-left: 2px solid var(--teal); border-right: 2px solid var(--teal); padding: 4px; color: var(--gray-400); font-size: 11px;">click building ↓</div>
+                  <!-- Units -->
+                  <div style="background: var(--white); border: 2px solid var(--teal); border-top: 1px dashed var(--gray-300); border-radius: 0 0 var(--radius-md) var(--radius-md); padding: var(--space-4);">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-2);">Units (123 Main St)</div>
+                    <div style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--gray-600);">
+                      <div style="padding: 4px 8px; background: var(--gray-50); border-radius: var(--radius-sm);">Unit 101 · 1BR · $1,450</div>
+                      <div style="padding: 4px 8px; background: var(--gray-50); border-radius: var(--radius-sm);">Unit 205 · 2BR · $1,850</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Syndication comparison -->
+        <div class="section">
+          <h2 class="section-title">What Changes with a Community</h2>
+          <p class="section-subtitle">A side-by-side look at how syndication behaves.</p>
+
+          <div class="card mb-6">
+            <div class="card-body" style="padding: 0;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 180px;">Aspect</th>
+                    <th>Without Community</th>
+                    <th>With Community</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight: 600;">Search result card</td>
+                    <td>Building photo + address</td>
+                    <td style="color: var(--teal); font-weight: 500;">Community name + hero photo</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">Unit count shown</td>
+                    <td>This building only</td>
+                    <td style="color: var(--teal); font-weight: 500;">Total across all buildings in community</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">Photo</td>
+                    <td>Building photo</td>
+                    <td style="color: var(--teal); font-weight: 500;">Community hero photo (set by PM)</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">Click-through</td>
+                    <td>Straight to units</td>
+                    <td style="color: var(--teal); font-weight: 500;">Buildings first → then units (adds a nav level)</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">Address displayed</td>
+                    <td>Building address</td>
+                    <td style="color: var(--teal); font-weight: 500;">Community name (addresses shown inside)</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">Classification</td>
+                    <td>Each unit classified via taxonomy</td>
+                    <td>Same — community doesn't change classification</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">Billing</td>
+                    <td>Per building (unit count)</td>
+                    <td><span class="badge badge-gray" style="font-size: 10px;">Open Question</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- What Community Is NOT -->
+        <div class="section">
+          <h2 class="section-title">What Community Is Not</h2>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6);">
+            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="color: #ef4444; font-weight: 600; font-size: 13px; margin-bottom: var(--space-2);">✗ Not a property type</div>
+              <div style="font-size: 13px; color: var(--gray-600);">You can't create a "community" listing. It's a grouping layer above listings.</div>
+            </div>
+            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="color: #ef4444; font-weight: 600; font-size: 13px; margin-bottom: var(--space-2);">✗ Not a structure type</div>
+              <div style="font-size: 13px; color: var(--gray-600);">Doesn't describe a physical building. A community contains buildings, it isn't one.</div>
+            </div>
+            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="color: #ef4444; font-weight: 600; font-size: 13px; margin-bottom: var(--space-2);">✗ Not a taxonomy dimension</div>
+              <div style="font-size: 13px; color: var(--gray-600);">Doesn't affect how a unit is classified. A unit in a community has the exact same 7 dimensions as one outside it.</div>
+            </div>
+            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="color: #ef4444; font-weight: 600; font-size: 13px; margin-bottom: var(--space-2);">✗ Not visible at unit level</div>
+              <div style="font-size: 13px; color: var(--gray-600);">A renter looking at a specific unit listing doesn't see "community." It only affects the search result layer.</div>
+            </div>
+            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5);">
+              <div style="color: #ef4444; font-weight: 600; font-size: 13px; margin-bottom: var(--space-2);">✗ Not created by landlords</div>
+              <div style="font-size: 13px; color: var(--gray-600);">PM companies or platform admins set up communities. Individual landlords with one building don't use this.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Community open questions -->
+        <div class="section">
+          <h2 class="section-title">Community — Open Questions</h2>
+          <p class="section-subtitle">Decisions needed before implementation.</p>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+
+            <div class="card" style="margin-bottom: 0;">
+              <div class="card-header">
+                <div class="card-title">1. Can a community contain mixed structure types?</div>
+                <span class="badge badge-gray">Needs PM input</span>
+              </div>
+              <div class="card-body">
+                <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-3);">
+                  If "Riverside Gardens" includes an apartment building and a row of townhouses, is that one community? Or should communities be homogeneous?
+                </p>
+                <div style="display: flex; gap: var(--space-4); font-size: 12px;">
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>A.</strong> Yes — mixed types allowed</div>
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>B.</strong> No — single structure type only</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 0;">
+              <div class="card-header">
+                <div class="card-title">2. How does community affect billing?</div>
+                <span class="badge badge-gray">Needs PM input</span>
+              </div>
+              <div class="card-body">
+                <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-3);">
+                  Current billing is per-building based on unit count. When buildings are grouped into a community, what's the billing model?
+                </p>
+                <div style="display: flex; gap: var(--space-4); font-size: 12px;">
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>A.</strong> Sum of individual buildings</div>
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>B.</strong> Community-level flat rate</div>
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>C.</strong> Third billing tier</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 0;">
+              <div class="card-header">
+                <div class="card-title">3. Who can create communities?</div>
+                <span class="badge badge-gray">Needs PM input</span>
+              </div>
+              <div class="card-body">
+                <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-3);">
+                  Is community creation self-serve for PMs with multiple buildings, or admin-only?
+                </p>
+                <div style="display: flex; gap: var(--space-4); font-size: 12px;">
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>A.</strong> Platform admins only</div>
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>B.</strong> Any PM with 2+ buildings</div>
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>C.</strong> Anyone (self-serve)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 0;">
+              <div class="card-header">
+                <div class="card-title">4. Can a building belong to multiple communities?</div>
+                <span class="badge badge-gray">Needs PM input</span>
+              </div>
+              <div class="card-body">
+                <div style="display: flex; gap: var(--space-4); font-size: 12px;">
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>A.</strong> 1:1 — each building in at most one community</div>
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>B.</strong> 1:N — a building can appear in multiple communities</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 0;">
+              <div class="card-header">
+                <div class="card-title">5. What community-level data is needed?</div>
+                <span class="badge badge-gray">Needs PM input</span>
+              </div>
+              <div class="card-body">
+                <div style="display: flex; gap: var(--space-4); font-size: 12px;">
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>A.</strong> Minimal — name + hero photo only</div>
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>B.</strong> Extended — name, photo, description, amenity list</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 0;">
+              <div class="card-header">
+                <div class="card-title">6. How do community amenities work?</div>
+                <span class="badge badge-gray">Needs PM input</span>
+              </div>
+              <div class="card-body">
+                <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-3);">
+                  If a community has a shared pool, does it show on each building's listing? Or only at the community level?
+                </p>
+                <div style="display: flex; gap: var(--space-4); font-size: 12px;">
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>A.</strong> Community-level only</div>
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>B.</strong> Roll up from buildings</div>
+                  <div style="padding: var(--space-2) var(--space-3); background: var(--gray-50); border-radius: var(--radius); color: var(--gray-600);"><strong>C.</strong> Both — community has its own + inherits</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         TAB 5: DECISIONS & OPEN QUESTIONS
+         ========================================== -->
+    <div class="tab-panel" id="decisions">
+
+      <div class="section">
+        <h2 class="section-title">Problems Solved & Tradeoffs</h2>
+        <p class="section-subtitle">Key decisions made and why.</p>
+        <!-- Structured list: problem → solution → tradeoff -->
+        <!-- Variant layer solves apartment/loft problem -->
+        <!-- Unit-first/structure-first solves generic apartment problem -->
+        <!-- Structure hierarchy consolidation (cabin under house) -->
+        <!-- Synonyms concept for regional naming -->
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Open Questions</h2>
+        <p class="section-subtitle">Items that need PM input before finalizing.</p>
+        <!-- Question cards with options and recommendations -->
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+  <script>
+    // ==========================================
+    // Main tab navigation
+    // ==========================================
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const tabId = tab.dataset.tab;
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    // Sub-tab navigation
+    document.querySelectorAll('.sub-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        if (tab.classList.contains('disabled')) return;
+        const parent = tab.dataset.parent;
+        const siblings = tab.closest('.sub-tabs-inner').querySelectorAll('.sub-tab');
+        siblings.forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        const parentPanel = document.getElementById(parent);
+        parentPanel.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(tab.dataset.subtab).classList.add('active');
+      });
+    });
+
+    // ==========================================
+    // TAXONOMY DATA MODEL
+    // ==========================================
+    const TAXONOMY = {
+      residential: {
+        label: 'Residential',
+        types: {
+          house: {
+            label: 'House',
+            subtypes: {
+              detached: { label: 'Detached', variants: ['bungalow','split_level','two_storey','garden_home'], unitTypes: ['entire','main_floor','suite','basement','room_private','room_shared'] },
+              mobile: { label: 'Mobile / Manufactured', variants: [], unitTypes: ['entire'] },
+              'cabin_cottage': { label: 'Cabin / Cottage', variants: [], unitTypes: ['entire'] },
+              'house_other': { label: 'Other (House)', variants: ['garden_suite','garage_suite'], unitTypes: ['entire','main_floor','suite','basement','room_private','room_shared'] }
+            }
+          },
+          townhouse_plex: {
+            label: 'Townhouse / Plex',
+            subtypes: {
+              semi: { label: 'Semi-Detached', variants: [], unitTypes: ['entire','main_floor','suite','basement','room_private','room_shared'] },
+              townhouse: { label: 'Townhouse / Row', variants: [], unitTypes: ['entire','main_floor','suite','basement','room_private','room_shared'] },
+              duplex: { label: 'Duplex', variants: [], unitTypes: ['entire','suite','basement'] },
+              triplex: { label: 'Triplex', variants: [], unitTypes: ['entire','suite','basement'] },
+              fourplex: { label: 'Fourplex', variants: [], unitTypes: ['entire','suite','basement'] },
+              multiplex: { label: 'Multiplex', variants: [], unitTypes: ['entire','suite','basement'] }
+            }
+          },
+          apartment_bldg: {
+            label: 'Apartment Building',
+            subtypes: {
+              low_rise: { label: 'Low Rise (1-4 fl)', variants: ['loft','studio','penthouse'], unitTypes: ['entire','suite','basement','apartment','room_private','room_shared'] },
+              mid_rise: { label: 'Mid Rise (5-12 fl)', variants: ['loft','studio','penthouse'], unitTypes: ['entire','suite','apartment','room_private','room_shared'] },
+              high_rise: { label: 'High Rise (13+ fl)', variants: ['loft','studio','penthouse'], unitTypes: ['entire','suite','apartment','room_private','room_shared'] },
+              walkup: { label: 'Walk-up', variants: ['studio'], unitTypes: ['entire','suite','apartment','room_private','room_shared'] }
+            }
+          }
+        }
+      },
+      commercial: {
+        label: 'Commercial',
+        types: {
+          office: {
+            label: 'Office',
+            subtypes: {
+              class_a: { label: 'Class A', variants: [], unitTypes: ['entire','suite','floor','office'] },
+              class_b: { label: 'Class B', variants: [], unitTypes: ['entire','suite','floor','office'] },
+              class_c: { label: 'Class C', variants: [], unitTypes: ['entire','suite','floor','office'] },
+              coworking: { label: 'Co-working', variants: ['desk'], unitTypes: ['suite','spot','office'] }
+            }
+          },
+          retail: {
+            label: 'Retail',
+            subtypes: {
+              storefront: { label: 'Storefront', variants: [], unitTypes: ['entire','suite'] },
+              mall: { label: 'Mall / Shopping Ctr', variants: [], unitTypes: ['suite'] },
+              strip_mall: { label: 'Strip Mall', variants: [], unitTypes: ['suite'] }
+            }
+          },
+          industrial: {
+            label: 'Industrial',
+            subtypes: {
+              warehouse: { label: 'Warehouse', variants: [], unitTypes: ['entire','floor'] },
+              manufacturing: { label: 'Manufacturing', variants: [], unitTypes: ['entire'] },
+              flex: { label: 'Flex Space', variants: [], unitTypes: ['entire','suite'] },
+              storage: { label: 'Storage Facility', variants: [], unitTypes: ['entire','suite'] },
+              construction: { label: 'Construction / New Dev', variants: [], unitTypes: ['entire'] }
+            }
+          },
+          parking: {
+            label: 'Parking',
+            subtypes: {
+              parking_garage: { label: 'Garage', variants: [], unitTypes: ['entire','floor','spot','parking'] },
+              surface_lot: { label: 'Surface Lot', variants: [], unitTypes: ['entire','spot','parking'] }
+            }
+          }
+        }
+      },
+      recreation: {
+        label: 'Recreation',
+        types: {
+          hospitality: {
+            label: 'Hospitality',
+            subtypes: {
+              hotel: { label: 'Hotel', variants: [], unitTypes: ['entire'] },
+              motel: { label: 'Motel', variants: [], unitTypes: ['entire'] },
+              bnb: { label: 'B&B', variants: [], unitTypes: ['entire'] },
+              inn: { label: 'Inn', variants: [], unitTypes: ['entire'] }
+            }
+          },
+          leisure: {
+            label: 'Leisure',
+            subtypes: {
+              marina: { label: 'Marina', variants: [], unitTypes: ['spot'] },
+              campground: { label: 'Campground', variants: [], unitTypes: ['spot'] },
+              stable: { label: 'Stable', variants: [], unitTypes: ['spot'] }
+            }
+          }
+        }
+      },
+      other: {
+        label: 'Other',
+        types: {
+          land: {
+            label: 'Land',
+            subtypes: {
+              agricultural: { label: 'Agricultural', variants: [], unitTypes: ['entire'] },
+              acreage: { label: 'Acreage', variants: [], unitTypes: ['entire'] },
+              vacant: { label: 'Vacant Lot', variants: [], unitTypes: ['entire'] }
+            }
+          }
+        }
+      }
+    };
+
+    // Self-sufficient unit types and their implied sectors
+    const SELF_SUFFICIENT = {
+      apartment: { label: 'Apartment', sector: 'residential', impliedStruct: 'apartment_bldg' },
+      basement: { label: 'Basement', sector: 'residential', impliedStruct: 'house' },
+      room_private: { label: 'Room (Private)', sector: 'residential', impliedStruct: null },
+      room_shared: { label: 'Room (Shared)', sector: 'residential', impliedStruct: null },
+      office: { label: 'Office', sector: 'commercial', impliedStruct: 'office' },
+      parking: { label: 'Parking', sector: 'commercial', impliedStruct: 'parking' }
+    };
+
+    const UNIT_LABELS = {
+      entire: 'Entire', main_floor: 'Main Floor', suite: 'Suite', basement: 'Basement',
+      apartment: 'Apartment', room_private: 'Room (Private)', room_shared: 'Room (Shared)',
+      office: 'Office', parking: 'Parking', floor: 'Floor', spot: 'Spot'
+    };
+
+    const VARIANT_LABELS = {
+      loft: 'Loft', studio: 'Studio', penthouse: 'Penthouse',
+      bungalow: 'Bungalow', split_level: 'Split-level', two_storey: 'Two-storey',
+      garden_home: 'Garden Home', garden_suite: 'Garden Suite', garage_suite: 'Garage Suite',
+      desk: 'Desk'
+    };
+
+    // ==========================================
+    // PLATFORM MAPPING FUNCTIONS
+    // ==========================================
+    function getPlatformDisplay(data) {
+      const { sector, structure, subtype, variant, unit, transaction, purposes } = data;
+      const sLabel = structure ? findStructLabel(sector, structure) : null;
+      const stLabel = subtype ? findSubtypeLabel(sector, structure, subtype) : null;
+      const vLabel = variant ? (VARIANT_LABELS[variant] || variant) : null;
+      const uLabel = UNIT_LABELS[unit] || unit;
+
+      // BSTK / RentSync
+      let bstk = '';
+      if (unit in SELF_SUFFICIENT && !structure) {
+        bstk = `Property Type: ${uLabel}`;
+      } else if (sLabel && stLabel) {
+        bstk = `Property Type: ${sLabel} — ${stLabel}`;
+        if (vLabel) bstk += ` (${vLabel})`;
+      } else if (sLabel) {
+        bstk = `Property Type: ${sLabel}`;
+      } else {
+        bstk = `Property Type: ${uLabel}`;
+      }
+
+      // ILS (Rentals.ca / RentFaster)
+      let ils = '', ilsNote = '';
+      if (sector === 'commercial' || sector === 'recreation' || sector === 'other') {
+        ils = ''; ilsNote = 'Not displayed (non-residential)';
+      } else if (unit === 'apartment' || unit === 'basement' || unit === 'room_private' || unit === 'room_shared') {
+        ils = `Property Type: ${uLabel}`;
+        if (vLabel) ilsNote = `Apt Type override: "${vLabel}"`;
+        if (purposes.includes('student')) ilsNote += (ilsNote ? ' · ' : '') + 'Filter: Student Housing ✓';
+      } else if (sLabel) {
+        ils = `Property Type: ${sLabel}`;
+        if (unit !== 'entire') ilsNote = `Unit: ${uLabel}`;
+      } else {
+        ils = `Property Type: ${uLabel}`;
+      }
+
+      // Spacelist
+      let spacelist = '', spacelistNote = '';
+      if (sector === 'residential') {
+        spacelist = ''; spacelistNote = 'Not displayed (residential)';
+      } else {
+        if (sLabel && stLabel) {
+          spacelist = `Property Type: ${sLabel} — ${stLabel}`;
+        } else if (sLabel) {
+          spacelist = `Property Type: ${sLabel}`;
+        } else {
+          spacelist = `Type: ${uLabel}`;
+        }
+        if (transaction) spacelistNote = `Transaction: ${transaction.charAt(0).toUpperCase() + transaction.slice(1)}`;
+        if (unit && unit !== 'entire') spacelistNote += (spacelistNote ? ' · ' : '') + `Unit: ${uLabel}`;
+      }
+
+      // MLS / Roomies
+      let mls = '', mlsNote = 'Inbound mapping';
+      if (unit === 'apartment') mls = 'Maps to: Apartment';
+      else if (unit === 'basement') mls = 'Maps to: Basement Unit';
+      else if (unit === 'room_private' || unit === 'room_shared') mls = 'Maps to: Room Rental';
+      else if (structure === 'house' && subtype === 'detached') mls = 'Maps to: Single Family Detached';
+      else if (structure === 'townhouse_plex') mls = 'Maps to: Townhouse / Row';
+      else if (structure === 'office') mls = 'Maps to: Commercial Office';
+      else if (sLabel) mls = `Maps to: ${sLabel}`;
+      else mls = `Maps to: ${uLabel}`;
+
+      return { bstk, ils, ilsNote, spacelist, spacelistNote, mls, mlsNote };
+    }
+
+    function findStructLabel(sector, structKey) {
+      const s = TAXONOMY[sector];
+      if (!s) return structKey;
+      const t = s.types[structKey];
+      return t ? t.label : structKey;
+    }
+
+    function findSubtypeLabel(sector, structKey, subKey) {
+      try { return TAXONOMY[sector].types[structKey].subtypes[subKey].label; } catch(e) { return subKey; }
+    }
+
+    // ==========================================
+    // BUILDER UI LOGIC
+    // ==========================================
+    let currentPath = 'unit';
+
+    function setBuilderPath(path) {
+      currentPath = path;
+      document.querySelectorAll('.builder-path-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.path === path);
+      });
+      document.getElementById('builder-unit-first').style.display = path === 'unit' ? 'block' : 'none';
+      document.getElementById('builder-struct-first').style.display = path === 'structure' ? 'block' : 'none';
+      resetBuilder();
+    }
+
+    function resetBuilder() {
+      // Reset unit-first
+      document.getElementById('b-unit').value = '';
+      document.getElementById('b-enrich-toggle').style.display = 'none';
+      document.getElementById('b-enrich-fields').style.display = 'none';
+      if (document.getElementById('b-enrich')) document.getElementById('b-enrich').checked = false;
+      // Reset struct-first
+      document.getElementById('b-sector').value = '';
+      ['b-struct-group','b-sub-group','b-var-group','b-unit-struct-group'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+      updateBuilder();
+    }
+
+    function toggleEnrich() {
+      const show = document.getElementById('b-enrich').checked;
+      document.getElementById('b-enrich-fields').style.display = show ? 'block' : 'none';
+      if (show) {
+        const unit = document.getElementById('b-unit').value;
+        const implied = SELF_SUFFICIENT[unit]?.impliedStruct;
+        const sector = SELF_SUFFICIENT[unit]?.sector || 'residential';
+        populateStructSelect('b-struct-enrich', sector, implied);
+      }
+      updateBuilder();
+    }
+
+    function populateStructSelect(selectId, sector, preselect) {
+      const sel = document.getElementById(selectId);
+      sel.innerHTML = '<option value="">— Unknown —</option>';
+      const sData = TAXONOMY[sector];
+      if (!sData) return;
+      for (const [key, val] of Object.entries(sData.types)) {
+        const opt = document.createElement('option');
+        opt.value = key; opt.textContent = val.label;
+        if (preselect === key) opt.selected = true;
+        sel.appendChild(opt);
+      }
+      if (preselect) updateSubtypes(selectId === 'b-struct-enrich' ? 'enrich' : 'struct');
+    }
+
+    function updateStructureTypes() {
+      const sector = document.getElementById('b-sector').value;
+      const group = document.getElementById('b-struct-group');
+      if (!sector) { group.style.display = 'none'; return; }
+      group.style.display = 'block';
+      const sel = document.getElementById('b-struct');
+      sel.innerHTML = '<option value="">— Select —</option>';
+      const sData = TAXONOMY[sector];
+      if (!sData) return;
+      for (const [key, val] of Object.entries(sData.types)) {
+        const opt = document.createElement('option');
+        opt.value = key; opt.textContent = val.label;
+        sel.appendChild(opt);
+      }
+      ['b-sub-group','b-var-group','b-unit-struct-group'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+    }
+
+    function updateSubtypes(mode) {
+      const isEnrich = mode === 'enrich';
+      const sector = isEnrich ? (SELF_SUFFICIENT[document.getElementById('b-unit').value]?.sector || 'residential') : document.getElementById('b-sector').value;
+      const struct = document.getElementById(isEnrich ? 'b-struct-enrich' : 'b-struct').value;
+      const subGroup = document.getElementById(isEnrich ? 'b-sub-enrich-group' : 'b-sub-group');
+      const subSel = document.getElementById(isEnrich ? 'b-sub-enrich' : 'b-sub');
+
+      if (!struct) { subGroup.style.display = 'none'; return; }
+      subGroup.style.display = 'block';
+      subSel.innerHTML = '<option value="">— Any —</option>';
+      try {
+        const subtypes = TAXONOMY[sector].types[struct].subtypes;
+        for (const [key, val] of Object.entries(subtypes)) {
+          const opt = document.createElement('option');
+          opt.value = key; opt.textContent = val.label;
+          subSel.appendChild(opt);
+        }
+      } catch(e) {}
+
+      // Hide variant
+      document.getElementById(isEnrich ? 'b-var-enrich-group' : 'b-var-group').style.display = 'none';
+      if (!isEnrich) document.getElementById('b-unit-struct-group').style.display = 'none';
+    }
+
+    function updateVariants(mode) {
+      const isEnrich = mode === 'enrich';
+      const sector = isEnrich ? (SELF_SUFFICIENT[document.getElementById('b-unit').value]?.sector || 'residential') : document.getElementById('b-sector').value;
+      const struct = document.getElementById(isEnrich ? 'b-struct-enrich' : 'b-struct').value;
+      const sub = document.getElementById(isEnrich ? 'b-sub-enrich' : 'b-sub').value;
+      const varGroup = document.getElementById(isEnrich ? 'b-var-enrich-group' : 'b-var-group');
+      const varSel = document.getElementById(isEnrich ? 'b-var-enrich' : 'b-var');
+
+      if (!sub) { varGroup.style.display = 'none'; return; }
+      try {
+        const variants = TAXONOMY[sector].types[struct].subtypes[sub].variants;
+        if (!variants || variants.length === 0) { varGroup.style.display = 'none'; return; }
+        varGroup.style.display = 'block';
+        varSel.innerHTML = '<option value="">— None —</option>';
+        for (const v of variants) {
+          const opt = document.createElement('option');
+          opt.value = v; opt.textContent = VARIANT_LABELS[v] || v;
+          varSel.appendChild(opt);
+        }
+      } catch(e) { varGroup.style.display = 'none'; }
+    }
+
+    function updateUnitTypes() {
+      const sector = document.getElementById('b-sector').value;
+      const struct = document.getElementById('b-struct').value;
+      const sub = document.getElementById('b-sub').value;
+      const group = document.getElementById('b-unit-struct-group');
+      const sel = document.getElementById('b-unit-struct');
+
+      if (!struct) { group.style.display = 'none'; return; }
+      group.style.display = 'block';
+      sel.innerHTML = '<option value="">— Select —</option>';
+      try {
+        let unitTypes;
+        if (sub) {
+          unitTypes = TAXONOMY[sector].types[struct].subtypes[sub].unitTypes;
+        } else {
+          // Collect all unit types from all subtypes
+          const allUts = new Set();
+          for (const st of Object.values(TAXONOMY[sector].types[struct].subtypes)) {
+            st.unitTypes.forEach(u => allUts.add(u));
+          }
+          unitTypes = [...allUts];
+        }
+        for (const u of unitTypes) {
+          const opt = document.createElement('option');
+          opt.value = u; opt.textContent = UNIT_LABELS[u] || u;
+          sel.appendChild(opt);
+        }
+      } catch(e) {}
+    }
+
+    // ==========================================
+    // UPDATE OUTPUT
+    // ==========================================
+    function updateBuilder() {
+      let sector='', structure='', subtype='', variant='', unit='', transaction='', purposes=[];
+
+      transaction = document.getElementById('b-transaction').value;
+      purposes = [...document.querySelectorAll('#b-purpose-container input:checked')].map(c => c.value);
+
+      if (currentPath === 'unit') {
+        unit = document.getElementById('b-unit').value;
+        if (unit && SELF_SUFFICIENT[unit]) {
+          sector = SELF_SUFFICIENT[unit].sector;
+          if (document.getElementById('b-enrich')?.checked) {
+            structure = document.getElementById('b-struct-enrich').value;
+            subtype = document.getElementById('b-sub-enrich')?.value || '';
+            variant = document.getElementById('b-var-enrich')?.value || '';
+          }
+        }
+        // Show enrich toggle when unit is selected
+        document.getElementById('b-enrich-toggle').style.display = unit ? 'block' : 'none';
+      } else {
+        sector = document.getElementById('b-sector').value;
+        structure = document.getElementById('b-struct').value;
+        subtype = document.getElementById('b-sub')?.value || '';
+        variant = document.getElementById('b-var')?.value || '';
+        unit = document.getElementById('b-unit-struct')?.value || '';
+      }
+
+      // Update canonical display
+      setCanonical('bc-sector', sector, TAXONOMY[sector]?.label);
+      setCanonical('bc-structure', structure, structure ? findStructLabel(sector, structure) : null);
+      setCanonical('bc-subtype', subtype, subtype ? findSubtypeLabel(sector, structure, subtype) : null);
+      setCanonical('bc-variant', variant, variant ? (VARIANT_LABELS[variant] || variant) : null);
+      setCanonical('bc-unit', unit, UNIT_LABELS[unit], unit && (unit in SELF_SUFFICIENT));
+      setCanonical('bc-transaction', transaction, transaction ? transaction.charAt(0).toUpperCase() + transaction.slice(1) : null);
+      setCanonical('bc-purpose', purposes.length > 0 ? purposes.join(',') : '', purposes.length > 0 ? purposes.join(', ') : null);
+
+      // Update path badge
+      const badge = document.getElementById('b-path-badge');
+      if (!unit && !structure) {
+        badge.textContent = 'Select a listing type';
+        badge.className = 'badge badge-gray';
+      } else if (unit in SELF_SUFFICIENT) {
+        badge.textContent = 'Unit-first' + (structure ? ' + enriched' : '');
+        badge.className = 'badge badge-teal';
+      } else {
+        badge.textContent = 'Structure-first';
+        badge.className = 'badge badge-amber';
+      }
+
+      // Update sentence
+      const sentenceBox = document.getElementById('b-sentence-box');
+      if (unit || structure) {
+        sentenceBox.style.display = 'block';
+        let parts = [];
+        if (sector) parts.push(`<span class="dim dim-sector">${TAXONOMY[sector]?.label || sector}</span>`);
+        if (structure) parts.push(`<span class="dim dim-structure">${findStructLabel(sector, structure)}</span>`);
+        if (subtype) parts.push(`<span class="dim dim-subtype">${findSubtypeLabel(sector, structure, subtype)}</span>`);
+        if (variant) parts.push(`<span class="dim dim-variant">${VARIANT_LABELS[variant] || variant}</span>`);
+        if (unit) parts.push(`<span class="dim dim-unit">${UNIT_LABELS[unit] || unit}</span>`);
+        if (transaction) parts.push(`for <span class="dim dim-transaction">${transaction}</span>`);
+        if (purposes.length) parts.push(`targeting <span class="dim dim-purpose">${purposes.join(', ')}</span>`);
+        document.getElementById('b-sentence').innerHTML = 'A ' + parts.join(' ');
+      } else {
+        sentenceBox.style.display = 'none';
+      }
+
+      // Update platform displays
+      if (unit || structure) {
+        const data = { sector, structure, subtype, variant, unit, transaction, purposes };
+        const p = getPlatformDisplay(data);
+
+        document.getElementById('bp-bstk').innerHTML = p.bstk
+          ? `<div class="platform-display">${p.bstk}</div>`
+          : `<div class="platform-note">Insufficient data</div>`;
+
+        document.getElementById('bp-ils').innerHTML =
+          (p.ils ? `<div class="platform-display">${p.ils}</div>` : '') +
+          (p.ilsNote ? `<div class="platform-note">${p.ilsNote}</div>` : '') +
+          (!p.ils && !p.ilsNote ? `<div class="platform-note">Insufficient data</div>` : '');
+
+        document.getElementById('bp-spacelist').innerHTML =
+          (p.spacelist ? `<div class="platform-display">${p.spacelist}</div>` : '') +
+          (p.spacelistNote ? `<div class="platform-note">${p.spacelistNote}</div>` : '') +
+          (!p.spacelist && !p.spacelistNote ? `<div class="platform-note">Insufficient data</div>` : '');
+
+        document.getElementById('bp-mls').innerHTML =
+          (p.mls ? `<div class="platform-display">${p.mls}</div>` : '') +
+          (p.mlsNote ? `<div class="platform-note">${p.mlsNote}</div>` : '');
+      } else {
+        ['bp-bstk','bp-ils','bp-spacelist','bp-mls'].forEach(id => {
+          document.getElementById(id).innerHTML = '<div class="platform-note">Select a listing type to see output</div>';
+        });
+      }
+
+      // Update JSON view
+      const jsonObj = {
+        sector: sector || null,
+        structure_type: structure || null,
+        structure_subtype: subtype || null,
+        structure_variant: variant || null,
+        unit_type: unit || null,
+        transaction_type: transaction || null,
+        purpose: purposes.length > 0 ? purposes : null
+      };
+      const jsonEl = document.getElementById('b-json-output');
+      if (unit || structure) {
+        const colorized = JSON.stringify(jsonObj, null, 2)
+          .replace(/"([^"]+)":/g, '<span style="color: #93c5fd;">"$1"</span>:')
+          .replace(/: "([^"]+)"/g, ': <span style="color: #86efac;">"$1"</span>')
+          .replace(/: null/g, ': <span style="color: #6b7280;">null</span>')
+          .replace(/: (\[)/g, ': $1')
+          .replace(/"([^"]+)"(,?\n\s*\])/g, '<span style="color: #86efac;">"$1"</span>$2');
+        jsonEl.innerHTML = '<span style="color: #6b7280;">// canonical storage record</span>\n' + colorized;
+      } else {
+        jsonEl.innerHTML = '<span style="color: #6b7280;">// select a listing type to see the data model</span>\n{\n  ...\n}';
+      }
+    }
+
+    function setCanonicalView(view) {
+      document.getElementById('b-canonical-visual').style.display = view === 'visual' ? 'block' : 'none';
+      document.getElementById('b-canonical-json').style.display = view === 'json' ? 'block' : 'none';
+      document.querySelectorAll('.b-view-btn').forEach(btn => {
+        const isActive = btn.dataset.view === view;
+        btn.classList.toggle('active', isActive);
+        btn.style.background = isActive ? 'var(--white)' : 'transparent';
+        btn.style.color = isActive ? 'var(--gray-700)' : 'var(--gray-500)';
+        btn.style.boxShadow = isActive ? 'var(--shadow-sm)' : 'none';
+      });
+    }
+
+    function setCanonical(id, rawValue, displayValue, highlight) {
+      const el = document.getElementById(id);
+      if (rawValue && displayValue) {
+        el.textContent = displayValue;
+        el.className = 'b-val' + (highlight ? ' highlight' : '');
+      } else {
+        el.textContent = rawValue === '' ? '—' : 'null';
+        el.className = 'b-val null';
+      }
+    }
+
+    // ==========================================
+    // COMMUNITY DEMO LOGIC
+    // ==========================================
+    const DEMO_UNITS = {
+      '123 Main St': [
+        { name: 'Unit 101', details: '1 BR · 1 BA · 580 sq ft', price: '$1,100/mo' },
+        { name: 'Unit 205', details: '2 BR · 1 BA · 780 sq ft', price: '$1,450/mo' },
+        { name: 'Unit 312', details: 'Studio · 1 BA · 420 sq ft', price: '$1,050/mo' },
+        { name: 'Unit 401', details: '2 BR · 2 BA · 900 sq ft', price: '$1,650/mo' },
+      ],
+      '456 Oak Ave': [
+        { name: 'Unit A', details: '1 BR · 1 BA · 550 sq ft', price: '$1,250/mo' },
+        { name: 'Unit B', details: '2 BR · 1 BA · 800 sq ft', price: '$1,500/mo' },
+        { name: 'Unit C', details: '3 BR · 2 BA · 1100 sq ft', price: '$1,900/mo' },
+      ],
+      '789 Elm Blvd': [
+        { name: 'Suite 1A', details: '1 BR · 1 BA · 600 sq ft', price: '$1,400/mo' },
+        { name: 'Suite 2B', details: '2 BR · 1 BA · 850 sq ft', price: '$1,700/mo' },
+        { name: 'Suite 3C', details: '2 BR · 2 BA · 950 sq ft', price: '$1,850/mo' },
+        { name: 'Penthouse', details: '3 BR · 2 BA · 1400 sq ft', price: '$2,800/mo' },
+      ],
+      '200 River Rd': [
+        { name: 'Unit 101', details: '1 BR · 1 BA · 620 sq ft', price: '$1,300/mo' },
+        { name: 'Unit 204', details: '2 BR · 1 BA · 810 sq ft', price: '$1,550/mo' },
+        { name: 'Unit 305', details: '2 BR · 2 BA · 980 sq ft', price: '$1,750/mo' },
+      ],
+      '55 Riverside Dr': [
+        { name: 'Apt 1', details: 'Studio · 1 BA · 400 sq ft', price: '$1,050/mo' },
+        { name: 'Apt 2', details: '1 BR · 1 BA · 520 sq ft', price: '$1,150/mo' },
+        { name: 'Apt 3', details: '1 BR · 1 BA · 540 sq ft', price: '$1,200/mo' },
+        { name: 'Apt 4', details: '2 BR · 1 BA · 720 sq ft', price: '$1,400/mo' },
+      ]
+    };
+
+    function renderUnits(containerId, building) {
+      const units = DEMO_UNITS[building] || [];
+      const container = document.getElementById(containerId);
+      container.innerHTML = units.map(u => `
+        <div class="demo-unit-row">
+          <div>
+            <div class="demo-unit-name">${u.name}</div>
+            <div class="demo-unit-details">${u.details}</div>
+          </div>
+          <div class="demo-unit-price">${u.price}</div>
+        </div>
+      `).join('');
+    }
+
+    // --- WITHOUT COMMUNITY ---
+    function resetNoCommunity() {
+      document.getElementById('nc-level-1').style.display = 'block';
+      document.getElementById('nc-level-2').style.display = 'none';
+      document.getElementById('nc-breadcrumb').innerHTML = '<span style="font-weight: 600; color: var(--gray-600);">🔍 Search Results</span>';
+    }
+
+    function ncDrillBuilding(name, count) {
+      document.getElementById('nc-level-1').style.display = 'none';
+      document.getElementById('nc-level-2').style.display = 'block';
+      document.getElementById('nc-breadcrumb').innerHTML = `
+        <span class="demo-breadcrumb-link" onclick="resetNoCommunity()">🔍 Search Results</span>
+        <span style="color: var(--gray-300);">›</span>
+        <span style="font-weight: 600; color: var(--gray-600);">🏢 ${name}</span>
+        <span style="color: var(--gray-400); margin-left: 4px;">(${count} units)</span>
+      `;
+      renderUnits('nc-units', name);
+    }
+
+    // standalone building drill in "with community" side
+    function ncDrillBuilding2(name, count) {
+      document.getElementById('wc-level-1').style.display = 'none';
+      document.getElementById('wc-level-2').style.display = 'none';
+      document.getElementById('wc-level-3').style.display = 'block';
+      document.getElementById('wc-breadcrumb').innerHTML = `
+        <span class="demo-breadcrumb-link" onclick="resetWithCommunity()">🔍 Search Results</span>
+        <span style="color: var(--gray-300);">›</span>
+        <span style="font-weight: 600; color: var(--gray-600);">🏢 ${name}</span>
+        <span style="color: var(--gray-400); margin-left: 4px;">(${count} units)</span>
+      `;
+      renderUnits('wc-units', name);
+    }
+
+    // --- WITH COMMUNITY ---
+    function resetWithCommunity() {
+      document.getElementById('wc-level-1').style.display = 'block';
+      document.getElementById('wc-level-2').style.display = 'none';
+      document.getElementById('wc-level-3').style.display = 'none';
+      document.getElementById('wc-breadcrumb').innerHTML = '<span style="font-weight: 600; color: var(--gray-600);">🔍 Search Results</span>';
+    }
+
+    function wcDrillCommunity() {
+      document.getElementById('wc-level-1').style.display = 'none';
+      document.getElementById('wc-level-2').style.display = 'block';
+      document.getElementById('wc-level-3').style.display = 'none';
+      document.getElementById('wc-breadcrumb').innerHTML = `
+        <span class="demo-breadcrumb-link" onclick="resetWithCommunity()">🔍 Search Results</span>
+        <span style="color: var(--gray-300);">›</span>
+        <span style="font-weight: 600; color: var(--teal-dark);">🏘️ Riverside Gardens</span>
+        <span style="color: var(--gray-400); margin-left: 4px;">(3 buildings · 120 units)</span>
+      `;
+    }
+
+    function wcDrillUnit(name, count) {
+      document.getElementById('wc-level-2').style.display = 'none';
+      document.getElementById('wc-level-3').style.display = 'block';
+      document.getElementById('wc-breadcrumb').innerHTML = `
+        <span class="demo-breadcrumb-link" onclick="resetWithCommunity()">🔍 Search Results</span>
+        <span style="color: var(--gray-300);">›</span>
+        <span class="demo-breadcrumb-link" onclick="wcDrillCommunity()">🏘️ Riverside Gardens</span>
+        <span style="color: var(--gray-300);">›</span>
+        <span style="font-weight: 600; color: var(--gray-600);">🏢 ${name}</span>
+        <span style="color: var(--gray-400); margin-left: 4px;">(${count} units)</span>
+      `;
+      renderUnits('wc-units', name);
+    }
+  </script>
+
+</body>
+</html>

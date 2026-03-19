@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amenities System — RentSync Property Taxonomy</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAFAF8;
+  --bg-card: #FFFFFF;
+  --bg-code: #F5F4F0;
+  --bg-teal: #E8F5F0;
+  --bg-amber: #FDF6E8;
+  --bg-purple: #F0EEF8;
+  --bg-coral: #FBF0EC;
+  --text: #1A1A1A;
+  --text-2: #5A5A54;
+  --text-3: #9A9A90;
+  --border: #E5E4DE;
+  --teal: #0A7B5A;
+  --teal-dim: #D0E8DF;
+  --amber: #9E6B12;
+  --purple: #5B4BA0;
+  --coral: #C04A2A;
+  --accent: #0A7B5A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+.container { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+header { padding: 80px 0 48px; border-bottom: 1px solid var(--border); margin-bottom: 56px; }
+header h1 { font-family: 'Source Serif 4', serif; font-size: 36px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 8px; }
+header .sub { font-size: 16px; color: var(--text-2); max-width: 600px; }
+header .badge { display: inline-block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--teal); background: var(--bg-teal); padding: 4px 14px; border-radius: 4px; margin-bottom: 16px; }
+
+nav.toc { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 48px; }
+nav.toc .container { display: flex; gap: 6px; flex-wrap: wrap; }
+nav.toc a { font-size: 12px; font-weight: 500; color: var(--text-3); text-decoration: none; padding: 4px 12px; border-radius: 4px; transition: all 0.15s; }
+nav.toc a:hover { color: var(--text); background: var(--border); }
+
+section { margin-bottom: 64px; }
+section h2 { font-family: 'Source Serif 4', serif; font-size: 24px; font-weight: 600; margin-bottom: 8px; padding-top: 8px; }
+section h3 { font-size: 16px; font-weight: 600; margin-top: 32px; margin-bottom: 8px; }
+section p { color: var(--text-2); margin-bottom: 12px; }
+section p strong { color: var(--text); font-weight: 500; }
+
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin: 16px 0; }
+.card.teal { border-left: 3px solid var(--teal); }
+.card.amber { border-left: 3px solid var(--amber); }
+.card.purple { border-left: 3px solid var(--purple); }
+.card.coral { border-left: 3px solid var(--coral); }
+
+pre { font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.9; overflow-x: auto; }
+code { font-family: 'IBM Plex Mono', monospace; font-size: 13px; background: var(--bg-code); padding: 2px 6px; border-radius: 3px; }
+.code-block { background: var(--bg-code); border-radius: 8px; padding: 20px 24px; margin: 16px 0; overflow-x: auto; }
+.code-block pre { background: none; padding: 0; }
+
+.k { color: var(--teal); }
+.v { color: var(--amber); }
+.n { color: var(--purple); }
+.c { color: var(--text-3); font-style: italic; }
+.hl { background: #E8F5F0; padding: 1px 4px; border-radius: 3px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px; }
+.label.teal { color: var(--teal); }
+.label.amber { color: var(--amber); }
+.label.purple { color: var(--purple); }
+.label.coral { color: var(--coral); }
+
+.rule { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 8px 0; }
+.rule .num { font-family: 'Source Serif 4', serif; font-size: 20px; font-weight: 600; color: var(--teal); margin-right: 12px; float: left; }
+.rule p { margin: 0; }
+
+.flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+.flow .step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 500; }
+.flow .arrow { color: var(--text-3); font-size: 18px; }
+
+.example-toggle { display: flex; gap: 0; margin: 16px 0 0; }
+.example-toggle button { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 8px 20px; border: 1px solid var(--border); background: var(--bg); color: var(--text-3); cursor: pointer; transition: all 0.15s; }
+.example-toggle button:first-child { border-radius: 6px 0 0 6px; }
+.example-toggle button:last-child { border-radius: 0 6px 6px 0; }
+.example-toggle button.active { background: var(--bg-card); color: var(--text); border-color: var(--border); z-index: 1; }
+
+.ex-panel { display: none; }
+.ex-panel.active { display: block; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+table th { text-align: left; padding: 10px 12px; font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-3); border-bottom: 2px solid var(--border); }
+table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+table td:first-child { font-weight: 500; }
+table .mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+table .teal { color: var(--teal); }
+table .amber { color: var(--amber); }
+
+.tag { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 10px; border-radius: 4px; }
+.tag.teal { background: var(--bg-teal); color: var(--teal); }
+.tag.amber { background: var(--bg-amber); color: var(--amber); }
+.tag.purple { background: var(--bg-purple); color: var(--purple); }
+
+.callout { border-radius: 8px; padding: 16px 20px; margin: 16px 0; font-size: 14px; }
+.callout.teal { background: var(--bg-teal); color: #064D38; }
+.callout.amber { background: var(--bg-amber); color: #6B4810; }
+
+footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px; color: var(--text-3); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+<header>
+  <div class="badge">Property Taxonomy v5</div>
+  <h1>The amenities system</h1>
+  <p class="sub">How amenities, utilities, and custom features are structured, stored, and searched across the RentSync platform ecosystem.</p>
+</header>
+</div>
+
+<nav class="toc"><div class="container">
+  <a href="#model">Data model</a>
+  <a href="#storage">Uniform storage</a>
+  <a href="#levels">Building vs unit</a>
+  <a href="#categories">Category shortlists</a>
+  <a href="#custom">Custom amenities</a>
+  <a href="#growth">Growth paths</a>
+  <a href="#examples">JSON examples</a>
+  <a href="#ai">AI detection</a>
+  <a href="#rollups">Search roll-ups</a>
+  <a href="#rules">Rules</a>
+</div></nav>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<section id="model">
+<h2>The data model</h2>
+<p>Amenities use BSTK-native data types — Bool, Enum, Bool+String — with one addition: <strong>Bool + detail</strong>, which lets a simple boolean grow subtypes over time without migration.</p>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="label teal">Bool</div>
+    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">228 amenities — BSTK native</p>
+    <p style="margin:4px 0 0;font-size:13px">Simple presence. Dishwasher, elevator, balcony.</p>
+    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"dishwasher"</span>: <span class="n">true</span></pre></div>
+  </div>
+  <div class="card">
+    <div class="label" style="color:var(--purple)">Enum</div>
+    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">~70 amenities — BSTK native</p>
+    <p style="margin:4px 0 0;font-size:13px">Pick one. Flooring, fireplace, furnishings, utilities.</p>
+    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"flooring"</span>: <span class="v">"hardwood"</span>
+<span class="k">"electricity"</span>: <span class="v">"included"</span></pre></div>
+  </div>
+  <div class="card">
+    <div class="label" style="color:var(--amber)">Bool + detail</div>
+    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">~15 amenities — new pattern</p>
+    <p style="margin:4px 0 0;font-size:13px">Bool for search, detail array for specifics.</p>
+    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"pool"</span>: <span class="n">true</span>
+<span class="k">"pool_detail"</span>: [<span class="v">"heated"</span>, <span class="v">"outdoor"</span>]</pre></div>
+  </div>
+  <div class="card">
+    <div class="label" style="color:var(--coral)">Bool + String</div>
+    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">2 amenities — BSTK native</p>
+    <p style="margin:4px 0 0;font-size:13px">"Other" fields with free text.</p>
+    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"parking_other"</span>: <span class="n">true</span>
+<span class="k">"parking_other_text"</span>: <span class="v">"Tandem"</span></pre></div>
+  </div>
+</div>
+
+<h3>The Bool + detail pattern</h3>
+<p>This is the key addition to BSTK's existing types. It separates two questions that are genuinely different:</p>
+<div class="code-block"><pre><span class="k">Bool</span>     →  "do you have it?"   →  the search filter   →  <span class="c">never changes</span>
+<span class="k">Detail</span>   →  "what kind?"        →  the listing page    →  <span class="c">grows over time</span></pre></div>
+
+<p>When a Bool amenity needs subtypes later, you add the <code>_detail</code> companion. The Bool never changes. No migration. Old data stays valid forever.</p>
+
+<div class="code-block"><pre><span class="c">Today:</span>      <span class="k">"freezer"</span>: <span class="n">true</span>
+<span class="c">Next year:</span>  <span class="k">"freezer"</span>: <span class="n">true</span>                          <span class="c">← unchanged</span>
+            <span class="k">"freezer_detail"</span>: [<span class="v">"upright"</span>]             <span class="c">← new companion</span>
+<span class="c">Old data:</span>   <span class="k">"freezer"</span>: <span class="n">true</span> (no detail)              <span class="c">← still valid</span></pre></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="storage">
+<h2>Data types and storage</h2>
+<p>BSTK-compatible. Bool is <code>true</code>, Enum is a <code>string</code>, Bool+detail is <code>true</code> plus a <code>string[]</code> companion.</p>
+
+<div class="code-block"><pre><span class="c">Bool:</span>          <span class="k">"dishwasher"</span>:    <span class="n">true</span>
+<span class="c">Enum:</span>          <span class="k">"flooring"</span>:      <span class="v">"hardwood"</span>
+<span class="c">Bool+detail:</span>   <span class="k">"pool"</span>:          <span class="n">true</span>
+               <span class="k">"pool_detail"</span>:   [<span class="v">"heated"</span>, <span class="v">"outdoor"</span>]
+<span class="c">Utility:</span>       <span class="k">"electricity"</span>:   <span class="v">"included"</span>          <span class="c">← just an Enum</span>
+<span class="c">Bool+String:</span>   <span class="k">"parking_other"</span>: <span class="n">true</span>
+               <span class="k">"parking_other_text"</span>: <span class="v">"Tandem parking"</span></pre></div>
+
+<h3>Amenities with _detail fields</h3>
+<table>
+  <tr><th>Amenity (Bool)</th><th>Detail field</th><th>Canonical values</th></tr>
+  <tr><td>pool</td><td class="mono teal">pool_detail</td><td class="mono">heated, indoor, outdoor, hot_tub, jacuzzi</td></tr>
+  <tr><td>yard</td><td class="mono teal">yard_detail</td><td class="mono">private, shared, fenced</td></tr>
+  <tr><td>rooftop</td><td class="mono teal">rooftop_detail</td><td class="mono">bbq, garden, lounge, patio, terrace</td></tr>
+  <tr><td>security</td><td class="mono teal">security_detail</td><td class="mono">24_7_onsite, video, buzzer, controlled_access, doorman, keyless, ...</td></tr>
+  <tr><td>parking_type</td><td class="mono teal">parking_type_detail</td><td class="mono">underground, indoor, outdoor, covered, ev, visitor, valet, ...</td></tr>
+  <tr><td>senior_care</td><td class="mono teal">senior_care_detail</td><td class="mono">assisted_living, nurses, medical_visits, transport, ...</td></tr>
+  <tr><td>laundry (property)</td><td class="mono teal">laundry_detail</td><td class="mono">on_site, every_floor</td></tr>
+  <tr><td>laundry (unit)</td><td class="mono teal">laundry_detail</td><td class="mono">in_suite, washer, dryer, washer_dryer_inlet</td></tr>
+  <tr><td>rooms_included</td><td class="mono teal">rooms_detail</td><td class="mono">attic, basement, office, pantry, family_room, ...</td></tr>
+  <tr><td>sports_courts</td><td class="mono teal">sports_courts_detail</td><td class="mono">basketball, tennis, volleyball, racquetball</td></tr>
+  <tr><td>nearby</td><td class="mono teal">nearby_detail</td><td class="mono">beach, transit, school, hospital, park, pharmacy, ...</td></tr>
+</table>
+</section>
+
+<!-- ============================================================ -->
+<section id="levels">
+<h2>Building vs unit level</h2>
+<p>Some amenities exist at both levels. They answer different questions:</p>
+
+<div class="grid-2">
+  <div class="card teal">
+    <div class="label teal">Building level</div>
+    <p style="margin:8px 0 0;font-size:14px">What's <strong>available</strong> on site. The <strong>policy</strong>.</p>
+  </div>
+  <div class="card amber">
+    <div class="label amber">Unit level</div>
+    <p style="margin:8px 0 0;font-size:14px">What's <strong>included</strong> with this unit. Or an <strong>override</strong>.</p>
+  </div>
+</div>
+
+<h3>Parking</h3>
+<div class="code-block"><pre><span class="c">Building — what's on site:</span>
+<span class="k">"parking"</span>:      [<span class="v">"available"</span>]
+<span class="k">"parking_type"</span>: [<span class="v">"underground"</span>, <span class="v">"visitor"</span>, <span class="v">"ev_charging"</span>]
+
+<span class="c">Unit — what comes with this lease:</span>
+<span class="k">"parking"</span>:      [<span class="v">"included_in_rent"</span>]
+<span class="k">"parking_type"</span>: [<span class="v">"underground"</span>]       <span class="c">← 1 underground spot</span>
+<span class="k">"parking_qty"</span>:  [<span class="v">"1"</span>]</pre></div>
+
+<h3>Pet policy</h3>
+<div class="code-block"><pre><span class="c">Building — the policy:</span>
+<span class="k">"pet_policy"</span>:     [<span class="v">"allowed"</span>]
+<span class="k">"pet_type"</span>:       [<span class="v">"cat"</span>, <span class="v">"dog"</span>]
+<span class="k">"pet_size_limit"</span>: [<span class="v">"medium_50lbs"</span>]
+
+<span class="c">Unit A (ground floor, near garden):</span>
+<span class="k">"pet_policy"</span>:     [<span class="v">"not_allowed"</span>]   <span class="c">← override</span>
+
+<span class="c">Unit B (upper floor):</span>
+<span class="c">← key absent = inherits building policy (allowed, cats + dogs, medium max)</span></pre></div>
+
+<h3>The inheritance rule</h3>
+<h3>Category at both levels</h3>
+<p><code>category</code> exists at both the property and unit level. The property-level category is rolled up from units, but individual units can have different categories — a building might have both conventional and senior units.</p>
+
+<div class="code-block"><pre><span class="c">Property level (calculated — rolled up from units):</span>
+<span class="k">"category"</span>: [<span class="v">"conventional"</span>, <span class="v">"senior"</span>]    <span class="c">← building has both types</span>
+
+<span class="c">Unit level (input — set per unit):</span>
+<span class="k">Unit A: "category"</span>: <span class="v">"senior"</span>              <span class="c">← assisted living unit</span>
+<span class="k">Unit B: "category"</span>: <span class="v">"conventional"</span>        <span class="c">← standard rental unit</span></pre></div>
+
+<p>The category shortlist applies per unit — when the landlord sets a unit's category to "senior," that unit's amenity form shows the senior shortlist. Other units in the same building can use different shortlists.</p>
+
+<div class="callout teal">
+  Key <strong>present</strong> in unitAmenities → unit value wins (override).<br>
+  Key <strong>absent</strong> from unitAmenities → inherits from buildingAmenities.<br>
+  Key <strong>absent</strong> from both → not specified.
+</div>
+
+<h3>Which amenities are dual-level?</h3>
+<table>
+  <tr><th>Amenity</th><th>Building = </th><th>Unit = </th></tr>
+  <tr><td>parking / parking_type</td><td class="teal">what's on site</td><td class="amber">what's included with unit</td></tr>
+  <tr><td>pet_policy / pet_type / pet_size</td><td class="teal">building policy</td><td class="amber">unit override</td></tr>
+  <tr><td>storage / storage_type</td><td class="teal">what's available</td><td class="amber">what's included with unit</td></tr>
+  <tr><td>laundry</td><td class="teal">shared facilities</td><td class="amber">in-suite equipment</td></tr>
+  <tr><td>internet</td><td class="teal">infrastructure available</td><td class="amber">included / tenant_pays</td></tr>
+  <tr><td>smoking_policy</td><td class="teal">building default</td><td class="amber">unit override</td></tr>
+  <tr><td>security</td><td class="teal">building systems</td><td class="amber">unit alarms, keyless</td></tr>
+</table>
+<p>Everything else stays single-level. Elevator, gym, pool, rooftop → property only. Dishwasher, flooring, fireplace, views → unit only.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="categories">
+<h2>Category shortlists</h2>
+<p>When a landlord selects a category, the form <strong>shortlists relevant amenities</strong>. This doesn't restrict what's available — it surfaces the most relevant ones first, organized by group.</p>
+
+<div id="cat-demo">
+  <div class="example-toggle" style="flex-wrap:wrap">
+    <button class="active" onclick="showCat('conv')">Conventional</button>
+    <button onclick="showCat('senior')">Senior</button>
+    <button onclick="showCat('student')">Student</button>
+    <button onclick="showCat('military')">Military</button>
+    <button onclick="showCat('corp')">Corporate</button>
+    <button onclick="showCat('vacation')">Vacation</button>
+    <button onclick="showCat('short_term')">Short-term</button>
+    <button onclick="showCat('co_living')">Co-living</button>
+    <button onclick="showCat('affordable')">Affordable</button>
+    <button onclick="showCat('luxury')">Luxury</button>
+  </div>
+
+  <div class="card" style="margin-top:0;border-top:none;border-radius:0 0 10px 10px;">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px">
+      <div id="cat-label" class="label teal">CONVENTIONAL</div>
+      <div id="cat-count" style="font-size:13px;color:var(--text-3)"></div>
+    </div>
+    <div id="cat-groups"></div>
+    <p id="cat-note" style="margin-top:16px;font-size:13px;color:var(--text-3);border-top:1px solid var(--border);padding-top:12px"></p>
+  </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<section id="custom">
+<h2>Custom amenities — three tiers</h2>
+
+<div class="flow">
+  <div class="step" style="border-color:var(--teal)">Canonical</div>
+  <div class="arrow">→</div>
+  <div class="step" style="border-color:var(--amber)">Custom</div>
+  <div class="arrow">→</div>
+  <div class="step" style="border-color:var(--purple)">Promoted</div>
+</div>
+
+<div class="card teal">
+  <div class="label teal">Tier 1 — Canonical</div>
+  <p style="margin:8px 0 0">The official list. Searchable, filterable, mapped to every platform. This is what the spreadsheet defines.</p>
+</div>
+
+<div class="card amber">
+  <div class="label amber">Tier 2 — Custom (stored separately)</div>
+  <p style="margin:8px 0 0">Landlord free-text, tagged to a canonical parent. Shows on the listing detail page. <strong>Not searchable.</strong></p>
+  <div class="code-block" style="margin-top:12px"><pre><span class="k">"custom"</span>: [
+  { <span class="k">"parent"</span>: <span class="v">"pool"</span>,         <span class="k">"text"</span>: <span class="v">"Saltwater infinity pool"</span> },
+  { <span class="k">"parent"</span>: <span class="v">"parking_type"</span>, <span class="k">"text"</span>: <span class="v">"Tesla wall charger"</span> },
+  { <span class="k">"parent"</span>: <span class="n">null</span>,           <span class="k">"text"</span>: <span class="v">"Smart home (Alexa)"</span> }
+]</pre></div>
+</div>
+
+<div class="card purple">
+  <div class="label purple">Tier 3 — Promoted</div>
+  <p style="margin:8px 0 0">When enough landlords add the same custom, it gets reviewed and promoted to a canonical value. Now searchable. Old entries auto-map.</p>
+  <div class="flow" style="margin-top:12px;font-size:13px">
+    <div class="step">"EV charging" ×500</div>
+    <div class="arrow">→</div>
+    <div class="step">PM review</div>
+    <div class="arrow">→</div>
+    <div class="step" style="border-color:var(--teal)">ev_charging under Parking</div>
+  </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<section id="growth">
+<h2>Migration-free growth</h2>
+<p>Because Bool+detail separates presence from specifics, amenities evolve without touching existing data.</p>
+
+<h3>Bool → Bool + detail (add subtypes)</h3>
+<div class="code-block"><pre><span class="c">Today:</span>      <span class="k">"freezer"</span>: <span class="n">true</span>                         <span class="c">← Bool, no detail</span>
+<span class="c">Next year:</span>  <span class="k">"freezer"</span>: <span class="n">true</span>                         <span class="c">← Bool unchanged</span>
+            <span class="k">"freezer_detail"</span>: [<span class="v">"upright"</span>]            <span class="c">← new companion field</span>
+<span class="c">Old data:</span>   <span class="k">"freezer"</span>: <span class="n">true</span> (no detail)              <span class="c">← still valid forever</span>
+
+<span class="c">Search: "has a freezer" → freezer: true (matches all)</span>
+<span class="c">Search: "upright freezer" → freezer_detail contains "upright"</span></pre></div>
+
+<h3>New value added to existing detail</h3>
+<div class="code-block"><pre><span class="c">Today:</span>  pool_detail values: [<span class="v">heated</span>, <span class="v">indoor</span>, <span class="v">outdoor</span>, <span class="v">hot_tub</span>, <span class="v">jacuzzi</span>]
+<span class="c">Later:</span>  pool_detail values: [<span class="v">heated</span>, <span class="v">indoor</span>, <span class="v">outdoor</span>, <span class="v">hot_tub</span>, <span class="v">jacuzzi</span>, <span class="v">saltwater</span>, <span class="v">infinity</span>]
+<span class="c">Old data untouched. New values just appear in the dropdown.</span></pre></div>
+
+<h3>New Enum value added</h3>
+<div class="code-block"><pre><span class="c">Today:</span>  electricity: [<span class="v">included</span>, <span class="v">tenant_pays</span>, <span class="v">not_available</span>]
+<span class="c">Later:</span>  electricity: [<span class="v">included</span>, <span class="v">tenant_pays</span>, <span class="v">partially_included</span>, <span class="v">seasonal</span>, <span class="v">not_available</span>]
+<span class="c">Just append to the values list. Old data stays valid.</span></pre></div>
+
+<h3>Custom → promoted to detail (the pipeline)</h3>
+<div class="code-block"><pre><span class="c">Day 1:</span>    custom: [{ parent: "pool", text: "Saltwater pool" }]
+<span class="c">Day 200:</span>  "saltwater" added to pool_detail canonical values
+          custom entries matching "Saltwater pool" → remapped to pool_detail: ["saltwater"]
+          <span class="c">Bool "pool: true" never touched. No migration.</span></pre></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="examples">
+<h2>Full JSON examples</h2>
+
+<div class="example-toggle" id="ex-toggle">
+  <button class="active" onclick="showEx('std')">Mid-rise apartment</button>
+  <button onclick="showEx('senior')">Senior living</button>
+  <button onclick="showEx('vacation')">Vacation cabin</button>
+</div>
+
+<div id="ex-std" class="ex-panel active">
+<div class="card" style="border-radius:0 0 10px 10px;border-top:none;margin-top:0">
+<p style="font-size:13px;color:var(--text-3);margin-bottom:12px">2-bed loft in a mid-rise. Standard rental. Underground parking included. Cat + dog allowed.</p>
+<div class="code-block"><pre>{
+  <span class="k">"buildingAmenities"</span>: {
+    <span class="k">"elevator"</span>:       <span class="n">true</span>,
+    <span class="k">"gym"</span>:            <span class="n">true</span>,
+    <span class="k">"bike_room"</span>:      <span class="n">true</span>,
+    <span class="k">"laundry"</span>:        <span class="n">true</span>,
+    <span class="k">"laundry_detail"</span>: [<span class="v">"on_site"</span>, <span class="v">"every_floor"</span>],
+    <span class="k">"parking"</span>:        <span class="v">"available"</span>,
+    <span class="k">"parking_type"</span>:   <span class="n">true</span>,
+    <span class="k">"parking_type_detail"</span>: [<span class="v">"underground"</span>, <span class="v">"visitor"</span>],
+    <span class="k">"pet_policy"</span>:     <span class="v">"allowed"</span>,
+    <span class="k">"pet_type"</span>:       <span class="n">true</span>,
+    <span class="k">"pet_type_detail"</span>: [<span class="v">"cat"</span>, <span class="v">"dog"</span>],
+    <span class="k">"pet_size_limit"</span>: <span class="v">"medium_50lbs"</span>,
+    <span class="k">"security"</span>:       <span class="n">true</span>,
+    <span class="k">"security_detail"</span>: [<span class="v">"video_surveillance"</span>, <span class="v">"controlled_access"</span>],
+    <span class="k">"pool"</span>:           <span class="n">true</span>,
+    <span class="k">"pool_detail"</span>:    [<span class="v">"heated"</span>, <span class="v">"outdoor"</span>],
+    <span class="k">"rooftop"</span>:        <span class="n">true</span>,
+    <span class="k">"rooftop_detail"</span>: [<span class="v">"patio"</span>, <span class="v">"bbq"</span>],
+    <span class="k">"smoking_policy"</span>: <span class="v">"not_allowed"</span>
+  },
+
+  <span class="k">"unitAmenities"</span>: {
+    <span class="k">"dishwasher"</span>:     <span class="n">true</span>,
+    <span class="k">"fridge"</span>:         <span class="n">true</span>,
+    <span class="k">"stove"</span>:          <span class="n">true</span>,
+    <span class="k">"balcony"</span>:        <span class="n">true</span>,
+    <span class="k">"high_ceilings"</span>:  <span class="n">true</span>,
+
+    <span class="k">"flooring"</span>:       <span class="v">"hardwood"</span>,
+    <span class="k">"fireplace"</span>:      <span class="v">"gas"</span>,
+    <span class="k">"ac_type"</span>:        <span class="v">"central"</span>,
+    <span class="k">"heating_type"</span>:   <span class="v">"central"</span>,
+    <span class="k">"countertops"</span>:    <span class="v">"granite"</span>,
+    <span class="k">"views"</span>:          <span class="v">"city"</span>,
+    <span class="k">"furnishings"</span>:    <span class="v">"not_furnished"</span>,
+    <span class="k">"laundry"</span>:        <span class="n">true</span>,
+    <span class="k">"laundry_detail"</span>: [<span class="v">"in_suite"</span>, <span class="v">"washer"</span>, <span class="v">"dryer"</span>],
+    <span class="k">"closets"</span>:        <span class="n">true</span>,
+    <span class="k">"closets_detail"</span>: [<span class="v">"walk_in"</span>],
+
+    <span class="k">"parking"</span>:        <span class="v">"included_in_rent"</span>,
+    <span class="k">"parking_type"</span>:   [<span class="v">"underground"</span>],
+    <span class="k">"parking_qty"</span>:    [<span class="v">"1"</span>],
+
+    <span class="k">"electricity"</span>:    <span class="v">"tenant_pays"</span>,
+    <span class="k">"water"</span>:          <span class="v">"included"</span>,
+    <span class="k">"heating"</span>:        <span class="v">"included"</span>,
+    <span class="k">"internet"</span>:       [<span class="v">"tenant_pays"</span>]
+  }
+}</pre></div>
+</div>
+</div>
+
+<div id="ex-senior" class="ex-panel">
+<div class="card" style="border-radius:0 0 10px 10px;border-top:none;margin-top:0">
+<p style="font-size:13px;color:var(--text-3);margin-bottom:12px">Category = senior. Assisted living facility. Accessibility + medical + safety relevant amenities.</p>
+<div class="code-block"><pre>{
+  <span class="k">"buildingAmenities"</span>: {
+    <span class="k">"elevator"</span>:          <span class="n">true</span>,
+    <span class="k">"wheelchair_access"</span>: <span class="n">true</span>,
+    <span class="k">"visual_audio_aids"</span>: <span class="n">true</span>,
+    <span class="k">"community_garden"</span>:  <span class="n">true</span>,
+    <span class="k">"social_room"</span>:       <span class="n">true</span>,
+    <span class="k">"laundry"</span>:           <span class="n">true</span>,
+    <span class="k">"laundry_detail"</span>:    [<span class="v">"on_site"</span>, <span class="v">"every_floor"</span>],
+    <span class="k">"security"</span>:          <span class="n">true</span>,
+    <span class="k">"security_detail"</span>:   [<span class="v">"24_7_onsite"</span>, <span class="v">"video_surveillance"</span>, <span class="v">"controlled_access"</span>],
+    <span class="k">"senior_care"</span>:       <span class="n">true</span>,
+    <span class="k">"senior_care_detail"</span>:[<span class="v">"assisted_living"</span>, <span class="v">"nurses_onsite"</span>, <span class="v">"medical_visits"</span>,
+                          <span class="v">"transport_services"</span>, <span class="v">"personal_hygiene_care"</span>],
+    <span class="k">"courtyard"</span>:         <span class="n">true</span>,
+    <span class="k">"snow_removal"</span>:      <span class="n">true</span>,
+    <span class="k">"cleaning"</span>:          <span class="n">true</span>,
+    <span class="k">"smoking_policy"</span>:    <span class="v">"not_allowed"</span>
+  },
+
+  <span class="k">"unitAmenities"</span>: {
+    <span class="k">"accessible_bath"</span>:  <span class="n">true</span>,
+    <span class="k">"handrails"</span>:        <span class="n">true</span>,
+    <span class="k">"roll_in_shower"</span>:   <span class="n">true</span>,
+    <span class="k">"alarm_system"</span>:     <span class="n">true</span>,
+    <span class="k">"flooring"</span>:         <span class="v">"vinyl"</span>,
+    <span class="k">"furnishings"</span>:      <span class="v">"furnished"</span>,
+    <span class="k">"ac_type"</span>:          <span class="v">"central"</span>,
+    <span class="k">"heating_type"</span>:     <span class="v">"central"</span>,
+
+    <span class="k">"electricity"</span>:      <span class="v">"included"</span>,
+    <span class="k">"water"</span>:            <span class="v">"included"</span>,
+    <span class="k">"heating"</span>:          <span class="v">"included"</span>,
+    <span class="k">"internet"</span>:         <span class="v">"included"</span>,
+    <span class="k">"cable"</span>:            <span class="v">"included"</span>
+  },
+
+  <span class="k">"custom"</span>: [
+    { <span class="k">"parent"</span>: <span class="v">"senior_care"</span>, <span class="k">"text"</span>: <span class="v">"Weekly social activities"</span> },
+    { <span class="k">"parent"</span>: <span class="v">"senior_care"</span>, <span class="k">"text"</span>: <span class="v">"On-site pharmacy"</span> }
+  ]
+}</pre></div>
+</div>
+</div>
+
+<div id="ex-vacation" class="ex-panel">
+<div class="card" style="border-radius:0 0 10px 10px;border-top:none;margin-top:0">
+<p style="font-size:13px;color:var(--text-3);margin-bottom:12px">Category = vacation. Oregon cabin. Pool, fire pit, mountain views, custom features.</p>
+<div class="code-block"><pre>{
+  <span class="k">"buildingAmenities"</span>: {
+    <span class="k">"bbq_area"</span>:       <span class="n">true</span>,
+    <span class="k">"fire_pit"</span>:       <span class="n">true</span>,
+    <span class="k">"pool"</span>:           <span class="n">true</span>,
+    <span class="k">"pool_detail"</span>:    [<span class="v">"outdoor"</span>, <span class="v">"hot_tub"</span>],
+    <span class="k">"yard"</span>:           <span class="n">true</span>,
+    <span class="k">"yard_detail"</span>:    [<span class="v">"private"</span>, <span class="v">"fenced"</span>],
+    <span class="k">"patio_deck"</span>:     <span class="n">true</span>,
+    <span class="k">"patio_detail"</span>:   [<span class="v">"deck"</span>, <span class="v">"sun_deck"</span>],
+    <span class="k">"parking"</span>:        [<span class="v">"included_in_rent"</span>],
+    <span class="k">"parking_type"</span>:   <span class="n">true</span>,
+    <span class="k">"parking_type_detail"</span>: [<span class="v">"outdoor_surface"</span>],
+    <span class="k">"pet_policy"</span>:     <span class="v">"allowed"</span>,
+    <span class="k">"pet_type"</span>:       <span class="n">true</span>,
+    <span class="k">"pet_type_detail"</span>: [<span class="v">"dog"</span>],
+    <span class="k">"nearby"</span>:         <span class="n">true</span>,
+    <span class="k">"nearby_detail"</span>:  [<span class="v">"beach"</span>, <span class="v">"park"</span>, <span class="v">"shopping"</span>]
+  },
+
+  <span class="k">"unitAmenities"</span>: {
+    <span class="k">"dishwasher"</span>:     <span class="n">true</span>,
+    <span class="k">"fridge"</span>:         <span class="n">true</span>,
+    <span class="k">"stove"</span>:          <span class="n">true</span>,
+    <span class="k">"coffee_maker"</span>:   <span class="n">true</span>,
+    <span class="k">"balcony"</span>:        <span class="n">true</span>,
+    <span class="k">"high_ceilings"</span>:  <span class="n">true</span>,
+
+    <span class="k">"flooring"</span>:       <span class="v">"hardwood"</span>,
+    <span class="k">"fireplace"</span>:      <span class="v">"wood"</span>,
+    <span class="k">"furnishings"</span>:    <span class="v">"furnished"</span>,
+    <span class="k">"views"</span>:          <span class="v">"mountain"</span>,
+    <span class="k">"laundry"</span>:        <span class="n">true</span>,
+    <span class="k">"laundry_detail"</span>: [<span class="v">"in_suite"</span>, <span class="v">"washer"</span>, <span class="v">"dryer"</span>],
+    <span class="k">"rooms_included"</span>: <span class="n">true</span>,
+    <span class="k">"rooms_detail"</span>:   [<span class="v">"office"</span>, <span class="v">"family_room"</span>, <span class="v">"sun_room"</span>],
+
+    <span class="k">"electricity"</span>:    <span class="v">"included"</span>,
+    <span class="k">"water"</span>:          <span class="v">"included"</span>,
+    <span class="k">"internet"</span>:       <span class="v">"included"</span>
+  },
+
+  <span class="k">"custom"</span>: [
+    { <span class="k">"parent"</span>: <span class="v">"pool"</span>,  <span class="k">"text"</span>: <span class="v">"Saltwater heated pool"</span> },
+    { <span class="k">"parent"</span>: <span class="n">null</span>,    <span class="k">"text"</span>: <span class="v">"Private hiking trail access"</span> },
+    { <span class="k">"parent"</span>: <span class="n">null</span>,    <span class="k">"text"</span>: <span class="v">"Outdoor shower"</span> },
+    { <span class="k">"parent"</span>: <span class="n">null</span>,    <span class="k">"text"</span>: <span class="v">"Starlink satellite internet"</span> }
+  ]
+}</pre></div>
+</div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<section id="ai">
+<h2>AI image detection</h2>
+<p>The existing AI image tagger (v1.5.3) already outputs Bool for presence and Enum for type — the same split as Bool + detail. AI detection maps directly to the canonical amenity model.</p>
+
+<h3>How tagger outputs map to amenities</h3>
+<table>
+  <tr><th>Tagger detects</th><th>Maps to</th><th>Type</th></tr>
+  <tr><td class="mono">appliances_visible.dishwasher: true</td><td class="mono teal">dishwasher: true</td><td>Bool</td></tr>
+  <tr><td class="mono">floor_type: "hardwood"</td><td class="mono teal">flooring: "hardwood"</td><td>Enum</td></tr>
+  <tr><td class="mono">pool_visible: true</td><td class="mono teal">pool: true + pool_detail: ["outdoor"]</td><td>Bool + detail</td></tr>
+  <tr><td class="mono">security_cameras_visible: true</td><td class="mono teal">security: true + detail: ["video_surveillance"]</td><td>Bool + detail</td></tr>
+  <tr><td class="mono">is_furnished: true</td><td class="mono teal">furnishings: "furnished"</td><td>Enum</td></tr>
+  <tr><td class="mono">floorplan.bedrooms: 2</td><td class="mono teal">beds: 2 (unitDetails)</td><td>Numeric</td></tr>
+  <tr><td class="mono" style="color:var(--amber)">(AI sees wine cellar)</td><td class="mono amber">custom: [{parent: "rooms", text: "wine cellar"}]</td><td>Custom</td></tr>
+</table>
+
+<h3>Confidence pipeline</h3>
+<p>AI detections are <strong>suggestions</strong>, not auto-populated values. The landlord sees a pre-filled form with AI detections as checkboxes — high confidence items are pre-checked, medium confidence items are highlighted but unchecked.</p>
+
+<div class="code-block"><pre><span class="c">Step 1 — AI runs on uploaded photos:</span>
+  suggested: { <span class="k">dishwasher</span>: high, <span class="k">pool</span>: high, <span class="k">pool_detail</span>: [<span class="v">"outdoor"</span>] medium, <span class="k">high_ceilings</span>: medium }
+
+<span class="c">Step 2 — Landlord confirms on the form:</span>
+  <span class="n">☑</span> Dishwasher <span class="c">(detected in photo 3)</span>
+  <span class="n">☑</span> Pool
+      <span class="n">☑</span> Outdoor <span class="c">(detected)</span>     <span class="n">☐</span> Heated <span class="c">(landlord adds)</span>
+  <span class="n">☐</span> High ceilings <span class="c">(confirm?)</span>
+
+<span class="c">Step 3 — Stored after confirmation:</span>
+  <span class="k">"dishwasher"</span>:    <span class="n">true</span>
+  <span class="k">"pool"</span>:          <span class="n">true</span>
+  <span class="k">"pool_detail"</span>:   [<span class="v">"outdoor"</span>, <span class="v">"heated"</span>]   <span class="c">← AI + landlord combined</span></pre></div>
+
+<h3>AI feeds the custom promotion pipeline</h3>
+<p>When AI detects something with no canonical match, it goes to the custom array tagged as <code>ai_detected</code>. This makes AI a discovery engine — the system learns what amenities exist in the real world, and frequently-detected items become candidates for canonical promotion.</p>
+
+<div class="code-block"><pre><span class="k">"custom"</span>: [
+  { <span class="k">"parent"</span>: <span class="v">"pool"</span>, <span class="k">"text"</span>: <span class="v">"Infinity edge pool"</span>, <span class="k">"source"</span>: <span class="v">"ai_detected"</span> },
+  { <span class="k">"parent"</span>: <span class="n">null</span>,   <span class="k">"text"</span>: <span class="v">"Rooftop solar panels"</span>, <span class="k">"source"</span>: <span class="v">"ai_detected"</span> }
+]
+
+<span class="c">When "infinity edge" appears across 500+ properties → promote to pool_detail</span></pre></div>
+
+<div class="callout teal">Three data sources, one model: landlord input (manual, high confidence), AI detection (automated, confirmed by landlord), and custom free text (not searchable until promoted). All feed the same Bool / Enum / detail fields.</div>
+
+<h3>Handling existing custom amenities</h3>
+<p>Properties already in the system may have free-text custom amenities. Here's how they migrate into the new model:</p>
+
+<div class="code-block"><pre><span class="c">Step 1 — Scan existing customs against canonical list:</span>
+  <span class="v">"Stainless steel appliances"</span>  →  matches <span class="k">stainless_steel_appliances: true</span>
+  <span class="v">"In-unit washer/dryer"</span>        →  matches <span class="k">laundry: true + detail: ["in_suite","washer","dryer"]</span>
+  <span class="v">"Underground parking"</span>         →  matches <span class="k">parking_type: true + detail: ["underground"]</span>
+
+<span class="c">Step 2 — Fuzzy matches flagged for review:</span>
+  <span class="v">"W/D in unit"</span>                 →  likely laundry (in_suite) — confirm
+  <span class="v">"AC"</span>                          →  likely ac_type — confirm
+  <span class="v">"Renovated"</span>                   →  likely renovation: "recently_renovated" — confirm
+
+<span class="c">Step 3 — No match = stays as custom, tagged to nearest parent:</span>
+  <span class="v">"Tesla wall charger"</span>          →  custom, parent: "parking_type"
+  <span class="v">"Smart home system"</span>           →  custom, parent: null
+  <span class="v">"Japanese soaking tub"</span>        →  custom, parent: null</pre></div>
+
+<div class="callout amber">Existing customs don't disappear. They either map to canonical values (auto or confirmed), or stay as customs tagged to a parent. The migration is additive — canonical fields get populated, matched customs get archived with a "migrated_to" reference, unmatched customs persist as-is. AI detection can also help: run the tagger on existing photos to auto-suggest canonical values for listings that only had free-text customs.</div>
+
+</section>
+
+<section id="rollups">
+<h2>Search roll-ups by platform</h2>
+<p>How granular canonical amenities collapse into simplified search filters per platform. The amenity parent is the search filter; values show on the listing detail page.</p>
+
+<table>
+  <tr><th>Filter</th><th>Shows as</th><th>Expands to (canonical values)</th></tr>
+  <tr><td>Pool</td><td>Pool: Yes/No</td><td class="mono">heated, indoor, outdoor, hot_tub, jacuzzi</td></tr>
+  <tr><td>Parking</td><td>Parking: Yes/Included/No</td><td class="mono">underground, indoor, outdoor, covered, ev, garage, visitor, valet</td></tr>
+  <tr><td>Laundry</td><td>In-suite / On-site / None</td><td class="mono">in_suite, washer, dryer, on_site, every_floor</td></tr>
+  <tr><td>Security</td><td>Security: Yes/No</td><td class="mono">24_7_onsite, video, buzzer, controlled, doorman, keyless</td></tr>
+  <tr><td>Pets</td><td>Allowed / Not Allowed</td><td class="mono">cat, dog, bird, fish + size restrictions</td></tr>
+  <tr><td>Recreation</td><td>Rec: Yes/No</td><td class="mono">pool, sports, games, club_house, cabana</td></tr>
+  <tr><td>Nearby</td><td>Transit / Schools / Parks</td><td class="mono">14 individual nearby values</td></tr>
+</table>
+<p>Smaller platforms (RentFaster, RentBoard) use the rolled-up yes/no filters. Rentals.ca and BSTK show the full value detail on listing pages.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="rules">
+<h2>The rules</h2>
+
+<div class="rule"><span class="num">1</span><p><strong>Bool is bool. Enum is enum.</strong> BSTK-native types. No unnecessary abstraction.</p></div>
+<div class="rule"><span class="num">2</span><p><strong>When a Bool needs subtypes, add a _detail companion.</strong> Bool never changes. No migration.</p></div>
+<div class="rule"><span class="num">3</span><p><strong>_detail is always string[]</strong> — array of canonical values from the values list.</p></div>
+<div class="rule"><span class="num">4</span><p><strong>Utilities are Enum amenities</strong> with values [included, tenant_pays, not_available]. Same shape as flooring.</p></div>
+<div class="rule"><span class="num">5</span><p><strong>AI detections map to the same fields.</strong> Bool for presence, _detail for specifics, custom for unknowns.</p></div>
+<div class="rule"><span class="num">6</span><p><strong>Dual-level amenities use inheritance.</strong> Unit overrides building. Absent = inherit.</p></div>
+<div class="rule"><span class="num">7</span><p><strong>Custom entries are never searchable</strong> until promoted to canonical.</p></div>
+<div class="rule"><span class="num">8</span><p><strong>Category ✓ marks mean "shortlist on the form"</strong>, not "available for this category."</p></div>
+</section>
+
+</div>
+
+<footer><div class="container">
+  RentSync Property Taxonomy — Amenities System &nbsp;·&nbsp; Based on Su's Standardizing Amenities work &nbsp;·&nbsp; Updated March 2026
+</div></footer>
+
+<script>
+const catData = {
+  conv: {
+    label: 'CONVENTIONAL', count: 54,
+    note: 'Standard residential amenities. Quality signals (flooring, countertops, renovation), lifestyle features (pool, BBQ, balcony), and core appliances.',
+    groups: {
+      'Common Areas': { level: 'property', items: ['BBQ Area','Gym / Fitness','Laundry'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Pet Wash Station'] },
+      'Outdoor': { level: 'property', items: ['Yard','Patio / Deck','Porch','Dog Run','Outdoor Space'] },
+      'Parking': { level: 'property', items: ['Parking','Parking Type'] },
+      'Pet Policy': { level: 'property', items: ['Pet Policy','Pet Type','Pet Size Limit'] },
+      'Recreation': { level: 'property', items: ['Pool',"Children's Play"] },
+      'Rooftop': { level: 'property', items: ['Rooftop'] },
+      'Smoking': { level: 'property', items: ['Smoking Policy'] },
+      'Storage': { level: 'property', items: ['Storage','Storage Type'] },
+      'Other': { level: 'property', items: ['BBQ on Balconies'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating'] },
+      'Appliances': { level: 'unit', items: ['Dishwasher','Fridge','Stove','Oven','Garbage Disposal','Laundry (in-suite)'] },
+      'Features': { level: 'unit', items: ['Fireplace','Flooring','Countertops','Renovation'] },
+      'Rooms': { level: 'unit', items: ['Rooms Included'] },
+      'Connectivity': { level: 'unit', items: ['Cable'] },
+      'Unit Features': { level: 'unit', items: ['Balcony','Corner Unit','Moldings','En-suite Bath','High Ceilings','Large Windows','Stainless Appliances'] },
+      'Storage (unit)': { level: 'unit', items: ['Closets','In-Suite Storage'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Water','Hot Water','Heating','A/C','Cable/Sat','Sewage','Garbage','Recycling'] },
+    }
+  },
+  senior: {
+    label: 'SENIOR', count: 59,
+    note: 'Accessibility, medical care, safety, comfort, and companion animal amenities. Flooring (slip resistance), heating fuel (cost concern), and connectivity for seniors.',
+    groups: {
+      'Accessibility': { level: 'property', items: ['Elevator','Wheelchair Access','Access for Disabled','Visual / Audio Aids'] },
+      'Common Areas': { level: 'property', items: ['Community Garden','Gym / Fitness','Laundry','Recreation Room','Social Room / Lounge'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Cleaning / Janitor','Concierge','Snow Removal'] },
+      'Outdoor': { level: 'property', items: ['Courtyard','Outdoor Space'] },
+      'Parking': { level: 'property', items: ['Parking','Parking Type'] },
+      'Pet Policy': { level: 'property', items: ['Pet Policy','Pet Type','Pet Size Limit'] },
+      'Recreation': { level: 'property', items: ['Club House'] },
+      'Security': { level: 'property', items: ['Security'] },
+      'Senior Living': { level: 'property', items: ['Senior Care'] },
+      'Smoking': { level: 'property', items: ['Smoking Policy'] },
+      'Storage': { level: 'property', items: ['Storage'] },
+      'Other': { level: 'property', items: ['Noise Reduction Walls'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating Type','Heating Fuel'] },
+      'Appliances': { level: 'unit', items: ['Dishwasher','Fridge','Stove','Microwave','Laundry (in-suite)'] },
+      'Features': { level: 'unit', items: ['Flooring','Furnishings'] },
+      'Connectivity': { level: 'unit', items: ['Cable','Internet'] },
+      'Accessibility (unit)': { level: 'unit', items: ['Accessible Bathroom','Handrails','Roll-in Shower','Double-pane Windows'] },
+      'Unit Features': { level: 'unit', items: ['Balcony','En-suite Bath'] },
+      'Storage (unit)': { level: 'unit', items: ['Closets'] },
+      'Security (unit)': { level: 'unit', items: ['Alarm System'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Gas','Water','Hot Water','Heating','A/C','Internet','Cable/Sat','Phone','Sewage','Garbage','Recycling','Wi-Fi'] },
+    }
+  },
+  student: {
+    label: 'STUDENT', count: 38,
+    note: 'Laundry, connectivity, study space, transit, and budget-conscious features. Noise reduction and storage for shared living.',
+    groups: {
+      'Common Areas': { level: 'property', items: ['Bike Room','Gym / Fitness','Laundry','Recreation Room'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Coffee Shop','Convenience Store','Package Services'] },
+      'Parking': { level: 'property', items: ['Parking'] },
+      'Pet Policy': { level: 'property', items: ['Pet Policy'] },
+      'Recreation': { level: 'property', items: ['Sports Courts','Games'] },
+      'Security': { level: 'property', items: ['Security'] },
+      'Smoking': { level: 'property', items: ['Smoking Policy'] },
+      'Storage': { level: 'property', items: ['Storage','Storage Type'] },
+      'Other': { level: 'property', items: ['Noise Reduction Walls'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating'] },
+      'Appliances': { level: 'unit', items: ['Dishwasher','Fridge','Stove','Microwave','Laundry (in-suite)'] },
+      'Features': { level: 'unit', items: ['Furnishings'] },
+      'Connectivity': { level: 'unit', items: ['Internet'] },
+      'Storage (unit)': { level: 'unit', items: ['In-Suite Storage'] },
+      'Security (unit)': { level: 'unit', items: ['Keyless Suites'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Water','Hot Water','Heating','A/C','Internet','Sewage','Garbage','Recycling','Wi-Fi'] },
+    }
+  },
+  military: {
+    label: 'MILITARY', count: 38,
+    note: 'Family housing essentials: childcare, play areas, yard, security, storage. Practical over luxury. Internet now standard.',
+    groups: {
+      'Common Areas': { level: 'property', items: ['Gym / Fitness','Laundry','Recreation Room'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Childcare','Convenience Store','Package Services'] },
+      'Outdoor': { level: 'property', items: ['Yard','Dog Run','Outdoor Space'] },
+      'Parking': { level: 'property', items: ['Parking','Parking Type'] },
+      'Pet Policy': { level: 'property', items: ['Pet Policy'] },
+      'Recreation': { level: 'property', items: ['Sports Courts',"Children's Play"] },
+      'Security': { level: 'property', items: ['Security'] },
+      'Storage': { level: 'property', items: ['Storage'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating'] },
+      'Appliances': { level: 'unit', items: ['Dishwasher','Fridge','Stove','Microwave','Laundry (in-suite)'] },
+      'Features': { level: 'unit', items: ['Furnishings'] },
+      'Rooms': { level: 'unit', items: ['Rooms Included'] },
+      'Connectivity': { level: 'unit', items: ['Internet'] },
+      'Storage (unit)': { level: 'unit', items: ['Closets'] },
+      'Security (unit)': { level: 'unit', items: ['Alarm System'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Water','Hot Water','Heating','A/C','Internet','Sewage','Garbage','Recycling'] },
+    }
+  },
+  corp: {
+    label: 'CORPORATE', count: 55,
+    note: 'Business infrastructure, professional amenities, serviced spaces. Full commercial unit suite plus executive residential features.',
+    groups: {
+      'Commercial': { level: 'property', items: ['24/7 Access','Private Office','Shared Office','Virtual Office'] },
+      'Common Areas': { level: 'property', items: ['Business Centre','Gym / Fitness','Yoga Studio'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Cleaning','Coffee Shop','Concierge','Dry Cleaning','Package Services'] },
+      'Parking': { level: 'property', items: ['Parking','Parking Type'] },
+      'Rooftop': { level: 'property', items: ['Rooftop'] },
+      'Security': { level: 'property', items: ['Security'] },
+      'Other': { level: 'property', items: ['Guest Suites','Wet Bar'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating'] },
+      'Appliances': { level: 'unit', items: ['Coffee Maker'] },
+      'Commercial (unit)': { level: 'unit', items: ['24/7 Access','Dedicated Parking','Board Room','Kitchenette','Meeting Room','Open Plan','Maintenance','Management','Printer/Scanner','Private Gym','Private Office(s)','Projector','Reception','Shared Office','Virtual Office(s)'] },
+      'Features': { level: 'unit', items: ['Flooring','Furnishings','Renovation'] },
+      'Connectivity': { level: 'unit', items: ['Internet'] },
+      'Unit Features': { level: 'unit', items: ['High Ceilings','Large Windows'] },
+      'Security (unit)': { level: 'unit', items: ['Keyless Suites'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Water','Hot Water','Heating','A/C','Internet','Phone','Sewage','Garbage','Recycling','Wi-Fi'] },
+    }
+  },
+  vacation: {
+    label: 'VACATION', count: 63,
+    note: 'Outdoor, leisure, furnished, experience-oriented. The largest residential shortlist — vacation renters browse every detail.',
+    groups: {
+      'Common Areas': { level: 'property', items: ['BBQ Area'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Cleaning','Concierge','Dry Cleaning'] },
+      'Outdoor': { level: 'property', items: ['Yard','Patio/Deck','Porch','Fire Pit','Greenhouse','Outdoor Space'] },
+      'Parking': { level: 'property', items: ['Parking','Parking Type'] },
+      'Pet Policy': { level: 'property', items: ['Pet Policy','Pet Type'] },
+      'Recreation': { level: 'property', items: ['Pool','Sauna','Sports Courts','Games',"Children's Play",'Cabana'] },
+      'Other': { level: 'property', items: ['BBQ on Balconies','Beach Access','Wet Bar'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating'] },
+      'Appliances': { level: 'unit', items: ['Dishwasher','Fridge','Stove','Oven','Microwave','Coffee Maker','Laundry (in-suite)'] },
+      'Features': { level: 'unit', items: ['Fireplace','Flooring','Furnishings','Views','Countertops'] },
+      'Rooms': { level: 'unit', items: ['Rooms Included'] },
+      'Connectivity': { level: 'unit', items: ['Internet','Satellite'] },
+      'Unit Features': { level: 'unit', items: ['Balcony','Terrace','Ceiling Fans','Corner Unit','Moldings','En-suite Bath','High Ceilings','Large Windows','Skylight','Stainless Appliances','Window Coverings'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Water','Hot Water','Heating','A/C','Internet','Cable/Sat','Sewage','Garbage','Recycling','Wi-Fi'] },
+    }
+  },
+  short_term: {
+    label: 'SHORT-TERM', count: 37,
+    note: 'Similar to vacation but narrower. Furnished, connected, kitchen-ready essentials. Keyless entry for self-check-in.',
+    groups: {
+      'Common Areas': { level: 'property', items: ['BBQ Area'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Cleaning'] },
+      'Outdoor': { level: 'property', items: ['Patio/Deck','Fire Pit','Outdoor Space'] },
+      'Parking': { level: 'property', items: ['Parking'] },
+      'Recreation': { level: 'property', items: ['Pool'] },
+      'Other': { level: 'property', items: ['Beach Access'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating'] },
+      'Appliances': { level: 'unit', items: ['Dishwasher','Fridge','Stove','Oven','Microwave','Coffee Maker','Laundry (in-suite)'] },
+      'Features': { level: 'unit', items: ['Fireplace','Furnishings','Views'] },
+      'Connectivity': { level: 'unit', items: ['Internet'] },
+      'Unit Features': { level: 'unit', items: ['Ceiling Fans','Skylight','Window Coverings'] },
+      'Security (unit)': { level: 'unit', items: ['Keyless Suites'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Water','Hot Water','Heating','A/C','Internet','Cable/Sat','Sewage','Garbage','Recycling','Wi-Fi'] },
+    }
+  },
+  co_living: {
+    label: 'CO-LIVING', count: 40,
+    note: 'Shared spaces, community features, connectivity, and noise management. Pet policy matters in shared environments.',
+    groups: {
+      'Common Areas': { level: 'property', items: ['BBQ Area','Bike Room','Community Garden','Gym / Fitness','Laundry','Recreation Room','Social Room / Lounge','Yoga Studio'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Coffee Shop','Convenience Store','Package Services','Pet Wash Station'] },
+      'Outdoor': { level: 'property', items: ['Courtyard'] },
+      'Pet Policy': { level: 'property', items: ['Pet Policy','Pet Size Limit'] },
+      'Recreation': { level: 'property', items: ['Games'] },
+      'Security': { level: 'property', items: ['Security'] },
+      'Smoking': { level: 'property', items: ['Smoking Policy'] },
+      'Storage': { level: 'property', items: ['Storage'] },
+      'Other': { level: 'property', items: ['Noise Reduction Walls'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating'] },
+      'Appliances': { level: 'unit', items: ['Fridge','Stove','Microwave','Laundry (in-suite)'] },
+      'Features': { level: 'unit', items: ['Furnishings'] },
+      'Connectivity': { level: 'unit', items: ['Internet'] },
+      'Security (unit)': { level: 'unit', items: ['Keyless Suites'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Water','Hot Water','Heating','A/C','Internet','Sewage','Garbage','Recycling','Wi-Fi'] },
+    }
+  },
+  affordable: {
+    label: 'AFFORDABLE', count: 32,
+    note: 'Budget essentials that reduce total cost: utilities included, energy efficiency, transit access, basic appliances, storage. Security and play areas for families.',
+    groups: {
+      'Common Areas': { level: 'property', items: ['Laundry'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Convenience Store','Package Services'] },
+      'Parking': { level: 'property', items: ['Parking'] },
+      'Pet Policy': { level: 'property', items: ['Pet Policy'] },
+      'Recreation': { level: 'property', items: ["Children's Play Area"] },
+      'Security': { level: 'property', items: ['Security'] },
+      'Smoking': { level: 'property', items: ['Smoking Policy'] },
+      'Storage': { level: 'property', items: ['Storage'] },
+      'Other': { level: 'property', items: ['Noise Reduction Walls'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating','Heating Fuel'] },
+      'Appliances': { level: 'unit', items: ['Dishwasher','Fridge','Stove','Microwave','Laundry (in-suite)'] },
+      'Connectivity': { level: 'unit', items: ['Internet'] },
+      'Unit Features': { level: 'unit', items: ['Double-pane Windows'] },
+      'Storage (unit)': { level: 'unit', items: ['In-Suite Storage'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Gas','Water','Hot Water','Heating','A/C','Internet','Sewage','Garbage','Recycling'] },
+    }
+  },
+  luxury: {
+    label: 'LUXURY', count: 76,
+    note: 'Premium everything: concierge, resort-style recreation, high-end finishes, views, rooftop, smart security. The broadest shortlist — luxury renters expect comprehensive detail.',
+    groups: {
+      'Accessibility': { level: 'property', items: ['Elevator'] },
+      'Common Areas': { level: 'property', items: ['BBQ Area','Business Centre','Gym / Fitness','Social Room / Lounge','Yoga Studio'] },
+      'Nearby': { level: 'property', items: ['Nearby'] },
+      'On-Site Services': { level: 'property', items: ['Cleaning','Coffee Shop','Concierge','Dry Cleaning','Package Services','Pet Wash Station'] },
+      'Outdoor': { level: 'property', items: ['Patio/Deck','Courtyard','Fire Pit','Dog Run','Outdoor Space'] },
+      'Parking': { level: 'property', items: ['Parking','Parking Type'] },
+      'Pet Policy': { level: 'property', items: ['Pet Policy','Pet Type'] },
+      'Recreation': { level: 'property', items: ['Pool','Sauna','Sports Courts','Games','Club House','Cabana'] },
+      'Rooftop': { level: 'property', items: ['Rooftop'] },
+      'Security': { level: 'property', items: ['Security'] },
+      'Other': { level: 'property', items: ['BBQ on Balconies','Beach Access','Guest Suites','Noise Reduction','Wet Bar'] },
+      'Climate': { level: 'unit', items: ['A/C','Heating'] },
+      'Appliances': { level: 'unit', items: ['Dishwasher','Fridge','Stove','Oven','Garbage Disposal','Coffee Maker','Laundry (in-suite)'] },
+      'Features': { level: 'unit', items: ['Fireplace','Flooring','Furnishings','Views','Countertops','Renovation'] },
+      'Rooms': { level: 'unit', items: ['Rooms Included'] },
+      'Connectivity': { level: 'unit', items: ['Internet'] },
+      'Unit Features': { level: 'unit', items: ['Balcony','Terrace','Corner Unit','Moldings','En-suite Bath','High Ceilings','Large Windows','Skylight','Stainless Appliances','Window Coverings'] },
+      'Storage (unit)': { level: 'unit', items: ['Closets'] },
+      'Security (unit)': { level: 'unit', items: ['Alarm System','Keyless Suites'] },
+      'Utilities': { level: 'unit', items: ['Electricity','Water','Hot Water','Heating','A/C','Internet','Cable/Sat','Sewage','Garbage','Recycling','Wi-Fi'] },
+    }
+  }
+};
+
+function showCat(key) {
+  document.querySelectorAll('#cat-demo .example-toggle button').forEach(b => b.classList.remove('active'));
+  if(event && event.target) event.target.classList.add('active');
+  const d = catData[key];
+  document.getElementById('cat-label').textContent = d.label;
+  document.getElementById('cat-count').textContent = d.count + ' relevant amenities';
+  
+  let html = '';
+  const propGroups = {};
+  const unitGroups = {};
+  
+  for (const [gname, gdata] of Object.entries(d.groups)) {
+    if (gdata.level === 'property') propGroups[gname] = gdata;
+    else unitGroups[gname] = gdata;
+  }
+  
+  if (Object.keys(propGroups).length) {
+    html += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-3);margin-bottom:8px;margin-top:4px">Building level</div>';
+    for (const [gname, gdata] of Object.entries(propGroups)) {
+      html += '<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:500;color:var(--text-2);margin-bottom:4px">' + gname + '</div>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:5px">';
+      html += gdata.items.map(i => '<span class="tag teal">' + i + '</span>').join('');
+      html += '</div></div>';
+    }
+  }
+  
+  if (Object.keys(unitGroups).length) {
+    html += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-3);margin-bottom:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">Unit level</div>';
+    for (const [gname, gdata] of Object.entries(unitGroups)) {
+      html += '<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:500;color:var(--text-2);margin-bottom:4px">' + gname + '</div>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:5px">';
+      html += gdata.items.map(i => '<span class="tag amber">' + i + '</span>').join('');
+      html += '</div></div>';
+    }
+  }
+  
+  document.getElementById('cat-groups').innerHTML = html;
+  document.getElementById('cat-note').textContent = d.note;
+}
+
+// Init
+showCat('conv');
+
+function showEx(key) {
+  document.querySelectorAll('#ex-toggle button').forEach(b => b.classList.remove('active'));
+  if(event && event.target) event.target.classList.add('active');
+  document.querySelectorAll('.ex-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('ex-' + key).classList.add('active');
+}
+
+</script>
+</body>
+</html>

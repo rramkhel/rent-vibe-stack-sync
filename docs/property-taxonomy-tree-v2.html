@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property Taxonomy — Complete Tree v2</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181b24;
+    --surface-2: #1f2230;
+    --surface-3: #272b38;
+    --border: #2e3345;
+    --border-focus: #4a5068;
+    --text: #e2e4eb;
+    --text-muted: #8b90a0;
+    --text-dim: #5c6175;
+
+    --sector: #f97316;
+    --sector-bg: rgba(249,115,22,0.08);
+    --sector-border: rgba(249,115,22,0.2);
+    --structure: #3b82f6;
+    --structure-bg: rgba(59,130,246,0.08);
+    --structure-border: rgba(59,130,246,0.2);
+    --subtype: #8b5cf6;
+    --subtype-bg: rgba(139,92,246,0.08);
+    --subtype-border: rgba(139,92,246,0.2);
+    --unit: #14b8a6;
+    --unit-bg: rgba(20,184,166,0.08);
+    --unit-border: rgba(20,184,166,0.2);
+    --listing: #f43f5e;
+    --listing-bg: rgba(244,63,94,0.08);
+    --listing-border: rgba(244,63,94,0.2);
+    --purpose: #eab308;
+    --purpose-bg: rgba(234,179,8,0.08);
+    --purpose-border: rgba(234,179,8,0.2);
+    --ownership: #06b6d4;
+    --ownership-bg: rgba(6,182,212,0.08);
+    --ownership-border: rgba(6,182,212,0.2);
+    --derived: #64748b;
+    --derived-bg: rgba(100,116,139,0.08);
+    --derived-border: rgba(100,116,139,0.2);
+
+    --tbd: #f59e0b;
+    --tbd-bg: rgba(245,158,11,0.12);
+    --clean: #22c55e;
+    --deprecated: #ef4444;
+    --needed: #22c55e;
+    --deferred: #a78bfa;
+    --deferred-bg: rgba(167,139,250,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ── Header ── */
+  .header {
+    padding: 40px 48px 28px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(59,130,246,0.03) 0%, transparent 100%);
+  }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .header .subtitle { font-size: 13px; color: var(--text-muted); margin-top: 6px; max-width: 720px; line-height: 1.6; }
+  .header-row { display: flex; justify-content: space-between; align-items: flex-start; }
+  .meta-badges { display: flex; gap: 8px; }
+  .meta-badge { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 10px; border-radius: 4px; background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  /* ── Roll-up callout ── */
+  .rollup-callout {
+    padding: 14px 48px;
+    background: var(--structure-bg);
+    border-bottom: 1px solid var(--structure-border);
+    font-size: 12px;
+    color: var(--structure);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .rollup-callout strong { font-weight: 700; }
+
+  /* ── Stats ── */
+  .stats-bar { display: flex; gap: 28px; padding: 18px 48px; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; line-height: 1; }
+  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dim); margin-top: 3px; }
+
+  /* ── Legend ── */
+  .legend { display: flex; gap: 18px; padding: 14px 48px; border-bottom: 1px solid var(--border); background: var(--surface); flex-wrap: wrap; align-items: center; }
+  .legend-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+  .legend-sep { width: 1px; height: 14px; background: var(--border); }
+
+  /* ── Controls ── */
+  .controls { display: flex; gap: 6px; padding: 12px 48px; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .ctrl-btn {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500;
+    padding: 5px 12px; border-radius: 5px; border: 1px solid var(--border);
+    background: var(--surface-2); color: var(--text-muted); cursor: pointer; transition: all 0.12s;
+  }
+  .ctrl-btn:hover { background: var(--surface-3); color: var(--text); }
+  .ctrl-btn.active { background: rgba(59,130,246,0.15); color: var(--structure); border-color: var(--structure-border); }
+
+  /* ── Content ── */
+  .content { padding: 28px 48px 80px; max-width: 1600px; }
+
+  /* ── Section header ── */
+  .tree-section { margin-bottom: 36px; }
+  .section-hdr {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  }
+  .dim-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
+    width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+    border-radius: 4px; flex-shrink: 0;
+  }
+  .dim-title { font-size: 15px; font-weight: 700; }
+  .dim-q { font-size: 12px; color: var(--text-muted); font-style: italic; margin-left: auto; }
+
+  /* ── Tree structure ── */
+  .tree-group { margin-bottom: 2px; }
+  .tree-root {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 12px; border-radius: 5px; cursor: pointer;
+    transition: background 0.1s; user-select: none;
+  }
+  .tree-root:hover { background: var(--surface-2); }
+  .tree-root.open { background: var(--surface-2); }
+  .tree-toggle { font-size: 9px; width: 14px; color: var(--text-dim); transition: transform 0.12s; flex-shrink: 0; }
+  .tree-root.open > .tree-toggle { transform: rotate(90deg); }
+  .tree-root.leaf > .tree-toggle { visibility: hidden; }
+  .tree-label { font-size: 13px; font-weight: 600; }
+  .tree-code { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); padding: 1px 5px; background: var(--surface-3); border-radius: 3px; }
+  .tree-note { font-size: 10px; color: var(--text-dim); font-style: italic; }
+  .tree-children { padding-left: 24px; border-left: 1px solid var(--border); margin-left: 18px; display: none; }
+  .tree-children.open { display: block; }
+
+  /* ── Badges ── */
+  .badge { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; padding: 2px 5px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+  .badge-tbd { background: var(--tbd-bg); color: var(--tbd); }
+  .badge-new { background: rgba(34,197,94,0.12); color: var(--needed); }
+  .badge-dep { background: rgba(239,68,68,0.12); color: var(--deprecated); }
+  .badge-defer { background: var(--deferred-bg); color: var(--deferred); }
+  .badge-c { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 1px 5px; border-radius: 3px; background: var(--surface-3); color: var(--text-dim); border: 1px solid var(--border); }
+
+  /* ═══════════════════════════════════════════════════ */
+  /* SUBTYPE ROW — the big change: horizontal columns   */
+  /* ═══════════════════════════════════════════════════ */
+  .subtype-row {
+    display: grid;
+    grid-template-columns: 240px 1fr 1fr 1fr;
+    gap: 0;
+    align-items: stretch;
+    border-radius: 4px;
+    transition: background 0.1s;
+    min-height: 32px;
+  }
+  .subtype-row:hover { background: var(--surface-2); }
+
+  .subtype-name {
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 10px; font-size: 12px; color: var(--text-muted);
+  }
+  .subtype-name .s-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+
+  .subtype-col {
+    display: flex; align-items: center; gap: 4px; padding: 4px 8px;
+    flex-wrap: wrap; border-left: 1px solid rgba(46,51,69,0.5);
+  }
+  .chip {
+    font-size: 9px; font-weight: 500; padding: 1px 6px; border-radius: 3px;
+    white-space: nowrap; line-height: 1.5;
+  }
+  .chip-unit { background: var(--unit-bg); color: var(--unit); border: 1px solid var(--unit-border); }
+  .chip-listing { background: var(--listing-bg); color: var(--listing); border: 1px solid var(--listing-border); }
+  .chip-purpose { background: var(--purpose-bg); color: var(--purpose); border: 1px solid var(--purpose-border); }
+  .chip-any { background: var(--surface-3); color: var(--text-dim); border: 1px solid var(--border); font-style: italic; }
+
+  /* Column headers row */
+  .col-headers {
+    display: grid;
+    grid-template-columns: 240px 1fr 1fr 1fr;
+    gap: 0; margin-bottom: 4px;
+    padding: 0 0 6px; border-bottom: 1px solid var(--border);
+  }
+  .col-hdr {
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+    padding: 0 10px;
+  }
+
+  /* ── Flat grids (standalone dimensions) ── */
+  .flat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 4px; }
+  .flat-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 10px; font-size: 12px; border-radius: 4px; color: var(--text-muted); transition: background 0.1s;
+  }
+  .flat-item:hover { background: var(--surface-2); color: var(--text); }
+  .flat-dot { width: 5px; height: 5px; border-radius: 2px; flex-shrink: 0; }
+  .flat-label { font-weight: 500; }
+  .flat-code { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); margin-left: auto; }
+
+  /* ── Callout boxes ── */
+  .callout { margin-top: 12px; padding: 12px 16px; border-radius: 6px; font-size: 11px; line-height: 1.5; border: 1px solid; }
+
+  /* ── Supp sections ── */
+  .supp-section { margin-top: 44px; padding-top: 28px; border-top: 1px dashed var(--border); }
+  .supp-title { font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+
+  /* ── Deferred section ── */
+  .deferred-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+  .deferred-card {
+    padding: 12px 16px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+  .deferred-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .deferred-card p { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
+
+  @media (max-width: 900px) {
+    .header, .rollup-callout, .legend, .controls, .content, .stats-bar { padding-left: 16px; padding-right: 16px; }
+    .subtype-row { grid-template-columns: 1fr; }
+    .col-headers { display: none; }
+    .subtype-col { border-left: none; border-top: 1px solid rgba(46,51,69,0.3); padding: 4px 10px; }
+    .subtype-col::before { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); margin-right: 6px; }
+    .subtype-col:nth-child(2)::before { content: "UNIT: "; }
+    .subtype-col:nth-child(3)::before { content: "LISTING: "; }
+    .subtype-col:nth-child(4)::before { content: "PURPOSE: "; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <h1>Property Taxonomy — Complete Tree</h1>
+      <div class="subtitle">
+        Every canonical value across all six dimensions. Each subtype shows its valid Unit Types, Listing Types, and Purposes.
+        Organized by the <strong>roll-up test</strong>: if a platform only shows the parent category, would the user expect to find this subtype there?
+      </div>
+    </div>
+    <div class="meta-badges">
+      <span class="meta-badge">Draft v2</span>
+      <span class="meta-badge">Feb 2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="rollup-callout">
+  <strong>🧪 Roll-up test:</strong>
+  If we receive "Garden Home" but the user can only pick "House" — would they expect to find it there? Yes → it belongs under House.
+  If we receive "Townhouse" but the user can only pick "House" — would they expect that? No → it belongs elsewhere.
+</div>
+
+<div class="stats-bar">
+  <div><div class="stat-value" style="color:var(--sector)">2</div><div class="stat-label">Sectors</div></div>
+  <div><div class="stat-value" style="color:var(--structure)">12</div><div class="stat-label">Structure Types</div></div>
+  <div><div class="stat-value" style="color:var(--subtype)">30+</div><div class="stat-label">Subtypes</div></div>
+  <div><div class="stat-value" style="color:var(--unit)">8</div><div class="stat-label">Unit Types</div></div>
+  <div><div class="stat-value" style="color:var(--listing)">4</div><div class="stat-label">Listing Types</div></div>
+  <div><div class="stat-value" style="color:var(--purpose)">8</div><div class="stat-label">Purposes</div></div>
+</div>
+
+<div class="legend">
+  <span class="legend-label">Legend</span>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--clean)"></div> Confirmed</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tbd)"></div> Decision Needed</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--deprecated)"></div> Deprecate?</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--deferred)"></div> Deferred — decide later</div>
+  <div class="legend-sep"></div>
+  <div class="legend-item"><span class="badge-c">1:1</span> Exclusive to parent</div>
+  <div class="legend-item"><span class="badge-c">1:N</span> Shared across parents</div>
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn active" onclick="toggleAll(true)">Expand All</button>
+  <button class="ctrl-btn" onclick="toggleAll(false)">Collapse All</button>
+</div>
+
+<div class="content">
+
+<!-- ═════════════════════════════════════════════════════════════ -->
+<!-- DIMENSIONS 1–3: SECTOR → STRUCTURE TYPE → STRUCTURE SUBTYPE  -->
+<!-- Plus cross-dimension columns per subtype                     -->
+<!-- ═════════════════════════════════════════════════════════════ -->
+
+<div class="tree-section">
+  <div class="section-hdr">
+    <div class="dim-num" style="background:var(--sector-bg);color:var(--sector);border:1px solid var(--sector-border)">1</div>
+    <div class="dim-title" style="color:var(--sector)">Sector</div>
+    <span style="color:var(--text-dim);font-size:12px">→</span>
+    <div class="dim-num" style="background:var(--structure-bg);color:var(--structure);border:1px solid var(--structure-border)">2</div>
+    <div class="dim-title" style="color:var(--structure)">Structure Type</div>
+    <span style="color:var(--text-dim);font-size:12px">→</span>
+    <div class="dim-num" style="background:var(--subtype-bg);color:var(--subtype);border:1px solid var(--subtype-border)">3</div>
+    <div class="dim-title" style="color:var(--subtype)">Subtype</div>
+    <div class="dim-q">+ valid Unit / Listing / Purpose per subtype</div>
+  </div>
+
+  <div id="main-tree">
+
+  <!-- ╔══════════════════════════╗ -->
+  <!-- ║      RESIDENTIAL         ║ -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="tree-group">
+    <div class="tree-root open" onclick="toggle(this)">
+      <span class="tree-toggle">▶</span>
+      <span class="tree-label" style="color:var(--sector);font-size:15px">Residential</span>
+      <span class="tree-code">residential</span>
+    </div>
+    <div class="tree-children open">
+
+      <!-- ──── HOUSE ──── -->
+      <!-- Roll-up test: "If all you see is 'House', would you expect to find this here?" -->
+      <!-- YES for: Detached, Garden Home, Mobile Home. These are all standalone single-dwelling structures. -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">House</span>
+          <span class="tree-code">house</span>
+          <span class="tree-note">Standalone, single-dwelling structure on its own land</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Detached <span class="tree-code">detached</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Basement</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Room</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Mobile / Manufactured <span class="tree-code">mobile</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--tbd)"></span> Garden Home <span class="tree-code">garden_home</span> <span class="badge-c">1:1</span> <span class="badge badge-tbd">TBD</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">house_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ──── MULTI-UNIT LOW-RISE ──── -->
+      <!-- Roll-up: "If all you see is 'Multi-unit', would Townhouse, Semi, Duplex fit?" YES. -->
+      <!-- These all share walls, have 2-6 units, and a user would NOT expect to find them under "House". -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Multi-Unit Low-Rise</span>
+          <span class="tree-code">multi_unit_lr</span>
+          <span class="tree-note">Attached dwellings, shared walls, 2–6 units</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Semi-Detached <span class="tree-code">semi</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Basement</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Room</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Townhouse / Row <span class="tree-code">townhouse</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Basement</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Room</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Duplex <span class="tree-code">duplex</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Basement</span><span class="chip chip-unit">Suite</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Triplex <span class="tree-code">triplex</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Basement</span><span class="chip chip-unit">Suite</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Fourplex <span class="tree-code">fourplex</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Suite</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">multi_lr_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ──── APARTMENT BUILDING ──── -->
+      <!-- Roll-up: "Apartment" → Low Rise, Mid Rise, High Rise, Walk-up all pass. -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Apartment Building</span>
+          <span class="tree-code">apartment_bldg</span>
+          <span class="tree-note">Multi-unit rental building, 5+ units typically</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Low Rise <span class="tree-code">low_rise</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Basement</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Room</span><span class="chip chip-unit">Loft</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Mid Rise <span class="tree-code">mid_rise</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Room</span><span class="chip chip-unit">Loft</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> High Rise <span class="tree-code">high_rise</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Room</span><span class="chip chip-unit">Loft</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Walk-up <span class="tree-code">walkup</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Room</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">apt_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ──── COTTAGE / CABIN ──── -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Cottage / Cabin</span>
+          <span class="tree-code">cottage</span>
+          <span class="tree-note">Recreational / rural dwellings</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Cottage <span class="tree-code">cottage</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Room</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Vacation</span><span class="chip chip-purpose">Short-Term</span><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Cabin <span class="tree-code">cabin</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Room</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Vacation</span><span class="chip chip-purpose">Short-Term</span><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> A-Frame <span class="tree-code">aframe</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Vacation</span><span class="chip chip-purpose">Short-Term</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Chalet <span class="tree-code">chalet</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Room</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Vacation</span><span class="chip chip-purpose">Short-Term</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Yurt <span class="tree-code">yurt</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Vacation</span><span class="chip chip-purpose">Short-Term</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Treehouse <span class="tree-code">treehouse</span> <span class="badge-c">1:1</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Vacation</span><span class="chip chip-purpose">Short-Term</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">cottage_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ──── OTHER (Residential) ──── -->
+      <div class="tree-group">
+        <div class="tree-root leaf" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)"><em>Other (Residential)</em></span>
+          <span class="tree-code">res_other</span>
+          <span class="badge badge-new">CATCH-ALL</span>
+          <span class="tree-note">Unmapped or unrecognized residential properties</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ╔══════════════════════════╗ -->
+  <!-- ║       COMMERCIAL          ║ -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="tree-group">
+    <div class="tree-root open" onclick="toggle(this)">
+      <span class="tree-toggle">▶</span>
+      <span class="tree-label" style="color:var(--sector);font-size:15px">Commercial</span>
+      <span class="tree-code">commercial</span>
+    </div>
+    <div class="tree-children open">
+
+      <!-- Office -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Office Building</span>
+          <span class="tree-code">office_bldg</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Class A <span class="tree-code">class_a</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Floor</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Corporate</span><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Class B <span class="tree-code">class_b</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Floor</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Corporate</span><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Class C <span class="tree-code">class_c</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Floor</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Co-working <span class="tree-code">coworking</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Room</span><span class="chip chip-unit">Spot</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Rent</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">office_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Retail -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Retail</span>
+          <span class="tree-code">retail</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Storefront <span class="tree-code">storefront</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Mall / Shopping Centre <span class="tree-code">mall</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Suite</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Strip Mall <span class="tree-code">strip_mall</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Suite</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">retail_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Industrial -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Industrial</span>
+          <span class="tree-code">industrial</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Warehouse <span class="tree-code">warehouse</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Floor</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Manufacturing <span class="tree-code">manufacturing</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Floor</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Flex Space <span class="tree-code">flex</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Suite</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Storage Facility <span class="tree-code">storage</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span><span class="chip chip-unit">Suite</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Rent</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">ind_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hospitality -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Hospitality</span>
+          <span class="tree-code">hospitality</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Hotel <span class="tree-code">hotel</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Room</span><span class="chip chip-unit">Suite</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span><span class="chip chip-purpose">Short-Term</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Motel <span class="tree-code">motel</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Room</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> B&B / Inn <span class="tree-code">bnb</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Room</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span><span class="chip chip-purpose">Short-Term</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">hosp_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recreation -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Recreation</span>
+          <span class="tree-code">recreation</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Marina <span class="tree-code">marina</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Spot</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Campground <span class="tree-code">campground</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Spot</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Vacation</span><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">rec_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Land -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Land</span>
+          <span class="tree-code">land</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Agricultural <span class="tree-code">agricultural</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Vacant Lot <span class="tree-code">vacant</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Lease</span><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--tbd)"></span> Subdivision <span class="tree-code">subdivision</span> <span class="badge badge-tbd">TBD</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Sale</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--needed)"></span> <em style="color:var(--text-dim)">Other</em> <span class="tree-code">land_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+            <div class="subtype-col"><span class="chip chip-any">Any</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parking -->
+      <div class="tree-group">
+        <div class="tree-root open" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)">Parking</span>
+          <span class="tree-code">parking</span>
+          <span class="badge badge-tbd">TBD</span>
+          <span class="tree-note">Standalone type AND/OR residential add-on?</span>
+        </div>
+        <div class="tree-children open">
+          <div class="col-headers">
+            <div class="col-hdr" style="color:var(--subtype)">Subtype</div>
+            <div class="col-hdr" style="color:var(--unit)">Valid Unit Types</div>
+            <div class="col-hdr" style="color:var(--listing)">Listing Types</div>
+            <div class="col-hdr" style="color:var(--purpose)">Purposes</div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Surface Lot <span class="tree-code">surface</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Spot</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Lease</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Underground <span class="tree-code">underground</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Spot</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Lease</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+          <div class="subtype-row">
+            <div class="subtype-name"><span class="s-dot" style="background:var(--clean)"></span> Garage <span class="tree-code">garage</span></div>
+            <div class="subtype-col"><span class="chip chip-unit">Spot</span><span class="chip chip-unit">Entire</span></div>
+            <div class="subtype-col"><span class="chip chip-listing">Rent</span><span class="chip chip-listing">Lease</span></div>
+            <div class="subtype-col"><span class="chip chip-purpose">Standard</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other (Commercial) -->
+      <div class="tree-group">
+        <div class="tree-root leaf" onclick="toggle(this)">
+          <span class="tree-toggle">▶</span>
+          <span class="tree-label" style="color:var(--structure)"><em>Other (Commercial)</em></span>
+          <span class="tree-code">com_other</span>
+          <span class="badge badge-new">CATCH-ALL</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SUPPLEMENTARY: Ownership + Scope + Deferred Items   -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<div class="supp-section">
+  <div class="supp-title">Related Attributes (Not Dimensions)</div>
+
+  <!-- Ownership -->
+  <div class="tree-section" style="margin-top:16px">
+    <div class="section-hdr">
+      <div class="dim-num" style="background:var(--ownership-bg);color:var(--ownership);border:1px solid var(--ownership-border)">A</div>
+      <div class="dim-title" style="color:var(--ownership)">Ownership / Tenure</div>
+      <div class="dim-q">Tracked as a separate attribute, not a dimension</div>
+    </div>
+    <div class="flat-grid">
+      <div class="flat-item"><span class="flat-dot" style="background:var(--clean)"></span> <span class="flat-label">Freehold</span> <span class="flat-code">freehold</span></div>
+      <div class="flat-item"><span class="flat-dot" style="background:var(--clean)"></span> <span class="flat-label">Condo (Strata)</span> <span class="flat-code">condo</span></div>
+      <div class="flat-item"><span class="flat-dot" style="background:var(--tbd)"></span> <span class="flat-label">Co-op</span> <span class="flat-code">coop</span> <span class="badge badge-tbd">TBD</span></div>
+      <div class="flat-item"><span class="flat-dot" style="background:var(--clean)"></span> <span class="flat-label">Leasehold</span> <span class="flat-code">leasehold</span></div>
+      <div class="flat-item"><span class="flat-dot" style="background:var(--clean)"></span> <span class="flat-label">Rental (Corporate-owned)</span> <span class="flat-code">rental_corp</span></div>
+      <div class="flat-item"><span class="flat-dot" style="background:var(--needed)"></span> <span class="flat-label"><em style="color:var(--text-dim)">Other</em></span> <span class="flat-code">own_other</span> <span class="badge badge-new">CATCH-ALL</span></div>
+    </div>
+    <div class="callout" style="background:var(--ownership-bg);border-color:var(--ownership-border);color:var(--ownership)">
+      <strong>"Condo" is ownership, not structure.</strong> A high-rise, townhouse, or detached house can all be condos.
+      ILS search for "Condo" queries Ownership = condo across all structure types. "Condo Building" removed as a Structure Type — use Apartment Building + Ownership: Condo instead.
+    </div>
+  </div>
+
+  <!-- Scope -->
+  <div class="tree-section" style="margin-top:28px">
+    <div class="section-hdr">
+      <div class="dim-num" style="background:var(--derived-bg);color:var(--derived);border:1px solid var(--derived-border)">B</div>
+      <div class="dim-title" style="color:var(--derived)">Listing Structure (Scope)</div>
+      <div class="dim-q">Derived from unit count — not user-declared</div>
+    </div>
+    <div class="flat-grid">
+      <div class="flat-item"><span class="flat-dot" style="background:var(--derived)"></span> <span class="flat-label">Unit</span> <span class="flat-code">units == 1 → SF billing</span></div>
+      <div class="flat-item"><span class="flat-dot" style="background:var(--derived)"></span> <span class="flat-label">Building</span> <span class="flat-code">units > 1 → MF billing</span></div>
+      <div class="flat-item"><span class="flat-dot" style="background:var(--derived)"></span> <span class="flat-label">Community</span> <span class="flat-code">buildings > 1 → wrapper</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- DEFERRED DECISIONS                                  -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<div class="supp-section">
+  <div class="supp-title">Deferred Decisions — Parked for Later</div>
+  <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px">Items removed from the core tree to avoid blocking progress. Each needs a focused decision before implementation.</p>
+
+  <div class="deferred-grid">
+    <div class="deferred-card">
+      <h4 style="color:var(--deferred)">Luxury</h4>
+      <p>Is "Luxury Apartment" a subtype or a quality flag / attribute? Recommendation: attribute (like amenity tier), not a structure subtype.</p>
+    </div>
+    <div class="deferred-card">
+      <h4 style="color:var(--deferred)">Loft</h4>
+      <p>Is Loft a Unit Type (where you are in the building) or a Structure Subtype (building style)? Currently sitting in Unit Type but needs confirmation.</p>
+    </div>
+    <div class="deferred-card">
+      <h4 style="color:var(--deferred)">Main Floor / Garage Suite / Laneway Suite</h4>
+      <p>Create specific unit types, or collapse all into "Suite" with a location attribute? Recommendation: specific unit types for search accuracy.</p>
+    </div>
+    <div class="deferred-card">
+      <h4 style="color:var(--deferred)">Sublet</h4>
+      <p>Lives in Listing Type or Purpose? Can't be both. Recommendation: Listing Type (it describes the transaction, not the tenant).</p>
+    </div>
+    <div class="deferred-card">
+      <h4 style="color:var(--deferred)">Lease-to-Own / Rent-to-Own</h4>
+      <p>Low volume. Keep as Listing Types or deprecate? Recommendation: deprecate, but needs stakeholder sign-off.</p>
+    </div>
+    <div class="deferred-card">
+      <h4 style="color:var(--deferred)">Specialty / Leisure / Construction</h4>
+      <p>Legacy commercial categories with unclear definitions. Clarify concrete examples or deprecate. "Leisure" removed from Recreation pending definition.</p>
+    </div>
+    <div class="deferred-card">
+      <h4 style="color:var(--deferred)">Co-op</h4>
+      <p>Ownership attribute, Purpose, or Listing Type? Recommendation: Ownership attribute alongside Condo/Freehold.</p>
+    </div>
+    <div class="deferred-card">
+      <h4 style="color:var(--deferred)">Condo Association</h4>
+      <p>What even is this? Nobody's sure. Recommendation: deprecate.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- HOW "ROOM" AND "CONDO" WORK WITHOUT BEING TYPES    -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<div class="supp-section">
+  <div class="supp-title">Platform Display Concepts — Not Structure Types</div>
+  <p style="font-size:12px;color:var(--text-dim);margin-bottom:20px;max-width:800px">
+    ILS sites like Rentals.ca show "Room" and "Condo" as top-level Property Types in their UI.
+    But in our canonical model, these aren't Structure Types — they're resolved through other dimensions and the platform mapping layer.
+    This is how we support third-party feeds (Roomies, MLS) without needing separate structure types.
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+
+    <!-- ROOM -->
+    <div style="border:1px solid var(--unit-border);border-radius:8px;overflow:hidden">
+      <div style="padding:12px 16px;background:var(--unit-bg);border-bottom:1px solid var(--unit-border);display:flex;align-items:center;gap:8px">
+        <span style="font-size:15px">🛏️</span>
+        <span style="font-weight:700;color:var(--unit);font-size:14px">"Room" on ILS = Unit Type, not Structure Type</span>
+      </div>
+      <div style="padding:16px">
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px">
+          A room exists <em>inside</em> a structure (house, apartment, townhouse). The room is the <strong>unit type</strong>, not the building type.
+        </p>
+
+        <div style="font-size:11px;font-family:'JetBrains Mono',monospace;background:var(--surface-3);padding:12px;border-radius:6px;line-height:1.7;margin-bottom:12px">
+          <span style="color:var(--text-dim)">// Mike lists a room in his townhouse</span><br>
+          <span style="color:var(--structure)">structure_type:</span> <span style="color:var(--text)">multi_unit_lr</span><br>
+          <span style="color:var(--subtype)">subtype:</span> <span style="color:var(--text)">townhouse</span><br>
+          <span style="color:var(--unit);font-weight:700">unit_type:</span> <span style="color:var(--text);font-weight:700">room_private</span> <span style="color:var(--text-dim)">← key field</span><br>
+          <span style="color:var(--purpose)">purpose:</span> <span style="color:var(--text)">student</span>
+        </div>
+
+        <div style="font-size:11px;color:var(--text-dim);padding:8px 12px;background:var(--surface-2);border-radius:4px;border-left:3px solid var(--unit)">
+          <strong style="color:var(--unit)">ILS mapping rule:</strong><br>
+          If <code>unit_type = room_*</code> → display as Property Type: "Room" on Rentals.ca, RentBoard, RentCanada.<br>
+          If <code>unit_type = room_*</code> → display as "Room For Rent" on RentFaster.
+        </div>
+      </div>
+    </div>
+
+    <!-- CONDO -->
+    <div style="border:1px solid var(--ownership-border);border-radius:8px;overflow:hidden">
+      <div style="padding:12px 16px;background:var(--ownership-bg);border-bottom:1px solid var(--ownership-border);display:flex;align-items:center;gap:8px">
+        <span style="font-size:15px">🏙️</span>
+        <span style="font-weight:700;color:var(--ownership);font-size:14px">"Condo" on ILS = Ownership Attribute, not Structure Type</span>
+      </div>
+      <div style="padding:16px">
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px">
+          "Condo" describes who owns the unit, not what the building looks like. A high-rise, townhouse, or house can all be condos.
+        </p>
+
+        <div style="font-size:11px;font-family:'JetBrains Mono',monospace;background:var(--surface-3);padding:12px;border-radius:6px;line-height:1.7;margin-bottom:12px">
+          <span style="color:var(--text-dim)">// MLS sends a "Condo" listing</span><br>
+          <span style="color:var(--structure)">structure_type:</span> <span style="color:var(--text)">apartment_bldg</span><br>
+          <span style="color:var(--subtype)">subtype:</span> <span style="color:var(--text)">high_rise</span><br>
+          <span style="color:var(--unit)">unit_type:</span> <span style="color:var(--text)">entire</span><br>
+          <span style="color:var(--ownership);font-weight:700">ownership:</span> <span style="color:var(--text);font-weight:700">condo</span> <span style="color:var(--text-dim)">← key field</span>
+        </div>
+
+        <div style="font-size:11px;color:var(--text-dim);padding:8px 12px;background:var(--surface-2);border-radius:4px;border-left:3px solid var(--ownership)">
+          <strong style="color:var(--ownership)">ILS mapping rule:</strong><br>
+          If <code>ownership = condo</code> → display as Property Type: "Condo" on Rentals.ca.<br>
+          Search for "Condo" → queries all listings where ownership = condo, regardless of structure type.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inbound sparse data example -->
+  <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px">
+    <div style="padding:12px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
+      <span style="font-size:13px">📥</span>
+      <span style="font-weight:700;color:var(--text);font-size:13px">Inbound: Sparse Third-Party Data (Roomies, MLS)</span>
+    </div>
+    <div style="padding:16px;display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr;gap:0;align-items:start">
+
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);margin-bottom:8px">Roomies sends</div>
+        <div style="font-size:11px;font-family:'JetBrains Mono',monospace;background:var(--surface-3);padding:10px;border-radius:6px;line-height:1.7">
+          type: <span style="color:var(--text)">"Room"</span><br>
+          city: <span style="color:var(--text)">"Toronto"</span><br>
+          price: <span style="color:var(--text)">$800</span><br>
+          <span style="color:var(--text-dim)">// no structure info</span><br>
+          <span style="color:var(--text-dim)">// no ownership info</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:16px;padding-top:28px">→</div>
+
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);margin-bottom:8px">We store (canonical)</div>
+        <div style="font-size:11px;font-family:'JetBrains Mono',monospace;background:var(--surface-3);padding:10px;border-radius:6px;line-height:1.7">
+          sector: <span style="color:var(--sector)">residential</span><br>
+          structure_type: <span style="color:var(--tbd)">res_other</span> <span style="color:var(--text-dim)">← unknown</span><br>
+          subtype: <span style="color:var(--text-dim)">null</span><br>
+          unit_type: <span style="color:var(--unit)">room_private</span><br>
+          listing_type: <span style="color:var(--listing)">rent</span><br>
+          purpose: <span style="color:var(--purpose)">standard</span> <span style="color:var(--text-dim)">← default</span><br>
+          source: <span style="color:var(--text)">roomies</span><br>
+          <span style="color:var(--tbd)">needs_enrichment: true</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:16px;padding-top:28px">→</div>
+
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);margin-bottom:8px">Displays on ILS</div>
+        <div style="font-size:11px;font-family:'JetBrains Mono',monospace;background:var(--surface-3);padding:10px;border-radius:6px;line-height:1.7">
+          <span style="color:var(--text-dim)">// Rentals.ca:</span><br>
+          Property Type: <span style="color:var(--text)">"Room"</span> <span style="color:var(--clean)">✓</span><br><br>
+          <span style="color:var(--text-dim)">// RentFaster:</span><br>
+          SU Type: <span style="color:var(--text)">"Room For Rent"</span> <span style="color:var(--clean)">✓</span><br><br>
+          <span style="color:var(--text-dim)">// Structure unknown but</span><br>
+          <span style="color:var(--text-dim)">// listing still works ✓</span>
+        </div>
+      </div>
+    </div>
+    <div style="padding:10px 16px;background:var(--tbd-bg);border-top:1px solid rgba(245,158,11,0.15);font-size:11px;color:var(--tbd)">
+      <strong>Key:</strong> The listing displays correctly because ILS outbound mapping only needs <code>unit_type</code> to resolve "Room."
+      Structure type is unknown but doesn't block display. The <code>needs_enrichment</code> flag lets us backfill later.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- REQUIRED vs OPTIONAL MATRIX                         -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<div class="supp-section">
+  <div class="supp-title">Required vs Optional — By Data Source</div>
+  <p style="font-size:12px;color:var(--text-dim);margin-bottom:20px;max-width:800px">
+    Not every source can provide every dimension. The model must work with partial data from external feeds 
+    while requiring full granularity from internal platforms. Catch-all "Other" values are load-bearing for this — they're where sparse inbound data lands.
+  </p>
+
+  <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead>
+        <tr style="border-bottom:2px solid var(--border)">
+          <th style="text-align:left;padding:10px 12px;color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:0.8px;width:180px">Dimension</th>
+          <th style="text-align:center;padding:10px 12px;color:var(--structure);font-size:10px;text-transform:uppercase;letter-spacing:0.8px">
+            BSTK / RentSync<br><span style="font-weight:400;color:var(--text-dim)">Enterprise</span>
+          </th>
+          <th style="text-align:center;padding:10px 12px;color:var(--clean);font-size:10px;text-transform:uppercase;letter-spacing:0.8px">
+            ILS Direct<br><span style="font-weight:400;color:var(--text-dim)">Landlord form</span>
+          </th>
+          <th style="text-align:center;padding:10px 12px;color:var(--tbd);font-size:10px;text-transform:uppercase;letter-spacing:0.8px">
+            External Feed<br><span style="font-weight:400;color:var(--text-dim)">Roomies, MLS, Zumper</span>
+          </th>
+          <th style="text-align:left;padding:10px 12px;color:var(--text-dim);font-size:10px;text-transform:uppercase;letter-spacing:0.8px;width:220px">Default if missing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 12px;font-weight:600;color:var(--sector)">Sector</td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span> <span style="color:var(--text-dim);font-size:10px">(inferred)</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span> <span style="color:var(--text-dim);font-size:10px">(inferred)</span></td>
+          <td style="padding:10px 12px;color:var(--text-dim);font-size:11px">Infer from context — almost always determinable</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 12px;font-weight:600;color:var(--structure)">Structure Type</td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span> <span style="color:var(--text-dim);font-size:10px">(asked)</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span></td>
+          <td style="padding:10px 12px;font-size:11px"><code style="color:var(--tbd);background:var(--tbd-bg);padding:1px 4px;border-radius:2px">res_other</code> or <code style="color:var(--tbd);background:var(--tbd-bg);padding:1px 4px;border-radius:2px">com_other</code></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 12px;font-weight:600;color:var(--subtype)">Structure Subtype</td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span></td>
+          <td style="padding:10px 12px;color:var(--text-dim);font-size:11px"><code style="color:var(--text-dim);background:var(--surface-3);padding:1px 4px;border-radius:2px">null</code> — infer later or leave blank</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 12px;font-weight:600;color:var(--unit)">Unit Type</td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span> <span style="color:var(--text-dim);font-size:10px">(asked)</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span> <span style="color:var(--text-dim);font-size:10px">(usually provided)</span></td>
+          <td style="padding:10px 12px;font-size:11px"><code style="color:var(--tbd);background:var(--tbd-bg);padding:1px 4px;border-radius:2px">entire</code> — safest assumption</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 12px;font-weight:600;color:var(--listing)">Listing Type</td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span> <span style="color:var(--text-dim);font-size:10px">(asked)</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--listing);font-weight:700;font-size:11px">REQUIRED</span> <span style="color:var(--text-dim);font-size:10px">(usually provided)</span></td>
+          <td style="padding:10px 12px;font-size:11px"><code style="color:var(--tbd);background:var(--tbd-bg);padding:1px 4px;border-radius:2px">rent</code> — most common default</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 12px;font-weight:600;color:var(--purpose)">Purpose</td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span></td>
+          <td style="padding:10px 12px;font-size:11px"><code style="color:var(--text-dim);background:var(--surface-3);padding:1px 4px;border-radius:2px">standard</code></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 12px;font-weight:600;color:var(--ownership)">Ownership</td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span></td>
+          <td style="text-align:center;padding:10px 12px"><span style="color:var(--text-muted);font-size:11px">Optional</span> <span style="color:var(--text-dim);font-size:10px">(infer if possible)</span></td>
+          <td style="padding:10px 12px;font-size:11px"><code style="color:var(--text-dim);background:var(--surface-3);padding:1px 4px;border-radius:2px">null</code> — unknown is fine</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
+    <div class="callout" style="background:rgba(244,63,94,0.06);border-color:var(--listing-border);color:var(--listing)">
+      <strong>Hard minimum for any listing:</strong> Sector + Unit Type + Listing Type.
+      If we have these three, the listing can display on ILS sites even with everything else unknown.
+    </div>
+    <div class="callout" style="background:var(--tbd-bg);border-color:rgba(245,158,11,0.2);color:var(--tbd)">
+      <strong>"Other" catch-alls are load-bearing.</strong> They're not just nice-to-haves — they're where sparse inbound data
+      from Roomies, MLS, and future integrations lands until it can be enriched. Without them, we'd either reject data or force-fit it.
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function toggle(el) {
+  const ch = el.nextElementSibling;
+  if (!ch || !ch.classList.contains('tree-children')) return;
+  el.classList.toggle('open');
+  ch.classList.toggle('open');
+}
+function toggleAll(open) {
+  document.querySelectorAll('.tree-root').forEach(r => {
+    const ch = r.nextElementSibling;
+    if (!ch || !ch.classList.contains('tree-children')) return;
+    open ? (r.classList.add('open'), ch.classList.add('open')) : (r.classList.remove('open'), ch.classList.remove('open'));
+  });
+  document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platform Mapping — What Each Platform Calls It</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181b24;
+    --surface-2: #1f2230;
+    --surface-3: #272b38;
+    --border: #2e3345;
+    --text: #e2e4eb;
+    --text-muted: #8b90a0;
+    --text-dim: #5c6175;
+
+    --canonical: #8b5cf6;
+    --canonical-bg: rgba(139,92,246,0.08);
+    --canonical-border: rgba(139,92,246,0.2);
+
+    --bstk: #06b6d4;
+    --bstk-bg: rgba(6,182,212,0.06);
+    --bstk-border: rgba(6,182,212,0.2);
+
+    --ils: #22c55e;
+    --ils-bg: rgba(34,197,94,0.06);
+    --ils-border: rgba(34,197,94,0.2);
+
+    --spacelist: #f97316;
+    --spacelist-bg: rgba(249,115,22,0.06);
+    --spacelist-border: rgba(249,115,22,0.2);
+
+    --woodcabins: #a78bfa;
+    --woodcabins-bg: rgba(167,139,250,0.06);
+    --woodcabins-border: rgba(167,139,250,0.2);
+
+    --hidden: #ef4444;
+    --same: #22c55e;
+    --renamed: #eab308;
+    --collapsed: #3b82f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+
+  .header { padding: 40px 48px 28px; border-bottom: 1px solid var(--border); }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .header .sub { font-size: 13px; color: var(--text-muted); margin-top: 6px; max-width: 780px; line-height: 1.6; }
+  .header-row { display: flex; justify-content: space-between; align-items: flex-start; }
+  .meta-badge { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 10px; border-radius: 4px; background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  /* Platform header cards */
+  .platform-bar {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .platform-bar-label {
+    padding: 16px 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--border);
+  }
+  .platform-hdr {
+    padding: 12px 16px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .platform-hdr:last-child { border-right: none; }
+  .platform-name { font-size: 13px; font-weight: 700; }
+  .platform-desc { font-size: 10px; color: var(--text-dim); }
+  .platform-vocab {
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex; gap: 20px; padding: 12px 48px;
+    border-bottom: 1px solid var(--border); background: var(--surface);
+    flex-wrap: wrap; align-items: center;
+  }
+  .legend-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+  .legend-sep { width: 1px; height: 14px; background: var(--border); }
+
+  /* Controls */
+  .controls { display: flex; gap: 6px; padding: 12px 48px; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .ctrl-btn {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500;
+    padding: 5px 12px; border-radius: 5px; border: 1px solid var(--border);
+    background: var(--surface-2); color: var(--text-muted); cursor: pointer; transition: all 0.12s;
+  }
+  .ctrl-btn:hover { background: var(--surface-3); color: var(--text); }
+  .ctrl-btn.active { background: rgba(139,92,246,0.15); color: var(--canonical); border-color: var(--canonical-border); }
+
+  /* Content */
+  .content { padding: 0 0 80px; }
+
+  /* Section groups */
+  .section-group { border-bottom: 2px solid var(--border); }
+  .section-header-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr 1fr 1fr;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.1s;
+  }
+  .section-header-row:hover { background: var(--surface-3); }
+  .section-label {
+    padding: 10px 20px;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700;
+    border-right: 1px solid var(--border);
+  }
+  .section-label .toggle { font-size: 9px; color: var(--text-dim); transition: transform 0.12s; }
+  .section-header-row.open .section-label .toggle { transform: rotate(90deg); }
+  .section-platform-summary {
+    padding: 10px 16px;
+    font-size: 11px;
+    color: var(--text-dim);
+    border-right: 1px solid var(--border);
+    display: flex; align-items: center;
+  }
+  .section-platform-summary:last-child { border-right: none; }
+
+  /* Mapping rows */
+  .mapping-body { display: none; }
+  .mapping-body.open { display: block; }
+
+  .map-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid rgba(46,51,69,0.5);
+    transition: background 0.08s;
+    min-height: 36px;
+  }
+  .map-row:hover { background: var(--surface-2); }
+  .map-row.is-unit-type { background: rgba(20,184,166,0.03); }
+  .map-row.is-ownership { background: rgba(6,182,212,0.03); }
+
+  .map-canonical {
+    padding: 7px 12px 7px 28px;
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 500;
+    border-right: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .map-canonical .c-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+  .map-canonical .c-code {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    color: var(--text-dim); padding: 1px 4px; background: var(--surface-3); border-radius: 2px;
+    margin-left: auto; flex-shrink: 0;
+  }
+
+  .map-cell {
+    padding: 7px 12px;
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px;
+    border-right: 1px solid rgba(46,51,69,0.4);
+  }
+  .map-cell:last-child { border-right: none; }
+
+  /* Display value chips */
+  .dv {
+    font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 4px;
+    white-space: nowrap;
+  }
+  .dv-same { background: rgba(34,197,94,0.1); color: var(--same); border: 1px solid rgba(34,197,94,0.2); }
+  .dv-renamed { background: rgba(234,179,8,0.1); color: var(--renamed); border: 1px solid rgba(234,179,8,0.2); }
+  .dv-collapsed { background: rgba(59,130,246,0.1); color: var(--collapsed); border: 1px solid rgba(59,130,246,0.2); }
+  .dv-hidden {
+    font-size: 10px; font-style: italic; color: var(--text-dim);
+    padding: 2px 8px; background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.12); border-radius: 4px;
+  }
+  .dv-note {
+    font-size: 9px; color: var(--text-dim); font-style: italic;
+  }
+
+  /* Separator rows */
+  .dim-separator {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+  }
+  .dim-separator-label {
+    padding: 6px 20px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .dim-separator-note {
+    padding: 6px 16px;
+    font-size: 10px;
+    color: var(--text-dim);
+    font-style: italic;
+    display: flex; align-items: center;
+  }
+
+  /* Callout at bottom */
+  .bottom-callout {
+    margin: 32px 48px;
+    padding: 20px 24px;
+    border: 1px solid var(--canonical-border);
+    border-radius: 8px;
+    background: var(--canonical-bg);
+  }
+  .bottom-callout h3 { font-size: 14px; font-weight: 700; color: var(--canonical); margin-bottom: 8px; }
+  .bottom-callout p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .bottom-callout code {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    background: var(--surface-3); padding: 1px 5px; border-radius: 3px; color: var(--text);
+  }
+
+  /* How to add a platform */
+  .add-platform {
+    margin: 24px 48px;
+    padding: 20px 24px;
+    border: 1px dashed var(--woodcabins-border);
+    border-radius: 8px;
+    background: var(--woodcabins-bg);
+  }
+  .add-platform h3 { font-size: 14px; font-weight: 700; color: var(--woodcabins); margin-bottom: 8px; }
+  .add-platform p { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px; }
+  .add-platform ol { font-size: 12px; color: var(--text-muted); line-height: 1.8; padding-left: 20px; }
+  .add-platform li { margin-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <h1>Platform Mapping — What Each Platform Calls It</h1>
+      <div class="sub">
+        The canonical model stores precise classifications. Each platform translates them into its own vocabulary through mapping tables.
+        This is the complete outbound mapping: for every canonical value, here's what each platform displays — or whether it's hidden entirely.
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <span class="meta-badge">Draft v1</span>
+      <span class="meta-badge">Feb 2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <span class="legend-label">Display type</span>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--same)"></div> Same name</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--renamed)"></div> Renamed</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--collapsed)"></div> Collapsed into parent</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--hidden)"></div> Hidden / not shown</div>
+  <div class="legend-sep"></div>
+  <div class="legend-item" style="font-style:italic;color:var(--text-dim)">Grey italic = notes about the mapping logic</div>
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn active" onclick="toggleSections(true)">Expand All</button>
+  <button class="ctrl-btn" onclick="toggleSections(false)">Collapse All</button>
+</div>
+
+<!-- Platform header bar (sticky) -->
+<div class="platform-bar">
+  <div class="platform-bar-label">Canonical Value</div>
+  <div class="platform-hdr" style="background:var(--bstk-bg)">
+    <div class="platform-name" style="color:var(--bstk)">🏢 BSTK / RentSync</div>
+    <div class="platform-desc">Enterprise property mgmt</div>
+    <div class="platform-vocab">Full taxonomy, all fields visible</div>
+  </div>
+  <div class="platform-hdr" style="background:var(--ils-bg)">
+    <div class="platform-name" style="color:var(--ils)">🌐 ILS Network</div>
+    <div class="platform-desc">Rentals.ca, RentFaster, RentBoard, etc.</div>
+    <div class="platform-vocab">Simplified categories, renter-friendly</div>
+  </div>
+  <div class="platform-hdr" style="background:var(--spacelist-bg)">
+    <div class="platform-name" style="color:var(--spacelist)">🏬 Spacelist</div>
+    <div class="platform-desc">Commercial real estate</div>
+    <div class="platform-vocab">Commercial only, Office/Retail/Industrial</div>
+  </div>
+  <div class="platform-hdr" style="background:var(--woodcabins-bg)">
+    <div class="platform-name" style="color:var(--woodcabins)">🌲 WoodCabins.ca</div>
+    <div class="platform-desc">Niche vacation/cabin rentals (fictional)</div>
+    <div class="platform-vocab">Cottage/Cabin subtypes only</div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- RESIDENTIAL → HOUSE                             -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:var(--canonical)"><span class="toggle">▶</span> House</div>
+    <div class="section-platform-summary" style="color:var(--bstk)">House + subtypes</div>
+    <div class="section-platform-summary" style="color:var(--ils)">→ "House"</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Detached <span class="c-code">detached</span></div>
+      <div class="map-cell"><span class="dv dv-same">House</span><span class="dv-note">→ Detached</span></div>
+      <div class="map-cell"><span class="dv dv-same">House</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Mobile / Manufactured <span class="c-code">mobile</span></div>
+      <div class="map-cell"><span class="dv dv-same">Mobile Home</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span><span class="dv-note">collapsed</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--renamed)"></span> Garden Home <span class="c-code">garden_home</span></div>
+      <div class="map-cell"><span class="dv dv-same">Garden Home</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span><span class="dv-note">collapsed</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- RESIDENTIAL → MULTI-UNIT LOW-RISE               -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:var(--canonical)"><span class="toggle">▶</span> Multi-Unit Low-Rise</div>
+    <div class="section-platform-summary" style="color:var(--bstk)">Individual subtypes</div>
+    <div class="section-platform-summary" style="color:var(--ils)">→ "Townhouse" / "Duplex" etc.</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Semi-Detached <span class="c-code">semi</span></div>
+      <div class="map-cell"><span class="dv dv-same">Semi House</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">House</span><span class="dv-note">or Duplex</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Townhouse / Row <span class="c-code">townhouse</span></div>
+      <div class="map-cell"><span class="dv dv-same">Town House</span></div>
+      <div class="map-cell"><span class="dv dv-same">Townhouse</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Duplex <span class="c-code">duplex</span></div>
+      <div class="map-cell"><span class="dv dv-same">Duplex</span></div>
+      <div class="map-cell"><span class="dv dv-same">Duplex</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Triplex <span class="c-code">triplex</span></div>
+      <div class="map-cell"><span class="dv dv-same">Triplex</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span><span class="dv-note">or Multi-Unit</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Fourplex <span class="c-code">fourplex</span></div>
+      <div class="map-cell"><span class="dv dv-same">Fourplex</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span><span class="dv-note">or Multi-Unit</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- RESIDENTIAL → APARTMENT BUILDING                -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:var(--canonical)"><span class="toggle">▶</span> Apartment Building</div>
+    <div class="section-platform-summary" style="color:var(--bstk)">Apartment + rise level</div>
+    <div class="section-platform-summary" style="color:var(--ils)">→ "Apartment"</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Low Rise <span class="c-code">low_rise</span></div>
+      <div class="map-cell"><span class="dv dv-same">Low Rise Apartment</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">Apartment</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Mid Rise <span class="c-code">mid_rise</span></div>
+      <div class="map-cell"><span class="dv dv-same">Mid Rise Apartment</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">Apartment</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> High Rise <span class="c-code">high_rise</span></div>
+      <div class="map-cell"><span class="dv dv-same">High Rise Apartment</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">Apartment</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Walk-up <span class="c-code">walkup</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Low Rise Apartment</span><span class="dv-note">closest match</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">Apartment</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- RESIDENTIAL → COTTAGE / CABIN                   -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:var(--canonical)"><span class="toggle">▶</span> Cottage / Cabin</div>
+    <div class="section-platform-summary" style="color:var(--bstk)">→ "Cabin" or "Cottage"</div>
+    <div class="section-platform-summary" style="color:var(--ils)">→ "House" (collapsed)</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary" style="color:var(--woodcabins)">✦ Full granularity</div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Cottage <span class="c-code">cottage</span></div>
+      <div class="map-cell"><span class="dv dv-same">Cottage</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Cottage</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Cabin <span class="c-code">cabin</span></div>
+      <div class="map-cell"><span class="dv dv-same">Cabin</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Cabin</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--renamed)"></span> A-Frame <span class="c-code">aframe</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Cabin</span><span class="dv-note">closest match</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">A-Frame</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--renamed)"></span> Chalet <span class="c-code">chalet</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Cabin</span><span class="dv-note">closest match</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Chalet</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--renamed)"></span> Yurt <span class="c-code">yurt</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Cabin</span><span class="dv-note">closest match</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Yurt</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--renamed)"></span> Treehouse <span class="c-code">treehouse</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Cabin</span><span class="dv-note">closest match</span></div>
+      <div class="map-cell"><span class="dv dv-collapsed">House</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Treehouse</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- COMMERCIAL → OFFICE                             -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:var(--canonical)"><span class="toggle">▶</span> Office Building</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary" style="color:var(--spacelist)">Full granularity</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Class A <span class="c-code">class_a</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Office — Class A</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Class B <span class="c-code">class_b</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Office — Class B</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Class C <span class="c-code">class_c</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Office — Class C</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Co-working <span class="c-code">coworking</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Co-working</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- COMMERCIAL → RETAIL                             -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:var(--canonical)"><span class="toggle">▶</span> Retail</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary" style="color:var(--spacelist)">Full granularity</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Storefront <span class="c-code">storefront</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Retail — Storefront</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Mall / Shopping Centre <span class="c-code">mall</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Retail — Mall</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Strip Mall <span class="c-code">strip_mall</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Retail — Strip Mall</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- COMMERCIAL → INDUSTRIAL                         -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:var(--canonical)"><span class="toggle">▶</span> Industrial</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary" style="color:var(--spacelist)">Full granularity</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Warehouse <span class="c-code">warehouse</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Industrial — Warehouse</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Manufacturing <span class="c-code">manufacturing</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Industrial — Manufacturing</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Flex Space <span class="c-code">flex</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Industrial — Flex</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Storage Facility <span class="c-code">storage</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Industrial — Storage</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- COMMERCIAL → HOSPITALITY / RECREATION / LAND    -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:var(--canonical)"><span class="toggle">▶</span> Hospitality / Recreation / Land</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+    <div class="section-platform-summary" style="color:var(--spacelist)">Mixed visibility</div>
+    <div class="section-platform-summary"><span class="dv-hidden">hidden</span></div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Hotel <span class="c-code">hotel</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Hospitality — Hotel</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Motel <span class="c-code">motel</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Hospitality — Motel</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Marina <span class="c-code">marina</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Recreation — Marina</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Campground <span class="c-code">campground</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Recreation — Campground</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Agricultural <span class="c-code">agricultural</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Land — Agricultural</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+    <div class="map-row">
+      <div class="map-canonical"><span class="c-dot" style="background:var(--same)"></span> Vacant Lot <span class="c-code">vacant</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+      <div class="map-cell"><span class="dv dv-same">Land — Vacant</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">hidden</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- CROSS-CUTTING: UNIT TYPE MAPPINGS               -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="dim-separator">
+  <div class="dim-separator-label" style="color:rgba(20,184,166,0.9)">⬥ Unit Type Mappings</div>
+  <div class="dim-separator-note">These override or supplement the structure type display on some platforms</div>
+</div>
+
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:rgba(20,184,166,0.9)"><span class="toggle">▶</span> Unit Types</div>
+    <div class="section-platform-summary" style="color:var(--bstk)">Shown as field</div>
+    <div class="section-platform-summary" style="color:var(--ils)">Some become top-level types</div>
+    <div class="section-platform-summary" style="color:var(--spacelist)">Suite / Floor</div>
+    <div class="section-platform-summary"><span class="dv-hidden">n/a</span></div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row is-unit-type">
+      <div class="map-canonical"><span class="c-dot" style="background:rgba(20,184,166,0.9)"></span> Entire <span class="c-code">entire</span></div>
+      <div class="map-cell"><span class="dv dv-same">Entire Unit</span></div>
+      <div class="map-cell"><span class="dv-note">implied — not shown separately</span></div>
+      <div class="map-cell"><span class="dv dv-same">Entire</span></div>
+      <div class="map-cell"><span class="dv-note">implied</span></div>
+    </div>
+    <div class="map-row is-unit-type">
+      <div class="map-canonical"><span class="c-dot" style="background:rgba(20,184,166,0.9)"></span> Basement <span class="c-code">basement</span></div>
+      <div class="map-cell"><span class="dv dv-same">Basement</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Property Type: "Apartment"</span><span class="dv-note">+ Apt Type: Basement</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+    </div>
+    <div class="map-row is-unit-type">
+      <div class="map-canonical"><span class="c-dot" style="background:rgba(20,184,166,0.9)"></span> Suite <span class="c-code">suite</span></div>
+      <div class="map-cell"><span class="dv dv-same">Suite</span></div>
+      <div class="map-cell"><span class="dv-note">uses parent structure type</span></div>
+      <div class="map-cell"><span class="dv dv-same">Suite</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+    </div>
+    <div class="map-row is-unit-type">
+      <div class="map-canonical"><span class="c-dot" style="background:rgba(20,184,166,0.9)"></span> Room (Private) <span class="c-code">room_private</span></div>
+      <div class="map-cell"><span class="dv dv-same">Room</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Property Type: "Room"</span><span class="dv-note">becomes top-level</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+    </div>
+    <div class="map-row is-unit-type">
+      <div class="map-canonical"><span class="c-dot" style="background:rgba(20,184,166,0.9)"></span> Room (Shared) <span class="c-code">room_shared</span></div>
+      <div class="map-cell"><span class="dv dv-same">Room (Shared)</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Property Type: "Room"</span><span class="dv-note">becomes top-level</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+    </div>
+    <div class="map-row is-unit-type">
+      <div class="map-canonical"><span class="c-dot" style="background:rgba(20,184,166,0.9)"></span> Floor <span class="c-code">floor</span></div>
+      <div class="map-cell"><span class="dv dv-same">Floor</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+      <div class="map-cell"><span class="dv dv-same">Floor</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- CROSS-CUTTING: OWNERSHIP → ILS DISPLAY          -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="dim-separator">
+  <div class="dim-separator-label" style="color:rgba(6,182,212,0.9)">⬥ Ownership → ILS Display Override</div>
+  <div class="dim-separator-note">Ownership attribute can override the structure type display on ILS</div>
+</div>
+
+<div class="section-group">
+  <div class="section-header-row open" onclick="toggleSection(this)">
+    <div class="section-label" style="color:rgba(6,182,212,0.9)"><span class="toggle">▶</span> Ownership Overrides</div>
+    <div class="section-platform-summary" style="color:var(--bstk)">Shown as attribute</div>
+    <div class="section-platform-summary" style="color:var(--ils)">Can override display type</div>
+    <div class="section-platform-summary"><span class="dv-hidden">n/a</span></div>
+    <div class="section-platform-summary"><span class="dv-hidden">n/a</span></div>
+  </div>
+  <div class="mapping-body open">
+    <div class="map-row is-ownership">
+      <div class="map-canonical"><span class="c-dot" style="background:rgba(6,182,212,0.9)"></span> Ownership: Condo <span class="c-code">condo</span></div>
+      <div class="map-cell"><span class="dv dv-same">Ownership: Condo</span><span class="dv-note">field value</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Property Type: "Condo"</span><span class="dv-note">overrides structure</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+    </div>
+    <div class="map-row is-ownership">
+      <div class="map-canonical"><span class="c-dot" style="background:rgba(6,182,212,0.9)"></span> Ownership: Co-op <span class="c-code">coop</span></div>
+      <div class="map-cell"><span class="dv dv-same">Ownership: Co-op</span><span class="dv-note">field value</span></div>
+      <div class="map-cell"><span class="dv dv-renamed">Category: "Co-op Housing"</span><span class="dv-note">filter tag</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+    </div>
+    <div class="map-row is-ownership">
+      <div class="map-canonical"><span class="c-dot" style="background:rgba(6,182,212,0.9)"></span> Ownership: Freehold <span class="c-code">freehold</span></div>
+      <div class="map-cell"><span class="dv dv-same">Ownership: Freehold</span><span class="dv-note">field value</span></div>
+      <div class="map-cell"><span class="dv-note">no override — uses structure type</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+      <div class="map-cell"><span class="dv dv-hidden">n/a</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<!-- How WoodCabins demonstrates extensibility -->
+<div class="add-platform">
+  <h3>🌲 Why WoodCabins Is Here</h3>
+  <p>WoodCabins.ca is a fictional niche platform that demonstrates how the mapping layer handles future acquisitions or partnerships without changing the canonical model.</p>
+  <p><strong>To add a new platform, you:</strong></p>
+  <ol>
+    <li>Decide which canonical values are <strong>visible</strong> on this platform</li>
+    <li>Decide the <strong>display name</strong> for each visible value (can match canonical or use platform's own vocabulary)</li>
+    <li>Add rows to the <code>mapping.platform_structure</code> table — no schema changes needed</li>
+    <li>Everything not explicitly mapped is <strong>hidden</strong> by default</li>
+  </ol>
+  <p style="margin-top:8px;margin-bottom:0">WoodCabins only cares about Cottage/Cabin subtypes. It gets full granularity for those (A-Frame, Yurt, Treehouse, Chalet) while everything else — apartments, offices, duplexes — simply doesn't exist on the platform. Same canonical data, different lens.</p>
+</div>
+
+<!-- Key insight callout -->
+<div class="bottom-callout">
+  <h3>The Point of All This</h3>
+  <p>
+    A Yurt stored as <code>structure_type: cottage, subtype: yurt</code> in the canonical layer displays as
+    <strong>"Cabin"</strong> on BSTK, <strong>"House"</strong> on Rentals.ca, <strong>"Yurt"</strong> on WoodCabins, and is <strong>invisible</strong> on Spacelist.
+    Same record. Four completely different experiences. No data duplication, no platform-specific schemas.
+    <br><br>
+    The canonical model names don't matter to end users — "Multi-Unit Low-Rise" never appears in any UI.
+    What matters is that each platform's mapping table translates it into vocabulary that makes sense <em>for that platform's audience</em>.
+  </p>
+</div>
+
+<script>
+function toggleSection(el) {
+  el.classList.toggle('open');
+  const body = el.nextElementSibling;
+  if (body && body.classList.contains('mapping-body')) {
+    body.classList.toggle('open');
+  }
+}
+function toggleSections(open) {
+  document.querySelectorAll('.section-header-row').forEach(h => {
+    const body = h.nextElementSibling;
+    if (!body || !body.classList.contains('mapping-body')) return;
+    if (open) { h.classList.add('open'); body.classList.add('open'); }
+    else { h.classList.remove('open'); body.classList.remove('open'); }
+  });
+  document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

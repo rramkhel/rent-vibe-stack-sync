@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RentSync Property Taxonomy — The Bible</title>
+<style>
+:root {
+  --bg: #FAFAF8; --surface: #FFFFFF; --surface-2: #F5F4F0;
+  --text-1: #1A1A18; --text-2: #6B6B66; --text-3: #9E9E98;
+  --border: #E8E7E3; --border-2: #D4D3CF;
+  --teal: #0d9488; --teal-bg: #E1F5EE; --teal-dark: #085041;
+  --purple: #7c3aed; --purple-bg: #EEEDFE; --purple-dark: #3C3489;
+  --amber: #b45309; --amber-bg: #FAEEDA; --amber-dark: #633806;
+  --coral: #D85A30; --coral-bg: #FAECE7; --coral-dark: #712B13;
+  --blue: #185FA5; --blue-bg: #E6F1FB; --blue-dark: #0C447C;
+  --green: #3B6D11; --green-bg: #EAF3DE; --green-dark: #27500A;
+  --red: #A32D2D; --red-bg: #FCEBEB;
+  --mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  --sans: 'Söhne', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text-1); line-height: 1.6; }
+.container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 10px 0; }
+nav .container { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+nav a { font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; color: var(--text-2); white-space: nowrap; border: 1px solid transparent; transition: all 0.15s; }
+nav a:hover { color: var(--text-1); background: var(--surface-2); }
+
+/* HERO */
+.hero { padding: 80px 0 48px; border-bottom: 1px solid var(--border); }
+.hero h1 { font-size: 36px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 8px; }
+.hero .sub { font-size: 16px; color: var(--text-2); max-width: 600px; line-height: 1.7; }
+.hero .badge { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 4px; margin-bottom: 16px; }
+
+/* SECTIONS */
+section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 6px; }
+h3 { font-size: 17px; font-weight: 600; margin: 28px 0 8px; color: var(--text-1); }
+h4 { font-size: 14px; font-weight: 600; margin: 16px 0 4px; }
+p { color: var(--text-2); margin-bottom: 12px; font-size: 15px; }
+code { font-family: var(--mono); font-size: 13px; color: var(--teal); background: var(--surface-2); padding: 1px 5px; border-radius: 3px; }
+
+/* CARDS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 12px 0; }
+@media (max-width: 640px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }
+.card.teal { border-left: 3px solid var(--teal); }
+.card.purple { border-left: 3px solid var(--purple); }
+.card.amber { border-left: 3px solid var(--amber); }
+.card.coral { border-left: 3px solid var(--coral); }
+.card.blue { border-left: 3px solid var(--blue); }
+
+/* LABELS */
+.label { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: 4px; }
+.label.teal { background: var(--teal-bg); color: var(--teal-dark); }
+.label.purple { background: var(--purple-bg); color: var(--purple-dark); }
+.label.amber { background: var(--amber-bg); color: var(--amber-dark); }
+.label.coral { background: var(--coral-bg); color: var(--coral-dark); }
+.label.blue { background: var(--blue-bg); color: var(--blue-dark); }
+.label.green { background: var(--green-bg); color: var(--green-dark); }
+
+/* CODE BLOCKS */
+.code-block { background: var(--surface-2); border-radius: 8px; padding: 14px 18px; margin: 10px 0; overflow-x: auto; }
+.code-block pre { font-family: var(--mono); font-size: 12px; line-height: 1.8; white-space: pre; }
+.k { color: var(--teal); } .v { color: var(--amber); } .n { color: var(--purple); } .c { color: var(--text-3); font-style: italic; }
+
+/* CALLOUTS */
+.callout { padding: 14px 18px; border-radius: 8px; font-size: 13px; line-height: 1.6; margin: 12px 0; }
+.callout.teal { background: var(--teal-bg); color: var(--teal-dark); }
+.callout.amber { background: var(--amber-bg); color: var(--amber-dark); }
+.callout.purple { background: var(--purple-bg); color: var(--purple-dark); }
+
+/* TABLES */
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+th { text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-3); padding: 8px 12px; border-bottom: 2px solid var(--border-2); }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
+td:first-child { color: var(--text-1); font-weight: 500; }
+.mono { font-family: var(--mono); font-size: 12px; }
+.teal { color: var(--teal); } .amber { color: var(--amber); } .purple { color: var(--purple); }
+.res-tag { font-size: 10px; font-weight: 600; background: var(--teal-bg); color: var(--teal-dark); padding: 1px 6px; border-radius: 3px; margin-left: 4px; vertical-align: middle; }
+
+/* CASCADE */
+.cascade { margin: 12px 0; }
+.cascade-group { margin-bottom: 2px; }
+.cascade-head { display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; user-select: none; transition: background 0.15s; }
+.cascade-head:hover { background: var(--surface-2); }
+.cascade-head .arrow { font-size: 10px; color: var(--text-3); transition: transform 0.2s; }
+.cascade-group.open .cascade-head .arrow { transform: rotate(90deg); }
+.cascade-head .bt { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--teal); }
+.cascade-head .count { font-size: 11px; color: var(--text-3); margin-left: auto; }
+.cascade-body { display: none; padding: 4px 0 4px 28px; }
+.cascade-group.open .cascade-body { display: block; }
+.cascade-row { display: grid; grid-template-columns: 140px 200px 1fr; gap: 8px; padding: 5px 12px; font-size: 12px; border-bottom: 1px solid var(--border); align-items: baseline; }
+.cascade-row .bs { font-family: var(--mono); color: var(--amber); }
+.cascade-row .units { font-family: var(--mono); color: var(--purple); font-size: 11px; }
+.cascade-row .def { color: var(--text-3); font-size: 11px; }
+
+/* EDGE CASES */
+.edge-case { margin-bottom: 14px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.edge-head { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; user-select: none; transition: background 0.15s; }
+.edge-head:hover { background: var(--surface-2); }
+.edge-num { font-family: var(--mono); font-size: 12px; font-weight: 600; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--teal-bg); color: var(--teal-dark); }
+.edge-title { font-size: 14px; font-weight: 500; }
+.edge-verdict { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-left: auto; background: var(--green-bg); color: var(--green-dark); }
+.edge-body { display: none; padding: 0 16px 14px; font-size: 13px; line-height: 1.6; }
+.edge-case.open .edge-body { display: block; }
+.edge-head .arrow { font-size: 10px; color: var(--text-3); transition: transform 0.2s; }
+.edge-case.open .edge-head .arrow { transform: rotate(90deg); }
+
+/* RULES */
+.rule { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.rule-num { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--teal); min-width: 24px; }
+.rule p { margin: 0; font-size: 14px; }
+
+/* TABS */
+.tab-bar { display: flex; gap: 4px; margin: 12px 0 0; flex-wrap: wrap; }
+.tab-bar button { font-size: 12px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text-2); cursor: pointer; transition: all 0.15s; font-family: var(--sans); }
+.tab-bar button:hover { background: var(--surface-2); }
+.tab-bar button.active { background: var(--text-1); color: var(--surface); border-color: var(--text-1); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="#model">The model</a>
+    <a href="#residential">Residential</a>
+    <a href="#commercial">Commercial</a>
+    <a href="#other">Other</a>
+    <a href="#deal">The deal</a>
+    <a href="#categories">Categories</a>
+    <a href="#derived">Derived fields</a>
+    <a href="#decisions">Design decisions</a>
+    <a href="#edge-cases">Edge cases</a>
+    <a href="#examples">Examples</a>
+    <a href="#rules">Rules</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge" style="background:var(--teal-bg);color:var(--teal-dark)">Property Taxonomy v5.1</div>
+  <h1>The Bible</h1>
+  <p class="sub">A canonical property classification system that every RentSync platform translates to and from. Store canonical, translate for display. One source of truth for residential, commercial, and mixed-use properties across all platforms.</p>
+</div>
+
+<!-- THE MODEL -->
+<section id="model">
+  <h2>The model</h2>
+  <p>Every listing is classified using a small set of fields. Only <code>buildingSubtype</code> and <code>unit</code> are truly required — everything else is derived or optional.</p>
+
+  <h3>Classification — what is this place?</h3>
+  <table>
+    <tr><th>Field</th><th>Question</th><th>Example values</th><th>Required?</th></tr>
+    <tr><td class="mono teal">sector</td><td>What market?</td><td class="mono">residential, commercial, other, mixed_use</td><td>Derived from units</td></tr>
+    <tr><td class="mono teal">buildingType</td><td>What kind of building?</td><td class="mono">apartment_bldg, house, office_bldg, retail_bldg, land</td><td>Derived or input</td></tr>
+    <tr><td class="mono teal">buildingSubtype</td><td>What specific form?</td><td class="mono">mid_rise, bungalow, stacked, coworking, warehouse</td><td style="color:var(--teal);font-weight:600">Required</td></tr>
+    <tr><td class="mono teal">unit</td><td>What is being listed?</td><td class="mono">apartment, room, floor, entire, office, lot, slip</td><td style="color:var(--teal);font-weight:600">Required</td></tr>
+    <tr><td class="mono teal">unitType</td><td>What style/variant?</td><td class="mono">loft, studio, penthouse, basement, room_private</td><td>Optional</td></tr>
+  </table>
+
+  <h3>Deal — what's the transaction?</h3>
+  <table>
+    <tr><th>Field</th><th>Question</th><th>Example values</th><th>Required?</th></tr>
+    <tr><td class="mono purple">ownership</td><td>Who owns it?</td><td class="mono">null, condo, co_op, freehold, leasehold</td><td>Optional (null = rental)</td></tr>
+    <tr><td class="mono purple">transaction</td><td>What's the deal?</td><td class="mono">rent, sale, lease, sublet, lease_to_own, rent_to_own</td><td>Required</td></tr>
+    <tr><td class="mono purple">lease_type</td><td>What lease structure?</td><td class="mono">standard, month_to_month, gross, net, nnn, ...</td><td>Optional</td></tr>
+    <tr><td class="mono purple">term</td><td>How long?</td><td class="mono">{ amount: 12, period: "months" }</td><td>Optional</td></tr>
+    <tr><td class="mono purple">deposit</td><td>Security deposit?</td><td class="mono">1450, null</td><td>Optional</td></tr>
+    <tr><td class="mono purple">condo_fees</td><td>Monthly condo fees?</td><td class="mono">580, null</td><td>Optional · only when ownership = condo</td></tr>
+    <tr><td class="mono purple">price_per</td><td>Price basis?</td><td class="mono">month, sqft, total, day, acre</td><td>Derived from transaction</td></tr>
+  </table>
+
+  <h3>Context — who is it for?</h3>
+  <table>
+    <tr><th>Field</th><th>Question</th><th>Example values</th><th>Required?</th></tr>
+    <tr><td class="mono amber">category<span class="res-tag">res</span></td><td>What market segment?</td><td class="mono">conventional, senior, student, vacation, luxury</td><td>Optional · residential only</td></tr>
+    <tr><td class="mono amber">community<span class="res-tag">res</span></td><td>Part of a community?</td><td class="mono">"Harbourview Estates" or null</td><td>Optional · residential only</td></tr>
+    <tr><td class="mono amber">single_multi<span class="res-tag">res</span></td><td>SF or MF?</td><td class="mono">single_family, multi_family</td><td>Derived or input · residential only</td></tr>
+  </table>
+
+  <h3>Two levels</h3>
+  <p>Data exists at two levels. Property-level fields can be derived from units or input manually — the system fills what it can, but you can always override. Unit-level fields are what landlords provide for each listing.</p>
+  <div class="grid-2">
+    <div class="card" style="border-left:3px solid var(--text-3)">
+      <h4>Property level</h4>
+      <p style="font-size:13px;margin:0;color:var(--text-2)">Can be derived from units, or input manually:</p>
+      <p style="font-size:13px;margin:6px 0 0"><code>sector[]</code> — rolled up from unit sectors<br><code>category[]</code> — rolled up from unit categories <span class="res-tag">res</span><br><code>single_multi</code> — from buildingType, or set directly <span class="res-tag">res</span><br><code>community</code> — optional wrapper name <span class="res-tag">res</span><br><code>buildingSummary[]</code> — all building forms present<br><code>unitSummary[]</code> — all unit classifications<br><code>buildingAmenities{}</code> — building-level amenities</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--teal)">
+      <h4>Unit level</h4>
+      <p style="font-size:13px;margin:0;color:var(--text-2)">Set per unit by the landlord:</p>
+      <p style="font-size:13px;margin:6px 0 0"><code>buildingType</code> · <code>buildingSubtype</code> — the structure<br><code>unit</code> · <code>unitType</code> — what's being listed<br><code>ownership</code> · <code>transaction</code> — the deal<br><code>lease_type</code> · <code>term</code> · <code>deposit</code> — lease details<br><code>condo_fees</code> — when ownership = condo<br><code>category</code> — market segment <span class="res-tag">res</span><br><code>beds</code> · <code>baths</code> <span class="res-tag">res</span> · <code>sqft</code> · <code>price</code> · <code>price_per</code> — details<br><code>unitAmenities{}</code> — unit amenities</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESIDENTIAL CASCADE -->
+<section id="residential">
+  <h2>Residential cascade</h2>
+  <p>5 building types, ~20 subtypes, ~18 unit types. Each row shows what units are valid for that building form.</p>
+
+  <div class="cascade" id="res-cascade">
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">apartment_bldg</span>
+        <span style="font-size:12px;color:var(--text-2)">Multi-unit rental buildings</span>
+        <span class="count">6 subtypes</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">apartment_bldg (default)</span><span class="units">apartment, room, floor, floors, entire</span><span class="def">default: apartment</span></div>
+        <div class="cascade-row"><span class="bs">low_rise</span><span class="units">apartment, room, floor, floors, entire</span><span class="def">default: apartment</span></div>
+        <div class="cascade-row"><span class="bs">mid_rise</span><span class="units">apartment, room, floor, floors, entire</span><span class="def">default: apartment</span></div>
+        <div class="cascade-row"><span class="bs">high_rise</span><span class="units">apartment, room, floor, floors, entire</span><span class="def">default: apartment</span></div>
+        <div class="cascade-row"><span class="bs">walk_up</span><span class="units">apartment, room, floor, floors, entire</span><span class="def">default: apartment</span></div>
+        <div class="cascade-row"><span class="bs">other</span><span class="units">apartment, room, floor, floors, entire</span><span class="def">default: apartment</span></div>
+      </div>
+    </div>
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">house</span>
+        <span style="font-size:12px;color:var(--text-2)">Standalone dwellings</span>
+        <span class="count">5 subtypes</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">house (default)</span><span class="units">house, room, floor, floors, apartment, entire</span><span class="def">default: house</span></div>
+        <div class="cascade-row"><span class="bs">bungalow</span><span class="units">house, room, floor, floors, apartment, entire</span><span class="def">default: house</span></div>
+        <div class="cascade-row"><span class="bs">split_level</span><span class="units">house, room, floor, floors, apartment, entire</span><span class="def">default: house</span></div>
+        <div class="cascade-row"><span class="bs">two_storey</span><span class="units">house, room, floor, floors, apartment, entire</span><span class="def">default: house</span></div>
+        <div class="cascade-row"><span class="bs">other</span><span class="units">house, room, floor, floors, apartment, entire</span><span class="def">default: house</span></div>
+      </div>
+    </div>
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">townhouse</span>
+        <span style="font-size:12px;color:var(--text-2)">Attached housing, shared walls</span>
+        <span class="count">6 subtypes</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">townhouse (default)</span><span class="units">townhouse, room, floor, floors, apartment, entire</span><span class="def">default: townhouse</span></div>
+        <div class="cascade-row"><span class="bs">stacked</span><span class="units">townhouse, room, floor, floors, apartment, entire</span><span class="def">default: townhouse</span></div>
+        <div class="cascade-row"><span class="bs">back_to_back</span><span class="units">townhouse, room, floor, floors, apartment, entire</span><span class="def">default: townhouse</span></div>
+        <div class="cascade-row"><span class="bs">row_house</span><span class="units">townhouse, room, floor, floors, apartment, entire</span><span class="def">default: townhouse</span></div>
+        <div class="cascade-row"><span class="bs">semi_detached</span><span class="units">townhouse, room, floor, floors, apartment, entire</span><span class="def">default: townhouse</span></div>
+        <div class="cascade-row"><span class="bs">other</span><span class="units">townhouse, room, floor, floors, apartment, entire</span><span class="def">default: townhouse</span></div>
+      </div>
+    </div>
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">multiplex</span>
+        <span style="font-size:12px;color:var(--text-2)">Multi-unit plexes (2-5+ units)</span>
+        <span class="count">5 subtypes</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">multiplex (default)</span><span class="units">multiplex, room, floor, floors, apartment, entire</span><span class="def">default: apartment</span></div>
+        <div class="cascade-row"><span class="bs">duplex</span><span class="units">duplex, room, floor, floors, apartment, entire</span><span class="def">default: apartment</span></div>
+        <div class="cascade-row"><span class="bs">triplex</span><span class="units">triplex, room, floor, floors, apartment, entire</span><span class="def">default: apartment</span></div>
+        <div class="cascade-row"><span class="bs">fourplex</span><span class="units">fourplex, room, floor, floors, apartment, entire</span><span class="def">default: apartment</span></div>
+        <div class="cascade-row"><span class="bs">other</span><span class="units">apartment, room, floor, floors, entire</span><span class="def">default: apartment</span></div>
+      </div>
+    </div>
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">other_res_bldg</span>
+        <span style="font-size:12px;color:var(--text-2)">Accessory dwellings, mobile, cabins</span>
+        <span class="count">9 subtypes</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">mobile_home</span><span class="units">mobile_home, room, floor, floors, apartment, entire</span><span class="def">default: mobile_home</span></div>
+        <div class="cascade-row"><span class="bs">manufactured_home</span><span class="units">manufactured_home, room, floor, floors, apartment, entire</span><span class="def">default: manufactured_home</span></div>
+        <div class="cascade-row"><span class="bs">cabin</span><span class="units">cabin, room, floor, floors, apartment, entire</span><span class="def">default: cabin</span></div>
+        <div class="cascade-row"><span class="bs">cottage</span><span class="units">cottage, room, floor, floors, apartment, entire</span><span class="def">default: cottage</span></div>
+        <div class="cascade-row"><span class="bs">garden_suite</span><span class="units">garden_suite, room, floor, floors, apartment, entire</span><span class="def">default: garden_suite</span></div>
+        <div class="cascade-row"><span class="bs">garage_suite</span><span class="units">garage_suite, room, floor, floors, apartment, entire</span><span class="def">default: garage_suite</span></div>
+        <div class="cascade-row"><span class="bs">laneway_home</span><span class="units">laneway_home, room, floor, floors, apartment, entire</span><span class="def">default: laneway_home</span></div>
+        <div class="cascade-row"><span class="bs">carriage_house</span><span class="units">carriage_house, room, floor, floors, apartment, entire</span><span class="def">default: carriage_house</span></div>
+        <div class="cascade-row"><span class="bs">garage</span><span class="units">garage, entire, room</span><span class="def">default: garage</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Residential unit types</h3>
+  <p>Units describe what the renter actually occupies. unitType adds style/location specificity.</p>
+  <table>
+    <tr><th>Unit</th><th>unitTypes</th><th>What it means</th></tr>
+    <tr><td class="mono teal">apartment</td><td class="mono">loft, studio, penthouse, bachelor, basement, suite</td><td>A self-contained dwelling unit</td></tr>
+    <tr><td class="mono teal">room</td><td class="mono">room_private, room_shared</td><td>A room within a dwelling</td></tr>
+    <tr><td class="mono teal">floor</td><td class="mono">main_floor, upper_floor, lower_floor, basement, single_floor</td><td>One floor of a building</td></tr>
+    <tr><td class="mono teal">floors</td><td class="mono">upper_floors, lower_floors, multi_floors</td><td>Multiple floors of a building</td></tr>
+    <tr><td class="mono teal">entire</td><td class="mono">—</td><td>The whole property</td></tr>
+    <tr><td class="mono teal">house</td><td class="mono">—</td><td>Default for houses (= entire house)</td></tr>
+    <tr><td class="mono teal">townhouse</td><td class="mono">—</td><td>Default for townhouses</td></tr>
+  </table>
+</section>
+
+<!-- COMMERCIAL CASCADE -->
+<section id="commercial">
+  <h2>Commercial cascade</h2>
+  <p>10 building types, ~60 subtypes. Commercial units include desk and cubicle for coworking.</p>
+
+  <div class="cascade" id="com-cascade">
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">office_bldg</span>
+        <span style="font-size:12px;color:var(--text-2)">Office buildings</span>
+        <span class="count">9 subtypes</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">class_a / class_b / class_c</span><span class="units">entire, office, desk, cubicle, floor, bay, room, parking, spot</span><span class="def">default: office</span></div>
+        <div class="cascade-row"><span class="bs">coworking</span><span class="units">office, desk, cubicle, floor, room, parking, spot</span><span class="def">default: office</span></div>
+        <div class="cascade-row"><span class="bs">medical</span><span class="units">entire, office, desk, cubicle, floor, bay, room, parking, spot</span><span class="def">default: office</span></div>
+        <div class="cascade-row"><span class="bs">flex / casual</span><span class="units">entire, office, desk, cubicle, floor, room, parking, spot</span><span class="def">default: office</span></div>
+        <div class="cascade-row"><span class="bs">other</span><span class="units">all commercial units</span><span class="def">default: office</span></div>
+      </div>
+    </div>
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">retail_bldg</span>
+        <span style="font-size:12px;color:var(--text-2)">Retail spaces</span>
+        <span class="count">10 subtypes</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">storefront</span><span class="units">entire, office, floor, storefront, bay, room, spot, unit</span><span class="def">default: storefront</span></div>
+        <div class="cascade-row"><span class="bs">mall_shopping_ctr / strip_mall</span><span class="units">storefront, office, floor, bay, room, spot, unit</span><span class="def">default: storefront</span></div>
+        <div class="cascade-row"><span class="bs">car_wash / car_dealership</span><span class="units">entire, bay, storefront</span><span class="def">default: entire</span></div>
+        <div class="cascade-row"><span class="bs">bank_branch / showroom</span><span class="units">entire, storefront, office</span><span class="def">default: entire</span></div>
+        <div class="cascade-row"><span class="bs">pop_up / kiosk</span><span class="units">storefront, spot</span><span class="def">default: storefront / spot</span></div>
+      </div>
+    </div>
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">industrial_bldg</span>
+        <span style="font-size:12px;color:var(--text-2)">Industrial, warehouse, manufacturing</span>
+        <span class="count">8 subtypes</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">warehouse / manufacturing / distribution_center</span><span class="units">entire, office, floor, bay, room, unit</span><span class="def">default: entire</span></div>
+        <div class="cascade-row"><span class="bs">flex_space</span><span class="units">entire, office, floor, bay, room, unit</span><span class="def">default: entire</span></div>
+        <div class="cascade-row"><span class="bs">storage_facility / cold_storage</span><span class="units">entire, bay, unit, parking, spot</span><span class="def">default: unit</span></div>
+        <div class="cascade-row"><span class="bs">auto_shop</span><span class="units">entire, office, bay, room, spot</span><span class="def">default: entire</span></div>
+        <div class="cascade-row"><span class="bs">data_center</span><span class="units">entire, office, floor, room</span><span class="def">default: entire</span></div>
+      </div>
+    </div>
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">healthcare_bldg</span>
+        <span style="font-size:12px;color:var(--text-2)">Medical, dental, veterinary, lab</span>
+        <span class="count">7 subtypes</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">hospital</span><span class="units">entire, office, floor</span><span class="def">default: entire</span></div>
+        <div class="cascade-row"><span class="bs">clinic / dental_office / veterinary</span><span class="units">entire, office</span><span class="def">default: entire</span></div>
+        <div class="cascade-row"><span class="bs">long_term_care / assisted_living</span><span class="units">entire, floor, room, unit</span><span class="def">default: entire</span></div>
+        <div class="cascade-row"><span class="bs">lab</span><span class="units">entire, office, floor</span><span class="def">default: entire</span></div>
+      </div>
+    </div>
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">+ 6 more</span>
+        <span style="font-size:12px;color:var(--text-2)">institutional, entertainment, parking, hospitality, other</span>
+        <span class="count">click to expand</span>
+      </div>
+      <div class="cascade-body">
+        <div class="cascade-row"><span class="bs">institutional_bldg</span><span class="units">school, post_secondary, daycare, religious, government, community_center, library</span><span class="def"></span></div>
+        <div class="cascade-row"><span class="bs">entertainment_bldg</span><span class="units">theater, gym_fitness, arena_stadium, bowling_alley, spa</span><span class="def"></span></div>
+        <div class="cascade-row"><span class="bs">parking_pty</span><span class="units">underground, above_ground, surface_lot, covered, ev_charging</span><span class="def">units: entire, floor, parking, spot</span></div>
+        <div class="cascade-row"><span class="bs">hospitality_bldg</span><span class="units">hotel, motel, bnb, inn, resort</span><span class="def">units: entire, room, suite, floor</span></div>
+        <div class="cascade-row"><span class="bs">other_comm_bldg</span><span class="units">specialty, other</span><span class="def">units: entire, suite</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OTHER CASCADE -->
+<section id="other">
+  <h2>Other cascade</h2>
+  <p>Land, leisure, and mixed-use. Each has its own natural unit vocabulary — lots and parcels for land, slips and stalls for leisure.</p>
+
+  <div class="grid-2">
+    <div class="card teal">
+      <h4>Land</h4>
+      <p style="font-size:13px;margin:4px 0 0">Subtypes: agricultural, vacant, acreage, subdivision, industrial_land, commercial_land, residential_land</p>
+      <p style="font-size:12px;color:var(--text-3);margin:4px 0 0">Units: <code>entire</code> · <code>lot</code> · <code>parcel</code> · <code>acreage</code> · <code>pad</code></p>
+    </div>
+    <div class="card purple">
+      <h4>Leisure</h4>
+      <p style="font-size:13px;margin:4px 0 0">Subtypes: marina, campground, rv_park, stable, golf_course, ski_resort, vineyard</p>
+      <p style="font-size:12px;color:var(--text-3);margin:4px 0 0">Units: <code>entire</code> · <code>slip</code> · <code>berth</code> · <code>dock</code> · <code>site</code> · <code>pad</code> · <code>stall</code> · <code>paddock</code></p>
+    </div>
+  </div>
+
+  <h3>Mixed-use buildings</h3>
+  <p><code>mixed_use_bldg</code> handles buildings where residential and commercial coexist as a single entity — both data sets apply to the unit.</p>
+  <table>
+    <tr><th>Subtype</th><th>Sectors</th><th>Units</th></tr>
+    <tr><td class="mono teal">retail_residential</td><td>mixed_use, residential, commercial</td><td class="mono">entire, floor, suite, storefront, room, parking, unit</td></tr>
+    <tr><td class="mono teal">office_residential</td><td>mixed_use, residential, commercial</td><td class="mono">entire, floor, suite, office, room, parking</td></tr>
+    <tr><td class="mono teal">retail_office</td><td>mixed_use, residential, commercial</td><td class="mono">entire, floor, suite, storefront, office, room, parking</td></tr>
+    <tr><td class="mono teal">live_work</td><td>mixed_use, residential, commercial</td><td class="mono">entire, suite, parking</td></tr>
+  </table>
+  <div class="callout teal">Live-work is no longer an open question. It's a subtype of <code>mixed_use_bldg</code> where both residential fields (beds, baths, amenities) and commercial fields (lease_type, sqft) apply to the same unit.</div>
+</section>
+
+<!-- THE DEAL -->
+<section id="deal">
+  <h2>The deal</h2>
+  <p>Deal fields describe the transaction. All are per-unit — different units in the same building can have different ownership, transaction types, and terms.</p>
+
+  <div class="cascade" id="deal-cascade">
+
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">ownership</span>
+        <span style="font-size:12px;color:var(--text-2)">Who owns it? · Optional · null = standard rental</span>
+      </div>
+      <div class="cascade-body">
+        <table>
+          <tr><th>Value</th><th>What it means</th><th>Notes</th></tr>
+          <tr><td class="mono teal">null</td><td>Standard rental — no ownership declared</td><td>Default. Most ILS listings.</td></tr>
+          <tr><td class="mono teal">condo</td><td>Unit is individually owned, common areas shared</td><td>Appears as ILS search filter. Not a building type.</td></tr>
+          <tr><td class="mono teal">co_op</td><td>Owner holds shares in corporation, not title to unit</td><td>Less common in Canada outside major cities.</td></tr>
+          <tr><td class="mono teal">freehold</td><td>Owner owns land and building</td><td>Typical for houses, some townhouses.</td></tr>
+          <tr><td class="mono teal">leasehold</td><td>Owner owns building, leases the land</td><td>Common for some commercial. Rare residential.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">transaction</span>
+        <span style="font-size:12px;color:var(--text-2)">What's the deal? · Required</span>
+      </div>
+      <div class="cascade-body">
+        <table>
+          <tr><th>Value</th><th>What it means</th><th>Typical sector</th></tr>
+          <tr><td class="mono teal">rent</td><td>Periodic payment for use of property</td><td>Residential (primary), some commercial</td></tr>
+          <tr><td class="mono teal">sale</td><td>One-time purchase of property/unit</td><td>Both — houses, condos, commercial buildings</td></tr>
+          <tr><td class="mono teal">lease</td><td>Contractual right to use for fixed term</td><td>Commercial (primary), some residential</td></tr>
+          <tr><td class="mono teal">sublet</td><td>Existing tenant re-rents to another party</td><td>Residential · commercial equivalent = sublease</td></tr>
+          <tr><td class="mono teal">lease_to_own</td><td>Lease with option or obligation to purchase</td><td>Niche — primarily commercial/enterprise</td></tr>
+          <tr><td class="mono teal">rent_to_own</td><td>Rental with portion applied toward purchase</td><td>Niche — primarily residential</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">lease_type</span>
+        <span style="font-size:12px;color:var(--text-2)">What lease structure? · Optional · one flat list, front-end maps per sector</span>
+      </div>
+      <div class="cascade-body">
+        <table>
+          <tr><th>Value</th><th>What it means</th><th>Typical sector</th></tr>
+          <tr><td class="mono teal">standard</td><td>Standard residential lease</td><td>Residential</td></tr>
+          <tr><td class="mono teal">fixed_term</td><td>Set start and end date</td><td>Residential</td></tr>
+          <tr><td class="mono teal">month_to_month</td><td>Renews monthly, no fixed end</td><td>Residential</td></tr>
+          <tr><td class="mono teal">gross</td><td>Tenant pays flat rent, landlord covers operating costs</td><td>Commercial — office, retail</td></tr>
+          <tr><td class="mono teal">net</td><td>Tenant pays base rent + some operating costs</td><td>Commercial</td></tr>
+          <tr><td class="mono teal">nnn</td><td>Triple net — tenant pays base rent + taxes + insurance + maintenance</td><td>Commercial — industrial, retail</td></tr>
+          <tr><td class="mono teal">modified_gross</td><td>Landlord and tenant split operating costs</td><td>Commercial — office</td></tr>
+          <tr><td class="mono teal">percentage</td><td>Base rent + percentage of tenant's gross sales</td><td>Commercial — retail</td></tr>
+        </table>
+        <div class="callout teal" style="margin-top:8px">No restriction at the data level. All values are available for all sectors. Front-end mapping decides which options to show per platform and context.</div>
+      </div>
+    </div>
+
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">term</span>
+        <span style="font-size:12px;color:var(--text-2)">How long? · Optional · free-form duration</span>
+      </div>
+      <div class="cascade-body">
+        <p style="font-size:13px;margin-bottom:8px">Free-form: any number + period. No preset values — landlord sets what they want.</p>
+        <div class="code-block"><pre><span class="k">"term"</span>: { <span class="k">"amount"</span>: <span class="n">12</span>, <span class="k">"period"</span>: <span class="v">"months"</span> }     <span class="c">← 1-year lease</span>
+<span class="k">"term"</span>: { <span class="k">"amount"</span>: <span class="n">5</span>, <span class="k">"period"</span>: <span class="v">"years"</span> }      <span class="c">← commercial 5-year</span>
+<span class="k">"term"</span>: { <span class="k">"amount"</span>: <span class="n">90</span>, <span class="k">"period"</span>: <span class="v">"days"</span> }     <span class="c">← short-term / vacation</span>
+<span class="k">"term"</span>: { <span class="k">"amount"</span>: <span class="n">1</span>, <span class="k">"period"</span>: <span class="v">"weeks"</span> }     <span class="c">← weekly rental</span>
+<span class="k">"term"</span>: <span class="n">null</span>                                    <span class="c">← month-to-month / no fixed term</span></pre></div>
+        <table style="margin-top:8px">
+          <tr><th>Period values</th><th>Typical use</th></tr>
+          <tr><td class="mono teal">days</td><td>Vacation, short-term stays</td></tr>
+          <tr><td class="mono teal">weeks</td><td>Furnished rentals, sublets</td></tr>
+          <tr><td class="mono teal">months</td><td>Standard residential leases</td></tr>
+          <tr><td class="mono teal">years</td><td>Commercial leases</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">deposit</span>
+        <span style="font-size:12px;color:var(--text-2)">Security deposit or damage deposit · Optional</span>
+      </div>
+      <div class="cascade-body">
+        <p style="font-size:13px;margin-bottom:8px">Free-form amount. No preset structure — varies by province and sector.</p>
+        <div class="code-block"><pre><span class="k">"deposit"</span>: <span class="n">1450</span>        <span class="c">← flat amount (e.g., one month's rent)</span>
+<span class="k">"deposit"</span>: <span class="n">0</span>           <span class="c">← no deposit required</span>
+<span class="k">"deposit"</span>: <span class="n">null</span>        <span class="c">← not specified</span></pre></div>
+      </div>
+    </div>
+
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">condo_fees</span>
+        <span style="font-size:12px;color:var(--text-2)">Monthly condo/strata fees · Optional · only when ownership = condo</span>
+      </div>
+      <div class="cascade-body">
+        <p style="font-size:13px;margin-bottom:8px">Monthly amount paid to condo corporation for shared services and maintenance. Only relevant when <code>ownership: "condo"</code>.</p>
+        <div class="code-block"><pre><span class="k">"condo_fees"</span>: <span class="n">580</span>     <span class="c">← monthly condo fees</span>
+<span class="k">"condo_fees"</span>: <span class="n">null</span>    <span class="c">← not applicable (not a condo, or not specified)</span></pre></div>
+      </div>
+    </div>
+
+    <div class="cascade-group">
+      <div class="cascade-head" onclick="toggleCascade(this)">
+        <span class="arrow">&#9654;</span>
+        <span class="bt">price_per</span>
+        <span style="font-size:12px;color:var(--text-2)">Price basis · Derived from transaction, overridable</span>
+      </div>
+      <div class="cascade-body">
+        <table>
+          <tr><th>Value</th><th>When used</th><th>Example</th></tr>
+          <tr><td class="mono teal">month</td><td>Residential rent, parking, storage</td><td>$1,450/month</td></tr>
+          <tr><td class="mono teal">day</td><td>Vacation rentals, short-term</td><td>$250/day</td></tr>
+          <tr><td class="mono teal">week</td><td>Furnished, sublets</td><td>$400/week</td></tr>
+          <tr><td class="mono teal">year</td><td>Commercial leases (annual)</td><td>$45,000/year</td></tr>
+          <tr><td class="mono teal">sqft</td><td>Commercial leases (per sqft)</td><td>$45/sqft</td></tr>
+          <tr><td class="mono teal">acre</td><td>Land sales/leases</td><td>$12,000/acre</td></tr>
+          <tr><td class="mono teal">total</td><td>Property sales</td><td>$875,000</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section id="categories">
+  <h2>Categories</h2>
+  <p>Category is per-unit (residential only). Different units in the same building can have different categories. Property-level category is rolled up from units.</p>
+
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin:12px 0">
+    <span class="label teal">conventional</span>
+    <span class="label purple">senior</span>
+    <span class="label amber">student</span>
+    <span class="label coral">military</span>
+    <span class="label blue">corporate</span>
+    <span class="label green">vacation</span>
+    <span class="label" style="background:#FBEAF0;color:#72243E">short_term</span>
+    <span class="label" style="background:#F1EFE8;color:#444441">co_living</span>
+    <span class="label" style="background:#E6F1FB;color:#0C447C">affordable</span>
+    <span class="label" style="background:#FAEEDA;color:#412402">luxury</span>
+  </div>
+
+  <p>Categories drive amenity shortlists — when a landlord sets category to "senior," the listing form surfaces accessibility, medical, and safety amenities first. See the amenities spreadsheet for the full shortlist matrix.</p>
+</section>
+
+<!-- DERIVED FIELDS -->
+<section id="derived">
+  <h2>Derived fields</h2>
+  <p>The system fills what it can. Everything is overridable — if you provide a value, we use yours.</p>
+
+  <div class="grid-3">
+    <div class="card" style="border-top:3px solid var(--red)">
+      <h4 style="font-size:12px;color:var(--red)">Always derived</h4>
+      <p style="font-size:12px;margin:0"><code>sector[]</code> (property)<br><code>category[]</code> (property) <span class="res-tag">res</span><br><code>buildingSummary</code><br><code>unitSummary</code></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <h4 style="font-size:12px;color:var(--amber)">Derived if missing</h4>
+      <p style="font-size:12px;margin:0"><code>single_multi</code> ← from buildingType <span class="res-tag">res</span><br><code>buildingType</code> ← from unit<br><code>sector</code> (unit) ← from buildingType<br><code>price_per</code> ← from transaction</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <h4 style="font-size:12px;color:var(--teal)">Always input</h4>
+      <p style="font-size:12px;margin:0"><code>buildingSubtype</code><br><code>unit</code><br><code>transaction</code><br><code>price</code> · <code>beds</code> · <code>baths</code> <span class="res-tag">res</span><br>all amenities</p>
+    </div>
+  </div>
+
+  <div class="callout amber">The system never rejects data. If someone sends <code>single_multi: "multi_family"</code> for a house, we store it. The UI can flag it as unusual, but the API accepts it. This is the permissive model.</div>
+</section>
+
+<!-- DESIGN DECISIONS -->
+<section id="decisions">
+  <h2>Design decisions</h2>
+
+  <div class="card" style="margin-bottom:10px">
+    <h4>Condo is ownership, not building type</h4>
+    <p style="font-size:13px;margin:0">A condo unit can exist in a high-rise, townhouse, or house. "Condo" moved from Property Type to the ownership field. On ILS, "Condo" still appears as a search filter — handled by the translation layer.</p>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h4>Community is a wrapper, not a type</h4>
+    <p style="font-size:13px;margin:0">A community groups multiple buildings under a brand name for display. Each building within is classified independently. The community bumps the building down one level in the ILS display hierarchy.</p>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h4>Derived over declared</h4>
+    <p style="font-size:13px;margin:0">SF/MF is derived from buildingType, not self-declared. Sector is derived from units. This eliminates billing distortion — nobody can game their classification for a better rate.</p>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h4>Unit-level buildingType override</h4>
+    <p style="font-size:13px;margin:0">Units can declare their own buildingType when the physical space differs from the property (e.g., podium townhouses in a tower, laneway home behind a house). Null = inherit from property.</p>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h4>Mixed-use as its own buildingType</h4>
+    <p style="font-size:13px;margin:0"><code>mixed_use_bldg</code> exists in the Other cascade with subtypes like live_work and retail_residential. Both residential and commercial data apply. Sector = "mixed_use, residential, commercial."</p>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h4>Billing decoupled from classification</h4>
+    <p style="font-size:13px;margin:0">"Nobody should be changing how they structure their data to save on billing." (Steven Rai). The data model reflects reality, not billing optimization.</p>
+  </div>
+</section>
+
+<!-- EDGE CASES -->
+<section id="edge-cases">
+  <h2>David's 12 edge cases</h2>
+  <p>Stress-tested against the v5.1 model. All 12 pass. Click to expand.</p>
+
+  <div id="edge-list">
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">1</span><span class="edge-title">Mixed-form residential (podium tower)</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>High-rise on podium. Ground retail. Podium has stacked towns. Tower has apartments.</p>
+        <div class="code-block"><pre><span class="k">sector</span>: mixed_use, residential, commercial
+
+<span class="c">buildingSummary:</span>
+  residential → <span class="k">apartment_bldg</span> → <span class="v">high_rise</span>
+  residential → <span class="k">townhouse</span>      → <span class="v">stacked</span>
+  commercial  → <span class="k">retail_bldg</span>    → <span class="v">storefront</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">apartment_bldg</span> → <span class="v">apartment</span>  → null → null → rent  → null → count: 80
+  <span class="k">townhouse</span>      → <span class="v">townhouse</span>  → null → null → rent  → null → count: 12
+  <span class="k">retail_bldg</span>    → <span class="v">storefront</span> → null → null → lease → null → count: 3</pre></div>
+        <p style="font-size:12px;color:var(--text-3)">Unit-level buildingType override handles the three structural forms. Private entrances = amenity.</p>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">2</span><span class="edge-title">Community with old + new construction</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>New apartment on infill site. Shared amenities, limited access for older building.</p>
+        <div class="code-block"><pre><span class="k">community</span>: <span class="v">"Maple Ridge"</span>
+
+Building A (new): residential → <span class="k">apartment_bldg</span> → <span class="v">mid_rise</span>
+Building B (old): residential → <span class="k">apartment_bldg</span> → <span class="v">low_rise</span></pre></div>
+        <p style="font-size:12px;color:var(--text-3)">Community wrapper groups both. Each classified independently. Shared amenities at community level.</p>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">3</span><span class="edge-title">Industrial residential conversion</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>Former factory. Hard lofts, mezzanine/split-level units, conventional apartments.</p>
+        <div class="code-block"><pre>residential → <span class="k">apartment_bldg</span> → <span class="v">null</span>
+
+<span class="k">apartment_bldg</span> → <span class="v">apartment</span> → <span class="n">loft</span> → null → rent → null → count: 30
+<span class="k">apartment_bldg</span> → <span class="v">apartment</span> → <span class="n">null</span> → null → rent → null → count: 20
+
+<span class="c">Mezzanine = unitAmenity (Bool), not a unit type.</span></pre></div>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">4</span><span class="edge-title">Mixed tenure (condo + PBR)</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>Developer converted unsold condos to rental. Mix of condo-owned and PBR.</p>
+        <div class="code-block"><pre>residential → <span class="k">apartment_bldg</span> → <span class="v">high_rise</span>
+
+<span class="k">apartment_bldg</span> → <span class="v">apartment</span> → null → <span class="n">condo</span> → <span class="v">rent</span> → null → count: 45
+<span class="k">apartment_bldg</span> → <span class="v">apartment</span> → null → <span class="n">condo</span> → <span class="v">sale</span> → null → count: 10
+<span class="k">apartment_bldg</span> → <span class="v">apartment</span> → null → <span class="n">null</span>  → <span class="v">rent</span> → null → count: 45</pre></div>
+        <p style="font-size:12px;color:var(--text-3)">Ownership is per-unit. Condo vs PBR = ownership field, not building type.</p>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">5</span><span class="edge-title">Multiplex with apartment addition</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>House converted to triplex. Later addition with conventional apartments.</p>
+        <div class="code-block"><pre>residential → <span class="k">multiplex</span>      → <span class="v">triplex</span>
+residential → <span class="k">apartment_bldg</span> → <span class="v">null</span>
+
+<span class="k">multiplex</span>      → <span class="v">apartment</span> → null → null → rent → null → count: 3
+<span class="k">apartment_bldg</span> → <span class="v">apartment</span> → null → null → rent → null → count: 6</pre></div>
+        <p style="font-size:12px;color:var(--text-3)">Multiple buildingTypes in buildingSummary. Each unit declares its structural form.</p>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">6</span><span class="edge-title">SF house: basement + main floor</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>Homeowner lists basement as rental, lives on main floor — or lists both.</p>
+        <div class="code-block"><pre>residential → <span class="k">house</span> → <span class="v">null</span>
+
+<span class="c">Just basement:</span>
+  <span class="k">house</span> → <span class="v">apartment</span> → <span class="n">basement</span> → null → rent → null → count: 1
+
+<span class="c">Both listed:</span>
+  <span class="k">house</span> → <span class="v">apartment</span> → <span class="n">basement</span>    → null → rent → null → count: 1
+  <span class="k">house</span> → <span class="v">floor</span>     → <span class="n">main_floor</span> → null → rent → null → count: 1</pre></div>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">7</span><span class="edge-title">SF house with laneway home</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>Laneway is standalone structure, not a full SF home.</p>
+        <div class="code-block"><pre><span class="c">Main house:</span>
+  residential → <span class="k">house</span> → <span class="v">null</span>
+  <span class="k">house</span> → <span class="v">entire</span> → null → null → rent → null → count: 1
+
+<span class="c">Laneway home (unit-level override):</span>
+  residential → <span class="k">other_res_bldg</span> → <span class="v">laneway_home</span>
+  <span class="k">other_res_bldg</span> → <span class="v">laneway_home</span> → null → null → rent → null → count: 1</pre></div>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">8</span><span class="edge-title">Co-living community</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>Mix of co-living rooms and conventional apartments.</p>
+        <div class="code-block"><pre>residential → <span class="k">apartment_bldg</span> → <span class="v">null</span>
+
+<span class="k">apartment_bldg</span> → <span class="v">room</span>      → <span class="n">room_private</span> → null → rent → <span class="v">co_living</span>     → count: 20
+<span class="k">apartment_bldg</span> → <span class="v">room</span>      → <span class="n">room_shared</span>  → null → rent → <span class="v">co_living</span>     → count: 10
+<span class="k">apartment_bldg</span> → <span class="v">apartment</span> → <span class="n">null</span>         → null → rent → <span class="v">conventional</span> → count: 15</pre></div>
+        <p style="font-size:12px;color:var(--text-3)">Category is per-unit. Co-living and conventional coexist.</p>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">9</span><span class="edge-title">Live-work space</span><span class="edge-verdict">Works (v5.1)</span></div>
+      <div class="edge-body">
+        <p>Work on one floor, living on upper. Building has mix of live-work and regular units.</p>
+        <div class="code-block"><pre><span class="k">sector</span>: mixed_use, residential, commercial
+
+<span class="c">Using Other cascade → mixed_use_bldg:</span>
+  mixed_use → <span class="k">mixed_use_bldg</span> → <span class="v">live_work</span>
+  <span class="k">mixed_use_bldg</span> → <span class="v">suite</span> → null → null → lease → null → count: 8
+
+<span class="c">Both residential + commercial data sets apply.</span>
+<span class="c">Beds, baths, AND lease_type, sqft on the same unit.</span></pre></div>
+        <p style="font-size:12px;color:var(--text-3)">v5.1 resolves this: live_work is a buildingSubtype of mixed_use_bldg. No paired-unit linking needed.</p>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">10</span><span class="edge-title">Conventional + student housing</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>High-rise near university. Some floors student, others conventional.</p>
+        <div class="code-block"><pre>residential → <span class="k">apartment_bldg</span> → <span class="v">high_rise</span>
+
+<span class="k">apartment_bldg</span> → <span class="v">apartment</span> → null         → null → rent → <span class="v">student</span> → count: 60
+<span class="k">apartment_bldg</span> → <span class="v">apartment</span> → null         → null → rent → <span class="v">null</span>    → count: 40
+<span class="k">apartment_bldg</span> → <span class="v">room</span>      → <span class="n">room_private</span> → null → rent → <span class="v">student</span> → count: 20</pre></div>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">11</span><span class="edge-title">Stacked townhouse community</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>Lower units called "basements," uppers called "walkups." Users say "condos, apartments, towns."</p>
+        <div class="code-block"><pre><span class="k">community</span>: <span class="v">"Riverside Towns"</span>
+  residential → <span class="k">townhouse</span> → <span class="v">stacked</span>
+
+<span class="k">townhouse</span> → <span class="v">floor</span> → <span class="n">lower_floor</span> → <span class="v">condo</span> → rent → null → count: 6
+<span class="k">townhouse</span> → <span class="v">floor</span> → <span class="n">upper_floor</span> → <span class="v">condo</span> → rent → null → count: 6</pre></div>
+      </div>
+    </div>
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num">12</span><span class="edge-title">Mixed density community</span><span class="edge-verdict">Works</span></div>
+      <div class="edge-body">
+        <p>Low-rise buildings with mid/high-rise infill.</p>
+        <div class="code-block"><pre><span class="k">community</span>: <span class="v">"Oakwood Village"</span>
+
+Building A-C (original): residential → <span class="k">apartment_bldg</span> → <span class="v">low_rise</span>
+Building D (infill):     residential → <span class="k">apartment_bldg</span> → <span class="v">mid_rise</span></pre></div>
+        <p style="font-size:12px;color:var(--text-3)">Community wrapper. Each building classified independently. buildingSummary rolls up the mix.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMPLES -->
+<section id="examples">
+  <h2>Common examples</h2>
+  <p>How everyday listings map to the canonical model. Click to expand.</p>
+
+  <div id="example-list">
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">1</span><span class="edge-title">Standard apartment for rent</span></div>
+      <div class="edge-body">
+        <p>A 2BR apartment for rent in a mid-rise building. The most common listing type.</p>
+        <div class="code-block"><pre><span class="c">buildingSummary:</span>  residential → <span class="k">apartment_bldg</span> → <span class="v">mid_rise</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">apartment_bldg</span> → <span class="v">apartment</span> → null → null → rent → null → count: 1
+
+<span class="c">unitDetails:</span>  beds: 2, baths: 1, sqft: 850, price: 1450, price_per: "month"</pre></div>
+      </div>
+    </div>
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">2</span><span class="edge-title">Condo for sale in a high-rise</span></div>
+      <div class="edge-body">
+        <p>A condo unit being sold. Condo is ownership, not building type — the building is still an apartment_bldg.</p>
+        <div class="code-block"><pre><span class="c">buildingSummary:</span>  residential → <span class="k">apartment_bldg</span> → <span class="v">high_rise</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">apartment_bldg</span> → <span class="v">apartment</span> → <span class="n">penthouse</span> → <span class="v">condo</span> → sale → null → count: 1
+
+<span class="c">unitDetails:</span>  beds: 3, baths: 2, sqft: 1800, price: 875000, price_per: "total"
+<span class="c">condo_fees:</span> 650</pre></div>
+      </div>
+    </div>
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">3</span><span class="edge-title">Townhouse community for rent</span></div>
+      <div class="edge-body">
+        <p>A townhouse development with 60 units grouped under a community wrapper. Multiple building subtypes.</p>
+        <div class="code-block"><pre><span class="k">community</span>: <span class="v">"Sunset Gardens"</span>
+<span class="k">sector</span>: [residential]
+<span class="k">category</span>: [conventional]
+
+<span class="c">buildingSummary:</span>
+  residential → <span class="k">townhouse</span> → <span class="v">row_house</span>
+  residential → <span class="k">townhouse</span> → <span class="v">semi_detached</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">townhouse</span> → <span class="v">townhouse</span> → null → null → rent → null → count: 40
+  <span class="k">townhouse</span> → <span class="v">townhouse</span> → null → null → rent → null → count: 20
+
+<span class="c">buildingAmenities:</span> { pool: true, pool_detail: ["outdoor"], 
+  gym: true, parking: "included_in_rent", pet_policy: "allowed" }</pre></div>
+      </div>
+    </div>
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">4</span><span class="edge-title">Student room with custom amenities</span></div>
+      <div class="edge-body">
+        <p>A private room for rent near campus. Student category drives amenity shortlist. Landlord adds a custom amenity.</p>
+        <div class="code-block"><pre><span class="c">buildingSummary:</span>  residential → <span class="k">apartment_bldg</span> → <span class="v">low_rise</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">apartment_bldg</span> → <span class="v">room</span> → <span class="n">room_private</span> → null → rent → <span class="v">student</span> → count: 1
+
+<span class="c">unitDetails:</span>  beds: 1, baths: 1 (shared), sqft: 180, price: 650, price_per: "month"
+
+<span class="c">unitAmenities:</span> { internet: "included", furnishings: "furnished", 
+  laundry: true, laundry_detail: ["in_suite"] }
+
+<span class="c">custom:</span> [ { parent: null, text: "Study desk with built-in lamp", source: "landlord" } ]</pre></div>
+      </div>
+    </div>
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">5</span><span class="edge-title">Senior assisted living</span></div>
+      <div class="edge-body">
+        <p>A 45-unit senior facility. Category drives the accessibility and medical amenity shortlist.</p>
+        <div class="code-block"><pre><span class="c">buildingSummary:</span>  residential → <span class="k">apartment_bldg</span> → <span class="v">null</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">apartment_bldg</span> → <span class="v">apartment</span> → null → null → rent → <span class="v">senior</span> → count: 45
+
+<span class="c">buildingAmenities:</span> { elevator: true, wheelchair_access: true,
+  senior_care: true, senior_care_detail: ["nurses_onsite", "medical_visits"],
+  security: true, security_detail: ["24_7_onsite", "controlled_access"],
+  laundry: true, laundry_detail: ["every_floor"], snow_removal: true }
+
+<span class="c">unitAmenities:</span> { accessible_bath: true, handrails: true, 
+  roll_in_shower: true, alarm_system: true,
+  electricity: "included", heating: "included", cable: "included" }</pre></div>
+      </div>
+    </div>
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">6</span><span class="edge-title">Vacation cabin with full amenities</span></div>
+      <div class="edge-body">
+        <p>A lakeside cottage for short-term vacation rental. Furnished, full kitchen, outdoor amenities.</p>
+        <div class="code-block"><pre><span class="c">buildingSummary:</span>  residential → <span class="k">other_res_bldg</span> → <span class="v">cottage</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">other_res_bldg</span> → <span class="v">cottage</span> → null → null → rent → <span class="v">vacation</span> → count: 1
+
+<span class="c">unitDetails:</span>  beds: 3, baths: 2, sqft: 1200, price: 250, price_per: "day"
+<span class="c">term:</span> { amount: 90, period: "days" }  <span class="c">← available May-Aug</span>
+
+<span class="c">unitAmenities:</span> { furnishings: "furnished", fireplace: "wood",
+  flooring: "hardwood", views: "lake", dishwasher: true, stove: true,
+  laundry: true, laundry_detail: ["in_suite", "washer", "dryer"],
+  internet: "included" }
+
+<span class="c">buildingAmenities:</span> { yard: true, yard_detail: ["private", "fenced"],
+  patio_deck: true, fire_pit: true, bbq_area: true,
+  parking: "included_in_rent", pet_policy: "allowed",
+  nearby: true, nearby_detail: ["beach", "park"] }
+
+<span class="c">custom:</span> [ { parent: "yard", text: "Private dock with canoe", source: "landlord" } ]</pre></div>
+      </div>
+    </div>
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">7</span><span class="edge-title">Class A office for lease</span></div>
+      <div class="edge-body">
+        <p>One floor of a downtown Class A office tower. Triple-net lease.</p>
+        <div class="code-block"><pre><span class="c">buildingSummary:</span>  commercial → <span class="k">office_bldg</span> → <span class="v">class_a</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">office_bldg</span> → <span class="v">floor</span> → null → null → lease → null → count: 1
+
+<span class="c">unitDetails:</span>  sqft: 12000, price: 45, price_per: "sqft"
+<span class="c">lease_type:</span> "nnn"
+<span class="c">term:</span> { amount: 5, period: "years" }</pre></div>
+      </div>
+    </div>
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">8</span><span class="edge-title">Mixed-use: retail + apartments</span></div>
+      <div class="edge-body">
+        <p>Mid-rise with retail on ground floor and apartments above. Units use different cascades.</p>
+        <div class="code-block"><pre><span class="k">sector</span>: [residential, commercial, mixed_use]
+
+<span class="c">buildingSummary:</span>
+  residential → <span class="k">apartment_bldg</span> → <span class="v">mid_rise</span>
+  commercial  → <span class="k">retail_bldg</span>    → <span class="v">storefront</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">apartment_bldg</span> → <span class="v">apartment</span>  → null → null → rent  → null → count: 20
+  <span class="k">apartment_bldg</span> → <span class="v">apartment</span>  → <span class="n">studio</span> → null → rent → null → count: 5
+  <span class="k">retail_bldg</span>    → <span class="v">storefront</span> → null → null → lease → null → count: 3
+
+<span class="c">Residential units: beds, baths, price_per: "month"</span>
+<span class="c">Commercial units: sqft, lease_type: "net", price_per: "sqft"</span></pre></div>
+      </div>
+    </div>
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">9</span><span class="edge-title">Marina with boat slips</span></div>
+      <div class="edge-body">
+        <p>A marina leasing individual boat slips of various sizes. Uses the Other cascade with leisure-specific units.</p>
+        <div class="code-block"><pre><span class="c">buildingSummary:</span>  other → <span class="k">leisure_pty</span> → <span class="v">marina</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">leisure_pty</span> → <span class="v">slip</span>  → null → null → lease → null → count: 80
+  <span class="k">leisure_pty</span> → <span class="v">berth</span> → null → null → lease → null → count: 12
+  <span class="k">leisure_pty</span> → <span class="v">dock</span>  → null → null → lease → null → count: 3
+
+<span class="c">Slips priced by vessel length: price_per: "month"</span>
+<span class="c">Docks leased as whole sections: price_per: "year"</span></pre></div>
+      </div>
+    </div>
+
+    <div class="edge-case">
+      <div class="edge-head" onclick="toggleEdge(this)"><span class="arrow">&#9654;</span><span class="edge-num" style="background:var(--purple-bg);color:var(--purple-dark)">10</span><span class="edge-title">Luxury condo rental with AI-detected amenities</span></div>
+      <div class="edge-body">
+        <p>A luxury condo being rented out by the owner. AI image tagger detected several amenities from listing photos, landlord confirmed most.</p>
+        <div class="code-block"><pre><span class="c">buildingSummary:</span>  residential → <span class="k">apartment_bldg</span> → <span class="v">high_rise</span>
+
+<span class="c">unitSummary:</span>
+  <span class="k">apartment_bldg</span> → <span class="v">apartment</span> → null → <span class="v">condo</span> → rent → <span class="v">luxury</span> → count: 1
+
+<span class="c">unitDetails:</span>  beds: 2, baths: 2, sqft: 1400, price: 3200, price_per: "month"
+<span class="c">condo_fees:</span> 580
+
+<span class="c">unitAmenities:</span> { flooring: "hardwood", countertops: "quartz",
+  high_ceilings: true, large_windows: true, views: "city",
+  stainless_steel_appliances: true, dishwasher: true,
+  laundry: true, laundry_detail: ["in_suite", "washer", "dryer"],
+  balcony: true, en_suite_bath: true, closets: true,
+  closets_detail: ["walk_in"], keyless_suites: true,
+  electricity: "tenant_pays", internet: "tenant_pays" }
+
+<span class="c">AI detected (confirmed by landlord):</span>
+  <span class="c">dishwasher, hardwood floors, high ceilings, large windows</span>
+  <span class="c">→ auto-checked on form, landlord confirmed all</span>
+
+<span class="c">custom:</span> [
+  { parent: "security", text: "Ring doorbell camera", source: "landlord" },
+  { parent: null, text: "Nest smart thermostat", source: "ai_detected" }
+]</pre></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="rules">
+  <h2>Key rules</h2>
+  <div class="rule"><span class="rule-num">1</span><p><strong>Store canonical, translate for display.</strong> Every platform maps to/from the canonical model.</p></div>
+  <div class="rule"><span class="rule-num">2</span><p><strong>Derived over declared.</strong> Fields that can be computed (sector, single_multi) should not be user-declared.</p></div>
+  <div class="rule"><span class="rule-num">3</span><p><strong>Condo is ownership, not structure.</strong> Same applies to co-op.</p></div>
+  <div class="rule"><span class="rule-num">4</span><p><strong>Community is a wrapper, not a type.</strong> For display grouping only.</p></div>
+  <div class="rule"><span class="rule-num">5</span><p><strong>Billing decoupled from classification.</strong> No financial incentive should influence data accuracy.</p></div>
+  <div class="rule"><span class="rule-num">6</span><p><strong>Permissive model.</strong> The system never rejects data. Canonical values are what we recognize for search/filter, not what we enforce.</p></div>
+  <div class="rule"><span class="rule-num">7</span><p><strong>Unit-level overrides.</strong> Units can declare their own buildingType, sector, and category when they differ from the property.</p></div>
+  <div class="rule"><span class="rule-num">8</span><p><strong>Only buildingSubtype and unit are required.</strong> Everything else is derived, optional, or has a sensible default.</p></div>
+</section>
+
+<div style="padding:48px 0;text-align:center;color:var(--text-3);font-size:13px">
+  RentSync Property Taxonomy v5.1 · The Bible · March 2026
+</div>
+
+</div>
+
+<script>
+function toggleCascade(el) {
+  el.closest('.cascade-group').classList.toggle('open');
+}
+function toggleEdge(el) {
+  el.closest('.edge-case').classList.toggle('open');
+}
+</script>
+</body>
+</html>
