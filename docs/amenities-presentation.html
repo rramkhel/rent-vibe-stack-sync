@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amenities System — RentSync Property Taxonomy</title>
+<title>Amenities System — RentSync</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -109,110 +109,97 @@ table .amber { color: var(--amber); }
 footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px; color: var(--text-3); font-size: 13px; }
 </style>
 </head>
-<body>
+
 
 <div class="container">
 <header>
-  <div class="badge">Property Taxonomy v5</div>
+  <div class="badge">Property Types and Amenities v5.2</div>
   <h1>The amenities system</h1>
   <p class="sub">How amenities, utilities, and custom features are structured, stored, and searched across the RentSync platform ecosystem.</p>
 </header>
 </div>
 
 <nav class="toc"><div class="container">
-  <a href="#model">Data model</a>
-  <a href="#storage">Uniform storage</a>
+  <a href="#example-intro">At a glance</a>
   <a href="#levels">Building vs unit</a>
   <a href="#categories">Category shortlists</a>
+  <a href="#model">Data model</a>
   <a href="#custom">Custom amenities</a>
   <a href="#growth">Growth paths</a>
-  <a href="#examples">JSON examples</a>
   <a href="#ai">AI detection</a>
-  <a href="#rollups">Search roll-ups</a>
+  <a href="#examples">Examples</a>
   <a href="#rules">Rules</a>
 </div></nav>
 
 <div class="container">
 
-<!-- ============================================================ -->
-<section id="model">
-<h2>The data model</h2>
-<p>Amenities use BSTK-native data types — Bool, Enum, Bool+String — with one addition: <strong>Bool + detail</strong>, which lets a simple boolean grow subtypes over time without migration.</p>
 
-<div class="grid-2">
-  <div class="card">
-    <div class="label teal">Bool</div>
-    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">228 amenities — BSTK native</p>
-    <p style="margin:4px 0 0;font-size:13px">Simple presence. Dishwasher, elevator, balcony.</p>
-    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"dishwasher"</span>: <span class="n">true</span></pre></div>
-  </div>
-  <div class="card">
-    <div class="label" style="color:var(--purple)">Enum</div>
-    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">~70 amenities — BSTK native</p>
-    <p style="margin:4px 0 0;font-size:13px">Pick one. Flooring, fireplace, furnishings, utilities.</p>
-    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"flooring"</span>: <span class="v">"hardwood"</span>
-<span class="k">"electricity"</span>: <span class="v">"included"</span></pre></div>
-  </div>
-  <div class="card">
-    <div class="label" style="color:var(--amber)">Bool + detail</div>
-    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">~15 amenities — new pattern</p>
-    <p style="margin:4px 0 0;font-size:13px">Bool for search, detail array for specifics.</p>
-    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"pool"</span>: <span class="n">true</span>
-<span class="k">"pool_detail"</span>: [<span class="v">"heated"</span>, <span class="v">"outdoor"</span>]</pre></div>
-  </div>
-  <div class="card">
-    <div class="label" style="color:var(--coral)">Bool + String</div>
-    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">2 amenities — BSTK native</p>
-    <p style="margin:4px 0 0;font-size:13px">"Other" fields with free text.</p>
-    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"parking_other"</span>: <span class="n">true</span>
-<span class="k">"parking_other_text"</span>: <span class="v">"Tandem"</span></pre></div>
-  </div>
+
+<!-- ============================================================ -->
+<section id="example-intro">
+<h2>What it looks like</h2>
+<p>Before the details — here's a complete listing. A 2-bed loft in a mid-rise, standard rental, underground parking included, cats and dogs allowed.</p>
+
+<div class="card">
+<p style="font-size:12px;font-weight:500;color:var(--text-3);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px">Mid-rise apartment — full JSON</p>
+<div class="code-block"><pre>{
+  <span class="k">"buildingAmenities"</span>: {
+    <span class="k">"elevator"</span>:       <span class="n">true</span>,
+    <span class="k">"gym"</span>:            <span class="n">true</span>,
+    <span class="k">"bike_room"</span>:      <span class="n">true</span>,
+    <span class="k">"laundry"</span>:        <span class="n">true</span>,
+    <span class="k">"laundry_detail"</span>: [<span class="v">"on_site"</span>, <span class="v">"every_floor"</span>],
+    <span class="k">"parking"</span>:        <span class="v">"available"</span>,
+    <span class="k">"parking_type"</span>:   <span class="n">true</span>,
+    <span class="k">"parking_type_detail"</span>: [<span class="v">"underground"</span>, <span class="v">"visitor"</span>],
+    <span class="k">"pet_policy"</span>:     <span class="v">"allowed"</span>,
+    <span class="k">"pet_type"</span>:       <span class="n">true</span>,
+    <span class="k">"pet_type_detail"</span>: [<span class="v">"cat"</span>, <span class="v">"dog"</span>],
+    <span class="k">"pet_size_limit"</span>: <span class="v">"medium_50lbs"</span>,
+    <span class="k">"security"</span>:       <span class="n">true</span>,
+    <span class="k">"security_detail"</span>: [<span class="v">"video_surveillance"</span>, <span class="v">"controlled_access"</span>],
+    <span class="k">"pool"</span>:           <span class="n">true</span>,
+    <span class="k">"pool_detail"</span>:    [<span class="v">"heated"</span>, <span class="v">"outdoor"</span>],
+    <span class="k">"rooftop"</span>:        <span class="n">true</span>,
+    <span class="k">"rooftop_detail"</span>: [<span class="v">"patio"</span>, <span class="v">"bbq"</span>],
+    <span class="k">"smoking_policy"</span>: <span class="v">"not_allowed"</span>
+  },
+
+  <span class="k">"unitAmenities"</span>: {
+    <span class="k">"dishwasher"</span>:     <span class="n">true</span>,
+    <span class="k">"fridge"</span>:         <span class="n">true</span>,
+    <span class="k">"stove"</span>:          <span class="n">true</span>,
+    <span class="k">"balcony"</span>:        <span class="n">true</span>,
+    <span class="k">"high_ceilings"</span>:  <span class="n">true</span>,
+
+    <span class="k">"flooring"</span>:       <span class="v">"hardwood"</span>,
+    <span class="k">"fireplace"</span>:      <span class="v">"gas"</span>,
+    <span class="k">"ac_type"</span>:        <span class="v">"central"</span>,
+    <span class="k">"heating_type"</span>:   <span class="v">"central"</span>,
+    <span class="k">"countertops"</span>:    <span class="v">"granite"</span>,
+    <span class="k">"views"</span>:          <span class="v">"city"</span>,
+    <span class="k">"furnishings"</span>:    <span class="v">"not_furnished"</span>,
+    <span class="k">"laundry"</span>:        <span class="n">true</span>,
+    <span class="k">"laundry_detail"</span>: [<span class="v">"in_suite"</span>, <span class="v">"washer"</span>, <span class="v">"dryer"</span>],
+    <span class="k">"closets"</span>:        <span class="n">true</span>,
+    <span class="k">"closets_detail"</span>: [<span class="v">"walk_in"</span>],
+
+    <span class="k">"parking"</span>:        <span class="v">"included_in_rent"</span>,
+    <span class="k">"parking_type"</span>:   [<span class="v">"underground"</span>],
+    <span class="k">"parking_qty"</span>:    [<span class="v">"1"</span>],
+
+    <span class="k">"electricity"</span>:    <span class="v">"tenant_pays"</span>,
+    <span class="k">"water"</span>:          <span class="v">"included"</span>,
+    <span class="k">"heating"</span>:        <span class="v">"included"</span>,
+    <span class="k">"internet"</span>:       [<span class="v">"tenant_pays"</span>]
+  }
+}</pre></div>
 </div>
 
-<h3>The Bool + detail pattern</h3>
-<p>This is the key addition to BSTK's existing types. It separates two questions that are genuinely different:</p>
-<div class="code-block"><pre><span class="k">Bool</span>     →  "do you have it?"   →  the search filter   →  <span class="c">never changes</span>
-<span class="k">Detail</span>   →  "what kind?"        →  the listing page    →  <span class="c">grows over time</span></pre></div>
-
-<p>When a Bool amenity needs subtypes later, you add the <code>_detail</code> companion. The Bool never changes. No migration. Old data stays valid forever.</p>
-
-<div class="code-block"><pre><span class="c">Today:</span>      <span class="k">"freezer"</span>: <span class="n">true</span>
-<span class="c">Next year:</span>  <span class="k">"freezer"</span>: <span class="n">true</span>                          <span class="c">← unchanged</span>
-            <span class="k">"freezer_detail"</span>: [<span class="v">"upright"</span>]             <span class="c">← new companion</span>
-<span class="c">Old data:</span>   <span class="k">"freezer"</span>: <span class="n">true</span> (no detail)              <span class="c">← still valid</span></pre></div>
+<p>Two objects: <code>buildingAmenities</code> for what's on-site, <code>unitAmenities</code> for what's included with this specific unit. That's the core pattern. The rest of this page explains how it all fits together.</p>
 </section>
 
-<!-- ============================================================ -->
-<section id="storage">
-<h2>Data types and storage</h2>
-<p>BSTK-compatible. Bool is <code>true</code>, Enum is a <code>string</code>, Bool+detail is <code>true</code> plus a <code>string[]</code> companion.</p>
 
-<div class="code-block"><pre><span class="c">Bool:</span>          <span class="k">"dishwasher"</span>:    <span class="n">true</span>
-<span class="c">Enum:</span>          <span class="k">"flooring"</span>:      <span class="v">"hardwood"</span>
-<span class="c">Bool+detail:</span>   <span class="k">"pool"</span>:          <span class="n">true</span>
-               <span class="k">"pool_detail"</span>:   [<span class="v">"heated"</span>, <span class="v">"outdoor"</span>]
-<span class="c">Utility:</span>       <span class="k">"electricity"</span>:   <span class="v">"included"</span>          <span class="c">← just an Enum</span>
-<span class="c">Bool+String:</span>   <span class="k">"parking_other"</span>: <span class="n">true</span>
-               <span class="k">"parking_other_text"</span>: <span class="v">"Tandem parking"</span></pre></div>
-
-<h3>Amenities with _detail fields</h3>
-<table>
-  <tr><th>Amenity (Bool)</th><th>Detail field</th><th>Canonical values</th></tr>
-  <tr><td>pool</td><td class="mono teal">pool_detail</td><td class="mono">heated, indoor, outdoor, hot_tub, jacuzzi</td></tr>
-  <tr><td>yard</td><td class="mono teal">yard_detail</td><td class="mono">private, shared, fenced</td></tr>
-  <tr><td>rooftop</td><td class="mono teal">rooftop_detail</td><td class="mono">bbq, garden, lounge, patio, terrace</td></tr>
-  <tr><td>security</td><td class="mono teal">security_detail</td><td class="mono">24_7_onsite, video, buzzer, controlled_access, doorman, keyless, ...</td></tr>
-  <tr><td>parking_type</td><td class="mono teal">parking_type_detail</td><td class="mono">underground, indoor, outdoor, covered, ev, visitor, valet, ...</td></tr>
-  <tr><td>senior_care</td><td class="mono teal">senior_care_detail</td><td class="mono">assisted_living, nurses, medical_visits, transport, ...</td></tr>
-  <tr><td>laundry (property)</td><td class="mono teal">laundry_detail</td><td class="mono">on_site, every_floor</td></tr>
-  <tr><td>laundry (unit)</td><td class="mono teal">laundry_detail</td><td class="mono">in_suite, washer, dryer, washer_dryer_inlet</td></tr>
-  <tr><td>rooms_included</td><td class="mono teal">rooms_detail</td><td class="mono">attic, basement, office, pantry, family_room, ...</td></tr>
-  <tr><td>sports_courts</td><td class="mono teal">sports_courts_detail</td><td class="mono">basketball, tennis, volleyball, racquetball</td></tr>
-  <tr><td>nearby</td><td class="mono teal">nearby_detail</td><td class="mono">beach, transit, school, hospital, park, pharmacy, ...</td></tr>
-</table>
-</section>
-
-<!-- ============================================================ -->
 <section id="levels">
 <h2>Building vs unit level</h2>
 <p>Some amenities exist at both levels. They answer different questions:</p>
@@ -283,7 +270,6 @@ footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px;
 <p>Everything else stays single-level. Elevator, gym, pool, rooftop → property only. Dishwasher, flooring, fireplace, views → unit only.</p>
 </section>
 
-<!-- ============================================================ -->
 <section id="categories">
 <h2>Category shortlists</h2>
 <p>When a landlord selects a category, the form <strong>shortlists relevant amenities</strong>. This doesn't restrict what's available — it surfaces the most relevant ones first, organized by group.</p>
@@ -313,7 +299,90 @@ footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px;
 </div>
 </section>
 
+
 <!-- ============================================================ -->
+<section id="model">
+<h2>The data model</h2>
+<p>Amenities use BSTK-native data types — Bool, Enum, Bool+String — with one addition: <strong>Bool + detail</strong>, which lets a simple boolean grow subtypes over time without migration.</p>
+
+
+
+
+
+<div class="grid-2">
+  <div class="card">
+    <div class="label teal">Bool</div>
+    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">228 amenities — BSTK native</p>
+    <p style="margin:4px 0 0;font-size:13px">Simple presence. Dishwasher, elevator, balcony.</p>
+    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"dishwasher"</span>: <span class="n">true</span></pre></div>
+  </div>
+  <div class="card">
+    <div class="label" style="color:var(--purple)">Enum</div>
+    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">~70 amenities — BSTK native</p>
+    <p style="margin:4px 0 0;font-size:13px">Pick one. Flooring, fireplace, furnishings, utilities.</p>
+    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"flooring"</span>: <span class="v">"hardwood"</span>
+<span class="k">"electricity"</span>: <span class="v">"included"</span></pre></div>
+  </div>
+  <div class="card">
+    <div class="label" style="color:var(--amber)">Bool + detail</div>
+    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">~15 amenities — new pattern</p>
+    <p style="margin:4px 0 0;font-size:13px">Bool for search, detail array for specifics.</p>
+    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"pool"</span>: <span class="n">true</span>
+<span class="k">"pool_detail"</span>: [<span class="v">"heated"</span>, <span class="v">"outdoor"</span>]</pre></div>
+  </div>
+  <div class="card">
+    <div class="label" style="color:var(--coral)">Bool + String</div>
+    <p style="margin:4px 0 0;font-size:13px;color:var(--text-2)">2 amenities — BSTK native</p>
+    <p style="margin:4px 0 0;font-size:13px">"Other" fields with free text.</p>
+    <div class="code-block" style="margin:8px 0 0;padding:8px 12px"><pre><span class="k">"parking_other"</span>: <span class="n">true</span>
+<span class="k">"parking_other_text"</span>: <span class="v">"Tandem"</span></pre></div>
+  </div>
+</div>
+
+<h3>The Bool + detail pattern</h3>
+<p>This is the key addition to BSTK's existing types. It separates two questions that are genuinely different:</p>
+<div class="code-block"><pre><span class="k">Bool</span>     →  "do you have it?"   →  the search filter   →  <span class="c">never changes</span>
+<span class="k">Detail</span>   →  "what kind?"        →  the listing page    →  <span class="c">grows over time</span></pre></div>
+
+<p>When a Bool amenity needs subtypes later, you add the <code>_detail</code> companion. The Bool never changes. No migration. Old data stays valid forever.</p>
+
+<div class="code-block"><pre><span class="c">Today:</span>      <span class="k">"freezer"</span>: <span class="n">true</span>
+<span class="c">Next year:</span>  <span class="k">"freezer"</span>: <span class="n">true</span>                          <span class="c">← unchanged</span>
+            <span class="k">"freezer_detail"</span>: [<span class="v">"upright"</span>]             <span class="c">← new companion</span>
+<span class="c">Old data:</span>   <span class="k">"freezer"</span>: <span class="n">true</span> (no detail)              <span class="c">← still valid</span></pre></div>
+
+
+
+<h3>Storage format</h3>
+<p>BSTK-compatible. Bool is <code>true</code>, Enum is a <code>string</code>, Bool+detail is <code>true</code> plus a <code>string[]</code> companion.</p>
+
+<div class="code-block"><pre><span class="c">Bool:</span>          <span class="k">"dishwasher"</span>:    <span class="n">true</span>
+<span class="c">Enum:</span>          <span class="k">"flooring"</span>:      <span class="v">"hardwood"</span>
+<span class="c">Bool+detail:</span>   <span class="k">"pool"</span>:          <span class="n">true</span>
+               <span class="k">"pool_detail"</span>:   [<span class="v">"heated"</span>, <span class="v">"outdoor"</span>]
+<span class="c">Utility:</span>       <span class="k">"electricity"</span>:   <span class="v">"included"</span>          <span class="c">← just an Enum</span>
+<span class="c">Bool+String:</span>   <span class="k">"parking_other"</span>: <span class="n">true</span>
+               <span class="k">"parking_other_text"</span>: <span class="v">"Tandem parking"</span></pre></div>
+
+<h3>Amenities with _detail fields</h3>
+<table>
+  <tr><th>Amenity (Bool)</th><th>Detail field</th><th>Canonical values</th></tr>
+  <tr><td>pool</td><td class="mono teal">pool_detail</td><td class="mono">heated, indoor, outdoor, hot_tub, jacuzzi</td></tr>
+  <tr><td>yard</td><td class="mono teal">yard_detail</td><td class="mono">private, shared, fenced</td></tr>
+  <tr><td>rooftop</td><td class="mono teal">rooftop_detail</td><td class="mono">bbq, garden, lounge, patio, terrace</td></tr>
+  <tr><td>security</td><td class="mono teal">security_detail</td><td class="mono">24_7_onsite, video, buzzer, controlled_access, doorman, keyless, ...</td></tr>
+  <tr><td>parking_type</td><td class="mono teal">parking_type_detail</td><td class="mono">underground, indoor, outdoor, covered, ev, visitor, valet, ...</td></tr>
+  <tr><td>senior_care</td><td class="mono teal">senior_care_detail</td><td class="mono">assisted_living, nurses, medical_visits, transport, ...</td></tr>
+  <tr><td>laundry (property)</td><td class="mono teal">laundry_detail</td><td class="mono">on_site, every_floor</td></tr>
+  <tr><td>laundry (unit)</td><td class="mono teal">laundry_detail</td><td class="mono">in_suite, washer, dryer, washer_dryer_inlet</td></tr>
+  <tr><td>rooms_included</td><td class="mono teal">rooms_detail</td><td class="mono">attic, basement, office, pantry, family_room, ...</td></tr>
+  <tr><td>sports_courts</td><td class="mono teal">sports_courts_detail</td><td class="mono">basketball, tennis, volleyball, racquetball</td></tr>
+  <tr><td>nearby</td><td class="mono teal">nearby_detail</td><td class="mono">beach, transit, school, hospital, park, pharmacy, ...</td></tr>
+</table>
+
+</section>
+
+
 <section id="custom">
 <h2>Custom amenities — three tiers</h2>
 
@@ -353,7 +422,6 @@ footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px;
 </div>
 </section>
 
-<!-- ============================================================ -->
 <section id="growth">
 <h2>Migration-free growth</h2>
 <p>Because Bool+detail separates presence from specifics, amenities evolve without touching existing data.</p>
@@ -384,72 +452,85 @@ footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px;
           <span class="c">Bool "pool: true" never touched. No migration.</span></pre></div>
 </section>
 
+<section id="ai">
+<h2>AI image detection</h2>
+<p>The existing AI image tagger (v1.5.3) already outputs Bool for presence and Enum for type — the same split as Bool + detail. AI detection maps directly to the canonical amenity model.</p>
+
+<h3>How tagger outputs map to amenities</h3>
+<table>
+  <tr><th>Tagger detects</th><th>Maps to</th><th>Type</th></tr>
+  <tr><td class="mono">appliances_visible.dishwasher: true</td><td class="mono teal">dishwasher: true</td><td>Bool</td></tr>
+  <tr><td class="mono">floor_type: "hardwood"</td><td class="mono teal">flooring: "hardwood"</td><td>Enum</td></tr>
+  <tr><td class="mono">pool_visible: true</td><td class="mono teal">pool: true + pool_detail: ["outdoor"]</td><td>Bool + detail</td></tr>
+  <tr><td class="mono">security_cameras_visible: true</td><td class="mono teal">security: true + detail: ["video_surveillance"]</td><td>Bool + detail</td></tr>
+  <tr><td class="mono">is_furnished: true</td><td class="mono teal">furnishings: "furnished"</td><td>Enum</td></tr>
+  <tr><td class="mono">floorplan.bedrooms: 2</td><td class="mono teal">beds: 2 (unitDetails)</td><td>Numeric</td></tr>
+  <tr><td class="mono" style="color:var(--amber)">(AI sees wine cellar)</td><td class="mono amber">custom: [{parent: "rooms", text: "wine cellar"}]</td><td>Custom</td></tr>
+</table>
+
+<h3>Confidence pipeline</h3>
+<p>AI detections are <strong>suggestions</strong>, not auto-populated values. The landlord sees a pre-filled form with AI detections as checkboxes — high confidence items are pre-checked, medium confidence items are highlighted but unchecked.</p>
+
+<div class="code-block"><pre><span class="c">Step 1 — AI runs on uploaded photos:</span>
+  suggested: { <span class="k">dishwasher</span>: high, <span class="k">pool</span>: high, <span class="k">pool_detail</span>: [<span class="v">"outdoor"</span>] medium, <span class="k">high_ceilings</span>: medium }
+
+<span class="c">Step 2 — Landlord confirms on the form:</span>
+  <span class="n">☑</span> Dishwasher <span class="c">(detected in photo 3)</span>
+  <span class="n">☑</span> Pool
+      <span class="n">☑</span> Outdoor <span class="c">(detected)</span>     <span class="n">☐</span> Heated <span class="c">(landlord adds)</span>
+  <span class="n">☐</span> High ceilings <span class="c">(confirm?)</span>
+
+<span class="c">Step 3 — Stored after confirmation:</span>
+  <span class="k">"dishwasher"</span>:    <span class="n">true</span>
+  <span class="k">"pool"</span>:          <span class="n">true</span>
+  <span class="k">"pool_detail"</span>:   [<span class="v">"outdoor"</span>, <span class="v">"heated"</span>]   <span class="c">← AI + landlord combined</span></pre></div>
+
+<h3>AI feeds the custom promotion pipeline</h3>
+<p>When AI detects something with no canonical match, it goes to the custom array tagged as <code>ai_detected</code>. This makes AI a discovery engine — the system learns what amenities exist in the real world, and frequently-detected items become candidates for canonical promotion.</p>
+
+<div class="code-block"><pre><span class="k">"custom"</span>: [
+  { <span class="k">"parent"</span>: <span class="v">"pool"</span>, <span class="k">"text"</span>: <span class="v">"Infinity edge pool"</span>, <span class="k">"source"</span>: <span class="v">"ai_detected"</span> },
+  { <span class="k">"parent"</span>: <span class="n">null</span>,   <span class="k">"text"</span>: <span class="v">"Rooftop solar panels"</span>, <span class="k">"source"</span>: <span class="v">"ai_detected"</span> }
+]
+
+<span class="c">When "infinity edge" appears across 500+ properties → promote to pool_detail</span></pre></div>
+
+<div class="callout teal">Three data sources, one model: landlord input (manual, high confidence), AI detection (automated, confirmed by landlord), and custom free text (not searchable until promoted). All feed the same Bool / Enum / detail fields.</div>
+
+<h3>Handling existing custom amenities</h3>
+<p>Properties already in the system may have free-text custom amenities. Here's how they migrate into the new model:</p>
+
+<div class="code-block"><pre><span class="c">Step 1 — Scan existing customs against canonical list:</span>
+  <span class="v">"Stainless steel appliances"</span>  →  matches <span class="k">stainless_steel_appliances: true</span>
+  <span class="v">"In-unit washer/dryer"</span>        →  matches <span class="k">laundry: true + detail: ["in_suite","washer","dryer"]</span>
+  <span class="v">"Underground parking"</span>         →  matches <span class="k">parking_type: true + detail: ["underground"]</span>
+
+<span class="c">Step 2 — Fuzzy matches flagged for review:</span>
+  <span class="v">"W/D in unit"</span>                 →  likely laundry (in_suite) — confirm
+  <span class="v">"AC"</span>                          →  likely ac_type — confirm
+  <span class="v">"Renovated"</span>                   →  likely renovation: "recently_renovated" — confirm
+
+<span class="c">Step 3 — No match = stays as custom, tagged to nearest parent:</span>
+  <span class="v">"Tesla wall charger"</span>          →  custom, parent: "parking_type"
+  <span class="v">"Smart home system"</span>           →  custom, parent: null
+  <span class="v">"Japanese soaking tub"</span>        →  custom, parent: null</pre></div>
+
+<div class="callout amber">Existing customs don't disappear. They either map to canonical values (auto or confirmed), or stay as customs tagged to a parent. The migration is additive — canonical fields get populated, matched customs get archived with a "migrated_to" reference, unmatched customs persist as-is. AI detection can also help: run the tagger on existing photos to auto-suggest canonical values for listings that only had free-text customs.</div>
+
+</section>
+
+
 <!-- ============================================================ -->
 <section id="examples">
-<h2>Full JSON examples</h2>
+<h2>More examples and search roll-ups</h2>
+<p>Two more category-specific examples, and how canonical amenities collapse into simplified search filters per platform.</p>
+
+<h3>Category examples</h3>
+<p>How amenities differ by category. The mid-rise apartment was shown above — here are senior living and vacation listings.</p>
 
 <div class="example-toggle" id="ex-toggle">
-  <button class="active" onclick="showEx('std')">Mid-rise apartment</button>
-  <button onclick="showEx('senior')">Senior living</button>
+  <button class="active" onclick="showEx('senior')">Senior living</button>
   <button onclick="showEx('vacation')">Vacation cabin</button>
-</div>
-
-<div id="ex-std" class="ex-panel active">
-<div class="card" style="border-radius:0 0 10px 10px;border-top:none;margin-top:0">
-<p style="font-size:13px;color:var(--text-3);margin-bottom:12px">2-bed loft in a mid-rise. Standard rental. Underground parking included. Cat + dog allowed.</p>
-<div class="code-block"><pre>{
-  <span class="k">"buildingAmenities"</span>: {
-    <span class="k">"elevator"</span>:       <span class="n">true</span>,
-    <span class="k">"gym"</span>:            <span class="n">true</span>,
-    <span class="k">"bike_room"</span>:      <span class="n">true</span>,
-    <span class="k">"laundry"</span>:        <span class="n">true</span>,
-    <span class="k">"laundry_detail"</span>: [<span class="v">"on_site"</span>, <span class="v">"every_floor"</span>],
-    <span class="k">"parking"</span>:        <span class="v">"available"</span>,
-    <span class="k">"parking_type"</span>:   <span class="n">true</span>,
-    <span class="k">"parking_type_detail"</span>: [<span class="v">"underground"</span>, <span class="v">"visitor"</span>],
-    <span class="k">"pet_policy"</span>:     <span class="v">"allowed"</span>,
-    <span class="k">"pet_type"</span>:       <span class="n">true</span>,
-    <span class="k">"pet_type_detail"</span>: [<span class="v">"cat"</span>, <span class="v">"dog"</span>],
-    <span class="k">"pet_size_limit"</span>: <span class="v">"medium_50lbs"</span>,
-    <span class="k">"security"</span>:       <span class="n">true</span>,
-    <span class="k">"security_detail"</span>: [<span class="v">"video_surveillance"</span>, <span class="v">"controlled_access"</span>],
-    <span class="k">"pool"</span>:           <span class="n">true</span>,
-    <span class="k">"pool_detail"</span>:    [<span class="v">"heated"</span>, <span class="v">"outdoor"</span>],
-    <span class="k">"rooftop"</span>:        <span class="n">true</span>,
-    <span class="k">"rooftop_detail"</span>: [<span class="v">"patio"</span>, <span class="v">"bbq"</span>],
-    <span class="k">"smoking_policy"</span>: <span class="v">"not_allowed"</span>
-  },
-
-  <span class="k">"unitAmenities"</span>: {
-    <span class="k">"dishwasher"</span>:     <span class="n">true</span>,
-    <span class="k">"fridge"</span>:         <span class="n">true</span>,
-    <span class="k">"stove"</span>:          <span class="n">true</span>,
-    <span class="k">"balcony"</span>:        <span class="n">true</span>,
-    <span class="k">"high_ceilings"</span>:  <span class="n">true</span>,
-
-    <span class="k">"flooring"</span>:       <span class="v">"hardwood"</span>,
-    <span class="k">"fireplace"</span>:      <span class="v">"gas"</span>,
-    <span class="k">"ac_type"</span>:        <span class="v">"central"</span>,
-    <span class="k">"heating_type"</span>:   <span class="v">"central"</span>,
-    <span class="k">"countertops"</span>:    <span class="v">"granite"</span>,
-    <span class="k">"views"</span>:          <span class="v">"city"</span>,
-    <span class="k">"furnishings"</span>:    <span class="v">"not_furnished"</span>,
-    <span class="k">"laundry"</span>:        <span class="n">true</span>,
-    <span class="k">"laundry_detail"</span>: [<span class="v">"in_suite"</span>, <span class="v">"washer"</span>, <span class="v">"dryer"</span>],
-    <span class="k">"closets"</span>:        <span class="n">true</span>,
-    <span class="k">"closets_detail"</span>: [<span class="v">"walk_in"</span>],
-
-    <span class="k">"parking"</span>:        <span class="v">"included_in_rent"</span>,
-    <span class="k">"parking_type"</span>:   [<span class="v">"underground"</span>],
-    <span class="k">"parking_qty"</span>:    [<span class="v">"1"</span>],
-
-    <span class="k">"electricity"</span>:    <span class="v">"tenant_pays"</span>,
-    <span class="k">"water"</span>:          <span class="v">"included"</span>,
-    <span class="k">"heating"</span>:        <span class="v">"included"</span>,
-    <span class="k">"internet"</span>:       [<span class="v">"tenant_pays"</span>]
-  }
-}</pre></div>
-</div>
 </div>
 
 <div id="ex-senior" class="ex-panel">
@@ -554,78 +635,9 @@ footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px;
 }</pre></div>
 </div>
 </div>
-</section>
 
-<!-- ============================================================ -->
-<section id="ai">
-<h2>AI image detection</h2>
-<p>The existing AI image tagger (v1.5.3) already outputs Bool for presence and Enum for type — the same split as Bool + detail. AI detection maps directly to the canonical amenity model.</p>
 
-<h3>How tagger outputs map to amenities</h3>
-<table>
-  <tr><th>Tagger detects</th><th>Maps to</th><th>Type</th></tr>
-  <tr><td class="mono">appliances_visible.dishwasher: true</td><td class="mono teal">dishwasher: true</td><td>Bool</td></tr>
-  <tr><td class="mono">floor_type: "hardwood"</td><td class="mono teal">flooring: "hardwood"</td><td>Enum</td></tr>
-  <tr><td class="mono">pool_visible: true</td><td class="mono teal">pool: true + pool_detail: ["outdoor"]</td><td>Bool + detail</td></tr>
-  <tr><td class="mono">security_cameras_visible: true</td><td class="mono teal">security: true + detail: ["video_surveillance"]</td><td>Bool + detail</td></tr>
-  <tr><td class="mono">is_furnished: true</td><td class="mono teal">furnishings: "furnished"</td><td>Enum</td></tr>
-  <tr><td class="mono">floorplan.bedrooms: 2</td><td class="mono teal">beds: 2 (unitDetails)</td><td>Numeric</td></tr>
-  <tr><td class="mono" style="color:var(--amber)">(AI sees wine cellar)</td><td class="mono amber">custom: [{parent: "rooms", text: "wine cellar"}]</td><td>Custom</td></tr>
-</table>
-
-<h3>Confidence pipeline</h3>
-<p>AI detections are <strong>suggestions</strong>, not auto-populated values. The landlord sees a pre-filled form with AI detections as checkboxes — high confidence items are pre-checked, medium confidence items are highlighted but unchecked.</p>
-
-<div class="code-block"><pre><span class="c">Step 1 — AI runs on uploaded photos:</span>
-  suggested: { <span class="k">dishwasher</span>: high, <span class="k">pool</span>: high, <span class="k">pool_detail</span>: [<span class="v">"outdoor"</span>] medium, <span class="k">high_ceilings</span>: medium }
-
-<span class="c">Step 2 — Landlord confirms on the form:</span>
-  <span class="n">☑</span> Dishwasher <span class="c">(detected in photo 3)</span>
-  <span class="n">☑</span> Pool
-      <span class="n">☑</span> Outdoor <span class="c">(detected)</span>     <span class="n">☐</span> Heated <span class="c">(landlord adds)</span>
-  <span class="n">☐</span> High ceilings <span class="c">(confirm?)</span>
-
-<span class="c">Step 3 — Stored after confirmation:</span>
-  <span class="k">"dishwasher"</span>:    <span class="n">true</span>
-  <span class="k">"pool"</span>:          <span class="n">true</span>
-  <span class="k">"pool_detail"</span>:   [<span class="v">"outdoor"</span>, <span class="v">"heated"</span>]   <span class="c">← AI + landlord combined</span></pre></div>
-
-<h3>AI feeds the custom promotion pipeline</h3>
-<p>When AI detects something with no canonical match, it goes to the custom array tagged as <code>ai_detected</code>. This makes AI a discovery engine — the system learns what amenities exist in the real world, and frequently-detected items become candidates for canonical promotion.</p>
-
-<div class="code-block"><pre><span class="k">"custom"</span>: [
-  { <span class="k">"parent"</span>: <span class="v">"pool"</span>, <span class="k">"text"</span>: <span class="v">"Infinity edge pool"</span>, <span class="k">"source"</span>: <span class="v">"ai_detected"</span> },
-  { <span class="k">"parent"</span>: <span class="n">null</span>,   <span class="k">"text"</span>: <span class="v">"Rooftop solar panels"</span>, <span class="k">"source"</span>: <span class="v">"ai_detected"</span> }
-]
-
-<span class="c">When "infinity edge" appears across 500+ properties → promote to pool_detail</span></pre></div>
-
-<div class="callout teal">Three data sources, one model: landlord input (manual, high confidence), AI detection (automated, confirmed by landlord), and custom free text (not searchable until promoted). All feed the same Bool / Enum / detail fields.</div>
-
-<h3>Handling existing custom amenities</h3>
-<p>Properties already in the system may have free-text custom amenities. Here's how they migrate into the new model:</p>
-
-<div class="code-block"><pre><span class="c">Step 1 — Scan existing customs against canonical list:</span>
-  <span class="v">"Stainless steel appliances"</span>  →  matches <span class="k">stainless_steel_appliances: true</span>
-  <span class="v">"In-unit washer/dryer"</span>        →  matches <span class="k">laundry: true + detail: ["in_suite","washer","dryer"]</span>
-  <span class="v">"Underground parking"</span>         →  matches <span class="k">parking_type: true + detail: ["underground"]</span>
-
-<span class="c">Step 2 — Fuzzy matches flagged for review:</span>
-  <span class="v">"W/D in unit"</span>                 →  likely laundry (in_suite) — confirm
-  <span class="v">"AC"</span>                          →  likely ac_type — confirm
-  <span class="v">"Renovated"</span>                   →  likely renovation: "recently_renovated" — confirm
-
-<span class="c">Step 3 — No match = stays as custom, tagged to nearest parent:</span>
-  <span class="v">"Tesla wall charger"</span>          →  custom, parent: "parking_type"
-  <span class="v">"Smart home system"</span>           →  custom, parent: null
-  <span class="v">"Japanese soaking tub"</span>        →  custom, parent: null</pre></div>
-
-<div class="callout amber">Existing customs don't disappear. They either map to canonical values (auto or confirmed), or stay as customs tagged to a parent. The migration is additive — canonical fields get populated, matched customs get archived with a "migrated_to" reference, unmatched customs persist as-is. AI detection can also help: run the tagger on existing photos to auto-suggest canonical values for listings that only had free-text customs.</div>
-
-</section>
-
-<section id="rollups">
-<h2>Search roll-ups by platform</h2>
+<h3>Search roll-ups by platform</h3>
 <p>How granular canonical amenities collapse into simplified search filters per platform. The amenity parent is the search filter; values show on the listing detail page.</p>
 
 <table>
@@ -639,9 +651,10 @@ footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px;
   <tr><td>Nearby</td><td>Transit / Schools / Parks</td><td class="mono">14 individual nearby values</td></tr>
 </table>
 <p>Smaller platforms (RentFaster, RentBoard) use the rolled-up yes/no filters. Rentals.ca and BSTK show the full value detail on listing pages.</p>
+
 </section>
 
-<!-- ============================================================ -->
+
 <section id="rules">
 <h2>The rules</h2>
 
@@ -658,7 +671,7 @@ footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px;
 </div>
 
 <footer><div class="container">
-  RentSync Property Taxonomy — Amenities System &nbsp;·&nbsp; Based on Su's Standardizing Amenities work &nbsp;·&nbsp; Updated March 2026
+  RentSync — Amenities System v5.2 &nbsp;&middot;&nbsp; Updated March 2026
 </div></footer>
 
 <script>
